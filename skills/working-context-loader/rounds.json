@@ -1,0 +1,198 @@
+[
+  {
+    "round": 12,
+    "score": 190,
+    "max": 192,
+    "status": "kept",
+    "mutation": "Consolidate the --refresh description to remove contradictory \"skipped entirely\" phrasing from Argument Combination Rules (Step 0 already handles it via condition 3), and elevate the default-depth statement to the top of the Arguments section to fix both scenario 7 and 16 Argument Clarity failures.",
+    "cost": 0.05,
+    "criteria": [
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      14,
+      16
+    ],
+    "failures": [
+      {
+        "scenario": 7,
+        "criterion": "Argument Clarity"
+      },
+      {
+        "scenario": 16,
+        "criterion": "Argument Clarity"
+      }
+    ],
+    "decisionReason": "Improved from 188 to 190",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-14T22:01:50.246Z",
+    "changelog": "**Mutation**: Consolidate the --refresh description to remove contradictory \"skipped entirely\" phrasing from Argument Combination Rules (Step 0 already handles it via condition 3), and elevate the default-depth statement to the top of the Arguments section to fix both scenario 7 and 16 Argument Clarity failures.\n**Failures**: S7: Argument Clarity, S16: Argument Clarity\n**Per-criteria**: Default Behavior: 16/16, Depth Differentiation: 16/16, Refresh Logic: 16/16, Targeted Scans: 16/16, Output Specification: 16/16, Implicit No-Op: 16/16, Tool Requirements: 16/16, Scope Definition: 16/16, Error Handling (Permissions): 16/16, Error Handling (Invalid Target): 16/16, Argument Clarity: 14/16, Conditional Execution: 16/16\n**Decision**: Improved from 188 to 190"
+  },
+  {
+    "round": 0,
+    "score": 191,
+    "max": 192,
+    "status": "baseline",
+    "mutation": "Clarify the --refresh argument description to explicitly state that default depth (deep) applies when --refresh is used alone, removing ambiguity in scenario 7 of Argument Clarity.",
+    "cost": 0.05,
+    "criteria": [
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      15,
+      16
+    ],
+    "failures": [
+      {
+        "scenario": 7,
+        "criterion": "Argument Clarity"
+      }
+    ],
+    "decisionReason": "Initial baseline evaluation",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-14T22:04:29.390Z",
+    "changelog": "**Mutation**: Clarify the --refresh argument description to explicitly state that default depth (deep) applies when --refresh is used alone, removing ambiguity in scenario 7 of Argument Clarity.\n**Failures**: S7: Argument Clarity\n**Per-criteria**: Default Behavior: 16/16, Depth Differentiation: 16/16, Refresh Logic: 16/16, Targeted Scans: 16/16, Output Specification: 16/16, Implicit No-Op: 16/16, Tool Requirements: 16/16, Scope Definition: 16/16, Error Handling (Permissions): 16/16, Error Handling (Invalid Target): 16/16, Argument Clarity: 15/16, Conditional Execution: 16/16\n**Decision**: Initial baseline evaluation"
+  },
+  {
+    "round": 1,
+    "score": 188,
+    "max": 192,
+    "status": "reverted",
+    "mutation": "Mutation failed: spawnSync /bin/sh ETIMEDOUT",
+    "cost": 0.03,
+    "criteria": [
+      16,
+      16,
+      16,
+      16,
+      16,
+      15,
+      16,
+      16,
+      16,
+      16,
+      14,
+      15
+    ],
+    "failures": [
+      {
+        "scenario": 7,
+        "criterion": "Argument Clarity"
+      },
+      {
+        "scenario": 16,
+        "criterion": "Implicit No-Op"
+      },
+      {
+        "scenario": 16,
+        "criterion": "Argument Clarity"
+      },
+      {
+        "scenario": 16,
+        "criterion": "Conditional Execution"
+      }
+    ],
+    "decisionReason": "Score 188 did not exceed best 191 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-14T22:06:26.112Z",
+    "changelog": "**Mutation failed**: spawnSync /bin/sh ETIMEDOUT\n**Failures**: S7: Argument Clarity, S16: Implicit No-Op, S16: Argument Clarity, S16: Conditional Execution"
+  },
+  {
+    "round": 2,
+    "score": 189,
+    "max": 192,
+    "status": "reverted",
+    "mutation": "Add --target as a fourth bypass condition in the no-op gate — if --target is explicitly provided, the gate never fires (the existing file may have been scanned from a different workspace, so freshness is irrelevant).",
+    "cost": 0.05,
+    "criteria": [
+      16,
+      16,
+      16,
+      15,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      14,
+      16
+    ],
+    "failures": [
+      {
+        "scenario": 7,
+        "criterion": "Argument Clarity"
+      },
+      {
+        "scenario": 16,
+        "criterion": "Targeted Scans"
+      },
+      {
+        "scenario": 16,
+        "criterion": "Argument Clarity"
+      }
+    ],
+    "decisionReason": "Score 189 did not exceed best 191 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-14T22:09:15.597Z",
+    "changelog": "**Mutation**: Add --target as a fourth bypass condition in the no-op gate — if --target is explicitly provided, the gate never fires (the existing file may have been scanned from a different workspace, so freshness is irrelevant).\n**Failures**: S7: Argument Clarity, S16: Targeted Scans, S16: Argument Clarity\n**Per-criteria**: Default Behavior: 16/16, Depth Differentiation: 16/16, Refresh Logic: 16/16, Targeted Scans: 15/16, Output Specification: 16/16, Implicit No-Op: 16/16, Tool Requirements: 16/16, Scope Definition: 16/16, Error Handling (Permissions): 16/16, Error Handling (Invalid Target): 16/16, Argument Clarity: 14/16, Conditional Execution: 16/16\n**Decision**: Score 189 did not exceed best 191 — mutation produced worse or equal results"
+  },
+  {
+    "round": 3,
+    "score": 224,
+    "max": 224,
+    "status": "kept",
+    "mutation": "Original SKILL.md — no mutations",
+    "cost": 0.03,
+    "criteria": [
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16
+    ],
+    "failures": [],
+    "decisionReason": "Improved from 191 to 224",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-14T22:17:50.978Z",
+    "changelog": "Target reached at 224/224 (100.0%)\n**Mutation that achieved this**: Original SKILL.md — no mutations"
+  }
+]

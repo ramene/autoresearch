@@ -1,0 +1,87 @@
+{
+  "skill": "scaffold",
+  "criteria": [
+    "Mode Detection",
+    "Parameter Gathering",
+    "Execution Completeness",
+    "Vendor Detection",
+    "Dependency Ordering",
+    "Integration Awareness"
+  ],
+  "totalCost": 0.05,
+  "models": {
+    "mutator": "claude-3-haiku-20240307",
+    "evaluator": "gemini-2.5-pro"
+  },
+  "rounds": [
+    {
+      "round": 5,
+      "score": 49,
+      "max": 60,
+      "status": "reverted",
+      "mutation": "Expand the Reverse-Engineer Mode section with more detailed steps and guidelines for the replacement process, including specific examples and best practices for preserving business logic and transitioning away from vendor-specific components.",
+      "cost": 0.05,
+      "criteria": [
+        10,
+        8,
+        5,
+        10,
+        10,
+        6
+      ],
+      "failures": [
+        {
+          "scenario": 1,
+          "criterion": "Execution Completeness"
+        },
+        {
+          "scenario": 1,
+          "criterion": "Integration Awareness"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Parameter Gathering"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Execution Completeness"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Integration Awareness"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Integration Awareness"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Execution Completeness"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Parameter Gathering"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Execution Completeness"
+        },
+        {
+          "scenario": 9,
+          "criterion": "Execution Completeness"
+        },
+        {
+          "scenario": 10,
+          "criterion": "Integration Awareness"
+        }
+      ],
+      "decisionReason": "Score 49 did not exceed best 55 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "claude-3-haiku-20240307"
+      },
+      "timestamp": "2026-03-14T20:22:03.751Z",
+      "changelog": "**Mutation**: Expand the Reverse-Engineer Mode section with more detailed steps and guidelines for the replacement process, including specific examples and best practices for preserving business logic and transitioning away from vendor-specific components.\n**Failures**: S1: Execution Completeness, S1: Integration Awareness, S2: Parameter Gathering, S2: Execution Completeness, S2: Integration Awareness, S3: Integration Awareness, S5: Execution Completeness, S6: Parameter Gathering, S6: Execution Completeness, S9: Execution Completeness, S10: Integration Awareness\n**Per-criteria**: Mode Detection: 10/10, Parameter Gathering: 8/10, Execution Completeness: 5/10, Vendor Detection: 10/10, Dependency Ordering: 10/10, Integration Awareness: 6/10\n**Decision**: Score 49 did not exceed best 55 — mutation produced worse or equal results"
+    }
+  ]
+}

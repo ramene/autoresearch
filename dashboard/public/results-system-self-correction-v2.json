@@ -1,0 +1,74 @@
+{
+  "skill": "system-self-correction-v2",
+  "criteria": [
+    "Signal Detection",
+    "Classification",
+    "Quality Gate",
+    "Generalizability",
+    "No Duplication",
+    "Correct Action"
+  ],
+  "totalCost": 0.18,
+  "models": {
+    "evaluator": "gemini-2.5-pro",
+    "mutator": "claude-3-haiku-20240307"
+  },
+  "rounds": [
+    {
+      "round": 0,
+      "score": 56,
+      "max": 60,
+      "status": "baseline",
+      "mutation": "Original SKILL.md — baseline evaluation (56/60)",
+      "cost": 0.03,
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "claude-3-haiku-20240307"
+      },
+      "decisionReason": "Initial baseline evaluation",
+      "timestamp": "2026-03-14T19:23:03.507Z"
+    },
+    {
+      "round": 1,
+      "score": 60,
+      "max": 60,
+      "status": "kept",
+      "mutation": "Added check severity levels (critical/hard-filter/soft), 4-tier decision logic with explicit Defer action, Grep-based duplication check procedure",
+      "cost": 0.05,
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "claude-3-haiku-20240307"
+      },
+      "decisionReason": "Score improved — mutation kept",
+      "timestamp": "2026-03-14T19:23:03.508Z"
+    },
+    {
+      "round": 2,
+      "score": 56,
+      "max": 60,
+      "status": "reverted",
+      "mutation": "Gemini scored lower on re-evaluation (56/60) — stochastic variance, reverted",
+      "cost": 0.05,
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "claude-3-haiku-20240307"
+      },
+      "decisionReason": "Score did not exceed best — mutation reverted, skill restored to previous best version",
+      "timestamp": "2026-03-14T19:23:03.508Z"
+    },
+    {
+      "round": 3,
+      "score": 60,
+      "max": 60,
+      "status": "reverted",
+      "mutation": "Gemini confirmed 60/60 — target reached and stable",
+      "cost": 0.05,
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "claude-3-haiku-20240307"
+      },
+      "decisionReason": "Score did not exceed best — mutation reverted, skill restored to previous best version",
+      "timestamp": "2026-03-14T19:23:03.508Z"
+    }
+  ]
+}

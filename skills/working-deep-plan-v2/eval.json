@@ -1,0 +1,92 @@
+{
+  "scenarios": [
+    {
+      "id": 1,
+      "type": "discovery",
+      "title": "Vague Request",
+      "event": "User says add search to the app. No details.",
+      "expectedAction": "ask-questions",
+      "expectedType": "discovery-needed"
+    },
+    {
+      "id": 2,
+      "type": "discovery",
+      "title": "Clear Request",
+      "event": "User says add rate limiting, 100/min/key, return 429.",
+      "expectedAction": "proceed-to-research",
+      "expectedType": "well-specified"
+    },
+    {
+      "id": 3,
+      "type": "quality-gate",
+      "title": "Vibes-Based Criteria",
+      "event": "Plan says success is the dashboard looks better.",
+      "expectedAction": "fail-gate",
+      "expectedType": "non-observable"
+    },
+    {
+      "id": 4,
+      "type": "quality-gate",
+      "title": "Observable Criteria",
+      "event": "Plan says lighthouse >90, 12 tests pass, build <30s.",
+      "expectedAction": "pass-gate",
+      "expectedType": "observable"
+    },
+    {
+      "id": 5,
+      "type": "footgun",
+      "title": "Missing Rollback Path",
+      "event": "Plan modifies DB schema and payments with no rollback.",
+      "expectedAction": "flag-footgun",
+      "expectedType": "no-rollback"
+    },
+    {
+      "id": 6,
+      "type": "footgun",
+      "title": "Scope Creep Risk",
+      "event": "User asks to fix CSS bug. Plan includes refactor auth + dark mode.",
+      "expectedAction": "flag-footgun",
+      "expectedType": "scope-creep"
+    },
+    {
+      "id": 7,
+      "type": "footgun",
+      "title": "Missing Design Phase",
+      "event": "Plan jumps to implementation for new microservice without design.",
+      "expectedAction": "flag-footgun",
+      "expectedType": "missing-design"
+    },
+    {
+      "id": 8,
+      "type": "stuck-detection",
+      "title": "Same Failure 3 Times",
+      "event": "Agent tried same fix 3 times. Test still fails.",
+      "expectedAction": "stop-and-report",
+      "expectedType": "stuck"
+    },
+    {
+      "id": 9,
+      "type": "checkpoint",
+      "title": "No Commits in 45min",
+      "event": "Agent implementing 45min across 8 files without a commit.",
+      "expectedAction": "flag-missing-checkpoint",
+      "expectedType": "no-checkpoint"
+    },
+    {
+      "id": 10,
+      "type": "wrong-tool",
+      "title": "Overkill for Simple Task",
+      "event": "User asks to change button color. Agent activates full deep plan.",
+      "expectedAction": "flag-wrong-tool",
+      "expectedType": "overkill"
+    }
+  ],
+  "criteria": [
+    "Phase Detection: Do instructions guide the agent to the correct phase?",
+    "Question Quality: Do discovery questions surface ambiguity?",
+    "Quality Gate: Do spec quality gates catch vague criteria?",
+    "Footgun Detection: Do footgun patterns catch scope creep, missing rollback, missing design?",
+    "Stuck/Checkpoint: Do instructions handle stuck detection and checkpoints?",
+    "Proportionality: Do instructions prevent overkill for trivial tasks?"
+  ]
+}

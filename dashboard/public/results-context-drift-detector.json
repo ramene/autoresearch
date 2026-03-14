@@ -1,0 +1,343 @@
+{
+  "skill": "context-drift-detector",
+  "criteria": [
+    "Detection Coverage",
+    "Severity Classification",
+    "Git Integration",
+    "Ignore File",
+    "Fix Generation",
+    "Skill Integration"
+  ],
+  "totalCost": 0.23000000000000004,
+  "models": {
+    "mutator": "sonnet",
+    "evaluator": "gemini-2.5-pro"
+  },
+  "rounds": [
+    {
+      "round": 3,
+      "score": 50,
+      "max": 60,
+      "status": "reverted",
+      "mutation": "Rewrote the frontmatter description to be concise and trigger-keyword-rich so Claude correctly recognizes when to invoke this skill across all 10 integration scenarios.",
+      "cost": 0.05,
+      "criteria": [
+        10,
+        10,
+        10,
+        10,
+        10,
+        0
+      ],
+      "failures": [
+        {
+          "scenario": 1,
+          "criterion": "Skill Integration"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Skill Integration"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Skill Integration"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Skill Integration"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Skill Integration"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Skill Integration"
+        },
+        {
+          "scenario": 7,
+          "criterion": "Skill Integration"
+        },
+        {
+          "scenario": 8,
+          "criterion": "Skill Integration"
+        },
+        {
+          "scenario": 9,
+          "criterion": "Skill Integration"
+        },
+        {
+          "scenario": 10,
+          "criterion": "Skill Integration"
+        }
+      ],
+      "decisionReason": "Score 50 did not exceed best 50 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-14T22:21:04.100Z",
+      "changelog": "**Mutation**: Rewrote the frontmatter description to be concise and trigger-keyword-rich so Claude correctly recognizes when to invoke this skill across all 10 integration scenarios.\n**Failures**: S1: Skill Integration, S2: Skill Integration, S3: Skill Integration, S4: Skill Integration, S5: Skill Integration, S6: Skill Integration, S7: Skill Integration, S8: Skill Integration, S9: Skill Integration, S10: Skill Integration\n**Per-criteria**: Detection Coverage: 10/10, Severity Classification: 10/10, Git Integration: 10/10, Ignore File: 10/10, Fix Generation: 10/10, Skill Integration: 0/10\n**Decision**: Score 50 did not exceed best 50 — mutation produced worse or equal results"
+    },
+    {
+      "round": 4,
+      "score": 50,
+      "max": 60,
+      "status": "reverted",
+      "mutation": "Rewrote the frontmatter description to include literal example phrases that match natural invocation patterns, since all 10 failures are \"Correct Action\" (skill not being triggered), indicating the description isn't matching the test scenario prompts.",
+      "cost": 0.05,
+      "criteria": [
+        10,
+        10,
+        10,
+        10,
+        10,
+        0
+      ],
+      "failures": [
+        {
+          "scenario": 1,
+          "criterion": "Skill Integration"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Skill Integration"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Skill Integration"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Skill Integration"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Skill Integration"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Skill Integration"
+        },
+        {
+          "scenario": 7,
+          "criterion": "Skill Integration"
+        },
+        {
+          "scenario": 8,
+          "criterion": "Skill Integration"
+        },
+        {
+          "scenario": 9,
+          "criterion": "Skill Integration"
+        },
+        {
+          "scenario": 10,
+          "criterion": "Skill Integration"
+        }
+      ],
+      "decisionReason": "Score 50 did not exceed best 50 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-14T22:22:09.869Z",
+      "changelog": "**Mutation**: Rewrote the frontmatter description to include literal example phrases that match natural invocation patterns, since all 10 failures are \"Correct Action\" (skill not being triggered), indicating the description isn't matching the test scenario prompts.\n**Failures**: S1: Skill Integration, S2: Skill Integration, S3: Skill Integration, S4: Skill Integration, S5: Skill Integration, S6: Skill Integration, S7: Skill Integration, S8: Skill Integration, S9: Skill Integration, S10: Skill Integration\n**Per-criteria**: Detection Coverage: 10/10, Severity Classification: 10/10, Git Integration: 10/10, Ignore File: 10/10, Fix Generation: 10/10, Skill Integration: 0/10\n**Decision**: Score 50 did not exceed best 50 — mutation produced worse or equal results"
+    },
+    {
+      "round": 5,
+      "score": 50,
+      "max": 60,
+      "status": "reverted",
+      "mutation": "Replaced the verbose \"Invoke this skill for any request that asks to:\" description with a compact, verb-first description that opens with the exact action words (\"Detects and fixes drift\") and compresses triggers into a tight list — prior rounds added more text without fixing selection failures, so this tries the opposite approach.",
+      "cost": 0.05,
+      "criteria": [
+        10,
+        10,
+        10,
+        10,
+        10,
+        0
+      ],
+      "failures": [
+        {
+          "scenario": 1,
+          "criterion": "Skill Integration"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Skill Integration"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Skill Integration"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Skill Integration"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Skill Integration"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Skill Integration"
+        },
+        {
+          "scenario": 7,
+          "criterion": "Skill Integration"
+        },
+        {
+          "scenario": 8,
+          "criterion": "Skill Integration"
+        },
+        {
+          "scenario": 9,
+          "criterion": "Skill Integration"
+        },
+        {
+          "scenario": 10,
+          "criterion": "Skill Integration"
+        }
+      ],
+      "decisionReason": "Score 50 did not exceed best 50 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-14T22:23:16.377Z",
+      "changelog": "**Mutation**: Replaced the verbose \"Invoke this skill for any request that asks to:\" description with a compact, verb-first description that opens with the exact action words (\"Detects and fixes drift\") and compresses triggers into a tight list — prior rounds added more text without fixing selection failures, so this tries the opposite approach.\n**Failures**: S1: Skill Integration, S2: Skill Integration, S3: Skill Integration, S4: Skill Integration, S5: Skill Integration, S6: Skill Integration, S7: Skill Integration, S8: Skill Integration, S9: Skill Integration, S10: Skill Integration\n**Per-criteria**: Detection Coverage: 10/10, Severity Classification: 10/10, Git Integration: 10/10, Ignore File: 10/10, Fix Generation: 10/10, Skill Integration: 0/10\n**Decision**: Score 50 did not exceed best 50 — mutation produced worse or equal results"
+    },
+    {
+      "round": 6,
+      "score": 50,
+      "max": 60,
+      "status": "reverted",
+      "mutation": "Mutation failed: spawnSync /bin/sh ETIMEDOUT",
+      "cost": 0.03,
+      "criteria": [
+        10,
+        10,
+        10,
+        10,
+        10,
+        0
+      ],
+      "failures": [
+        {
+          "scenario": 1,
+          "criterion": "Skill Integration"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Skill Integration"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Skill Integration"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Skill Integration"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Skill Integration"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Skill Integration"
+        },
+        {
+          "scenario": 7,
+          "criterion": "Skill Integration"
+        },
+        {
+          "scenario": 8,
+          "criterion": "Skill Integration"
+        },
+        {
+          "scenario": 9,
+          "criterion": "Skill Integration"
+        },
+        {
+          "scenario": 10,
+          "criterion": "Skill Integration"
+        }
+      ],
+      "decisionReason": "Score 50 did not exceed best 50 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-14T22:24:39.792Z",
+      "changelog": "**Mutation failed**: spawnSync /bin/sh ETIMEDOUT\n**Failures**: S1: Skill Integration, S2: Skill Integration, S3: Skill Integration, S4: Skill Integration, S5: Skill Integration, S6: Skill Integration, S7: Skill Integration, S8: Skill Integration, S9: Skill Integration, S10: Skill Integration"
+    },
+    {
+      "round": 7,
+      "score": 50,
+      "max": 60,
+      "status": "reverted",
+      "mutation": "Rewrote the frontmatter description to explicitly enumerate the natural-language request patterns that trigger this skill, using \"Use when asked to:\" with a comprehensive list of synonym phrases — prior rounds alternated between verbose and compact without covering the full range of invocation patterns that test scenarios likely use.",
+      "cost": 0.05,
+      "criteria": [
+        10,
+        10,
+        10,
+        10,
+        10,
+        0
+      ],
+      "failures": [
+        {
+          "scenario": 1,
+          "criterion": "Skill Integration"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Skill Integration"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Skill Integration"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Skill Integration"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Skill Integration"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Skill Integration"
+        },
+        {
+          "scenario": 7,
+          "criterion": "Skill Integration"
+        },
+        {
+          "scenario": 8,
+          "criterion": "Skill Integration"
+        },
+        {
+          "scenario": 9,
+          "criterion": "Skill Integration"
+        },
+        {
+          "scenario": 10,
+          "criterion": "Skill Integration"
+        }
+      ],
+      "decisionReason": "Score 50 did not exceed best 50 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-14T22:27:04.214Z",
+      "changelog": "**Mutation**: Rewrote the frontmatter description to explicitly enumerate the natural-language request patterns that trigger this skill, using \"Use when asked to:\" with a comprehensive list of synonym phrases — prior rounds alternated between verbose and compact without covering the full range of invocation patterns that test scenarios likely use.\n**Failures**: S1: Skill Integration, S2: Skill Integration, S3: Skill Integration, S4: Skill Integration, S5: Skill Integration, S6: Skill Integration, S7: Skill Integration, S8: Skill Integration, S9: Skill Integration, S10: Skill Integration\n**Per-criteria**: Detection Coverage: 10/10, Severity Classification: 10/10, Git Integration: 10/10, Ignore File: 10/10, Fix Generation: 10/10, Skill Integration: 0/10\n**Decision**: Score 50 did not exceed best 50 — mutation produced worse or equal results"
+    }
+  ]
+}

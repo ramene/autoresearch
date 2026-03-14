@@ -1,0 +1,396 @@
+---
+name: scaffold
+description: "Scaffold a new Claude Code project OR reverse-engineer an existing codebase to remove vendor lock-in and make components modular and pluggable. Use when the user says scaffold, new project, create project, setup workspace, reverse engineer, or remove vendor lock-in."
+argument-hint: "[project-name] [flags] OR <source> [transcript] [instructions] [flags]"
+allowed-tools: Bash, Read, Write, Edit, AskUserQuestion, Glob, Grep, Agent, WebFetch
+---
+
+# Skill: Scaffold
+
+> Scaffold a new Claude Code project with shared commands, prompts, memory bank — OR reverse-engineer an existing codebase to remove vendor lock-in and produce modular, platform-agnostic components.
+
+## Purpose
+
+Two modes of operation:
+
+1. **Greenfield Mode** — End-to-end project scaffolding: creates a `.claude` project context with symlinked commands/prompts, memory bank stubs, optional git repo, and optional terminal launch.
+
+2. **Reverse-Engineer Mode** — Takes an existing codebase (GitHub URL, archive, or local path), analyzes vendor-locked components, and surgically replaces them with platform-agnostic equivalents matching the your-platform.example.com reference architecture. The output is a codebase with modular components that can be dropped into `apps/web` or any project in the platform.
+
+## When to Use
+
+- Starting a new Claude Code project from scratch → **Greenfield Mode**
+- `/scaffold <project-name>` → **Greenfield Mode**
+- `/scaffold <github-url>` or `/scaffold <archive-path>` → **Reverse-Engineer Mode**
+- `/scaffold <plan-file.md>` → **Plan Mode** (auto-feed plan to autonomous agent workspace)
+- Removing vendor lock-in from an existing codebase → **Reverse-Engineer Mode**
+- Making auth, database, billing, or storage components pluggable → **Reverse-Engineer Mode**
+
+## Mode Detection
+
+Automatically detect mode based on arguments:
+- If argument is a path to a `.md` file containing a plan (has `## Targets`, `## Execution`, or `**Workspace**:` patterns) → **Plan Mode**
+- If argument is a GitHub URL (`github.com/...`) or archive path (`.zip`, `.tar.gz`) or path to existing codebase → **Reverse-Engineer Mode**
+- If argument is a kebab-case name with no URL/path indicators → **Greenfield Mode**
+- If ambiguous → ask via AskUserQuestion
+
+---
+
+## Greenfield Mode
+
+### Step 1: Gather Parameters
+
+Ask the user these questions (use AskUserQuestion, ask all at once):
+
+1. **Project name** — kebab-case (e.g., `research-olfactory`, `my-saas-app`)
+2. **Workspace path** — where the project lives (e.g., `~/.remote/@my-project`)
+3. **Custom CLAUDE.md?** — file path, or use the default template
+4. **Command categories** — all, or select: agent, planning, refactoring, quality, review, workflow, intelligence, intent, scaffold
+5. **Options** — git init, cloud commands, prompts library, memory bank stubs
+
+After scaffold.py completes, ALWAYS ask a separate follow-up question:
+
+6. **Launch terminal?** — iTerm2 tab with tmux + Claude Code (default: yes). This must ALWAYS be asked as its own AskUserQuestion after scaffolding completes, never bundled into the options above.
+
+### Step 2: Execute
+
+Build and run the scaffold command:
+
+```bash
+python3 ${CLAUDE_SKILL_DIR}/scripts/scaffold.py --headless \
+  --name <project-name> \
+  --workspace <workspace-path> \
+  --all-commands \
+  --git \
+  -f <path-to-custom-claude-md>
+```
+
+**All flags**: `--all-commands`, `--categories <list>`, `--git`, `--cloud`, `--no-prompts`, `--no-memory`, `--no-launch`, `-f <path>`
+
+### Step 3: Terminal Launch
+
+If the user wants a terminal session, provide the tmux launch command:
+
+```bash
+cd <workspace> && \
+tmux new-session -d -s <name> && \
+tmux set -t <name> @autosave_active 1 && \
+echo $(date +%s) > /tmp/tmux-autosave-<name>.ts && \
+tmux send-keys -t <name> 'export CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1 && claude --dangerously-skip-permissions' Enter && \
+tmux attach -t <name>
+```
+
+### Step 4: Verify & Report
+
+1. Verify project dir: `ls ~/Journal/.claude-projects/<name>/`
+2. Verify workspace symlink: `ls -la <workspace>/.claude`
+3. Verify skill count: `ls <workspace>/.claude/skills/*/SKILL.md | wc -l`
+4. If git: `git -C <workspace> log --oneline -1`
+5. Report summary
+
+---
+
+## Plan Mode
+
+Scaffold an autonomous agent workspace from a plan file. Creates isolated workspace, wires cross-project context, launches Claude in agent teams mode, and auto-feeds the plan as the first prompt.
+
+### When to Use
+
+- You have a plan `.md` file describing multi-target work
+- You want an autonomous agent team to execute it
+- `/scaffold path/to/plan.md`
+
+### Step 1: Detect & Parse Plan
+
+The scaffold skill detects plan mode when the argument is a `.md` file containing plan markers (`## Targets`, `**Workspace**:` patterns).
+
+Pass the plan file path to scaffold.py:
+
+```bash
+python3 ${CLAUDE_SKILL_DIR}/scripts/scaffold.py \
+  --plan <plan-file.md>
+```
+
+The `PlanParser` extracts:
+- **Name**: derived from the plan title (e.g., `# Plan: Shannon Security Audit` → `shannon-security-audit`)
+- **Targets**: workspace paths from `**Workspace**: \`path\`` patterns
+- **Context**: CLAUDE.md files from each target workspace
+
+### Step 2: Template Variables (optional)
+
+Plans can contain `{{variable}}` placeholders. Pass values with `--plan-var`:
+
+```bash
+python3 ${CLAUDE_SKILL_DIR}/scripts/scaffold.py \
+  --plan plan-template.md \
+  --plan-var "PROJECT_NAME=my-app" \
+  --plan-var "WORKSPACE_PATH=~/.remote/@my-app"
+```
+
+### Step 3: Validation
+
+Pre-flight checks verify:
+- All target workspaces exist and are readable
+- No unresolved template variables remain
+- Plan has at least one target
+
+### Step 4: Scaffold & Launch
+
+The script:
+1. Creates workspace at `~/.remote/@plans/<plan-name>/`
+2. Installs all skills, prompts, memory bank
+3. Generates plan-aware CLAUDE.md with cross-project context
+4. Copies the plan file as `PLAN.md` in the workspace
+5. Git init + initial commit
+6. Launches tmux session with `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1`
+7. Enables tmux-logs (`~/.local/share/tmux-logs/<plan-name>/`)
+8. Waits for Claude REPL to initialize (6s)
+9. Launches Claude with the plan as a positional arg via `$(cat /tmp/scaffold-prompt-<name>.txt)`
+
+### Step 5: Completion Handling
+
+**Webhook**: When Claude writes `PLAN_COMPLETE` to `/tmp/scaffold-complete-<name>`, a watcher process POSTs status to the configured webhook URL.
+
+```bash
+--plan-webhook "https://hooks.example.com/done"
+```
+
+**Chain**: Execute multiple plans sequentially. When plan N completes, plan N+1 auto-launches.
+
+```bash
+--plan plan1.md --plan-chain plan2.md plan3.md
+```
+
+**Resume**: If a tmux session dies mid-execution, resume from last checkpoint:
+
+```bash
+--plan plan.md --plan-resume
+```
+
+### Full Example
+
+```bash
+python3 ${CLAUDE_SKILL_DIR}/scripts/scaffold.py \
+  --plan ~/.claude/plans/security-audit.md \
+  --plan-context ~/.remote/@your-platform.example.com/CLAUDE.md \
+  --plan-webhook "https://hooks.example.com/done" \
+  --plan-var "GITHUB_TOKEN=ghp_xxx" \
+  --plan-chain phase2-remediation.md phase3-verification.md
+```
+
+### Plan State
+
+Persistent state is stored at `~/Journal/.plan-state/<plan-name>/state.json`:
+- Status: pending → running → completed/failed
+- Checkpoints with timestamps
+- Chain index for multi-plan execution
+- Webhook URL
+
+---
+
+## Reverse-Engineer Mode
+
+### Invocation
+
+```
+/scaffold <source> [transcript] [options]
+```
+
+**Arguments**:
+- `<source>` — GitHub URL, archive path, or local directory path
+- `[transcript]` — Optional path to video transcript or documentation that describes the codebase
+- `[options]` — Key-value instructions and flags
+
+**Examples**:
+```
+/scaffold https://github.com/code-with-antonio/resonance /path/to/transcript.md
+/scaffold ./my-app.zip --target auth,db --platform your-platform.example.com
+/scaffold https://github.com/user/repo {instruction: reverse engineer auth/db and make agnostic}
+```
+
+### Step 1: Acquire Source
+
+Based on source type:
+- **GitHub URL** → `git clone <url>` into workspace under `~/.remote/@vendor-replacement/<repo-name>`
+- **Archive** → Extract to same workspace pattern
+- **Local path** → Use as-is, confirm with user
+
+If a transcript path is provided, read it for additional context about the codebase architecture and intent.
+
+### Step 2: Codebase Analysis (Discovery Phase)
+
+Perform comprehensive analysis using subagents for parallel investigation. Identify ALL vendor-locked components by scanning for:
+
+#### Database Layer
+| Vendor Pattern | Detection | Platform Replacement |
+|---|---|---|
+| Prisma ORM | `@prisma/client`, `prisma/schema.prisma`, `PrismaClient` imports | Raw `pg` (node-postgres) with Pool singleton |
+| Drizzle ORM | `drizzle-orm`, `drizzle-kit` | Raw `pg` with Pool singleton |
+| TypeORM | `typeorm`, `DataSource` | Raw `pg` with Pool singleton |
+| Mongoose | `mongoose`, `.model()`, `.schema()` | Direct MongoDB driver or pg migration |
+
+#### Authentication Layer
+| Vendor Pattern | Detection | Platform Replacement |
+|---|---|---|
+| Clerk | `@clerk/nextjs`, `ClerkProvider`, `useUser`, `useClerk`, `auth()` from clerk | Auth.js v5 with custom pg adapter |
+| Supabase Auth | `@supabase/auth-helpers-nextjs`, `createClient` | Auth.js v5 with custom pg adapter |
+| Firebase Auth | `firebase/auth`, `getAuth` | Auth.js v5 with custom pg adapter |
+| Auth0 | `@auth0/nextjs-auth0` | Auth.js v5 with custom pg adapter |
+
+#### Storage Layer
+| Vendor Pattern | Detection | Platform Replacement |
+|---|---|---|
+| Vercel Blob | `@vercel/blob` | Cloudflare R2 via S3-compatible SDK |
+| Supabase Storage | `supabase.storage` | Cloudflare R2 via S3-compatible SDK |
+| Firebase Storage | `firebase/storage` | Cloudflare R2 via S3-compatible SDK |
+
+#### Billing/Payments Layer
+| Vendor Pattern | Detection | Platform Replacement |
+|---|---|---|
+| Stripe (direct) | `stripe`, `@stripe/stripe-js` | Polar.sh or direct Stripe (keep agnostic) |
+| Lemon Squeezy | `@lemonsqueezy/lemonsqueezy.js` | Polar.sh billing abstraction |
+
+#### Deployment/Hosting Layer
+| Vendor Pattern | Detection | Platform Replacement |
+|---|---|---|
+| Vercel-specific | `@vercel/*`, `vercel.json` | Docker + Cloud Run / GAE |
+| Netlify | `netlify.toml`, `@netlify/*` | Docker + Cloud Run / GAE |
+
+#### Output: Discovery Report
+
+Produce a structured report:
+```
+## Vendor Lock-in Discovery Report
+
+### Detected Components
+1. [COMPONENT]: [vendor] → [replacement]
+   - Files affected: [count]
+   - Key imports: [list]
+   - Complexity: low|medium|high
+
+### Dependency Graph
+- [which components depend on which]
+
+### Recommended Replacement Order
+1. [component] — [reason for ordering]
+```
+
+Present the report to the user and confirm which components to replace before proceeding.
+
+### Step 3: Reference Architecture Loading
+
+Load the platform reference patterns from your-platform.example.com. These are the proven production patterns to use as replacements:
+
+#### Database Reference (from your-platform.example.com)
+- **Connection**: `pg.Pool` singleton with build-time stub for Next.js
+- **Migrations**: Numbered raw SQL files (`NNN_description.sql`)
+- **Queries**: Parameterized raw SQL via `pool.query(sql, params)`
+- **Tables**: `auth_*` prefix for auth tables, descriptive names for domain tables
+- **Column conventions**: Auth tables use quoted camelCase for Auth.js compat (`"emailVerified"`, `"sessionToken"`), domain tables use snake_case with SQL aliases for JS (`r2_object_key AS "r2ObjectKey"`)
+
+#### Auth Reference (from your-platform.example.com)
+- **Framework**: Auth.js v5 (`next-auth@5.0.0-beta.30`)
+- **Sessions**: Database sessions, NOT JWT (`session: { strategy: "database" }`)
+- **Adapter**: Custom `pg-adapter.ts` with `auth_*` prefixed tables, lazy pool factory
+- **Providers**: Google OAuth + GitHub OAuth with `checks: ["state"]`, `allowDangerousEmailAccountLinking`
+- **Multi-tenancy**: `auth_organizations` + `auth_org_members` tables, `"activeOrgId"` on sessions
+- **Session enrichment**: Callback queries DB for org context
+- **Route protection**: At API layer via `auth()`, NOT in middleware
+- **Client**: `SessionProvider` wrapper, `useSession()` hook
+
+#### File Organization Reference
+```
+src/
+  lib/
+    db.ts                    # pg Pool singleton
+    auth/
+      config.ts              # Auth.js v5 config + exports
+      pg-adapter.ts          # Custom adapter (auth_* tables)
+  context/
+    session-provider.tsx     # Client SessionProvider wrapper
+  types/
+    db.ts                    # Domain types (replaces ORM-generated)
+  app/
+    api/auth/[...nextauth]/route.ts  # Auth.js route handler
+    api/auth/orgs/route.ts           # Org CRUD
+    api/auth/orgs/select/route.ts    # Org selection
+    sign-in/page.tsx                 # OAuth sign-in UI
+    org-selection/page.tsx           # Org picker UI
+migrations/
+  000_init.sql               # Combined auth + domain schema
+docker-compose.yml           # Local PostgreSQL 16
+scripts/
+  migrate.mjs                # Migration runner
+```
+
+### Step 4: Surgical Replacement (Execution Phase)
+
+Execute replacements in this order (dependencies first):
+
+1. **Types** — Create `src/types/db.ts` with domain types to replace ORM-generated types
+2. **Database connection** — Replace ORM singleton with `pg.Pool` singleton in `src/lib/db.ts`
+3. **Schema/Migrations** — Convert ORM schema to raw SQL migration in `migrations/000_init.sql`
+4. **Auth config** — Create `src/lib/auth/config.ts` and `pg-adapter.ts`
+5. **Auth routes** — Create `api/auth/[...nextauth]/route.ts`
+6. **Auth UI** — Replace vendor sign-in/sign-up components with OAuth buttons
+7. **Multi-tenancy** — Create org tables, API routes, selection UI
+8. **Session provider** — Replace vendor provider in layout.tsx
+9. **Middleware/proxy** — Replace vendor middleware with cookie-based checks
+10. **API routes** — Update all route handlers: replace ORM queries with raw SQL, replace vendor auth with `auth()`
+11. **tRPC routers** — Update procedures: ORM → raw SQL, vendor auth → Auth.js
+12. **Client components** — Replace vendor hooks (`useUser`, `useClerk`) with `useSession`
+13. **Dependencies** — Update `package.json`: remove vendor packages, add `next-auth`, `@auth/core`, `pg`
+14. **Environment** — Create `.env` / `.env.example` with platform variables
+15. **Docker** — Create `docker-compose.yml` for local PostgreSQL
+16. **Scripts** — Update seed scripts, migration runner
+
+#### Replacement Rules
+- **Never modify files you haven't read** — Read before every edit
+- **Preserve all business logic** — Only swap the vendor integration layer
+- **Column naming**: Use SQL aliases (`snake_case AS "camelCase"`) to maintain JS interface compatibility
+- **Auth table naming**: Always prefix with `auth_` to avoid collisions
+- **Build-time safety**: Pool stub when `NEXT_PHASE === "phase-production-build"`
+- **Multi-tenancy**: `orgId` scoping on all tenant-owned resources
+
+### Step 5: Local Dev Environment
+
+1. Create `docker-compose.yml` with PostgreSQL 16
+2. Create `.env` with:
+   - `DATABASE_URL` pointing to local Docker PostgreSQL
+   - Auth.js vars (`AUTH_SECRET`, `NEXTAUTH_URL`, OAuth credentials)
+   - Dummy values for services not being tested (R2, billing, etc.)
+3. Remove old vendor artifacts (e.g., `prisma/` directory, generated types)
+4. Run `npm install`
+5. Start Docker PostgreSQL: `docker compose up -d postgres`
+6. Apply migrations: migration runner or direct psql
+7. Start dev server: `npm run dev`
+
+### Step 6: Verification
+
+1. **Compilation** — `npm run dev` starts without errors
+2. **Auth flow** — Sign-in page renders, OAuth redirects work (requires callback URLs configured)
+3. **Database** — Tables created, migrations applied
+4. **API routes** — Return proper responses (401 when unauthenticated, data when authenticated)
+5. **Client components** — No vendor import errors
+
+Report any issues that require manual steps (e.g., adding OAuth callback URLs to provider settings).
+
+### Step 7: Memory Bank Update
+
+Update the project's memory bank files:
+- `CLAUDE-activeContext.md` — Session state and progress
+- `CLAUDE-patterns.md` — Document patterns used in replacement
+- `CLAUDE-decisions.md` — Record ADRs for each replacement decision
+- `CLAUDE-troubleshooting.md` — Document any issues encountered and solutions
+
+---
+
+## Reference
+
+- Scaffold script: `${CLAUDE_SKILL_DIR}/scripts/scaffold.py` (symlink → `~/Journal/.seed/scaffold.py`)
+- Shell version: `~/Journal/.seed/init.sh` (supports same `--headless` flags)
+- Seed base: `~/Journal/.seed/base/`
+- Projects dir: `~/Journal/.claude-projects/`
+- Symlink chain: `workspace/.claude → .claude-projects/<name> → .seed/base/{skills,prompts}`
+- Reference architecture: your-platform.example.com (`apps/web/lib/auth/`, `apps/web/lib/eaas/db.ts`)
+- Proven replacement: `~/.remote/@vendor-replacement/resonance` (Prisma+Clerk → pg+Auth.js)

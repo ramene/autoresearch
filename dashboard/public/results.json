@@ -1,0 +1,23 @@
+[
+  {
+    "round": 0,
+    "score": 59,
+    "max": 60,
+    "status": "kept",
+    "mutation": "See changelog"
+  },
+  {
+    "round": 1,
+    "score": 20,
+    "max": 60,
+    "status": "reverted",
+    "mutation": "Reverted — no improvement"
+  },
+  {
+    "round": 2,
+    "score": 30,
+    "max": 60,
+    "status": "reverted",
+    "mutation": "Reverted — no improvement"
+  }
+]

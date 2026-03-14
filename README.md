@@ -1,90 +1,172 @@
-# autoresearch
+# Autoresearch for Claude Code Skills
 
-![teaser](progress.png)
+This fork extends autoresearch beyond ML training to **autonomous skill prompt improvement** using a cross-model evaluation pipeline.
 
-*One day, frontier AI research used to be done by meat computers in between eating, sleeping, having other fun, and synchronizing once in a while using sound wave interconnect in the ritual of "group meeting". That era is long gone. Research is now entirely the domain of autonomous swarms of AI agents running across compute cluster megastructures in the skies. The agents claim that we are now in the 10,205th generation of the code base, in any case no one could tell if that's right or wrong as the "code" is now a self-modifying binary that has grown beyond human comprehension. This repo is the story of how it all began. -@karpathy, March 2026*.
+![Dashboard Screenshot](docs/dashboard-screenshot.png)
 
-The idea: give an AI agent a small but real LLM training setup and let it experiment autonomously overnight. It modifies the code, trains for 5 minutes, checks if the result improved, keeps or discards, and repeats. You wake up in the morning to a log of experiments and (hopefully) a better model. The training code here is a simplified single-GPU implementation of [nanochat](https://github.com/karpathy/nanochat). The core idea is that you're not touching any of the Python files like you normally would as a researcher. Instead, you are programming the `program.md` Markdown files that provide context to the AI agents and set up your autonomous research org. The default `program.md` in this repo is intentionally kept as a bare bones baseline, though it's obvious how one would iterate on it over time to find the "research org code" that achieves the fastest research progress, how you'd add more agents to the mix, etc. A bit more context on this project is here in this [tweet](https://x.com/karpathy/status/2029701092347630069).
+### The Idea
 
-## How it works
+Claude Code skills are markdown prompt files. Like any prompt, they're noisy — sometimes they produce great output, sometimes garbage. Autoresearch fixes this by iteratively mutating the prompt, evaluating outputs, keeping improvements, and discarding regressions. The same loop Karpathy uses for `train.py`, applied to `SKILL.md`.
 
-The repo is deliberately kept small and only really has three files that matter:
+The twist: we use **Gemini as an independent evaluator** (the "naked reasoner") to eliminate self-grading bias. Claude proposes mutations, Claude generates outputs, but Gemini scores them — with zero knowledge of what was changed.
 
-- **`prepare.py`** — fixed constants, one-time data prep (downloads training data, trains a BPE tokenizer), and runtime utilities (dataloader, evaluation). Not modified.
-- **`train.py`** — the single file the agent edits. Contains the full GPT model, optimizer (Muon + AdamW), and training loop. Everything is fair game: architecture, hyperparameters, optimizer, batch size, etc. **This file is edited and iterated on by the agent**.
-- **`program.md`** — baseline instructions for one agent. Point your agent here and let it go. **This file is edited and iterated on by the human**.
+### How It Maps
 
-By design, training runs for a **fixed 5-minute time budget** (wall clock, excluding startup/compilation), regardless of the details of your compute. The metric is **val_bpb** (validation bits per byte) — lower is better, and vocab-size-independent so architectural changes are fairly compared.
+| Autoresearch (nanoGPT) | This Fork (Skills) |
+|------------------------|-------------------|
+| `train.py` — the thing being optimized | `SKILL.md` — the prompt being improved |
+| `program.md` — agent instructions | `skills/program.md` — improvement loop instructions |
+| `prepare.py` — data prep (ML-specific) | N/A — not needed for skills |
+| `val_bpb` — validation metric | `eval_pass_rate` — binary criteria across N runs |
+| Single model (agent edits + evaluates) | **Cross-model**: Claude mutates, Gemini evaluates |
 
-If you are new to neural networks, this ["Dummy's Guide"](https://x.com/hooeem/status/2030720614752039185) looks pretty good for a lot more context.
-
-## Quick start
-
-**Requirements:** A single NVIDIA GPU (tested on H100), Python 3.10+, [uv](https://docs.astral.sh/uv/).
+### Quick Start
 
 ```bash
+# 1. Set up credentials
+echo "YOUR_GEMINI_KEY" > ~/.claude/.credentials/gemini-api-key.txt
+echo "YOUR_ANTHROPIC_KEY" > ~/.claude/.credentials/anthropic-api-key.txt
 
-# 1. Install uv project manager (if you don't already have it)
-curl -LsSf https://astral.sh/uv/install.sh | sh
+# 2. Install dashboard
+cd dashboard && npm install
 
-# 2. Install dependencies
-uv sync
+# 3. Run autoresearch on a skill
+node skills/autoresearch-runner.mjs --skill system-self-correction-v2 --continuous --dashboard-sync
 
-# 3. Download data and train tokenizer (one-time, ~2 min)
-uv run prepare.py
+# 4. View live dashboard (in another terminal)
+cd dashboard && npm run dev
+# → http://localhost:4100
 
-# 4. Manually run a single training experiment (~5 min)
-uv run train.py
+# 5. Or use terminal dashboard
+node skills/autoresearch-runner.mjs --skill deep-plan-v2 --continuous --tui
 ```
 
-If the above commands all work ok, your setup is working and you can go into autonomous research mode.
+### Terminal Dashboard
 
-## Running the agent
-
-Simply spin up your Claude/Codex or whatever you want in this repo (and disable all permissions), then you can prompt something like:
+Run with `--tui` for a live-updating ASCII dashboard in your terminal:
 
 ```
-Hi have a look at program.md and let's kick off a new experiment! let's do the setup first.
+  ⚗  Autoresearch  LIVE  ─ deep-plan-v2
+  Autonomous skill improvement via cross-model evaluation
+  Claude (mutate) → Gemini (evaluate) → Claude (synthesize)
+
+  ┌──────────────┬──────────────┬──────────────┬──────────────┐
+  │ CURRENT BEST │ BASELINE     │ IMPROVEMENT  │ RUNS / KEPT  │
+  │ 60/60        │ 58/60        │ +3.4%        │ 7 / 3        │
+  └──────────────┴──────────────┴──────────────┴──────────────┘
+
+  Score Progress    ● kept  ○ reverted
+
+   62 │
+   60 │     ●                 ●                 ●
+   58 │           ○     ○
+   56 │                                   ○
+   53 │                             ○
+      └───────────────────────────────────────────▸ Round
+
+  Experiment History
+  ROUND  SCORE    RATE   STATUS      MUTATION
+  ─────────────────────────────────────────────────────────────────
+  6      60/60    100%   kept        Added proportionality check
+  5      56/60    93%    reverted    Restructured phases — regressed
+  4      53/60    88%    reverted    Added explicit examples — too narrow
+  3      59/60    98%    kept        Reworded footgun audit patterns
+  2      57/60    95%    reverted    Reverted — no improvement
+  1      57/60    95%    reverted    Reverted — no improvement
+  0      58/60    97%    baseline    Original SKILL.md
 ```
 
-The `program.md` file is essentially a super lightweight "skill".
+### Web Dashboard
 
-## Project structure
+Features:
+- **Metric cards**: Current Best, Baseline, Improvement %, Runs/Kept
+- **Recharts line chart**: Score progress with best-so-far overlay
+- **Experiment table**: Status badges, pass rate bars, mutation descriptions
+- **Auto-refresh**: Polls `results.json` every 30 seconds
+- **Configurable**: Point at any `results.json` URL via settings panel
+
+### Cross-Model Evaluation (in autoresearch)
 
 ```
-prepare.py      — constants, data prep + runtime utilities (do not modify)
-train.py        — model, optimizer, training loop (agent modifies this)
-program.md      — agent instructions
-pyproject.toml  — dependencies
+Claude (mutator)    → proposes SKILL.md mutations based on failure analysis
+Claude (runner)     → generates outputs against 10 test scenarios
+Gemini (evaluator)  → independently scores outputs (no mutation context = no bias)
+Claude (synthesizer)→ combines scores, decides keep/revert, plans next mutation
 ```
 
-## Design choices
+**Why Gemini as evaluator?** When Claude both mutates and evaluates, it's the student grading their own test. Gemini gets ONLY the outputs and the rubric — no changelog, no mutation rationale. It can't be biased by knowing what was changed. This adds ~$0.03/round but removes self-grading bias entirely.
 
-- **Single file to modify.** The agent only touches `train.py`. This keeps the scope manageable and diffs reviewable.
-- **Fixed time budget.** Training always runs for exactly 5 minutes, regardless of your specific platform. This means you can expect approx 12 experiments/hour and approx 100 experiments while you sleep. There are two upsides of this design decision. First, this makes experiments directly comparable regardless of what the agent changes (model size, batch size, architecture, etc). Second, this means that autoresearch will find the most optimal model for your platform in that time budget. The downside is that your runs (and results) become not comparable to other people running on other compute platforms.
-- **Self-contained.** No external dependencies beyond PyTorch and a few small packages. No distributed training, no complex configs. One GPU, one file, one metric.
+### Cross-Model Reasoning Pipeline (standalone tool)
 
-## Platform support
+This repo also includes a **separate, independent** tool: the [Cross-Model Reasoning Pipeline](reasoning-pipeline/). It uses the same Claude→Gemini→Claude architecture but for a completely different job — analyzing content (transcripts, articles, decisions) and producing validated action plans.
 
-This code currently requires that you have a single NVIDIA GPU. In principle it is quite possible to support CPU, MPS and other platforms but this would also bloat the code. I'm not 100% sure that I want to take this on personally right now. People can reference (or have their agents reference) the full/parent nanochat repository that has wider platform support and shows the various solutions (e.g. a Flash Attention 3 kernels fallback implementation, generic device support, autodetection, etc.), feel free to create forks or discussions for other platforms and I'm happy to link to them here in the README in some new notable forks section or etc.
+```bash
+# Analyze a video transcript through 3 models
+node reasoning-pipeline/pipeline.mjs \
+  --transcript my-talk-notes.md \
+  --context my-project.md
 
-Seeing as there seems to be a lot of interest in tinkering with autoresearch on much smaller compute platforms than an H100, a few extra words. If you're going to try running autoresearch on smaller computers (Macbooks etc.), I'd recommend one of the forks below. On top of this, here are some recommendations for how to tune the defaults for much smaller models for aspiring forks:
+# Output: 70-100K of validated, executable plans
+```
 
-1. To get half-decent results I'd use a dataset with a lot less entropy, e.g. this [TinyStories dataset](https://huggingface.co/datasets/karpathy/tinystories-gpt4-clean). These are GPT-4 generated short stories. Because the data is a lot narrower in scope, you will see reasonable results with a lot smaller models (if you try to sample from them after training).
-2. You might experiment with decreasing `vocab_size`, e.g. from 8192 down to 4096, 2048, 1024, or even - simply byte-level tokenizer with 256 possibly bytes after utf-8 encoding.
-3. In `prepare.py`, you'll want to lower `MAX_SEQ_LEN` a lot, depending on the computer even down to 256 etc. As you lower `MAX_SEQ_LEN`, you may want to experiment with increasing `DEVICE_BATCH_SIZE` in `train.py` slightly to compensate. The number of tokens per fwd/bwd pass is the product of these two.
-4. Also in `prepare.py`, you'll want to decrease `EVAL_TOKENS` so that your validation loss is evaluated on a lot less data.
-5. In `train.py`, the primary single knob that controls model complexity is the `DEPTH` (default 8, here). A lot of variables are just functions of this, so e.g. lower it down to e.g. 4.
-6. You'll want to most likely use `WINDOW_PATTERN` of just "L", because "SSSL" uses alternating banded attention pattern that may be very inefficient for you. Try it.
-7. You'll want to lower `TOTAL_BATCH_SIZE` a lot, but keep it powers of 2, e.g. down to `2**14` (~16K) or so even, hard to tell.
+See [`reasoning-pipeline/README.md`](reasoning-pipeline/README.md) for the full walkthrough, use cases, and examples.
 
-I think these would be the reasonable hyperparameters to play with. Ask your favorite coding agent for help and copy paste them this guide, as well as the full source code.
+**These are independent tools:**
+- **Autoresearch runner** → iterative prompt improvement loop (runs continuously)
+- **Reasoning pipeline** → one-shot content analysis (runs once per content piece)
+- Both use Gemini as an independent reasoner, but for different purposes
 
-## Notable forks
+### Eval Design
 
-- [miolini/autoresearch-macos](https://github.com/miolini/autoresearch-macos) (MacOS)
-- [trevin-creator/autoresearch-mlx](https://github.com/trevin-creator/autoresearch-mlx) (MacOS)
-- [jsegov/autoresearch-win-rtx](https://github.com/jsegov/autoresearch-win-rtx) (Windows)
+Follow these rules from the [autoresearch video transcript](docs/):
+
+1. **Binary yes/no** — "Does the output contain X?" Only two possible answers.
+2. **Avoid Likert scales** — 1-7 ratings compound variability.
+3. **Don't over-specify** — Too many narrow constraints → model "teaches to the test."
+4. **Few, meaningful, principle-based** — 4-6 criteria per skill.
+5. **Run many times** — 10 outputs per round to account for prompt noise.
+
+### Results
+
+| Skill | Baseline | Final | Rounds | Key Mutation |
+|-------|----------|-------|--------|-------------|
+| `system-self-correction-v2` | 56/60 | 60/60 | 2 | Added severity levels + Defer action to quality gate |
+| `deep-plan-v2` | 58/60 | 60/60 | 7 | Added proportionality check for trivial tasks |
+
+### CLI Reference
+
+```bash
+node skills/autoresearch-runner.mjs [options]
+
+Options:
+  --skill <name>        Target skill (default: system-self-correction-v2)
+  --rounds <n>          Number of rounds to run (default: 1)
+  --continuous          Run until target reached or stuck (max 100 rounds)
+  --dashboard-sync      Write results to dashboard/public/results.json
+  --tui                 Show live terminal dashboard after each round
+```
+
+### Project Structure
+
+```
+skills/                              ── Autoresearch skill improvement loop
+  autoresearch-runner.mjs            — Cross-model improvement engine
+  program.md                         — Agent instructions for the loop
+  working-<skill>/                   — Per-skill working directory
+    SKILL.md                         — Current (mutated) version
+    SKILL.md.baseline                — Original (never modified)
+    results.tsv                      — Experiment log
+    changelog.md                     — Mutation history
+
+reasoning-pipeline/                  ── Standalone cross-model reasoning tool
+  pipeline.mjs                       — 3-stage Claude→Gemini→Claude pipeline
+  README.md                          — Full walkthrough with use cases
+
+dashboard/                           ── Live monitoring web dashboard
+  src/App.jsx                        — Standalone React app
+  public/results.json                — Data file (synced by runner)
+  package.json                       — React + Vite + Tailwind + Recharts
+```
 
 ## License
 
