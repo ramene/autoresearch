@@ -406,6 +406,10 @@ const EVAL_JSON_PATH = resolve(EFFECTIVE_DIR, 'eval.json')
 function loadEvalConfig() {
   if (existsSync(EVAL_JSON_PATH)) {
     const evalData = JSON.parse(readFileSync(EVAL_JSON_PATH, 'utf8'))
+    // Normalize criteria: if objects {name, question}, convert to "Name: Question" strings
+    if (evalData.criteria.length > 0 && typeof evalData.criteria[0] === 'object') {
+      evalData.criteria = evalData.criteria.map(c => `${c.name}: ${c.question || c.description || ''}`)
+    }
     console.log(`  Eval: loaded from eval.json (${evalData.scenarios.length} scenarios × ${evalData.criteria.length} criteria = ${evalData.scenarios.length * evalData.criteria.length} max)`)
     return evalData
   }

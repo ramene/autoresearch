@@ -223,8 +223,11 @@ async function callGemini(prompt, systemInstruction) {
 // Supported models: claude-sonnet-4-5-20250514, claude-3-haiku-20240307,
 // claude-3-5-haiku-20241022, claude-opus-4-6-20250801, or any valid Anthropic model ID.
 // Change the default below to use a different model for Stages 1 and 3.
-async function callClaude(prompt, systemPrompt, model = "claude-sonnet-4-5-20250514") {
-  const apiKey = loadAnthropicKey();
+async function callClaude(prompt, systemPrompt, model = "sonnet") {
+  // Use CLI for short model names (sonnet, opus, haiku) — these use Max plan subscription
+  // Use API for full model IDs (claude-3-haiku-20240307, etc.) — these use API key
+  const cliModels = ["sonnet", "opus", "haiku"];
+  const useCli = cliModels.includes(model);
 
   // Truncate transcripts if prompt > 180K chars to stay within token limits
   let finalPrompt = prompt;
@@ -232,6 +235,15 @@ async function callClaude(prompt, systemPrompt, model = "claude-sonnet-4-5-20250
     console.log(`  ⚠ Prompt ${(prompt.length / 1000).toFixed(0)}K chars — truncating to ~180K`);
     finalPrompt = prompt.substring(0, 180000) + "\n\n[... truncated for token limits — remaining content follows same patterns ...]";
   }
+
+  console.log(`  → Calling Claude (${model}) [${useCli ? 'CLI/Max' : 'API'}]...`);
+  console.log(`  → Prompt: ${(finalPrompt.length / 1000).toFixed(1)}K chars`);
+
+  if (useCli) {
+    return callClaudeCli(finalPrompt, systemPrompt, model);
+  }
+
+  const apiKey = loadAnthropicKey();
 
   const body = {
     model,
@@ -243,9 +255,6 @@ async function callClaude(prompt, systemPrompt, model = "claude-sonnet-4-5-20250
   if (systemPrompt) {
     body.system = systemPrompt;
   }
-
-  console.log(`  → Calling Claude (${model}) [streaming]...`);
-  console.log(`  → Prompt: ${(finalPrompt.length / 1000).toFixed(1)}K chars`);
 
   try {
     const resp = await fetch("https://api.anthropic.com/v1/messages", {
@@ -316,6 +325,29 @@ async function callClaude(prompt, systemPrompt, model = "claude-sonnet-4-5-20250
   }
 }
 
+async function callClaudeCli(prompt, systemPrompt, model = "sonnet") {
+  const { execSync } = await import("child_process");
+  const fullPrompt = systemPrompt
+    ? `${systemPrompt}\n\n---\n\n${prompt}`
+    : prompt;
+
+  // Write prompt to temp file to avoid shell escaping issues
+  const tmpFile = path.join(OUTPUT_DIR || "/tmp", ".pipeline-prompt.tmp");
+  ensureDir(path.dirname(tmpFile));
+  fs.writeFileSync(tmpFile, fullPrompt);
+
+  try {
+    const result = execSync(
+      `cat "${tmpFile}" | claude --print --model ${model}`,
+      { maxBuffer: 10 * 1024 * 1024, timeout: 600000, encoding: "utf8", shell: true }
+    );
+    console.log(`  → Claude CLI response: ${(result.length / 1000).toFixed(1)}K chars`);
+    return { text: result, usage: { input_tokens: "cli", output_tokens: "cli" } };
+  } finally {
+    try { fs.unlinkSync(tmpFile); } catch {}
+  }
+}
+
 // ── Stage 1: Claude Synthesis ──────────────────────────────────
 async function stage1(config) {
   console.log("\n╔══════════════════════════════════════════════════╗");
@@ -323,8 +355,8 @@ async function stage1(config) {
   console.log("╚══════════════════════════════════════════════════╝\n");
 
   const transcripts = config.transcripts.map((t) => readFile(t));
-  const context = readFile(config.context);
-  const debatePrompt = readFile(config.prompt);
+  const context = config.context ? readFile(config.context) : "";
+  const debatePrompt = config.prompt ? readFile(config.prompt) : "";
 
   const stage1System = `You are Claude Opus in a structured synthesis role. Your output will be machine-parsed and passed to Gemini 3.1 Pro.
 
@@ -394,7 +426,7 @@ Produce a structured document with these EXACT sections:
 
 Be thorough. Be specific. Cite file paths and line numbers. This is the input that Gemini 3.1 Pro will reason about.`;
 
-  const result = await callClaude(stage1Prompt, stage1System, "claude-sonnet-4-5-20250514");
+  const result = await callClaude(stage1Prompt, stage1System, "sonnet");
   const outputPath = writeOutput("stage-1-claude-synthesis.md", `# Stage 1: Claude Synthesis\n\n> Generated: ${new Date().toISOString()}\n> Model: claude-opus-4-6\n> Input tokens: ${result.usage?.input_tokens}\n> Output tokens: ${result.usage?.output_tokens}\n\n${result.text}`);
 
   return { text: result.text, outputPath };
@@ -521,7 +553,7 @@ async function stage3(config, stage1Output, stage2Output) {
   console.log("║  STAGE 3: Claude Opus — Execution Planning              ║");
   console.log("╚═══════════════════════════════════════════════════════════╝\n");
 
-  const context = readFile(config.context);
+  const context = config.context ? readFile(config.context) : "";
   const transcript = config.transcripts.length > 0 ? readFile(config.transcripts[0]) : "";
 
   // Load available commands/skills if they exist
@@ -661,7 +693,7 @@ Define how this pipeline can be reused for future research prompts:
 
 Be thorough. Be specific. Cite sources with DOIs. This document is the primary research deliverable.`;
 
-  const result = await callClaude(stage3Prompt, stage3System, "claude-sonnet-4-5-20250514");
+  const result = await callClaude(stage3Prompt, stage3System, "sonnet");
 
   const outputContent = `# Stage 3: Claude Execution Plan
 
