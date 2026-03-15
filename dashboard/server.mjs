@@ -74,6 +74,8 @@ function loadPipelineRuns() {
 const MIME = {
   '.html': 'text/html', '.js': 'application/javascript', '.css': 'text/css',
   '.json': 'application/json', '.png': 'image/png', '.svg': 'image/svg+xml',
+  '.mp3': 'audio/mpeg', '.mp4': 'video/mp4', '.m4a': 'audio/mp4',
+  '.wav': 'audio/wav', '.ogg': 'audio/ogg', '.webm': 'video/webm',
 }
 
 function serveStatic(res, filePath) {
