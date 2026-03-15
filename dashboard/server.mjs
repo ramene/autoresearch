@@ -584,6 +584,37 @@ Return ONLY valid JSON:
     return
   }
 
+  // POST /api/pipeline/run/:runId/nblm/chat — proxy chat to NotebookLM
+  if (path.match(/^\/api\/pipeline\/run\/([^/]+)\/nblm\/chat$/) && req.method === 'POST') {
+    const runId = path.split('/')[4]
+    const body = await parseBody(req)
+    // Read NBLM state to get notebook ID
+    const nblmPath = join(PIPELINE_RUNS_DIR, `${runId}-nblm.json`)
+    if (!existsSync(nblmPath)) { jsonResponse(res, { error: 'No NBLM notebook for this run' }, 404); return }
+    const nblmState = JSON.parse(readFileSync(nblmPath, 'utf8'))
+    if (!nblmState.notebookId) { jsonResponse(res, { error: 'No notebook ID' }, 404); return }
+
+    // Shell out to nlm CLI for the query (MCP tools aren't available server-side)
+    const { execSync } = await import('child_process')
+    try {
+      const query = body.query?.replace(/"/g, '\\"') || ''
+      const conversationId = body.conversationId || ''
+      const convArg = conversationId ? ` --conversation-id "${conversationId}"` : ''
+      const result = execSync(
+        `~/.local/bin/nlm query "${nblmState.notebookId}" "${query}"${convArg}`,
+        { encoding: 'utf8', timeout: 60000, maxBuffer: 1024 * 1024 }
+      )
+      // Parse the nlm CLI output — it returns markdown-formatted response
+      jsonResponse(res, {
+        response: result.trim(),
+        notebookId: nblmState.notebookId,
+      })
+    } catch (err) {
+      jsonResponse(res, { error: err.message?.slice(0, 500) || 'Chat failed' }, 500)
+    }
+    return
+  }
+
   // GET /api/pipeline/run/:runId — get full results for a completed run
   const pipelineRunMatch = path.match(/^\/api\/pipeline\/run\/(.+)$/)
   if (pipelineRunMatch && req.method === 'GET') {

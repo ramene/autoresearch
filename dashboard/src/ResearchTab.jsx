@@ -856,6 +856,130 @@ const AnnotationsPanel = ({ runId, onJumpToSection }) => {
   )
 }
 
+// ─── NotebookLM Chat ──────────────────────────────────────────────────────
+
+const NblmChat = ({ runId, notebookId }) => {
+  const [messages, setMessages] = useState([])
+  const [input, setInput] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [conversationId, setConversationId] = useState(null)
+  const chatEndRef = useRef(null)
+
+  useEffect(() => {
+    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }, [messages])
+
+  const sendMessage = async () => {
+    if (!input.trim() || loading) return
+    const userMsg = input.trim()
+    setInput('')
+    setMessages(prev => [...prev, { role: 'user', text: userMsg }])
+    setLoading(true)
+
+    try {
+      const res = await fetch(`/api/pipeline/run/${runId}/nblm/chat`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query: userMsg, conversationId }),
+      })
+      const data = await res.json()
+      if (data.response) {
+        setMessages(prev => [...prev, { role: 'assistant', text: data.response }])
+        if (data.conversationId) setConversationId(data.conversationId)
+      } else {
+        setMessages(prev => [...prev, { role: 'error', text: data.error || 'Failed to get response' }])
+      }
+    } catch (err) {
+      setMessages(prev => [...prev, { role: 'error', text: err.message }])
+    }
+    setLoading(false)
+  }
+
+  const suggestedQuestions = [
+    "What is the three-stage sensorium model?",
+    "How does predictive processing relate to olfaction?",
+    "What are the key research gaps identified?",
+    "Explain the trigeminal lateralization puzzle",
+    "Who are the priority researchers and why?",
+  ]
+
+  return (
+    <div className="mt-4 border border-purple-200 rounded-lg overflow-hidden">
+      <div className="bg-purple-50 px-3 py-2 flex items-center justify-between border-b border-purple-200">
+        <span className="text-xs font-semibold text-purple-700 flex items-center gap-1.5">
+          Interactive Research Chat
+        </span>
+        <span className="text-[9px] text-purple-400">Grounded in pipeline sources</span>
+      </div>
+
+      {/* Chat messages */}
+      <div className="max-h-80 overflow-y-auto p-3 space-y-3 bg-white">
+        {messages.length === 0 && (
+          <div className="text-center py-4 space-y-3">
+            <p className="text-xs text-gray-400">Ask questions about the research — answers are grounded in the pipeline output.</p>
+            <div className="flex flex-wrap gap-1.5 justify-center">
+              {suggestedQuestions.map((q, i) => (
+                <button
+                  key={i}
+                  onClick={() => { setInput(q); }}
+                  className="px-2 py-1 text-[10px] rounded-full bg-purple-50 text-purple-600 hover:bg-purple-100 transition-colors"
+                >
+                  {q}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+        {messages.map((msg, i) => (
+          <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+            <div className={`max-w-[85%] rounded-lg px-3 py-2 text-xs leading-relaxed ${
+              msg.role === 'user'
+                ? 'bg-purple-500 text-white'
+                : msg.role === 'error'
+                ? 'bg-red-50 text-red-700 border border-red-200'
+                : 'bg-gray-100 text-gray-700'
+            }`}>
+              {msg.role === 'assistant' ? (
+                <div dangerouslySetInnerHTML={{ __html: renderInlineMarkdown(msg.text) }} />
+              ) : (
+                msg.text
+              )}
+            </div>
+          </div>
+        ))}
+        {loading && (
+          <div className="flex justify-start">
+            <div className="bg-gray-100 rounded-lg px-3 py-2">
+              <Loader2 className="w-3.5 h-3.5 text-purple-500 animate-spin" />
+            </div>
+          </div>
+        )}
+        <div ref={chatEndRef} />
+      </div>
+
+      {/* Input */}
+      <div className="border-t border-gray-200 p-2 flex gap-2 bg-white">
+        <input
+          type="text"
+          value={input}
+          onChange={e => setInput(e.target.value)}
+          onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage() } }}
+          placeholder="Ask about the research..."
+          className="flex-1 px-3 py-1.5 text-xs border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-purple-300"
+          disabled={loading}
+        />
+        <button
+          onClick={sendMessage}
+          disabled={loading || !input.trim()}
+          className="px-3 py-1.5 text-xs font-medium rounded-lg bg-purple-500 text-white hover:bg-purple-600 disabled:opacity-50 transition-colors"
+        >
+          Send
+        </button>
+      </div>
+    </div>
+  )
+}
+
 // ─── NotebookLM Panel ──────────────────────────────────────────────────────
 
 const NblmPanel = ({ runId, run }) => {
@@ -989,6 +1113,46 @@ const NblmPanel = ({ runId, run }) => {
             </div>
           )}
 
+          {/* Language audio variants */}
+          <div className="pt-2">
+            <span className="text-[10px] font-medium text-gray-500 block mb-1.5">Generate in other languages:</span>
+            <div className="flex gap-1.5">
+              {[
+                { code: 'en', label: 'English', flag: '\u{1F1EC}\u{1F1E7}' },
+                { code: 'es', label: 'Espa\u00f1ol', flag: '\u{1F1EA}\u{1F1F8}' },
+                { code: 'de', label: 'Deutsch', flag: '\u{1F1E9}\u{1F1EA}' },
+                { code: 'fr', label: 'Fran\u00e7ais', flag: '\u{1F1EB}\u{1F1F7}' },
+                { code: 'ja', label: '\u65E5\u672C\u8A9E', flag: '\u{1F1EF}\u{1F1F5}' },
+              ].map(lang => {
+                const existing = nblmState.audioLanguages?.[lang.code]
+                return (
+                  <button
+                    key={lang.code}
+                    onClick={() => saveState({ requestedLanguage: lang.code })}
+                    disabled={!!existing}
+                    className={`px-2 py-1 text-[10px] font-medium rounded transition-colors ${
+                      existing
+                        ? 'bg-green-100 text-green-700 cursor-default'
+                        : 'bg-gray-100 text-gray-600 hover:bg-purple-100 hover:text-purple-700'
+                    }`}
+                    title={existing ? `${lang.label}: ready` : `Generate ${lang.label} audio`}
+                  >
+                    {lang.flag} {existing ? '\u2713' : lang.label}
+                  </button>
+                )
+              })}
+            </div>
+            {/* Show language audio players if they exist */}
+            {nblmState.audioLanguages && Object.entries(nblmState.audioLanguages).map(([code, langData]) => (
+              code !== 'en' && langData.audioUrl && (
+                <div key={code} className="mt-2 p-2 bg-gray-50 rounded border border-gray-100">
+                  <span className="text-[10px] font-medium text-gray-600">{langData.label || code.toUpperCase()}</span>
+                  <audio controls src={langData.audioUrl} className="w-full h-8 mt-1" preload="metadata" />
+                </div>
+              )
+            ))}
+          </div>
+
           {/* Additional artifacts */}
           {nblmState.artifacts && nblmState.artifacts.length > 0 && (
             <div className="space-y-1.5">
@@ -1040,6 +1204,9 @@ const NblmPanel = ({ runId, run }) => {
               </button>
             </div>
           )}
+
+          {/* Interactive Chat */}
+          {hasNotebook && <NblmChat runId={runId} notebookId={nblmState.notebookId} />}
         </div>
       )}
     </div>
