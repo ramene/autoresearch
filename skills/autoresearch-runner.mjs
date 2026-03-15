@@ -51,7 +51,8 @@ const CONFIG = {
   scenarioCount: 10,
   criteriaCount: 6,
   targetScore: TARGET_SCORE,
-  maxStuckRounds: 5,
+  maxStuckRounds: 3,
+  maxStuckBeforeStop: 5,
   claudeModel: MUTATOR_MODEL,
   geminiModel: EVALUATOR_MODEL,
   skillName: SKILL_NAME,
@@ -163,7 +164,11 @@ async function callGemini(prompt, systemInstruction) {
   const data = await res.json()
   const parts = data.candidates?.[0]?.content?.parts || []
   const textParts = parts.filter(p => !p.thought).map(p => p.text).join('\n')
-  return textParts || parts.map(p => p.text).join('\n')
+  const thoughtParts = parts.filter(p => p.thought).map(p => p.text).join('\n')
+  return {
+    text: textParts || parts.map(p => p.text).join('\n'),
+    thoughts: thoughtParts || null,
+  }
 }
 
 // ─── Test Scenarios ──────────────────────────────────────────────────────────
@@ -453,15 +458,15 @@ Evaluate each scenario against the 6 criteria. Return ONLY the JSON array.`
   const response = await callGemini(prompt, systemInstruction)
 
   // Parse JSON from response (may be wrapped in markdown code blocks)
-  const jsonMatch = response.match(/\[[\s\S]*\]/)
-  if (!jsonMatch) throw new Error('Gemini did not return valid JSON: ' + response.substring(0, 200))
+  const jsonMatch = response.text.match(/\[[\s\S]*\]/)
+  if (!jsonMatch) throw new Error('Gemini did not return valid JSON: ' + response.text.substring(0, 200))
 
-  return JSON.parse(jsonMatch[0])
+  return { results: JSON.parse(jsonMatch[0]), thoughts: response.thoughts }
 }
 
 // ─── Mutation (Claude as Equipped Reasoner) ──────────────────────────────────
 
-async function generateMutation(skillContent, evalResults, changelog) {
+async function generateMutation(skillContent, evalResults, changelog, strategyOverride = null) {
   const systemPrompt = `You are an expert prompt engineer optimizing a Claude Code skill. You analyze evaluation failures and propose TARGETED mutations to the skill's markdown instructions.
 
 Rules:
@@ -489,7 +494,15 @@ Rules:
     `${name}: ${failureCounts[idx]} failures (scenarios: ${failedScenarios[idx].join(', ') || 'none'})`
   ).join('\n')
 
-  const prompt = `## Current Skill
+  const strategySection = strategyOverride ? `## Meta-Analysis Strategy Override
+The optimization loop has been stuck. A meta-analyst recommends this strategy:
+${strategyOverride}
+
+Follow this strategy for your mutation instead of your default approach.
+
+` : ''
+
+  const prompt = `${strategySection}## Current Skill
 \`\`\`markdown
 ${skillContent}
 \`\`\`
@@ -520,6 +533,58 @@ MUTATION_DESCRIPTION: <one line describing what you changed and why>
     description: descMatch?.[1]?.trim() || 'Unspecified mutation',
     skill: skillMatch[1].trim(),
   }
+}
+
+// ─── Stuck Escalation (Meta-Analysis) ────────────────────────────────────────
+
+async function escalateStuck(skillContent, changelog, roundsData) {
+  // Read the skill's baseline for comparison
+  const baseline = existsSync(CONFIG.baselinePath) ? readFileSync(CONFIG.baselinePath, 'utf8') : ''
+
+  // Get recent round history (last 10 rounds)
+  const recentRounds = roundsData.slice(-10)
+  const currentScore = recentRounds[recentRounds.length - 1]?.score || 0
+  const maxScore = recentRounds[recentRounds.length - 1]?.max || 0
+
+  // Build the meta-prompt for Gemini
+  const metaPrompt = `This skill has been stuck at ${currentScore}/${maxScore} for ${recentRounds.length} rounds.
+
+## Skill Content (Current)
+\`\`\`markdown
+${skillContent}
+\`\`\`
+
+## Recent Rounds
+${recentRounds.map(r => `Round ${r.round}: ${r.score}/${r.max} (${r.status}) — ${r.mutation}`).join('\n')}
+
+## Changelog (Recent)
+${changelog.slice(-3000)}
+
+## Analysis Task
+1. Why are mutations not improving the score? Identify the root cause.
+2. Is the evaluation criteria too narrow or testing something the skill doesn't cover?
+3. Does the skill need structural redesign rather than incremental tweaks?
+4. Propose a NEW mutation strategy that breaks out of the current local optimum.
+
+Return your analysis as:
+DIAGNOSIS: <one paragraph explaining why mutations are stuck>
+EVAL_REDESIGN_NEEDED: true/false
+STRATEGY: <concrete new mutation strategy for Claude to follow>
+SUGGESTED_MUTATION: <specific change to make>
+`
+
+  const systemInstruction = `You are a meta-analyst for an AI skill optimization system. Skills are markdown prompts evaluated against test scenarios. When the optimization loop gets stuck (no improvement despite mutations), you analyze WHY and propose a new strategy to break out of local optima.`
+
+  const response = await callGemini(metaPrompt, systemInstruction)
+  const responseText = response.text
+
+  // Parse the response
+  const diagnosis = responseText.match(/DIAGNOSIS:\s*([\s\S]*?)(?=EVAL_REDESIGN_NEEDED:|$)/)?.[1]?.trim() || responseText
+  const evalRedesign = /EVAL_REDESIGN_NEEDED:\s*true/i.test(responseText)
+  const strategy = responseText.match(/STRATEGY:\s*([\s\S]*?)(?=SUGGESTED_MUTATION:|$)/)?.[1]?.trim() || ''
+  const suggestedMutation = responseText.match(/SUGGESTED_MUTATION:\s*([\s\S]*?)$/)?.[1]?.trim() || ''
+
+  return { diagnosis, evalRedesign, strategy, suggestedMutation, rawResponse: responseText }
 }
 
 // ─── Results Management ──────────────────────────────────────────────────────
@@ -663,7 +728,7 @@ function renderTerminalDashboard(results, skillName) {
 
 // ─── Main Loop ───────────────────────────────────────────────────────────────
 
-async function runRound(roundNum, bestScore, bestSkill, pendingMutation) {
+async function runRound(roundNum, bestScore, bestSkill, pendingMutation, strategyOverride = null) {
   const skill = readFileSync(CONFIG.skillPath, 'utf8')
   const changelog = existsSync(CONFIG.changelogPath) ? readFileSync(CONFIG.changelogPath, 'utf8') : ''
   const criteriaShortNames = EVAL_DATA.criteria.map(c => c.split(':')[0])
@@ -672,7 +737,9 @@ async function runRound(roundNum, bestScore, bestSkill, pendingMutation) {
 
   // Step 1: Evaluate with Gemini (naked reasoner)
   console.log(`  [Gemini ${CONFIG.geminiModel}] Evaluating skill against ${CONFIG.scenarioCount} scenarios...`)
-  const evalResults = await evaluateWithGemini(skill, SCENARIOS)
+  const geminiResponse = await evaluateWithGemini(skill, SCENARIOS)
+  const evalResults = geminiResponse.results
+  const geminiThoughts = geminiResponse.thoughts
 
   // Step 2: Score — compute per-criteria totals
   const totalPass = evalResults.reduce((sum, r) => sum + r.criteria.filter(Boolean).length, 0)
@@ -702,10 +769,26 @@ async function runRound(roundNum, bestScore, bestSkill, pendingMutation) {
     status = roundNum === 0 && bestScore === 0 ? 'baseline' : 'kept'
     decisionReason = bestScore === 0 ? 'Initial baseline evaluation' : `Improved from ${bestScore} to ${totalPass}`
     console.log(`  [Decision] ${status.toUpperCase()} (${bestScore} → ${totalPass})`)
+    const prevBestScore = bestScore
     bestScore = totalPass
     bestSkill = skill
     mutationDesc = pendingMutation
     appendResult({ round: roundNum, score: totalPass, max: maxScore, status, mutation: mutationDesc })
+
+    // Emit improvement event for supervisor/Telegram notifications
+    if (status === 'kept') {
+      const eventsPath = resolve(EFFECTIVE_DIR, 'events.jsonl')
+      const impEvent = JSON.stringify({
+        type: 'improvement',
+        skill: CONFIG.skillName,
+        oldScore: prevBestScore,
+        newScore: totalPass,
+        max: maxScore,
+        mutation: mutationDesc || '',
+        timestamp: new Date().toISOString(),
+      })
+      appendFileSync(eventsPath, impEvent + '\n')
+    }
     appendFileSync(CONFIG.changelogPath, `\n## Round ${roundNum}\n- **Score**: ${totalPass}/${maxScore} (${status})\n- **Failures**: ${failureSummary}\n- **Per-criteria**: ${criteriaShortNames.map((n, i) => `${n}: ${perCriteria[i]}/${CONFIG.scenarioCount}`).join(', ')}\n`)
   } else {
     status = 'reverted'
@@ -726,6 +809,7 @@ async function runRound(roundNum, bestScore, bestSkill, pendingMutation) {
     cost: evalCost,
     criteria: perCriteria,
     failures: failureDetails,
+    geminiThoughts,
     decisionReason,
     models: { evaluator: CONFIG.geminiModel, mutator: CONFIG.claudeModel },
     timestamp: new Date().toISOString(),
@@ -736,13 +820,25 @@ async function runRound(roundNum, bestScore, bestSkill, pendingMutation) {
     richRound.changelog = `Target reached at ${totalPass}/${maxScore} (${((totalPass/maxScore)*100).toFixed(1)}%)\n**Mutation that achieved this**: ${pendingMutation}`
     appendRichRound(richRound)
     console.log(`\n  ✓ TARGET REACHED: ${totalPass}/${maxScore} (${((totalPass/maxScore)*100).toFixed(1)}%)`)
+
+    // Emit target_reached event for supervisor/Telegram notifications
+    const eventsPath = resolve(EFFECTIVE_DIR, 'events.jsonl')
+    const trEvent = JSON.stringify({
+      type: 'target_reached',
+      skill: CONFIG.skillName,
+      score: totalPass,
+      max: maxScore,
+      timestamp: new Date().toISOString(),
+    })
+    appendFileSync(eventsPath, trEvent + '\n')
+
     return { done: true, bestScore, bestSkill, nextMutation: pendingMutation }
   }
 
   // Step 5: Mutate for next round (Claude as equipped reasoner)
   console.log(`  [Claude ${CONFIG.claudeModel}] Generating mutation...`)
   try {
-    const mutation = await generateMutation(skill, evalResults, changelog)
+    const mutation = await generateMutation(skill, evalResults, changelog, strategyOverride)
     console.log(`  [Mutation] ${mutation.description}`)
     writeFileSync(CONFIG.skillPath, mutation.skill)
     mutationCost = 0.02
@@ -785,13 +881,16 @@ async function main() {
   console.log(`\nStarting from round ${startRound}, best score: ${bestScore}`)
 
   let stuckCounter = 0
+  let strategyOverride = null
 
   for (let i = startRound; i < startRound + maxRounds; i++) {
     const prevBest = bestScore
-    const { done, bestScore: newBest, bestSkill: newSkill, nextMutation } = await runRound(i, bestScore, bestSkill, pendingMutation)
+    const { done, bestScore: newBest, bestSkill: newSkill, nextMutation } = await runRound(i, bestScore, bestSkill, pendingMutation, strategyOverride)
     bestScore = newBest
     bestSkill = newSkill
     if (nextMutation) pendingMutation = nextMutation
+    // Clear strategy override after it's been used for one round
+    if (strategyOverride) strategyOverride = null
 
     if (dashboardSync) {
       syncDashboard()
@@ -802,11 +901,71 @@ async function main() {
 
     if (done) break
 
-    // Stuck detection
+    // Stuck detection with escalation
     if (bestScore === prevBest) {
       stuckCounter++
-      if (stuckCounter >= CONFIG.maxStuckRounds) {
-        console.log(`\n  ⚠ STUCK: No improvement for ${CONFIG.maxStuckRounds} rounds. Stopping.`)
+
+      // Escalation at threshold — call meta-analyst
+      if (stuckCounter === CONFIG.maxStuckRounds) {
+        console.log(`\n  ⚠ STUCK: No improvement for ${CONFIG.maxStuckRounds} rounds. Escalating to meta-analyst...`)
+        try {
+          const skill = readFileSync(CONFIG.skillPath, 'utf8')
+          const changelog = existsSync(CONFIG.changelogPath) ? readFileSync(CONFIG.changelogPath, 'utf8') : ''
+          const roundsData = loadRichRounds()
+          const escalation = await escalateStuck(skill, changelog, roundsData)
+
+          console.log(`  [Escalation] Diagnosis: ${escalation.diagnosis.substring(0, 150)}...`)
+          console.log(`  [Escalation] Eval redesign needed: ${escalation.evalRedesign}`)
+          console.log(`  [Escalation] Strategy: ${escalation.strategy.substring(0, 150)}...`)
+
+          // Log escalation round
+          const currentScore = roundsData[roundsData.length - 1]?.score || 0
+          const maxScore = roundsData[roundsData.length - 1]?.max || 0
+          const perCriteria = roundsData[roundsData.length - 1]?.criteria || []
+          const escalationRound = {
+            round: i,
+            score: currentScore,
+            max: maxScore,
+            status: 'escalation',
+            mutation: `Stuck escalation: ${escalation.diagnosis.substring(0, 200)}`,
+            cost: 0.03,
+            criteria: perCriteria,
+            failures: [],
+            decisionReason: `Stuck escalation triggered after ${CONFIG.maxStuckRounds}+ rounds with no improvement`,
+            escalation: {
+              diagnosis: escalation.diagnosis,
+              evalRedesignNeeded: escalation.evalRedesign,
+              strategy: escalation.strategy,
+              suggestedMutation: escalation.suggestedMutation,
+            },
+            models: { evaluator: CONFIG.geminiModel, mutator: CONFIG.claudeModel },
+            timestamp: new Date().toISOString(),
+          }
+          appendRichRound(escalationRound)
+
+          // Emit escalation event for supervisor/Telegram notifications
+          const eventsPath = resolve(EFFECTIVE_DIR, 'events.jsonl')
+          const event = JSON.stringify({
+            type: 'stuck_escalation',
+            skill: CONFIG.skillName,
+            score: currentScore,
+            max: maxScore,
+            diagnosis: escalation.diagnosis,
+            evalRedesign: escalation.evalRedesign,
+            timestamp: new Date().toISOString(),
+          })
+          appendFileSync(eventsPath, event + '\n')
+
+          // Inject strategy override for the next mutation
+          strategyOverride = escalation.strategy + (escalation.suggestedMutation ? `\n\nSuggested specific mutation:\n${escalation.suggestedMutation}` : '')
+        } catch (err) {
+          console.error(`  [Escalation FAILED] ${err.message}`)
+        }
+      }
+
+      // Hard stop after maxStuckBeforeStop
+      if (stuckCounter >= CONFIG.maxStuckBeforeStop) {
+        console.log(`\n  ⚠ STUCK: No improvement for ${CONFIG.maxStuckBeforeStop} rounds (even after escalation). Stopping.`)
         break
       }
     } else {

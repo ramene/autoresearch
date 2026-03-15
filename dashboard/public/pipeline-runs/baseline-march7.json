@@ -1,0 +1,17 @@
+{
+  "id": "baseline-march7",
+  "title": "Olfactory Neuroscience — March 7 Baseline",
+  "contentType": "paper",
+  "pipelineType": "cross-model",
+  "status": "complete",
+  "stages": [
+    { "stage": 1, "name": "Claude Synthesis", "status": "complete", "tokens": null, "duration": null },
+    { "stage": 2, "name": "Gemini Reasoning", "status": "complete", "tokens": null, "duration": null },
+    { "stage": 3, "name": "Claude Execution", "status": "complete", "tokens": null, "duration": null }
+  ],
+  "createdAt": "2026-03-07T00:00:00.000Z",
+  "completedAt": "2026-03-07T00:00:00.000Z",
+  "isBaseline": true,
+  "log": [],
+  "error": null
+}

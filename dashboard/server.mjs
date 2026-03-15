@@ -10,10 +10,11 @@
  */
 
 import { createServer } from 'http'
-import { readFileSync, existsSync, writeFileSync } from 'fs'
+import { readFileSync, existsSync, writeFileSync, readdirSync, unlinkSync, mkdirSync, statSync, rmSync, copyFileSync } from 'fs'
 import { resolve, dirname, extname, join } from 'path'
 import { fileURLToPath } from 'url'
 import { spawn } from 'child_process'
+import { randomUUID } from 'crypto'
 
 // Load .env from repo root
 const __dirname2 = dirname(fileURLToPath(import.meta.url))
@@ -30,9 +31,32 @@ const PORT = parseInt(process.env.PORT || '4100')
 const RUNNER_PATH = resolve(__dirname, '../skills/autoresearch-runner.mjs')
 const PUBLIC_DIR = resolve(__dirname, 'public')
 const DIST_DIR = resolve(__dirname, 'dist')
+const PIPELINE_PATH = resolve(__dirname, '../reasoning-pipeline/pipeline.mjs')
+const PIPELINE_RUNS_DIR = resolve(__dirname, 'public/pipeline-runs')
 
 let runnerProcess = null
 let runnerLog = []
+
+// Pipeline run tracking (in-memory, persisted to disk)
+const pipelineRuns = new Map()
+
+function ensurePipelineDir() {
+  if (!existsSync(PIPELINE_RUNS_DIR)) mkdirSync(PIPELINE_RUNS_DIR, { recursive: true })
+}
+
+function savePipelineRun(run) {
+  ensurePipelineDir()
+  writeFileSync(join(PIPELINE_RUNS_DIR, `${run.id}.json`), JSON.stringify(run, null, 2))
+}
+
+function loadPipelineRuns() {
+  ensurePipelineDir()
+  const runs = []
+  for (const f of readdirSync(PIPELINE_RUNS_DIR).filter(f => f.endsWith('.json'))) {
+    try { runs.push(JSON.parse(readFileSync(join(PIPELINE_RUNS_DIR, f), 'utf8'))) } catch {}
+  }
+  return runs.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+}
 
 const MIME = {
   '.html': 'text/html', '.js': 'application/javascript', '.css': 'text/css',
@@ -65,7 +89,7 @@ const server = createServer(async (req, res) => {
 
   // CORS preflight
   if (req.method === 'OPTIONS') {
-    res.writeHead(204, { 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET,POST', 'Access-Control-Allow-Headers': 'Content-Type' })
+    res.writeHead(204, { 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET,POST,DELETE', 'Access-Control-Allow-Headers': 'Content-Type' })
     res.end(); return
   }
 
@@ -318,6 +342,308 @@ Return ONLY valid JSON:
     return
   }
 
+  // ─── Pipeline API Routes ─────────────────────────────────────
+
+  // POST /api/pipeline/run — start a reasoning pipeline run
+  if (path === '/api/pipeline/run' && req.method === 'POST') {
+    const body = await parseBody(req)
+    if (!body.content && !body.contentPath) {
+      jsonResponse(res, { error: 'content or contentPath required' }, 400); return
+    }
+
+    const runId = randomUUID().slice(0, 8)
+    const outputDir = join(PIPELINE_RUNS_DIR, runId)
+    mkdirSync(outputDir, { recursive: true })
+
+    // Write content to a temp file if provided inline
+    let transcriptPath = body.contentPath
+    if (body.content && !body.contentPath) {
+      transcriptPath = join(outputDir, 'input.md')
+      writeFileSync(transcriptPath, body.content)
+    }
+
+    // Write optional context
+    let contextPath = body.contextPath || ''
+    if (body.context && !body.contextPath) {
+      contextPath = join(outputDir, 'context.md')
+      writeFileSync(contextPath, body.context)
+    }
+
+    const run = {
+      id: runId,
+      title: body.title || 'Pipeline Run',
+      contentType: body.contentType || 'text',
+      pipelineType: body.pipelineType || 'cross-model',
+      status: 'running',
+      stages: [
+        { stage: 1, name: 'Claude Synthesis', status: 'pending', tokens: null, duration: null },
+        { stage: 2, name: 'Gemini Reasoning', status: 'pending', tokens: null, duration: null },
+        { stage: 3, name: 'Claude Execution', status: 'pending', tokens: null, duration: null },
+      ],
+      createdAt: new Date().toISOString(),
+      completedAt: null,
+      log: [],
+      error: null,
+    }
+    pipelineRuns.set(runId, run)
+    savePipelineRun(run)
+
+    // Build pipeline args
+    const args = [PIPELINE_PATH, '--transcript', transcriptPath, '--output', outputDir]
+    if (contextPath) args.push('--context', contextPath)
+    if (body.stage) args.push('--stage', String(body.stage))
+
+    const pipelineProcess = spawn('node', args, {
+      cwd: resolve(__dirname, '..'),
+      env: { ...process.env },
+    })
+
+    let currentStage = 0
+
+    pipelineProcess.stdout.on('data', (d) => {
+      const text = d.toString()
+      run.log.push(text)
+      if (run.log.length > 500) run.log.shift()
+
+      // Parse stage transitions from pipeline output
+      if (text.includes('STAGE 1:')) {
+        currentStage = 0
+        run.stages[0].status = 'running'
+        run.stages[0].startedAt = new Date().toISOString()
+      } else if (text.includes('STAGE 2:')) {
+        if (run.stages[0].status === 'running') {
+          run.stages[0].status = 'complete'
+          run.stages[0].completedAt = new Date().toISOString()
+          run.stages[0].duration = new Date() - new Date(run.stages[0].startedAt)
+        }
+        currentStage = 1
+        run.stages[1].status = 'running'
+        run.stages[1].startedAt = new Date().toISOString()
+      } else if (text.includes('STAGE 3:')) {
+        if (run.stages[1].status === 'running') {
+          run.stages[1].status = 'complete'
+          run.stages[1].completedAt = new Date().toISOString()
+          run.stages[1].duration = new Date() - new Date(run.stages[1].startedAt)
+        }
+        currentStage = 2
+        run.stages[2].status = 'running'
+        run.stages[2].startedAt = new Date().toISOString()
+      }
+
+      // Parse token counts
+      const tokenMatch = text.match(/Tokens — (?:input|prompt): (\d+).*?output: (\d+)/)
+      if (tokenMatch && currentStage >= 0 && currentStage < 3) {
+        run.stages[currentStage].tokens = {
+          input: parseInt(tokenMatch[1]),
+          output: parseInt(tokenMatch[2]),
+        }
+      }
+
+      // Parse streaming progress
+      const streamMatch = text.match(/Streaming\.\.\. ([\d.]+)K chars/)
+      if (streamMatch && currentStage >= 0 && currentStage < 3) {
+        run.stages[currentStage].charsGenerated = parseFloat(streamMatch[1]) * 1000
+      }
+
+      process.stdout.write(text)
+    })
+
+    pipelineProcess.stderr.on('data', (d) => {
+      run.log.push(d.toString())
+      process.stderr.write(d.toString())
+    })
+
+    pipelineProcess.on('close', (code) => {
+      if (code === 0) {
+        run.status = 'complete'
+        // Mark any remaining running stage as complete
+        for (const s of run.stages) {
+          if (s.status === 'running') {
+            s.status = 'complete'
+            s.completedAt = new Date().toISOString()
+            if (s.startedAt) s.duration = new Date() - new Date(s.startedAt)
+          }
+        }
+        // Read output files
+        const stageFiles = [
+          'stage-1-claude-synthesis.md',
+          'stage-2-gemini-reasoning.md',
+          'stage-3-agent-team-execution.md',
+          'pipeline-complete.md',
+        ]
+        run.outputs = {}
+        for (const f of stageFiles) {
+          const fp = join(outputDir, f)
+          if (existsSync(fp)) {
+            run.outputs[f] = readFileSync(fp, 'utf8')
+          }
+        }
+      } else {
+        run.status = 'error'
+        run.error = `Pipeline exited with code ${code}`
+        for (const s of run.stages) {
+          if (s.status === 'running') s.status = 'error'
+        }
+      }
+      run.completedAt = new Date().toISOString()
+      savePipelineRun(run)
+    })
+
+    jsonResponse(res, { id: runId, status: 'started' })
+    return
+  }
+
+  // GET /api/pipeline/status/:runId — get pipeline progress
+  const pipelineStatusMatch = path.match(/^\/api\/pipeline\/status\/(.+)$/)
+  if (pipelineStatusMatch && req.method === 'GET') {
+    const runId = decodeURIComponent(pipelineStatusMatch[1])
+    const run = pipelineRuns.get(runId)
+    if (run) {
+      jsonResponse(res, {
+        id: run.id,
+        status: run.status,
+        stages: run.stages,
+        logTail: run.log.slice(-20).join(''),
+        error: run.error,
+      })
+    } else {
+      // Try loading from disk
+      const fp = join(PIPELINE_RUNS_DIR, `${runId}.json`)
+      if (existsSync(fp)) {
+        const saved = JSON.parse(readFileSync(fp, 'utf8'))
+        jsonResponse(res, {
+          id: saved.id,
+          status: saved.status,
+          stages: saved.stages,
+          logTail: '',
+          error: saved.error,
+        })
+      } else {
+        jsonResponse(res, { error: 'Run not found' }, 404)
+      }
+    }
+    return
+  }
+
+  // GET /api/pipeline/runs — list all pipeline runs
+  if (path === '/api/pipeline/runs' && req.method === 'GET') {
+    const runs = loadPipelineRuns().map(r => ({
+      id: r.id,
+      title: r.title,
+      contentType: r.contentType,
+      pipelineType: r.pipelineType,
+      status: r.status,
+      stages: r.stages,
+      createdAt: r.createdAt,
+      completedAt: r.completedAt,
+      error: r.error,
+    }))
+    jsonResponse(res, runs)
+    return
+  }
+
+  // GET /api/pipeline/run/:runId — get full results for a completed run
+  const pipelineRunMatch = path.match(/^\/api\/pipeline\/run\/(.+)$/)
+  if (pipelineRunMatch && req.method === 'GET') {
+    const runId = decodeURIComponent(pipelineRunMatch[1])
+    // Check in-memory first
+    let run = pipelineRuns.get(runId)
+    if (!run) {
+      const fp = join(PIPELINE_RUNS_DIR, `${runId}.json`)
+      if (existsSync(fp)) {
+        run = JSON.parse(readFileSync(fp, 'utf8'))
+      }
+    }
+    if (run) {
+      // If outputs not loaded (from disk), try loading them
+      if (!run.outputs) {
+        run.outputs = {}
+        const runDir = join(PIPELINE_RUNS_DIR, runId)
+        const stageFiles = [
+          'stage-1-claude-synthesis.md',
+          'stage-2-gemini-reasoning.md',
+          'stage-3-agent-team-execution.md',
+          'pipeline-complete.md',
+        ]
+        for (const f of stageFiles) {
+          const fp = join(runDir, f)
+          if (existsSync(fp)) run.outputs[f] = readFileSync(fp, 'utf8')
+        }
+      }
+      jsonResponse(res, run)
+    } else {
+      jsonResponse(res, { error: 'Run not found' }, 404)
+    }
+    return
+  }
+
+  // DELETE /api/pipeline/run/:runId — delete a pipeline run
+  if (pipelineRunMatch && req.method === 'DELETE') {
+    const runId = decodeURIComponent(pipelineRunMatch[1])
+    pipelineRuns.delete(runId)
+    const fp = join(PIPELINE_RUNS_DIR, `${runId}.json`)
+    if (existsSync(fp)) unlinkSync(fp)
+    // Clean up run output directory
+    const runDir = join(PIPELINE_RUNS_DIR, runId)
+    if (existsSync(runDir)) {
+      try { rmSync(runDir, { recursive: true }) } catch {}
+    }
+    jsonResponse(res, { deleted: true })
+    return
+  }
+
+  // POST /api/pipeline/import — import external pipeline output as a historical run
+  if (path === '/api/pipeline/import' && req.method === 'POST') {
+    const body = await parseBody(req)
+    if (!body.sourcePath) {
+      jsonResponse(res, { error: 'sourcePath required' }, 400); return
+    }
+    if (!existsSync(body.sourcePath)) {
+      jsonResponse(res, { error: 'sourcePath does not exist: ' + body.sourcePath }, 404); return
+    }
+
+    const runId = body.runId || randomUUID().slice(0, 8)
+    const outputDir = join(PIPELINE_RUNS_DIR, runId)
+    mkdirSync(outputDir, { recursive: true })
+
+    // Copy stage files from sourcePath into the run directory
+    const stageFiles = [
+      'stage-1-claude-synthesis.md',
+      'stage-2-gemini-reasoning.md',
+      'stage-3-agent-team-execution.md',
+      'pipeline-complete.md',
+    ]
+    const outputs = {}
+    for (const f of stageFiles) {
+      const src = join(body.sourcePath, f)
+      if (existsSync(src)) {
+        copyFileSync(src, join(outputDir, f))
+        outputs[f] = readFileSync(src, 'utf8')
+      }
+    }
+
+    const run = {
+      id: runId,
+      title: body.title || 'Imported Pipeline Run',
+      contentType: body.contentType || 'text',
+      pipelineType: body.pipelineType || 'cross-model',
+      status: 'complete',
+      stages: [
+        { stage: 1, name: 'Claude Synthesis', status: 'complete', tokens: null, duration: null },
+        { stage: 2, name: 'Gemini Reasoning', status: 'complete', tokens: null, duration: null },
+        { stage: 3, name: 'Claude Execution', status: 'complete', tokens: null, duration: null },
+      ],
+      createdAt: body.createdAt || new Date().toISOString(),
+      completedAt: body.completedAt || new Date().toISOString(),
+      isBaseline: body.isBaseline || false,
+      log: [],
+      error: null,
+    }
+    savePipelineRun(run)
+    jsonResponse(res, { id: runId, status: 'imported', files: Object.keys(outputs) })
+    return
+  }
+
   // ─── Static Files ────────────────────────────────────────────
 
   const serveDir = existsSync(DIST_DIR + '/index.html') ? DIST_DIR : PUBLIC_DIR
@@ -339,4 +665,5 @@ Return ONLY valid JSON:
 server.listen(PORT, '0.0.0.0', () => {
   console.log(`Autoresearch Dashboard — http://localhost:${PORT}`)
   console.log(`API: POST /api/run, POST /api/stop, GET /api/status`)
+  console.log(`Pipeline: POST /api/pipeline/run, GET /api/pipeline/runs, GET /api/pipeline/status/:id`)
 })

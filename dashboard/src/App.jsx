@@ -8,8 +8,10 @@ import {
 import {
   FlaskConical, TrendingUp, Target, Hash, Clock, Zap, DollarSign,
   CheckCircle, XCircle, RotateCcw, Github, Settings, ChevronDown,
-  FileText, X, BarChart3, BookOpen, Play, Square, Terminal, Plus, Trash2, Save, ListChecks
+  FileText, X, BarChart3, BookOpen, Play, Square, Terminal, Plus, Trash2, Save, ListChecks,
+  Microscope
 } from 'lucide-react'
+import ResearchTab from './ResearchTab'
 
 const REFRESH_INTERVAL = 30_000
 
@@ -625,6 +627,7 @@ const CriteriaBreakdown = ({ rounds, criteriaNames }) => {
 // ─── Changelog Panel ─────────────────────────────────────────────────────────
 
 const ChangelogPanel = ({ round, criteriaNames, onClose }) => {
+  const [showThoughts, setShowThoughts] = useState(false)
   if (!round) return null
   const maxPerCriteria = round.max / (round.criteria?.length || 6)
   return (
@@ -747,6 +750,23 @@ const ChangelogPanel = ({ round, criteriaNames, onClose }) => {
               </div>
             )}
 
+            {/* Evaluator Reasoning (Gemini chain-of-thought) */}
+            {round.geminiThoughts && (
+              <div>
+                <button
+                  onClick={() => setShowThoughts(!showThoughts)}
+                  className="text-sm text-purple-500 hover:text-purple-400 font-medium flex items-center gap-1"
+                >
+                  {showThoughts ? '\u25BC' : '\u25B8'} Evaluator Reasoning
+                </button>
+                {showThoughts && (
+                  <pre className="mt-2 text-xs text-gray-600 whitespace-pre-wrap max-h-60 overflow-y-auto bg-gray-50 border border-gray-200 p-3 rounded-lg leading-relaxed">
+                    {round.geminiThoughts}
+                  </pre>
+                )}
+              </div>
+            )}
+
             {/* Full changelog entry */}
             {round.changelog && (
               <div>
@@ -779,6 +799,7 @@ function App() {
   const [runnerStatus, setRunnerStatus] = useState({ running: false, pid: null, logTail: '' })
   const [showEvalEditor, setShowEvalEditor] = useState(false)
   const [showKeys, setShowKeys] = useState(false)
+  const [activeTab, setActiveTab] = useState('skills')
 
   // Poll runner status
   useEffect(() => {
@@ -892,7 +913,7 @@ function App() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Changelog slide-over */}
-      <ChangelogPanel round={selectedRound} criteriaNames={criteriaNames} onClose={() => setSelectedRound(null)} />
+      <ChangelogPanel key={selectedRound?.round} round={selectedRound} criteriaNames={criteriaNames} onClose={() => setSelectedRound(null)} />
       {selectedRound && (
         <div className="fixed inset-0 bg-black/10 z-40" onClick={() => setSelectedRound(null)} />
       )}
@@ -903,62 +924,85 @@ function App() {
           <div className="flex items-center space-x-3">
             <FlaskConical className="w-7 h-7 text-amber-600" />
             <h1 className="text-2xl font-bold text-gray-900">Autoresearch</h1>
-            {results.length > 0 && (
+            <div className="flex items-center ml-4 bg-gray-100 rounded-lg p-0.5">
+              <button
+                onClick={() => setActiveTab('skills')}
+                className={`px-3 py-1 text-xs font-medium rounded-md transition-colors ${
+                  activeTab === 'skills' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-700'
+                }`}
+              >
+                Skills
+              </button>
+              <button
+                onClick={() => setActiveTab('research')}
+                className={`px-3 py-1 text-xs font-medium rounded-md transition-colors flex items-center gap-1 ${
+                  activeTab === 'research' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-700'
+                }`}
+              >
+                <Microscope className="w-3 h-3" />
+                Research
+              </button>
+            </div>
+            {activeTab === 'skills' && results.length > 0 && (
               <span className="px-2.5 py-0.5 text-xs font-semibold rounded-full bg-green-100 text-green-700">
                 {results.length} rounds
               </span>
             )}
           </div>
           <div className="flex items-center space-x-2">
-            <MiniDropdown
-              options={SKILL_OPTIONS(skills)}
-              selected={selectedSkill}
-              onSelect={(s) => { setSelectedSkill(s); setConfig(c => ({ ...c, selectedSkill: s })) }}
-            />
-            <MiniDropdown
-              label="eval:"
-              options={EVALUATOR_OPTIONS}
-              selected={config.evaluator}
-              onSelect={(v) => setConfig(c => ({ ...c, evaluator: v }))}
-            />
-            <MiniDropdown
-              label="mut:"
-              options={MUTATOR_OPTIONS}
-              selected={config.mutator}
-              onSelect={(v) => setConfig(c => ({ ...c, mutator: v }))}
-            />
-            {runnerStatus.running ? (
-              <button onClick={stopRun}
-                className="inline-flex items-center space-x-1 px-2.5 py-1 bg-red-100 text-red-700 rounded-lg text-xs font-medium hover:bg-red-200 transition-colors"
-              >
-                <Square className="w-3 h-3" />
-                <span>Stop</span>
-              </button>
-            ) : (
-              <button onClick={startRun}
-                className="inline-flex items-center space-x-1 px-2.5 py-1 bg-green-100 text-green-700 rounded-lg text-xs font-medium hover:bg-green-200 transition-colors"
-              >
-                <Play className="w-3 h-3" />
-                <span>Run</span>
-              </button>
+            {activeTab === 'skills' && (
+              <>
+                <MiniDropdown
+                  options={SKILL_OPTIONS(skills)}
+                  selected={selectedSkill}
+                  onSelect={(s) => { setSelectedSkill(s); setConfig(c => ({ ...c, selectedSkill: s })) }}
+                />
+                <MiniDropdown
+                  label="eval:"
+                  options={EVALUATOR_OPTIONS}
+                  selected={config.evaluator}
+                  onSelect={(v) => setConfig(c => ({ ...c, evaluator: v }))}
+                />
+                <MiniDropdown
+                  label="mut:"
+                  options={MUTATOR_OPTIONS}
+                  selected={config.mutator}
+                  onSelect={(v) => setConfig(c => ({ ...c, mutator: v }))}
+                />
+                {runnerStatus.running ? (
+                  <button onClick={stopRun}
+                    className="inline-flex items-center space-x-1 px-2.5 py-1 bg-red-100 text-red-700 rounded-lg text-xs font-medium hover:bg-red-200 transition-colors"
+                  >
+                    <Square className="w-3 h-3" />
+                    <span>Stop</span>
+                  </button>
+                ) : (
+                  <button onClick={startRun}
+                    className="inline-flex items-center space-x-1 px-2.5 py-1 bg-green-100 text-green-700 rounded-lg text-xs font-medium hover:bg-green-200 transition-colors"
+                  >
+                    <Play className="w-3 h-3" />
+                    <span>Run</span>
+                  </button>
+                )}
+                {lastRefresh && (
+                  <span className="text-xs text-gray-400 flex items-center space-x-1">
+                    <Clock className="w-3 h-3" />
+                    <span>{lastRefresh.toLocaleTimeString()}</span>
+                  </span>
+                )}
+                <button onClick={() => { setShowEvalEditor(!showEvalEditor); if (showConfig) setShowConfig(false) }}
+                  className={`p-1.5 rounded-lg transition-colors ${showEvalEditor ? 'bg-amber-100 text-amber-700' : 'text-gray-400 hover:text-gray-600 hover:bg-gray-50'}`}
+                  title="Edit eval suite"
+                >
+                  <ListChecks className="w-3.5 h-3.5" />
+                </button>
+                <button onClick={() => { setShowConfig(!showConfig); if (showEvalEditor) setShowEvalEditor(false) }}
+                  className={`p-1.5 rounded-lg transition-colors ${showConfig ? 'bg-gray-100 text-gray-700' : 'text-gray-400 hover:text-gray-600 hover:bg-gray-50'}`}
+                >
+                  <Settings className="w-3.5 h-3.5" />
+                </button>
+              </>
             )}
-            {lastRefresh && (
-              <span className="text-xs text-gray-400 flex items-center space-x-1">
-                <Clock className="w-3 h-3" />
-                <span>{lastRefresh.toLocaleTimeString()}</span>
-              </span>
-            )}
-            <button onClick={() => { setShowEvalEditor(!showEvalEditor); if (showConfig) setShowConfig(false) }}
-              className={`p-1.5 rounded-lg transition-colors ${showEvalEditor ? 'bg-amber-100 text-amber-700' : 'text-gray-400 hover:text-gray-600 hover:bg-gray-50'}`}
-              title="Edit eval suite"
-            >
-              <ListChecks className="w-3.5 h-3.5" />
-            </button>
-            <button onClick={() => { setShowConfig(!showConfig); if (showEvalEditor) setShowEvalEditor(false) }}
-              className={`p-1.5 rounded-lg transition-colors ${showConfig ? 'bg-gray-100 text-gray-700' : 'text-gray-400 hover:text-gray-600 hover:bg-gray-50'}`}
-            >
-              <Settings className="w-3.5 h-3.5" />
-            </button>
             <button onClick={() => { setShowKeys(!showKeys); setShowConfig(false); setShowEvalEditor(false) }}
               className={`p-1.5 rounded-lg transition-colors ${showKeys ? 'bg-amber-100 text-amber-700' : 'text-gray-400 hover:text-gray-600 hover:bg-gray-50'}`}
               title="API Keys (BYOK)"
@@ -975,6 +1019,10 @@ function App() {
       </header>
 
       <main className="max-w-6xl mx-auto p-8 space-y-6">
+        {activeTab === 'research' ? (
+          <ResearchTab />
+        ) : (
+        <>
         <p className="text-gray-500 text-sm">
           Autonomous skill improvement via cross-model evaluation
           <span className="text-gray-300 mx-2">·</span>
@@ -1171,6 +1219,8 @@ function App() {
           <p>Autoresearch Dashboard — Adapted from <a href="https://github.com/karpathy/autoresearch" className="underline hover:text-gray-600">karpathy/autoresearch</a></p>
           <p className="mt-1">Cross-model evaluation: Claude (mutate) → Gemini (evaluate) → Claude (synthesize)</p>
         </footer>
+        </>
+        )}
       </main>
     </div>
   )
