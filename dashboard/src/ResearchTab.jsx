@@ -34,6 +34,18 @@ const DOMAIN_CATEGORIES = [
   { id: 'neuroscience', label: 'Neuroscience', color: 'bg-cyan-100 text-cyan-700' },
 ]
 
+// ─── Inline markdown for short snippets ──────────────────────────────────────
+
+function renderInlineMarkdown(text) {
+  if (!text) return ''
+  return text
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g, '<em>$1</em>')
+    .replace(/`([^`]+)`/g, '<code class="bg-gray-100 px-0.5 rounded text-[10px]">$1</code>')
+}
+
 // ─── Extract researchers from pipeline output ────────────────────────────────
 
 function getCustomResearchers() {
@@ -339,7 +351,7 @@ const FindingsPanel = ({ findings }) => {
                 {f.verdict}
               </span>
               <div className="min-w-0">
-                <p className="text-xs text-gray-700 leading-relaxed">{f.text}</p>
+                <p className="text-xs text-gray-700 leading-relaxed" dangerouslySetInnerHTML={{ __html: renderInlineMarkdown(f.text) }} />
                 <div className="flex gap-1 mt-1">
                   {f.categories.map(c => {
                     const cat = DOMAIN_CATEGORIES.find(d => d.id === c)
@@ -844,11 +856,201 @@ const AnnotationsPanel = ({ runId, onJumpToSection }) => {
   )
 }
 
+// ─── NotebookLM Panel ──────────────────────────────────────────────────────
+
+const NblmPanel = ({ runId, run }) => {
+  const [nblmState, setNblmState] = useState(null)
+  const [loading, setLoading] = useState(false)
+  const [pollInterval, setPollInterval] = useState(null)
+
+  // Load existing NBLM state
+  useEffect(() => {
+    fetch(`/api/pipeline/run/${runId}/nblm`).then(r => r.ok ? r.json() : {}).then(setNblmState).catch(() => {})
+  }, [runId])
+
+  // Poll for audio status when generating
+  useEffect(() => {
+    if (!nblmState?.audioGenerating || !nblmState?.notebookId) return
+    const interval = setInterval(async () => {
+      try {
+        const res = await fetch(`/api/pipeline/run/${runId}/nblm`)
+        if (res.ok) {
+          const state = await res.json()
+          setNblmState(state)
+          if (state.audioStatus === 'completed' || state.audioStatus === 'failed') {
+            clearInterval(interval)
+          }
+        }
+      } catch {}
+    }, 5000)
+    return () => clearInterval(interval)
+  }, [nblmState?.audioGenerating, nblmState?.notebookId, runId])
+
+  const saveState = async (update) => {
+    const newState = { ...nblmState, ...update }
+    setNblmState(newState)
+    await fetch(`/api/pipeline/run/${runId}/nblm`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newState),
+    })
+  }
+
+  const hasNotebook = nblmState?.notebookId
+  const hasAudio = nblmState?.audioUrl
+
+  return (
+    <div className="space-y-4">
+      <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wide flex items-center gap-1.5">
+        🎙️ NotebookLM Audio
+      </h4>
+
+      {!hasNotebook ? (
+        <div className="p-4 bg-gray-50 rounded-lg border border-gray-200 text-center space-y-3">
+          <p className="text-sm text-gray-600">
+            Generate an audio podcast from this pipeline's research output.
+            NotebookLM creates a two-speaker deep-dive discussion grounded entirely in the source material.
+          </p>
+          <p className="text-xs text-gray-400">
+            Pipeline output will be added as sources → Audio dialogue generated → Playable here
+          </p>
+          <button
+            onClick={async () => {
+              setLoading(true)
+              // This triggers the MCP flow — notebook creation, source upload, and audio generation
+              // happen via the Claude Code session (MCP tools), then state is saved via API
+              // For now, show instructions for manual triggering
+              await saveState({ pendingCreation: true, createdAt: new Date().toISOString() })
+              setLoading(false)
+            }}
+            disabled={loading}
+            className="inline-flex items-center gap-2 px-4 py-2 bg-purple-500 text-white text-sm font-medium rounded-lg hover:bg-purple-600 disabled:opacity-50 transition-colors"
+          >
+            {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Play className="w-4 h-4" />}
+            Create Audio Overview
+          </button>
+        </div>
+      ) : (
+        <div className="space-y-3">
+          {/* Notebook link */}
+          <div className="flex items-center gap-2 text-xs">
+            <span className="text-gray-500">Notebook:</span>
+            <a
+              href={nblmState.notebookUrl || `https://notebooklm.google.com/notebook/${nblmState.notebookId}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-purple-600 hover:text-purple-800 underline"
+            >
+              Open in NotebookLM ↗
+            </a>
+            {nblmState.sourceCount && (
+              <span className="text-gray-400">({nblmState.sourceCount} sources)</span>
+            )}
+          </div>
+
+          {/* Audio status */}
+          {nblmState.audioGenerating && nblmState.audioStatus !== 'completed' && (
+            <div className="flex items-center gap-2 p-3 bg-purple-50 rounded-lg border border-purple-200">
+              <Loader2 className="w-4 h-4 text-purple-500 animate-spin" />
+              <span className="text-sm text-purple-700">
+                Generating audio overview... This takes 3-5 minutes.
+              </span>
+            </div>
+          )}
+
+          {/* Audio player */}
+          {hasAudio && (
+            <div className="p-4 bg-white rounded-lg border border-gray-200 space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-medium text-gray-700">🎧 Audio Overview — Deep Dive</span>
+                {nblmState.audioPath && (
+                  <a
+                    href={nblmState.audioPath}
+                    download
+                    className="text-[10px] text-gray-400 hover:text-gray-600"
+                  >
+                    Download
+                  </a>
+                )}
+              </div>
+              <audio
+                controls
+                src={nblmState.audioUrl || nblmState.audioPath}
+                className="w-full h-10"
+                preload="metadata"
+              >
+                Your browser does not support audio playback.
+              </audio>
+              {nblmState.audioDuration && (
+                <span className="text-[10px] text-gray-400">
+                  Duration: {Math.floor(nblmState.audioDuration / 60)}:{String(nblmState.audioDuration % 60).padStart(2, '0')}
+                </span>
+              )}
+            </div>
+          )}
+
+          {/* Additional artifacts */}
+          {nblmState.artifacts && nblmState.artifacts.length > 0 && (
+            <div className="space-y-1.5">
+              <span className="text-xs font-medium text-gray-500">Additional Artifacts</span>
+              {nblmState.artifacts.map((a, i) => (
+                <div key={i} className="flex items-center justify-between p-2 bg-gray-50 rounded border border-gray-100">
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs text-gray-700">{a.type}: {a.title || a.artifact_id?.slice(0, 8)}</span>
+                    <span className={`px-1.5 py-0.5 text-[9px] rounded ${
+                      a.status === 'completed' ? 'bg-green-100 text-green-700' :
+                      a.status === 'in_progress' ? 'bg-blue-100 text-blue-700' :
+                      'bg-gray-100 text-gray-500'
+                    }`}>{a.status}</span>
+                  </div>
+                  {a.url && (
+                    <a href={a.url} target="_blank" rel="noopener noreferrer" className="text-[10px] text-purple-600 hover:underline">View ↗</a>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Generate more artifacts */}
+          {!nblmState.audioGenerating && (
+            <div className="flex gap-2 pt-2">
+              <button
+                onClick={() => saveState({ requestedArtifact: 'briefing_doc' })}
+                className="px-2.5 py-1 text-[10px] font-medium rounded bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors"
+              >
+                📄 Briefing Doc
+              </button>
+              <button
+                onClick={() => saveState({ requestedArtifact: 'study_guide' })}
+                className="px-2.5 py-1 text-[10px] font-medium rounded bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors"
+              >
+                📚 Study Guide
+              </button>
+              <button
+                onClick={() => saveState({ requestedArtifact: 'mind_map' })}
+                className="px-2.5 py-1 text-[10px] font-medium rounded bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors"
+              >
+                🧠 Mind Map
+              </button>
+              <button
+                onClick={() => saveState({ requestedArtifact: 'quiz' })}
+                className="px-2.5 py-1 text-[10px] font-medium rounded bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors"
+              >
+                ❓ Quiz
+              </button>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  )
+}
+
 // ─── Run Detail View ──────────────────────────────────────────────────────
 
 const RunDetailView = ({ run, onBack }) => {
   const [activeStage, setActiveStage] = useState(0)
-  const [activePanel, setActivePanel] = useState('output') // output | researchers | findings | annotations
+  const [activePanel, setActivePanel] = useState('output') // output | researchers | findings | annotations | audio
   const [customResearchers, setCustomResearchers] = useState(() => getCustomResearchers())
 
   if (!run) return null
@@ -986,11 +1188,18 @@ const RunDetailView = ({ run, onBack }) => {
                 activePanel === 'annotations' ? 'bg-amber-100 text-amber-700' : 'text-gray-500 hover:bg-gray-100'
               }`}
             >📝 Annotations ({annotationCount})</button>
+            <button
+              onClick={() => setActivePanel('audio')}
+              className={`px-3 py-1.5 text-xs font-medium rounded-t-lg transition-colors flex items-center gap-1 ${
+                activePanel === 'audio' ? 'bg-purple-100 text-purple-700' : 'text-gray-500 hover:bg-gray-100'
+              }`}
+            >🎙️ Audio</button>
           </div>
 
           {activePanel === 'researchers' && <ResearcherCards researchers={researchers} onAddCustom={handleAddCustomResearcher} onDeleteCustom={handleDeleteCustomResearcher} />}
           {activePanel === 'findings' && <FindingsPanel findings={findings} />}
           {activePanel === 'annotations' && <AnnotationsPanel runId={run.id} onJumpToSection={handleJumpToSection} />}
+          {activePanel === 'audio' && <NblmPanel runId={run.id} run={run} />}
           {activePanel === 'output' && (
             <>
               <div className="flex gap-1 mb-3">

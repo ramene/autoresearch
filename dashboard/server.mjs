@@ -555,6 +555,33 @@ Return ONLY valid JSON:
     return
   }
 
+  // ─── NotebookLM (NBLM) Routes ──────────────────────────────────
+
+  // POST /api/pipeline/run/:runId/nblm — create/get NBLM notebook for this run
+  if (path.match(/^\/api\/pipeline\/run\/([^/]+)\/nblm$/) && req.method === 'POST') {
+    const runId = path.split('/')[4]
+    const body = await parseBody(req)
+    // Store NBLM state alongside the run
+    const nblmPath = join(PIPELINE_RUNS_DIR, `${runId}-nblm.json`)
+    let nblmState = existsSync(nblmPath) ? JSON.parse(readFileSync(nblmPath, 'utf8')) : {}
+    nblmState = { ...nblmState, ...body }
+    writeFileSync(nblmPath, JSON.stringify(nblmState, null, 2))
+    jsonResponse(res, nblmState)
+    return
+  }
+
+  // GET /api/pipeline/run/:runId/nblm — get NBLM state
+  if (path.match(/^\/api\/pipeline\/run\/([^/]+)\/nblm$/) && req.method === 'GET') {
+    const runId = path.split('/')[4]
+    const nblmPath = join(PIPELINE_RUNS_DIR, `${runId}-nblm.json`)
+    if (existsSync(nblmPath)) {
+      jsonResponse(res, JSON.parse(readFileSync(nblmPath, 'utf8')))
+    } else {
+      jsonResponse(res, {})
+    }
+    return
+  }
+
   // GET /api/pipeline/run/:runId — get full results for a completed run
   const pipelineRunMatch = path.match(/^\/api\/pipeline\/run\/(.+)$/)
   if (pipelineRunMatch && req.method === 'GET') {
