@@ -563,9 +563,9 @@ if dashboard_running; then
         if [[ -n "$RUN_ID" ]]; then
             assert_pass "pipeline run started: $RUN_ID"
 
-            # Poll for completion (max 5 minutes)
-            echo "  Polling pipeline status (max 5 min)..."
-            DEADLINE=$((SECONDS + 300))
+            # Poll for completion (max 25 minutes — 3 stages × ~8 min each via CLI)
+            echo "  Polling pipeline status (max 25 min)..."
+            DEADLINE=$((SECONDS + 1500))
             FINAL_STATUS=""
             while [[ $SECONDS -lt $DEADLINE ]]; do
                 STATUS_JSON=$(curl -sf "${DASHBOARD_URL}/api/pipeline/status/${RUN_ID}" 2>/dev/null) || true

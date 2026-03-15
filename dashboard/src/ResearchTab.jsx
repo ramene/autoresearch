@@ -36,7 +36,15 @@ const DOMAIN_CATEGORIES = [
 
 // ─── Extract researchers from pipeline output ────────────────────────────────
 
-function extractResearchers(outputs) {
+function getCustomResearchers() {
+  try { return JSON.parse(localStorage.getItem('custom-researchers') || '[]') } catch { return [] }
+}
+
+function saveCustomResearchers(list) {
+  localStorage.setItem('custom-researchers', JSON.stringify(list))
+}
+
+function extractResearchers(outputs, customResearchers = []) {
   if (!outputs) return []
   const text = Object.values(outputs).join('\n')
   const known = [
@@ -54,13 +62,20 @@ function extractResearchers(outputs) {
     { name: 'Francisco Varela', domain: 'Neurophenomenology', key: 'Enactive cognition', tier: 3 },
     { name: 'Alain Berthoz', domain: 'Spatial cognition', key: 'Spatial navigation', tier: 3 },
   ]
-  return known
+  // Merge custom researchers (always shown, not filtered by text mention)
+  const customWithMentions = customResearchers.map(r => {
+    const regex = new RegExp(r.name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi')
+    const mentions = (text.match(regex) || []).length
+    return { ...r, mentions, isCustom: true }
+  })
+  const knownFiltered = known
     .filter(r => text.includes(r.name))
     .map(r => {
       const regex = new RegExp(r.name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi')
       const mentions = (text.match(regex) || []).length
       return { ...r, mentions }
     })
+  return [...knownFiltered, ...customWithMentions]
     .sort((a, b) => a.tier - b.tier || b.mentions - a.mentions)
 }
 
@@ -137,33 +152,122 @@ const PipelineStepper = ({ stages }) => (
 
 // ─── Researcher Profile Cards ────────────────────────────────────────────────
 
-const ResearcherCards = ({ researchers }) => {
-  if (!researchers || researchers.length === 0) return null
+const ResearcherCards = ({ researchers, onAddCustom, onDeleteCustom }) => {
+  const [showAddForm, setShowAddForm] = useState(false)
+  const [formName, setFormName] = useState('')
+  const [formDomain, setFormDomain] = useState('')
+  const [formKey, setFormKey] = useState('')
+  const [formTier, setFormTier] = useState(3)
+
   const tierLabel = { 1: 'Core Authority', 2: 'Anchor Author', 3: 'Extended Network' }
   const tierColor = {
     1: 'border-amber-300 bg-amber-50',
     2: 'border-blue-300 bg-blue-50',
     3: 'border-gray-200 bg-gray-50',
   }
+
+  const handleAdd = () => {
+    if (!formName.trim()) return
+    onAddCustom({
+      name: formName.trim(),
+      domain: formDomain.trim() || 'Unspecified',
+      key: formKey.trim() || 'Custom addition',
+      tier: Number(formTier),
+    })
+    setFormName(''); setFormDomain(''); setFormKey(''); setFormTier(3)
+    setShowAddForm(false)
+  }
+
   return (
     <div>
-      <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2 flex items-center gap-1.5">
-        <User className="w-3.5 h-3.5" /> Researchers ({researchers.length})
-      </h4>
+      <div className="flex items-center justify-between mb-2">
+        <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wide flex items-center gap-1.5">
+          <User className="w-3.5 h-3.5" /> Researchers ({researchers.length})
+        </h4>
+        <button
+          onClick={() => setShowAddForm(!showAddForm)}
+          className="px-2 py-0.5 text-[10px] font-medium rounded-full bg-amber-100 text-amber-700 hover:bg-amber-200 transition-colors"
+        >
+          + Add Researcher
+        </button>
+      </div>
+      {showAddForm && (
+        <div className="mb-3 p-3 bg-gray-50 rounded-lg border border-gray-200 space-y-2">
+          <input
+            type="text"
+            value={formName}
+            onChange={e => setFormName(e.target.value)}
+            placeholder="Name (required)"
+            className="w-full px-2 py-1 text-xs border border-gray-200 rounded focus:outline-none focus:ring-1 focus:ring-amber-300"
+          />
+          <div className="flex gap-2">
+            <input
+              type="text"
+              value={formDomain}
+              onChange={e => setFormDomain(e.target.value)}
+              placeholder="Domain (e.g. Philosopher/aesthetician)"
+              className="flex-1 px-2 py-1 text-xs border border-gray-200 rounded focus:outline-none focus:ring-1 focus:ring-amber-300"
+            />
+            <input
+              type="text"
+              value={formKey}
+              onChange={e => setFormKey(e.target.value)}
+              placeholder="Key contribution"
+              className="flex-1 px-2 py-1 text-xs border border-gray-200 rounded focus:outline-none focus:ring-1 focus:ring-amber-300"
+            />
+          </div>
+          <div className="flex items-center gap-2">
+            <select
+              value={formTier}
+              onChange={e => setFormTier(e.target.value)}
+              className="px-2 py-1 text-xs border border-gray-200 rounded bg-white focus:outline-none focus:ring-1 focus:ring-amber-300"
+            >
+              <option value={1}>Tier 1 - Core Authority</option>
+              <option value={2}>Tier 2 - Anchor Author</option>
+              <option value={3}>Tier 3 - Extended Network</option>
+            </select>
+            <button
+              onClick={handleAdd}
+              disabled={!formName.trim()}
+              className="px-3 py-1 text-xs font-medium rounded bg-amber-500 text-white hover:bg-amber-600 disabled:opacity-50 transition-colors"
+            >Add</button>
+            <button
+              onClick={() => setShowAddForm(false)}
+              className="px-3 py-1 text-xs font-medium rounded bg-gray-200 text-gray-600 hover:bg-gray-300 transition-colors"
+            >Cancel</button>
+          </div>
+        </div>
+      )}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
         {researchers.map((r, i) => (
           <div key={i} className={`rounded-lg border p-2.5 ${tierColor[r.tier] || tierColor[3]}`}>
             <div className="flex items-start justify-between">
               <span className="text-xs font-semibold text-gray-800">{r.name}</span>
-              <span className="text-[10px] text-gray-400">{r.mentions}x</span>
+              <div className="flex items-center gap-1">
+                <span className="text-[10px] text-gray-400">{r.mentions}x</span>
+                {r.isCustom && (
+                  <button
+                    onClick={() => onDeleteCustom(r.name)}
+                    className="text-gray-300 hover:text-red-500 transition-colors"
+                    title="Remove custom researcher"
+                  >
+                    <Trash2 className="w-3 h-3" />
+                  </button>
+                )}
+              </div>
             </div>
             <span className="text-[10px] text-gray-500 block">{r.domain}</span>
             <span className="text-[10px] text-gray-400 block mt-0.5 italic">{r.key}</span>
-            <span className={`inline-block mt-1 px-1.5 py-0.5 text-[9px] font-medium rounded ${
-              r.tier === 1 ? 'bg-amber-200 text-amber-800' : r.tier === 2 ? 'bg-blue-200 text-blue-800' : 'bg-gray-200 text-gray-600'
-            }`}>
-              {tierLabel[r.tier]}
-            </span>
+            <div className="flex items-center gap-1 mt-1">
+              <span className={`inline-block px-1.5 py-0.5 text-[9px] font-medium rounded ${
+                r.tier === 1 ? 'bg-amber-200 text-amber-800' : r.tier === 2 ? 'bg-blue-200 text-blue-800' : 'bg-gray-200 text-gray-600'
+              }`}>
+                {tierLabel[r.tier]}
+              </span>
+              {r.isCustom && (
+                <span className="px-1.5 py-0.5 text-[9px] font-medium rounded bg-purple-100 text-purple-700">custom</span>
+              )}
+            </div>
           </div>
         ))}
       </div>
@@ -253,13 +357,227 @@ const FindingsPanel = ({ findings }) => {
   )
 }
 
+// ─── Lightweight Markdown Renderer ───────────────────────────────────────────
+
+function renderMarkdown(text) {
+  if (!text) return ''
+  let html = text
+    // Escape HTML entities
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+
+  // Code blocks (``` ... ```)
+  html = html.replace(/```(\w*)\n([\s\S]*?)```/g, (_, lang, code) => {
+    if (lang === 'markdown' || lang === 'md') {
+      // Render markdown templates as styled callouts, not grey code blocks
+      const inner = code.trim()
+        .replace(/^###\s+(.+)$/gm, '<div class="text-xs font-bold text-gray-700 mt-2">$1</div>')
+        .replace(/^##\s+(.+)$/gm, '<div class="text-sm font-bold text-gray-800 mt-3">$1</div>')
+        .replace(/^#\s+(.+)$/gm, '<div class="text-base font-bold text-gray-900 mt-3">$1</div>')
+        .replace(/^[-*]\s+(.+)$/gm, '<div class="ml-3 text-xs text-gray-600">- $1</div>')
+      return `<div class="my-2 rounded-lg border border-amber-200 bg-amber-50/50 p-3 text-xs">`
+        + `<div class="text-[10px] font-medium text-amber-600 uppercase tracking-wide mb-1">Template</div>`
+        + inner + `</div>`
+    }
+    return `<pre class="bg-gray-100 rounded p-2 overflow-x-auto text-xs"><code>${code.trim()}</code></pre>`
+  })
+
+  // Inline code
+  html = html.replace(/`([^`]+)`/g, '<code class="bg-gray-100 px-1 rounded text-xs">$1</code>')
+
+  // Headings
+  html = html.replace(/^######\s+(.+)$/gm, '<h6 class="text-xs font-bold mt-3 mb-1">$1</h6>')
+  html = html.replace(/^#####\s+(.+)$/gm, '<h5 class="text-xs font-bold mt-3 mb-1">$1</h5>')
+  html = html.replace(/^####\s+(.+)$/gm, '<h4 class="text-sm font-bold mt-3 mb-1">$1</h4>')
+  html = html.replace(/^###\s+(.+)$/gm, '<h3 class="text-sm font-bold mt-4 mb-1">$1</h3>')
+  html = html.replace(/^##\s+(.+)$/gm, '<h2 class="text-base font-bold mt-4 mb-2">$1</h2>')
+  html = html.replace(/^#\s+(.+)$/gm, '<h1 class="text-lg font-bold mt-4 mb-2">$1</h1>')
+
+  // Horizontal rules
+  html = html.replace(/^---+$/gm, '<hr class="my-3 border-gray-300" />')
+
+  // Bold and italic
+  html = html.replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>')
+  html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+  html = html.replace(/\*(.+?)\*/g, '<em>$1</em>')
+
+  // Links
+  html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="text-blue-600 underline" target="_blank" rel="noopener noreferrer">$1</a>')
+
+  // Blockquotes
+  html = html.replace(/^&gt;\s+(.+)$/gm, '<blockquote class="border-l-2 border-gray-300 pl-3 italic text-gray-600 my-1">$1</blockquote>')
+
+  // Unordered lists (- item or * item)
+  html = html.replace(/^(?:[*-])\s+(.+)$/gm, '<li class="ml-4 list-disc">$1</li>')
+  html = html.replace(/((?:<li class="ml-4 list-disc">.*<\/li>\n?)+)/g, '<ul class="my-1">$1</ul>')
+
+  // Ordered lists
+  html = html.replace(/^\d+\.\s+(.+)$/gm, '<li class="ml-4 list-decimal">$1</li>')
+  html = html.replace(/((?:<li class="ml-4 list-decimal">.*<\/li>\n?)+)/g, '<ol class="my-1">$1</ol>')
+
+  // Tables — detect lines with | separators
+  html = html.replace(/((?:^\|.+\|$\n?)+)/gm, (tableBlock) => {
+    const rows = tableBlock.trim().split('\n').filter(r => r.trim())
+    if (rows.length < 2) return tableBlock
+    // Check if row 2 is a separator (|---|---|)
+    const isSep = (r) => /^\|[\s:|-]+\|$/.test(r.trim())
+    let headerEnd = isSep(rows[1]) ? 1 : 0
+    const parseRow = (row) => row.replace(/^\||\|$/g, '').split('|').map(c => c.trim())
+    let out = '<div class="overflow-x-auto my-2"><table class="min-w-full text-xs border-collapse border border-gray-300">'
+    rows.forEach((row, i) => {
+      if (isSep(row)) return // skip separator row
+      const cells = parseRow(row)
+      const isHeader = i < headerEnd || (headerEnd === 0 && i === 0 && rows.length > 2 && isSep(rows[1]))
+      const tag = isHeader ? 'th' : 'td'
+      const cls = isHeader ? 'bg-gray-100 font-semibold text-left px-2 py-1 border border-gray-300' : 'px-2 py-1 border border-gray-300'
+      out += '<tr>' + cells.map(c => `<${tag} class="${cls}">${c}</${tag}>`).join('') + '</tr>'
+    })
+    out += '</table></div>'
+    return out
+  })
+
+  // Paragraphs (double newlines)
+  html = html.replace(/\n\n+/g, '</p><p class="my-1">')
+  html = '<p class="my-1">' + html + '</p>'
+
+  // Clean up empty paragraphs
+  html = html.replace(/<p class="my-1">\s*<\/p>/g, '')
+  // Don't wrap block elements in <p>
+  html = html.replace(/<p class="my-1">(<(?:div|table|h[1-6]|ul|ol|pre|hr|blockquote))/g, '$1')
+  html = html.replace(/(<\/(?:div|table|h[1-6]|ul|ol|pre|hr|blockquote)>)<\/p>/g, '$1')
+
+  return html
+}
+
 // ─── Markdown Block ──────────────────────────────────────────────────────────
 
-const MarkdownBlock = ({ content, maxHeight = 'max-h-[600px]' }) => {
+const MarkdownBlock = ({ content, maxHeight = 'max-h-[600px]', onAnnotate, highlightText }) => {
+  const [viewMode, setViewMode] = useState('rendered')
+  const [ctxMenu, setCtxMenu] = useState(null) // {x, y, selectedText}
+  const [annotateText, setAnnotateText] = useState('')
+  const containerRef = useRef(null)
+
+  // Scroll to and highlight matching text when highlightText changes
+  useEffect(() => {
+    if (!highlightText || !containerRef.current) return
+    const searchStr = highlightText.slice(0, 40)
+    // Use TreeWalker to find text nodes containing the search string
+    const walker = document.createTreeWalker(containerRef.current, NodeFilter.SHOW_TEXT, null)
+    let node
+    while ((node = walker.nextNode())) {
+      if (node.textContent.includes(searchStr)) {
+        // Found the text node — wrap in a highlight span
+        const range = document.createRange()
+        const idx = node.textContent.indexOf(searchStr)
+        range.setStart(node, idx)
+        range.setEnd(node, Math.min(idx + highlightText.length, node.textContent.length))
+        // Scroll into view
+        const rect = range.getBoundingClientRect()
+        const container = containerRef.current
+        const containerRect = container.getBoundingClientRect()
+        container.scrollTop += rect.top - containerRect.top - 80
+        // Flash highlight using CSS animation on a temporary mark element
+        const mark = document.createElement('mark')
+        mark.className = 'bg-amber-200 transition-all duration-1000 rounded px-0.5'
+        range.surroundContents(mark)
+        setTimeout(() => {
+          mark.classList.replace('bg-amber-200', 'bg-transparent')
+          setTimeout(() => {
+            // Unwrap the mark
+            const parent = mark.parentNode
+            if (parent) {
+              parent.replaceChild(document.createTextNode(mark.textContent), mark)
+              parent.normalize()
+            }
+          }, 1000)
+        }, 2000)
+        break
+      }
+    }
+  }, [highlightText])
+
   if (!content) return null
+  const rendered = viewMode === 'rendered'
+
+  const handleContextMenu = (e) => {
+    const sel = window.getSelection()
+    const selectedText = sel?.toString().trim()
+    if (!selectedText || !onAnnotate) return
+    e.preventDefault()
+    const rect = containerRef.current?.getBoundingClientRect() || { left: 0, top: 0 }
+    setCtxMenu({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+      selectedText,
+    })
+    setAnnotateText('')
+  }
+
+  const handleAnnotateSubmit = () => {
+    if (!ctxMenu || !annotateText.trim()) return
+    onAnnotate({
+      text: annotateText.trim(),
+      section: ctxMenu.selectedText.slice(0, 120),
+    })
+    setCtxMenu(null)
+    setAnnotateText('')
+  }
+
+  // Close context menu on click elsewhere
+  useEffect(() => {
+    if (!ctxMenu) return
+    const close = (e) => {
+      if (!e.target.closest('.annotation-ctx-menu')) setCtxMenu(null)
+    }
+    document.addEventListener('mousedown', close)
+    return () => document.removeEventListener('mousedown', close)
+  }, [ctxMenu])
+
   return (
-    <div className={`prose prose-sm max-w-none ${maxHeight} overflow-y-auto bg-white rounded-lg border border-gray-200 p-4`}>
-      <pre className="whitespace-pre-wrap text-xs leading-relaxed text-gray-700 font-mono">{content}</pre>
+    <div ref={containerRef} className={`relative ${maxHeight} overflow-y-auto bg-white rounded-lg border border-gray-200 p-4`} onContextMenu={handleContextMenu}>
+      <div className="absolute top-2 right-2 flex items-center gap-1 text-[10px] bg-white/90 backdrop-blur-sm rounded px-1.5 py-0.5 border border-gray-200 z-10">
+        <button className={rendered ? 'font-bold text-amber-700' : 'text-gray-500 hover:text-gray-700'} onClick={() => setViewMode('rendered')}>Rendered</button>
+        <span className="text-gray-300">|</span>
+        <button className={!rendered ? 'font-bold text-amber-700' : 'text-gray-500 hover:text-gray-700'} onClick={() => setViewMode('raw')}>Raw</button>
+      </div>
+      {rendered ? (
+        <div
+          className="prose prose-sm max-w-none text-xs leading-relaxed text-gray-700 pt-4"
+          dangerouslySetInnerHTML={{ __html: renderMarkdown(content) }}
+        />
+      ) : (
+        <pre className="whitespace-pre-wrap text-xs leading-relaxed text-gray-700 font-mono pt-4">{content}</pre>
+      )}
+
+      {/* Right-click annotation context menu */}
+      {ctxMenu && (
+        <div
+          className="annotation-ctx-menu absolute z-50 bg-white rounded-lg shadow-lg border border-gray-200 p-3 w-72"
+          style={{ left: Math.min(ctxMenu.x, 300), top: ctxMenu.y }}
+        >
+          <div className="text-[10px] text-gray-400 mb-1 truncate">
+            Selected: <span className="italic">"{ctxMenu.selectedText.slice(0, 60)}{ctxMenu.selectedText.length > 60 ? '...' : ''}"</span>
+          </div>
+          <textarea
+            value={annotateText}
+            onChange={e => setAnnotateText(e.target.value)}
+            placeholder="Add your annotation..."
+            rows={2}
+            autoFocus
+            className="w-full px-2 py-1.5 text-xs border border-gray-200 rounded focus:outline-none focus:ring-1 focus:ring-amber-300 resize-none mb-2"
+            onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleAnnotateSubmit() } }}
+          />
+          <div className="flex items-center justify-between">
+            <button onClick={() => setCtxMenu(null)} className="text-[10px] text-gray-400 hover:text-gray-600">Cancel</button>
+            <button
+              onClick={handleAnnotateSubmit}
+              disabled={!annotateText.trim()}
+              className="px-2.5 py-1 text-[10px] font-medium rounded bg-amber-500 text-white hover:bg-amber-600 disabled:opacity-50"
+            >Annotate</button>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
@@ -426,11 +744,112 @@ const RunHistoryItem = ({ run, selected, onSelect, onDelete }) => {
   )
 }
 
+// ─── Annotations Panel ──────────────────────────────────────────────────────
+// TODO: Add server endpoints: POST /api/pipeline/run/:runId/annotations
+//       and GET /api/pipeline/run/:runId/annotations for persistent storage.
+
+const AnnotationsPanel = ({ runId, onJumpToSection }) => {
+  const storageKey = `annotations-${runId}`
+  const [annotations, setAnnotations] = useState(() => {
+    try { return JSON.parse(localStorage.getItem(storageKey) || '[]') } catch { return [] }
+  })
+  const [noteText, setNoteText] = useState('')
+  const [noteSection, setNoteSection] = useState('')
+
+  useEffect(() => {
+    localStorage.setItem(storageKey, JSON.stringify(annotations))
+  }, [annotations, storageKey])
+
+  const handleAdd = () => {
+    if (!noteText.trim()) return
+    setAnnotations(prev => [{
+      id: crypto.randomUUID(),
+      text: noteText.trim(),
+      section: noteSection.trim() || undefined,
+      createdAt: new Date().toISOString(),
+    }, ...prev])
+    setNoteText('')
+    setNoteSection('')
+  }
+
+  const handleDelete = (id) => {
+    setAnnotations(prev => prev.filter(a => a.id !== id))
+  }
+
+  return (
+    <div>
+      <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2 flex items-center gap-1.5">
+        Annotations ({annotations.length})
+      </h4>
+      <div className="mb-3 p-3 bg-gray-50 rounded-lg border border-gray-200 space-y-2">
+        <textarea
+          value={noteText}
+          onChange={e => setNoteText(e.target.value)}
+          placeholder="Add a research note..."
+          rows={2}
+          className="w-full px-2 py-1.5 text-xs border border-gray-200 rounded focus:outline-none focus:ring-1 focus:ring-amber-300 resize-y"
+        />
+        <div className="flex items-center gap-2">
+          <input
+            type="text"
+            value={noteSection}
+            onChange={e => setNoteSection(e.target.value)}
+            placeholder="Section reference (optional)"
+            className="flex-1 px-2 py-1 text-xs border border-gray-200 rounded focus:outline-none focus:ring-1 focus:ring-amber-300"
+          />
+          <button
+            onClick={handleAdd}
+            disabled={!noteText.trim()}
+            className="px-3 py-1 text-xs font-medium rounded bg-amber-500 text-white hover:bg-amber-600 disabled:opacity-50 transition-colors"
+          >Add Note</button>
+        </div>
+      </div>
+      {annotations.length === 0 ? (
+        <p className="text-xs text-gray-400 text-center py-4">No annotations yet. Add notes about this run above.</p>
+      ) : (
+        <div className="space-y-2 max-h-80 overflow-y-auto">
+          {annotations.map(a => (
+            <div key={a.id} className="p-2.5 bg-white rounded-lg border border-gray-100">
+              <div className="flex items-start justify-between gap-2">
+                <div className="min-w-0">
+                  <p className="text-xs text-gray-700 leading-relaxed">{a.text}</p>
+                  <div className="flex items-center gap-2 mt-1">
+                    <span className="text-[10px] text-gray-400">
+                      {new Date(a.createdAt).toLocaleString()}
+                    </span>
+                    {a.section && (
+                      <button
+                        onClick={() => onJumpToSection?.(a.section)}
+                        className="px-1.5 py-0.5 text-[9px] rounded bg-amber-100 text-amber-700 hover:bg-amber-200 transition-colors cursor-pointer max-w-xs truncate text-left"
+                        title={`Jump to: "${a.section}"`}
+                      >
+                        ↗ {a.section}
+                      </button>
+                    )}
+                  </div>
+                </div>
+                <button
+                  onClick={() => handleDelete(a.id)}
+                  className="flex-shrink-0 p-0.5 text-gray-300 hover:text-red-500 transition-colors"
+                  title="Delete annotation"
+                >
+                  <Trash2 className="w-3 h-3" />
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
+
 // ─── Run Detail View ──────────────────────────────────────────────────────
 
 const RunDetailView = ({ run, onBack }) => {
   const [activeStage, setActiveStage] = useState(0)
-  const [activePanel, setActivePanel] = useState('output') // output | researchers | findings
+  const [activePanel, setActivePanel] = useState('output') // output | researchers | findings | annotations
+  const [customResearchers, setCustomResearchers] = useState(() => getCustomResearchers())
 
   if (!run) return null
 
@@ -441,8 +860,65 @@ const RunDetailView = ({ run, onBack }) => {
   ]
 
   const stageContent = run.outputs?.[stageFileMap[activeStage]] || null
-  const researchers = useMemo(() => extractResearchers(run.outputs), [run.outputs])
+  const researchers = useMemo(() => extractResearchers(run.outputs, customResearchers), [run.outputs, customResearchers])
   const findings = useMemo(() => extractFindings(run.outputs), [run.outputs])
+
+  // Annotations count for badge (read from localStorage)
+  const annotationCount = useMemo(() => {
+    try { return JSON.parse(localStorage.getItem(`annotations-${run.id}`) || '[]').length } catch { return 0 }
+  }, [run.id, activePanel]) // re-check when panel switches
+
+  const handleAddCustomResearcher = (researcher) => {
+    const updated = [...customResearchers, researcher]
+    setCustomResearchers(updated)
+    saveCustomResearchers(updated)
+  }
+
+  const handleDeleteCustomResearcher = (name) => {
+    const updated = customResearchers.filter(r => r.name !== name)
+    setCustomResearchers(updated)
+    saveCustomResearchers(updated)
+  }
+
+  // Allow MarkdownBlock right-click annotations to flow into the annotations store
+  const handleInlineAnnotate = useCallback(({ text, section }) => {
+    const key = `annotations-${run.id}`
+    const existing = (() => { try { return JSON.parse(localStorage.getItem(key) || '[]') } catch { return [] } })()
+    const updated = [{
+      id: crypto.randomUUID(),
+      text,
+      section,
+      createdAt: new Date().toISOString(),
+    }, ...existing]
+    localStorage.setItem(key, JSON.stringify(updated))
+    // Flash to annotations panel to show the new note
+    setActivePanel('annotations')
+  }, [run.id])
+
+  // Jump to a section in the output — switches to Stage Outputs, finds text, highlights it
+  const [highlightText, setHighlightText] = useState(null)
+  const handleJumpToSection = useCallback((sectionText) => {
+    setActivePanel('output')
+    // Try to find which stage contains this text
+    const stageFiles = [
+      'stage-1-claude-synthesis.md',
+      'stage-2-gemini-reasoning.md',
+      'stage-3-agent-team-execution.md',
+      'pipeline-complete.md',
+    ]
+    if (run.outputs) {
+      for (let i = 0; i < stageFiles.length; i++) {
+        const content = run.outputs[stageFiles[i]]
+        if (content && content.includes(sectionText.slice(0, 40))) {
+          setActiveStage(i === 3 ? 3 : i)
+          break
+        }
+      }
+    }
+    setHighlightText(sectionText)
+    // Clear highlight after 4 seconds
+    setTimeout(() => setHighlightText(null), 4000)
+  }, [run.outputs])
 
   return (
     <div className="space-y-4">
@@ -504,10 +980,17 @@ const RunDetailView = ({ run, onBack }) => {
                 }`}
               ><Tag className="w-3 h-3" /> Findings ({findings.length})</button>
             )}
+            <button
+              onClick={() => setActivePanel('annotations')}
+              className={`px-3 py-1.5 text-xs font-medium rounded-t-lg transition-colors flex items-center gap-1 ${
+                activePanel === 'annotations' ? 'bg-amber-100 text-amber-700' : 'text-gray-500 hover:bg-gray-100'
+              }`}
+            >📝 Annotations ({annotationCount})</button>
           </div>
 
-          {activePanel === 'researchers' && <ResearcherCards researchers={researchers} />}
+          {activePanel === 'researchers' && <ResearcherCards researchers={researchers} onAddCustom={handleAddCustomResearcher} onDeleteCustom={handleDeleteCustomResearcher} />}
           {activePanel === 'findings' && <FindingsPanel findings={findings} />}
+          {activePanel === 'annotations' && <AnnotationsPanel runId={run.id} onJumpToSection={handleJumpToSection} />}
           {activePanel === 'output' && (
             <>
               <div className="flex gap-1 mb-3">
@@ -542,6 +1025,8 @@ const RunDetailView = ({ run, onBack }) => {
                     : stageContent
                 }
                 maxHeight="max-h-[70vh]"
+                onAnnotate={handleInlineAnnotate}
+                highlightText={highlightText}
               />
             </>
           )}

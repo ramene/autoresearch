@@ -918,9 +918,9 @@ function App() {
         <div className="fixed inset-0 bg-black/10 z-40" onClick={() => setSelectedRound(null)} />
       )}
 
-      {/* Top Bar */}
-      <header className="bg-white border-b border-gray-200 px-8 py-4">
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
+      {/* Top Bar — Row 1: Logo + Tabs + Utility icons */}
+      <header className="bg-white border-b border-gray-200">
+        <div className="max-w-6xl mx-auto px-8 py-3 flex items-center justify-between">
           <div className="flex items-center space-x-3">
             <FlaskConical className="w-7 h-7 text-amber-600" />
             <h1 className="text-2xl font-bold text-gray-900">Autoresearch</h1>
@@ -943,66 +943,8 @@ function App() {
                 Research
               </button>
             </div>
-            {activeTab === 'skills' && results.length > 0 && (
-              <span className="px-2.5 py-0.5 text-xs font-semibold rounded-full bg-green-100 text-green-700">
-                {results.length} rounds
-              </span>
-            )}
           </div>
-          <div className="flex items-center space-x-2">
-            {activeTab === 'skills' && (
-              <>
-                <MiniDropdown
-                  options={SKILL_OPTIONS(skills)}
-                  selected={selectedSkill}
-                  onSelect={(s) => { setSelectedSkill(s); setConfig(c => ({ ...c, selectedSkill: s })) }}
-                />
-                <MiniDropdown
-                  label="eval:"
-                  options={EVALUATOR_OPTIONS}
-                  selected={config.evaluator}
-                  onSelect={(v) => setConfig(c => ({ ...c, evaluator: v }))}
-                />
-                <MiniDropdown
-                  label="mut:"
-                  options={MUTATOR_OPTIONS}
-                  selected={config.mutator}
-                  onSelect={(v) => setConfig(c => ({ ...c, mutator: v }))}
-                />
-                {runnerStatus.running ? (
-                  <button onClick={stopRun}
-                    className="inline-flex items-center space-x-1 px-2.5 py-1 bg-red-100 text-red-700 rounded-lg text-xs font-medium hover:bg-red-200 transition-colors"
-                  >
-                    <Square className="w-3 h-3" />
-                    <span>Stop</span>
-                  </button>
-                ) : (
-                  <button onClick={startRun}
-                    className="inline-flex items-center space-x-1 px-2.5 py-1 bg-green-100 text-green-700 rounded-lg text-xs font-medium hover:bg-green-200 transition-colors"
-                  >
-                    <Play className="w-3 h-3" />
-                    <span>Run</span>
-                  </button>
-                )}
-                {lastRefresh && (
-                  <span className="text-xs text-gray-400 flex items-center space-x-1">
-                    <Clock className="w-3 h-3" />
-                    <span>{lastRefresh.toLocaleTimeString()}</span>
-                  </span>
-                )}
-                <button onClick={() => { setShowEvalEditor(!showEvalEditor); if (showConfig) setShowConfig(false) }}
-                  className={`p-1.5 rounded-lg transition-colors ${showEvalEditor ? 'bg-amber-100 text-amber-700' : 'text-gray-400 hover:text-gray-600 hover:bg-gray-50'}`}
-                  title="Edit eval suite"
-                >
-                  <ListChecks className="w-3.5 h-3.5" />
-                </button>
-                <button onClick={() => { setShowConfig(!showConfig); if (showEvalEditor) setShowEvalEditor(false) }}
-                  className={`p-1.5 rounded-lg transition-colors ${showConfig ? 'bg-gray-100 text-gray-700' : 'text-gray-400 hover:text-gray-600 hover:bg-gray-50'}`}
-                >
-                  <Settings className="w-3.5 h-3.5" />
-                </button>
-              </>
-            )}
+          <div className="flex items-center space-x-1.5">
             <button onClick={() => { setShowKeys(!showKeys); setShowConfig(false); setShowEvalEditor(false) }}
               className={`p-1.5 rounded-lg transition-colors ${showKeys ? 'bg-amber-100 text-amber-700' : 'text-gray-400 hover:text-gray-600 hover:bg-gray-50'}`}
               title="API Keys (BYOK)"
@@ -1016,9 +958,77 @@ function App() {
             </a>
           </div>
         </div>
+
+        {/* Row 2: Skills toolbar — only shown on Skills tab */}
+        {activeTab === 'skills' && (
+          <div className="max-w-6xl mx-auto px-8 pb-3 flex items-center justify-between">
+            <div className="flex items-center space-x-2">
+              <MiniDropdown
+                options={SKILL_OPTIONS(skills)}
+                selected={selectedSkill}
+                onSelect={(s) => { setSelectedSkill(s); setConfig(c => ({ ...c, selectedSkill: s })) }}
+              />
+              <MiniDropdown
+                label="eval:"
+                options={EVALUATOR_OPTIONS}
+                selected={config.evaluator}
+                onSelect={(v) => setConfig(c => ({ ...c, evaluator: v }))}
+              />
+              <MiniDropdown
+                label="mut:"
+                options={MUTATOR_OPTIONS}
+                selected={config.mutator}
+                onSelect={(v) => setConfig(c => ({ ...c, mutator: v }))}
+              />
+              {results.length > 0 && (
+                <span className="px-2.5 py-0.5 text-xs font-semibold rounded-full bg-green-100 text-green-700">
+                  {results.length} rounds
+                </span>
+              )}
+            </div>
+            <div className="flex items-center space-x-1.5">
+              {runnerStatus.running ? (
+                <button onClick={stopRun}
+                  className="inline-flex items-center space-x-1 px-2.5 py-1 bg-red-100 text-red-700 rounded-lg text-xs font-medium hover:bg-red-200 transition-colors"
+                >
+                  <Square className="w-3 h-3" />
+                  <span>Stop</span>
+                </button>
+              ) : (
+                <button onClick={startRun}
+                  className="inline-flex items-center space-x-1 px-2.5 py-1 bg-green-100 text-green-700 rounded-lg text-xs font-medium hover:bg-green-200 transition-colors"
+                >
+                  <Play className="w-3 h-3" />
+                  <span>Run</span>
+                </button>
+              )}
+              {lastRefresh && (
+                <span className="text-xs text-gray-400 flex items-center space-x-1">
+                  <Clock className="w-3 h-3" />
+                  <span>{lastRefresh.toLocaleTimeString()}</span>
+                </span>
+              )}
+              <button onClick={() => { setShowEvalEditor(!showEvalEditor); if (showConfig) setShowConfig(false) }}
+                className={`p-1.5 rounded-lg transition-colors ${showEvalEditor ? 'bg-amber-100 text-amber-700' : 'text-gray-400 hover:text-gray-600 hover:bg-gray-50'}`}
+                title="Edit eval suite"
+              >
+                <ListChecks className="w-3.5 h-3.5" />
+              </button>
+              <button onClick={() => { setShowConfig(!showConfig); if (showEvalEditor) setShowEvalEditor(false) }}
+                className={`p-1.5 rounded-lg transition-colors ${showConfig ? 'bg-gray-100 text-gray-700' : 'text-gray-400 hover:text-gray-600 hover:bg-gray-50'}`}
+                title="Settings"
+              >
+                <Settings className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          </div>
+        )}
       </header>
 
       <main className="max-w-6xl mx-auto p-8 space-y-6">
+        {/* BYOK key setup — visible on ALL tabs */}
+        <KeySetup visible={showKeys} onClose={() => setShowKeys(false)} />
+
         {activeTab === 'research' ? (
           <ResearchTab />
         ) : (
@@ -1034,8 +1044,6 @@ function App() {
         <ConfigPanel config={config} onUpdate={setConfig} visible={showConfig} maxScore={results.length > 0 ? results[0].max : null} />
 
         <EvalEditor skill={selectedSkill} visible={showEvalEditor} />
-
-        <KeySetup visible={showKeys} onClose={() => setShowKeys(false)} />
 
         {/* Runner Log */}
         {runnerStatus.running && runnerStatus.logTail && (

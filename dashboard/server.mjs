@@ -53,7 +53,20 @@ function loadPipelineRuns() {
   ensurePipelineDir()
   const runs = []
   for (const f of readdirSync(PIPELINE_RUNS_DIR).filter(f => f.endsWith('.json'))) {
-    try { runs.push(JSON.parse(readFileSync(join(PIPELINE_RUNS_DIR, f), 'utf8'))) } catch {}
+    try {
+      const run = JSON.parse(readFileSync(join(PIPELINE_RUNS_DIR, f), 'utf8'))
+      // Clean up stale "running" state from previous server process
+      if (run.status === 'running') {
+        run.status = 'error'
+        run.error = 'Server restarted while pipeline was running'
+        for (const s of (run.stages || [])) {
+          if (s.status === 'running') s.status = 'error'
+        }
+        run.completedAt = new Date().toISOString()
+        savePipelineRun(run)
+      }
+      runs.push(run)
+    } catch {}
   }
   return runs.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
 }
@@ -661,6 +674,12 @@ Return ONLY valid JSON:
   // SPA fallback
   serveStatic(res, join(serveDir, 'index.html'))
 })
+
+// Pre-load pipeline runs into memory on startup (cleans stale "running" state)
+for (const run of loadPipelineRuns()) {
+  pipelineRuns.set(run.id, run)
+}
+console.log(`Loaded ${pipelineRuns.size} pipeline run(s) from disk`)
 
 server.listen(PORT, '0.0.0.0', () => {
   console.log(`Autoresearch Dashboard — http://localhost:${PORT}`)

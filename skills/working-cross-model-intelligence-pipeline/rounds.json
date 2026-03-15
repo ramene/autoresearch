@@ -1,1 +1,94 @@
-[]
+[
+  {
+    "round": 0,
+    "score": 48,
+    "max": 48,
+    "status": "baseline",
+    "mutation": "All criteria show 0 failures — adding a brief variable-validation guard at the top of each stage's user prompt template to prevent silent failures when template variables are empty or undefined, targeting the most likely real-world failure mode.",
+    "cost": 0.05,
+    "criteria": [
+      8,
+      8,
+      8,
+      8,
+      8,
+      8
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Initial baseline evaluation",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-15T21:57:43.391Z",
+    "changelog": "**Mutation**: All criteria show 0 failures — adding a brief variable-validation guard at the top of each stage's user prompt template to prevent silent failures when template variables are empty or undefined, targeting the most likely real-world failure mode.\n**Failures**: none\n**Per-criteria**: Synthesis Completeness: 8/8, Evidence Grounding: 8/8, Adversarial Rigor: 8/8, Actionability: 8/8, Cross-Stage Coherence: 8/8, Citation Accuracy: 8/8\n**Decision**: Initial baseline evaluation"
+  },
+  {
+    "round": 0,
+    "score": 44,
+    "max": 48,
+    "status": "baseline",
+    "mutation": "Added CITATION INTEGRITY RULE to Stage 3 system prompt instructing the model to flag uncertain DOIs/citations as [VERIFY] rather than hallucinate them, reducing fabricated citation failures.",
+    "cost": 0.05,
+    "criteria": [
+      8,
+      8,
+      8,
+      8,
+      8,
+      4
+    ],
+    "failures": [
+      {
+        "scenario": 2,
+        "criterion": "Citation Accuracy"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Citation Accuracy"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Citation Accuracy"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Citation Accuracy"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Initial baseline evaluation",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-15T22:03:11.142Z",
+    "changelog": "**Mutation**: Added CITATION INTEGRITY RULE to Stage 3 system prompt instructing the model to flag uncertain DOIs/citations as [VERIFY] rather than hallucinate them, reducing fabricated citation failures.\n**Failures**: S2: Citation Accuracy, S3: Citation Accuracy, S4: Citation Accuracy, S6: Citation Accuracy\n**Per-criteria**: Synthesis Completeness: 8/8, Evidence Grounding: 8/8, Adversarial Rigor: 8/8, Actionability: 8/8, Cross-Stage Coherence: 8/8, Citation Accuracy: 4/8\n**Decision**: Initial baseline evaluation"
+  },
+  {
+    "round": 1,
+    "score": 48,
+    "max": 48,
+    "status": "kept",
+    "mutation": "All criteria show 0 failures — extending the CITATION INTEGRITY RULE from Stage 3 into Stage 1's system prompt to prevent potential citation hallucination at the synthesis stage, which feeds all downstream stages and is the highest-leverage hardening point.",
+    "cost": 0.05,
+    "criteria": [
+      8,
+      8,
+      8,
+      8,
+      8,
+      8
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Improved from 44 to 48",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-15T22:12:05.675Z",
+    "changelog": "**Mutation**: All criteria show 0 failures — extending the CITATION INTEGRITY RULE from Stage 3 into Stage 1's system prompt to prevent potential citation hallucination at the synthesis stage, which feeds all downstream stages and is the highest-leverage hardening point.\n**Failures**: none\n**Per-criteria**: Synthesis Completeness: 8/8, Evidence Grounding: 8/8, Adversarial Rigor: 8/8, Actionability: 8/8, Cross-Stage Coherence: 8/8, Citation Accuracy: 8/8\n**Decision**: Improved from 44 to 48"
+  }
+]
