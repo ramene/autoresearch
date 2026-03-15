@@ -599,14 +599,23 @@ Return ONLY valid JSON:
     try {
       const query = body.query?.replace(/"/g, '\\"') || ''
       const conversationId = body.conversationId || ''
-      const convArg = conversationId ? ` --conversation-id "${conversationId}"` : ''
-      const result = execSync(
-        `~/.local/bin/nlm query "${nblmState.notebookId}" "${query}"${convArg}`,
-        { encoding: 'utf8', timeout: 60000, maxBuffer: 1024 * 1024 }
+      const convArg = conversationId ? ` -c "${conversationId}"` : ''
+      const raw = execSync(
+        `~/.local/bin/nlm query notebook "${nblmState.notebookId}" "${query}"${convArg}`,
+        { encoding: 'utf8', timeout: 120000, maxBuffer: 2 * 1024 * 1024 }
       )
-      // Parse the nlm CLI output — it returns markdown-formatted response
+      // nlm CLI returns JSON with { value: { answer, conversation_id, citations } }
+      let response, convId
+      try {
+        const parsed = JSON.parse(raw)
+        response = parsed.value?.answer || parsed.answer || raw.trim()
+        convId = parsed.value?.conversation_id || parsed.conversation_id || null
+      } catch {
+        response = raw.trim()
+      }
       jsonResponse(res, {
-        response: result.trim(),
+        response,
+        conversationId: convId,
         notebookId: nblmState.notebookId,
       })
     } catch (err) {

@@ -13,7 +13,7 @@
   "artifacts": [
     {
       "type": "report",
-      "title": "Informe - Neurociencia Olfativa (Español)",
+      "title": "Informe — Neurociencia Olfativa (Español)",
       "artifact_id": "10eeea8c-edae-42f9-97b3-71bc3d1992a6",
       "status": "completed",
       "language": "es",
@@ -21,25 +21,41 @@
     },
     {
       "type": "report",
-      "title": "Briefing - Olfaktorische Neurowissenschaft (Deutsch)",
+      "title": "Briefing — Olfaktorische Neurowissenschaft (Deutsch)",
       "artifact_id": "659b04b5-fc5f-49cf-8306-b99544ecacc1",
       "status": "completed",
       "language": "de",
       "url": "https://docs.google.com/document/d/1B3qY-0I_TtGDxtm3O6QuTjoglLUcnsoKEGS8DxVhbkM"
-    },
-    {
-      "type": "audio",
-      "title": "Audio - Español",
-      "artifact_id": "87ec77d5-dcc2-4e66-a586-7efc139da1d8",
-      "status": "in_progress",
-      "language": "es"
-    },
-    {
-      "type": "audio",
-      "title": "Audio - Deutsch",
-      "artifact_id": "bf5877cc-47f3-4aa8-bfa2-62d142118b9b",
-      "status": "in_progress",
-      "language": "de"
     }
-  ]
+  ],
+  "audioLanguages": {
+    "en": {
+      "label": "English — Your Nose Is the Hidden Architect",
+      "audioUrl": "/pipeline-audio/baseline-march7-deep-dive.mp3",
+      "status": "completed"
+    },
+    "es": {
+      "label": "Español — Tu nariz es el GPS arquitectónico",
+      "audioUrl": "/pipeline-audio/baseline-march7-deep-dive-es.mp3",
+      "status": "completed"
+    },
+    "de": {
+      "label": "Deutsch — Warum wir Architektur riechen bevor wir eintreten",
+      "audioUrl": "/pipeline-audio/baseline-march7-deep-dive-de.mp3",
+      "status": "completed"
+    }
+  },
+  "reportLanguages": {
+    "es": {
+      "label": "Informe - Neurociencia Olfativa",
+      "url": "https://docs.google.com/document/d/1h6JB-nNvY3TfVhXTZE3fe-yyxi0YWT3c2vDF7cNWju4",
+      "status": "completed"
+    },
+    "de": {
+      "label": "Briefing - Olfaktorische Neurowissenschaft",
+      "url": "https://docs.google.com/document/d/1B3qY-0I_TtGDxtm3O6QuTjoglLUcnsoKEGS8DxVhbkM",
+      "status": "completed"
+    }
+  },
+  "requestedLanguage": "fr"
 }
