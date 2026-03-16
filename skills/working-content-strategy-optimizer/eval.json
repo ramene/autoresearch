@@ -1,0 +1,76 @@
+{
+  "scenarios": [
+    {
+      "id": 1,
+      "type": "happy",
+      "title": "Given last month's Substack data, propose three article topics for the coming mo",
+      "event": "Given last month's Substack data, propose three article topics for the coming month.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 2,
+      "type": "happy",
+      "title": "Analyze two successful posts and identify the common theme to suggest a follow-u",
+      "event": "Analyze two successful posts and identify the common theme to suggest a follow-up series.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 3,
+      "type": "happy",
+      "title": "Given a draft article title, propose three alternative, higher-engagement headli",
+      "event": "Given a draft article title, propose three alternative, higher-engagement headlines.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 4,
+      "type": "happy",
+      "title": "Analyze readership drop-off points and suggest structural changes to future arti",
+      "event": "Analyze readership drop-off points and suggest structural changes to future articles.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 5,
+      "type": "diagnostic",
+      "title": "Identify the day and time with the highest historical engagement and recommend i",
+      "event": "Identify the day and time with the highest historical engagement and recommend it for the next publication.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 6,
+      "type": "diagnostic",
+      "title": "Compare this Substack's performance against a known competitor's public data and",
+      "event": "Compare this Substack's performance against a known competitor's public data and identify a content gap.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 7,
+      "type": "edge",
+      "title": "Generate a list of keywords to target based on popular search queries leading to",
+      "event": "Generate a list of keywords to target based on popular search queries leading to the publication.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 8,
+      "type": "edge",
+      "title": "Analyze comment sections to identify frequently asked questions that could becom",
+      "event": "Analyze comment sections to identify frequently asked questions that could become a new article.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    }
+  ],
+  "criteria": [
+    "Does the proposed topic align with previously successful content themes: Does the proposed topic align with previously successful content themes?",
+    "Is the proposed headline A/B testable and based on engagement patterns: Is the proposed headline A/B testable and based on engagement patterns?",
+    "Does the analysis leverage at least three different data signals from the MCP (e.g., open rates, shares, comment velocity): Does the analysis leverage at least three different data signals from the MCP (e.g., open rates, shares, comment velocity)?",
+    "Does the output include a data-driven rationale for its recommendations: Does the output include a data-driven rationale for its recommendations?",
+    "Avoid proposing topics that have recently underperformed: Does the skill avoid proposing topics that have recently underperformed?",
+    "Can the skill generate a content calendar for the next two weeks: Can the skill generate a content calendar for the next two weeks?"
+  ]
+}

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-03-16T15:40:51.913Z",
+  "timestamp": "2026-03-16T19:00:46.455Z",
   "version": "1.0",
   "skills": {
     "backup": {
@@ -278,6 +278,53 @@
         "Integration Awareness"
       ]
     },
+    "skill-improver": {
+      "score": 30,
+      "max": 36,
+      "ratio": 0.833,
+      "trajectory": "insufficient_data",
+      "weakest_criteria": [
+        {
+          "name": "Identify the failing component (prompt, code, eval) of the target skill",
+          "fail_rate": 0.833
+        },
+        {
+          "name": "Does the proposed modification directly address an identified failure mode from the logs",
+          "fail_rate": 0.833
+        },
+        {
+          "name": "Apply the modification to the target skill's definition files",
+          "fail_rate": 0.833
+        }
+      ],
+      "strongest_criteria": [],
+      "rounds_completed": 6,
+      "rounds_kept": 1,
+      "cost_invested": 0.22,
+      "last_improvement": "2026-03-16T18:09:34.400Z",
+      "last_escalation": {
+        "diagnosis": "The mutations are failing to improve the score because they are addressing peripheral robustness issues (e.g., optional `events.jsonl`) rather than the core architectural flaw causing the failures in the most complex test scenario (S6). The repeated `spawnSync /bin/sh ETIMEDOUT` errors strongly indicate that the skill's synchronous execution model is the root cause. In Phase 4, the skill executes `autoresearch-runner` and waits for it to complete. For a complex target skill in S6, this evaluation takes too long, causing the `skill-improver` itself to time out. The skill isn't failing because its analytical logic is wrong, but because its execution flow cannot handle long-running subprocesses within the allowed time limit.",
+        "timestamp": "2026-03-16T18:19:20.652Z"
+      },
+      "stuck_count": 3,
+      "criteria_names": [
+        "Identify the failing component (prompt, code, eval) of the target skill",
+        "Does the proposed modification directly address an identified failure mode from the logs",
+        "Apply the modification to the target skill's definition files",
+        "Trigger a new evaluation run for the modified skill",
+        "Parse the new evaluation results to determine if the change was an improvement",
+        "Revert the change if performance degrades"
+      ],
+      "scenario_count": 6,
+      "eval_coverage": [
+        "Identify the failing component (prompt, code, eval) of the target skill",
+        "Does the proposed modification directly address an identified failure mode from the logs",
+        "Apply the modification to the target skill's definition files",
+        "Trigger a new evaluation run for the modified skill",
+        "Parse the new evaluation results to determine if the change was an improvement",
+        "Revert the change if performance degrades"
+      ]
+    },
     "system-self-correction-v2": {
       "score": 0,
       "max": 0,
@@ -345,6 +392,9 @@
     "code_generation": [
       "scaffold"
     ],
+    "refactoring": [
+      "skill-improver"
+    ],
     "self_correction": [
       "system-self-correction-v2"
     ]
@@ -352,16 +402,15 @@
   "uncovered_domains": [
     "testing",
     "security",
-    "deployment",
-    "refactoring"
+    "deployment"
   ],
   "summary": {
-    "total_skills": 7,
-    "avg_ratio": 0.913,
+    "total_skills": 8,
+    "avg_ratio": 0.897,
     "skills_at_target": 2,
     "skills_stuck": 1,
     "skills_untested": 3,
-    "total_cost": 0.64,
-    "total_rounds": 14
+    "total_cost": 0.86,
+    "total_rounds": 20
   }
 }

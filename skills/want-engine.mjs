@@ -219,12 +219,122 @@ function computeStructuralDeltas(selfModel, worldModel) {
     wants.push(w)
   }
 
+  // (f) MCP domain coverage gaps
+  for (const mcpDomain of (worldModel.mcp_domains || [])) {
+    const { mcp_server, domain, tool_count = 0, subdomains = [], data_available,
+            existing_autoresearch_skills = [], existing_skills = [] } = mcpDomain
+
+    if (data_available && existing_autoresearch_skills.length === 0) {
+      // Domain the system CAN observe (MCP exists) but has NO autoresearch skills for
+      const proposed_skill = proposeDomainSkill(mcpDomain)
+      const evidenceLines = [
+        `${tool_count} MCP tools available for ${domain}`,
+        `Subdomains: ${subdomains.join(', ') || 'none listed'}`,
+      ]
+      if (existing_skills.length > 0) {
+        evidenceLines.push(`Existing non-autoresearch skills: ${existing_skills.join(', ')}`)
+      } else {
+        evidenceLines.push('No skills at all')
+      }
+
+      const w = {
+        id: `want-domain-${mcp_server}`,
+        type: 'domain_coverage_gap',
+        hypothesis: `MCP '${mcp_server}' provides ${domain} intelligence (${tool_count} tools) but no autoresearch-optimizable skills exist for this domain`,
+        evidence: evidenceLines,
+        severity: 0.85,
+        frequency: 1.0,
+        feasibility: 0.8,
+        proposed_skill,
+        proposed_goal: `Create autoresearch-optimizable skill for ${domain} domain using ${mcp_server} MCP`,
+      }
+      w.score = scoreWant(w)
+      w.status = statusFromScore(w.score)
+      wants.push(w)
+    } else if (existing_autoresearch_skills.length > 0) {
+      // Check for low-scoring autoresearch skills in this domain
+      const lowScoreSkills = existing_autoresearch_skills.filter(s => {
+        const skillData = selfModel.skills?.[s]
+        return skillData && skillData.ratio != null && skillData.ratio < 0.5
+      })
+      if (lowScoreSkills.length > 0) {
+        const w = {
+          id: `want-domain-perf-${mcp_server}`,
+          type: 'domain_coverage_gap',
+          hypothesis: `MCP '${mcp_server}' domain ${domain} has autoresearch skills but they score low: ${lowScoreSkills.join(', ')}`,
+          evidence: [
+            `${tool_count} MCP tools available for ${domain}`,
+            `Low-scoring skills: ${lowScoreSkills.map(s => `${s} (${selfModel.skills[s]?.ratio})`).join(', ')}`,
+          ],
+          severity: 0.6,
+          frequency: 1.0,
+          feasibility: 0.7,
+          proposed_skill: null,
+          proposed_goal: `Improve autoresearch skills for ${domain} domain: ${lowScoreSkills.join(', ')}`,
+        }
+        w.score = scoreWant(w)
+        w.status = statusFromScore(w.score)
+        wants.push(w)
+      }
+    }
+
+    // Domain skill migration: existing_skills exist but not in autoresearch
+    if (existing_skills.length > 0 && existing_autoresearch_skills.length === 0 && !data_available) {
+      // Only generate migration want if not already covered by the coverage gap want above
+      const w = {
+        id: `want-domain-migrate-${mcp_server}`,
+        type: 'domain_coverage_gap',
+        hypothesis: `${domain} has ${existing_skills.length} existing skill(s) in seed library (${existing_skills.join(', ')}) but none registered in autoresearch`,
+        evidence: [
+          `Existing skills: ${existing_skills.join(', ')}`,
+          `MCP: ${mcp_server} (${tool_count} tools)`,
+          'Skills exist but need autoresearch registration',
+        ],
+        severity: 0.5,
+        frequency: 1.0,
+        feasibility: 0.9,
+        proposed_skill: null,
+        proposed_goal: `Import existing ${domain} skills (${existing_skills.join(', ')}) into autoresearch framework`,
+      }
+      w.score = scoreWant(w)
+      w.status = statusFromScore(w.score)
+      wants.push(w)
+    }
+  }
+
   return wants
 }
 
 function extractIntentName(signal) {
   const match = signal.match(/"([^"]+)"/)
   return match ? match[1] : signal.substring(0, 60)
+}
+
+// ─── MCP Domain Skill Proposal ──────────────────────────────────────────────
+
+function proposeDomainSkill(mcpDomain) {
+  const { mcp_server, domain, subdomains = [], tool_count } = mcpDomain
+
+  const name = `${domain.replace(/_/g, '-')}-optimizer`
+  const description = `Analyzes ${domain} performance via ${mcp_server} MCP tools and proposes improvements`
+
+  const criteria = subdomains.map(sub =>
+    `Does the skill effectively guide ${sub} using ${mcp_server} data?`
+  )
+  if (criteria.length === 0) {
+    criteria.push(`Does the skill leverage ${mcp_server} MCP tools to analyze ${domain}?`)
+  }
+
+  const scenarios = [
+    `Analyze current ${domain} performance and identify top 3 improvement areas`,
+    `Given declining engagement metrics, propose a data-driven recovery strategy`,
+    `Compare performance across content types and recommend optimal approach`,
+    `Detect emerging trends in ${domain} and suggest early-mover actions`,
+    `Generate a ${domain} improvement plan with measurable milestones`,
+    `Evaluate ROI of recent ${domain} activities and recommend budget allocation`,
+  ]
+
+  return { name, description, criteria, scenarios }
 }
 
 // ─── Gemini Deep Analysis ────────────────────────────────────────────────────
@@ -272,6 +382,17 @@ function buildWorldModelSummary(worldModel) {
   for (const d of (worldModel.user_intent_signals || [])) {
     lines.push(`  - [${d.current_capability || 'UNMET'}] ${d.signal} (freq: ${d.frequency || 0})`)
   }
+  if (worldModel.mcp_domains && worldModel.mcp_domains.length > 0) {
+    lines.push(`\nConnected MCP domains:`)
+    for (const m of worldModel.mcp_domains) {
+      const skillStatus = m.existing_autoresearch_skills?.length > 0
+        ? `autoresearch skills: ${m.existing_autoresearch_skills.join(', ')}`
+        : m.existing_skills?.length > 0
+          ? `seed skills only: ${m.existing_skills.join(', ')}`
+          : 'NO skills'
+      lines.push(`  - ${m.mcp_server}: ${m.domain} (${m.tool_count} tools, data=${m.data_available}, ${skillStatus})`)
+    }
+  }
   return lines.join('\n')
 }
 
@@ -296,6 +417,20 @@ ${selfSummary}
 WORLD-MODEL (what the world demands):
 ${worldSummary}
 
+CONNECTED MCP DOMAINS (data streams the system can observe):
+${(worldModel.mcp_domains || []).map(m => {
+  const skills = m.existing_autoresearch_skills?.length > 0
+    ? `autoresearch skills: ${m.existing_autoresearch_skills.join(', ')}`
+    : m.existing_skills?.length > 0
+      ? `seed skills only: ${m.existing_skills.join(', ')}`
+      : 'NO skills'
+  return `- ${m.mcp_server}: ${m.domain} (${m.tool_count} tools, subdomains: ${(m.subdomains || []).join(', ')}, ${skills})`
+}).join('\n') || 'None connected'}
+
+Consider: which domains have rich data streams but no skills? These represent
+the highest-value capability gaps — the system CAN observe these domains but
+CANNOT act on them.
+
 RULE-BASED WANTS (initial gap analysis):
 ${wantsSummary}
 
@@ -312,7 +447,7 @@ Your task:
 Return as a JSON array of objects with this schema:
 [
   {
-    "type": "uncovered_domain|stuck_skill|cross_skill_pattern|unmet_demand|user_intent|gemini_insight",
+    "type": "uncovered_domain|stuck_skill|cross_skill_pattern|unmet_demand|user_intent|domain_coverage_gap|gemini_insight",
     "hypothesis": "description of the gap",
     "evidence": ["data points"],
     "severity": 0.0-1.0,

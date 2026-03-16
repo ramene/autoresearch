@@ -22,6 +22,31 @@ const STRATEGIC_MD = join(HOME, '.remote/@openclaw-integration/supervisor/strate
 const SKILLS_DIR = join(HOME, '.remote/@autoresearch/skills');
 const TMUX_LOGS_BASE = join(HOME, '.local/share/tmux-logs');
 const OUTPUT_PATH = join(HOME, '.remote/@autoresearch/world-model.json');
+const AUTORESEARCH_DASHBOARD = join(HOME, '.remote/@autoresearch/dashboard/public');
+
+// MCP registry locations
+const GLOBAL_CLAUDE_JSON = join(HOME, '.claude.json');
+const PROJECT_MCP_CONFIGS = [
+  { path: join(HOME, '.remote/@builds.karve.ai/.mcp.json'), scope: 'project-local', project: 'builds.karve.ai' },
+  { path: join(HOME, '.remote/@builds.karve.ai/.claude.json'), scope: 'project-local', project: 'builds.karve.ai' },
+];
+
+// Skill directories to scan for domain matches
+const SKILL_SCAN_DIRS = [
+  { path: join(HOME, 'Journal/.seed/base/skills'), label: 'seed-base' },
+  { path: join(HOME, 'Journal/.claude-projects/builds-karve-ai/skills'), label: 'builds-karve-ai' },
+  { path: join(HOME, '.remote/@autoresearch/skills'), label: 'autoresearch' },
+];
+
+// Domain classifier for known MCP servers
+const MCP_DOMAIN_MAP = {
+  'substack': { domain: 'content_creation', subdomains: ['writing', 'audience_growth', 'engagement', 'monetization'] },
+  'resonance': { domain: 'content_intelligence', subdomains: ['analytics', 'trends', 'competitive_analysis'] },
+  'notebooklm-mcp': { domain: 'research_synthesis', subdomains: ['audio_generation', 'document_analysis', 'interactive_qa'] },
+  'github': { domain: 'software_development', subdomains: ['code_review', 'ci_cd', 'issue_tracking'] },
+  'playwright': { domain: 'testing', subdomains: ['e2e_testing', 'visual_testing', 'performance'] },
+  'eaas': { domain: 'monetization_platform', subdomains: ['api_endpoints', 'x402_payments', 'service_delivery'] },
+};
 
 // ---------------------------------------------------------------------------
 // Utility helpers
@@ -505,11 +530,234 @@ async function readTmuxLogPatterns() {
 }
 
 // ---------------------------------------------------------------------------
+// 6. MCP Domain Signals
+// ---------------------------------------------------------------------------
+
+/**
+ * Infer domain from MCP server name and tool names for unknown servers.
+ */
+function inferMcpDomain(serverName, config) {
+  // Check known domain map first
+  if (MCP_DOMAIN_MAP[serverName]) {
+    return MCP_DOMAIN_MAP[serverName];
+  }
+
+  // Infer from server name keywords
+  const name = serverName.toLowerCase();
+  if (name.includes('content') || name.includes('blog') || name.includes('write')) {
+    return { domain: 'content_creation', subdomains: ['writing'] };
+  }
+  if (name.includes('analyt') || name.includes('data') || name.includes('intel')) {
+    return { domain: 'analytics', subdomains: ['data_analysis'] };
+  }
+  if (name.includes('test') || name.includes('qa')) {
+    return { domain: 'testing', subdomains: ['automated_testing'] };
+  }
+  if (name.includes('deploy') || name.includes('infra') || name.includes('cloud')) {
+    return { domain: 'infrastructure', subdomains: ['deployment'] };
+  }
+  if (name.includes('search') || name.includes('research')) {
+    return { domain: 'research', subdomains: ['search'] };
+  }
+
+  // Infer from command/args if available
+  const cmdStr = [config.command || '', ...(config.args || [])].join(' ').toLowerCase();
+  if (cmdStr.includes('substack')) {
+    return MCP_DOMAIN_MAP['substack'];
+  }
+  if (cmdStr.includes('notebook') || cmdStr.includes('nblm')) {
+    return MCP_DOMAIN_MAP['notebooklm-mcp'];
+  }
+
+  return { domain: 'unknown', subdomains: [] };
+}
+
+/**
+ * Scan skill directories to find skills matching an MCP domain.
+ */
+async function findSkillsForDomain(serverName, domain) {
+  const matchingSkills = {};  // { dirLabel: [skillName, ...] }
+  const domainKeywords = [
+    serverName.toLowerCase(),
+    domain.toLowerCase(),
+    ...domain.toLowerCase().split('_'),
+  ];
+
+  for (const { path: skillDir, label } of SKILL_SCAN_DIRS) {
+    const entries = await safeLs(skillDir);
+    const matches = entries.filter(entry => {
+      const lower = entry.toLowerCase();
+      return domainKeywords.some(kw => kw.length > 2 && lower.includes(kw));
+    });
+    if (matches.length > 0) {
+      matchingSkills[label] = matches;
+    }
+  }
+
+  return matchingSkills;
+}
+
+/**
+ * Check if data sources are available on disk for a given MCP server.
+ */
+async function checkMcpDataAvailability(serverName, config) {
+  const checks = [];
+
+  // Substack: check MCP tools package
+  if (serverName === 'substack' || (config.command || '').includes('substack') ||
+      (config.args || []).some(a => String(a).includes('substack'))) {
+    try {
+      const srcPath = join(HOME, '.remote/@builds.karve.ai/apps/mcp/src');
+      const srcFiles = await safeLs(srcPath);
+      if (srcFiles.length > 0) {
+        checks.push({ type: 'mcp_source', path: srcPath, exists: true });
+      }
+    } catch { /* skip */ }
+    try {
+      const pkgPath = join(HOME, '.remote/@builds.karve.ai/packages/mcp-substack-tools');
+      const pkgFiles = await safeLs(pkgPath);
+      if (pkgFiles.length > 0) {
+        checks.push({ type: 'mcp_package', path: pkgPath, exists: true });
+      }
+    } catch { /* skip */ }
+  }
+
+  // NotebookLM: check for NBLM state files in pipeline runs
+  if (serverName === 'notebooklm-mcp') {
+    const pipelineEntries = await safeLs(PIPELINE_DIR);
+    const nblmFiles = pipelineEntries.filter(e => e.endsWith('-nblm.json'));
+    if (nblmFiles.length > 0) {
+      checks.push({ type: 'nblm_state_files', count: nblmFiles.length, exists: true });
+    }
+  }
+
+  // Check for cached MCP outputs in the autoresearch dashboard
+  const dashboardEntries = await safeLs(AUTORESEARCH_DASHBOARD);
+  const relevantResults = dashboardEntries.filter(e =>
+    e.startsWith('results-') && e.toLowerCase().includes(serverName.toLowerCase().replace(/-/g, ''))
+  );
+  if (relevantResults.length > 0) {
+    checks.push({ type: 'dashboard_results', files: relevantResults, exists: true });
+  }
+
+  return checks.length > 0 ? checks : null;
+}
+
+/**
+ * Count tools for an MCP server by reading its source if available.
+ */
+async function estimateToolCount(serverName, config) {
+  // Known tool counts from observation
+  const knownCounts = {
+    'substack': 27,
+    'notebooklm-mcp': 29,
+    'eaas': 5,
+  };
+  if (knownCounts[serverName]) return knownCounts[serverName];
+
+  // Try to count from source files
+  const args = config.args || [];
+  for (const arg of args) {
+    if (String(arg).endsWith('.ts') || String(arg).endsWith('.js')) {
+      const toolDir = join(resolve(String(arg), '..'), 'tools');
+      const toolFiles = await safeLs(toolDir);
+      if (toolFiles.length > 0) return toolFiles.length;
+    }
+  }
+
+  return null;
+}
+
+async function readMcpDomainSignals() {
+  const mcpDomains = [];
+  const serversFound = new Map(); // name -> { config, scope, project? }
+
+  // 1. Read global MCP registry
+  const globalConfig = await safeReadJSON(GLOBAL_CLAUDE_JSON);
+  if (globalConfig?.mcpServers) {
+    for (const [name, config] of Object.entries(globalConfig.mcpServers)) {
+      if (config && typeof config === 'object' && Object.keys(config).length > 0) {
+        serversFound.set(name, { config, scope: 'global' });
+      }
+    }
+  }
+
+  // 2. Read project-local MCP configs
+  for (const { path: cfgPath, scope, project } of PROJECT_MCP_CONFIGS) {
+    const projConfig = await safeReadJSON(cfgPath);
+    if (!projConfig) continue;
+
+    const servers = projConfig.mcpServers || projConfig;
+    if (typeof servers !== 'object') continue;
+
+    for (const [name, config] of Object.entries(servers)) {
+      if (name === 'mcpServers') continue; // skip nested key
+      if (config && typeof config === 'object' && config.command) {
+        // Project-local doesn't override global — record both scopes
+        if (serversFound.has(name)) {
+          const existing = serversFound.get(name);
+          existing.scope = `global+${scope}`;
+          existing.project = project;
+        } else {
+          serversFound.set(name, { config, scope, project });
+        }
+      }
+    }
+  }
+
+  // 3. For each server, build domain entry
+  for (const [serverName, { config, scope, project }] of serversFound) {
+    const domainInfo = inferMcpDomain(serverName, config);
+    const toolCount = await estimateToolCount(serverName, config);
+    const dataChecks = await checkMcpDataAvailability(serverName, config);
+    const skillMatches = await findSkillsForDomain(serverName, domainInfo.domain);
+
+    // Separate autoresearch skills from other skills
+    const autoresearchSkills = skillMatches['autoresearch'] || [];
+    const otherSkills = [];
+    for (const [label, skills] of Object.entries(skillMatches)) {
+      if (label !== 'autoresearch') {
+        otherSkills.push(...skills.map(s => `${s} (${label})`));
+      }
+    }
+
+    // Determine gap description
+    let gap;
+    if (autoresearchSkills.length > 0) {
+      gap = 'Autoresearch skills exist for this domain';
+    } else if (otherSkills.length > 0) {
+      gap = 'Skills exist elsewhere but no autoresearch-optimizable skills for this domain';
+    } else {
+      gap = 'Active MCP with no matching skills — domain entirely uncovered';
+    }
+
+    const entry = {
+      mcp_server: serverName,
+      domain: domainInfo.domain,
+      subdomains: domainInfo.subdomains,
+      tool_count: toolCount,
+      tool_namespace: `mcp__${serverName}__`,
+      scope,
+      ...(project ? { project } : {}),
+      data_available: dataChecks !== null,
+      ...(dataChecks ? { data_sources: dataChecks } : {}),
+      existing_skills: otherSkills,
+      existing_autoresearch_skills: autoresearchSkills,
+      gap,
+    };
+
+    mcpDomains.push(entry);
+  }
+
+  return mcpDomains;
+}
+
+// ---------------------------------------------------------------------------
 // Synthesis & output
 // ---------------------------------------------------------------------------
 
 async function buildWorldModel() {
-  console.log('World-Model Builder v1.0');
+  console.log('World-Model Builder v1.1');
   console.log('========================\n');
 
   // Collect all signals in parallel
@@ -520,12 +768,14 @@ async function buildWorldModel() {
     supervisorDemands,
     envSignals,
     userIntentSignals,
+    mcpDomains,
   ] = await Promise.all([
     readPipelineOutputs(),
     readResearcherAnnotations(),
     readSupervisorState(),
     readEnvironmentalSignals(),
     readTmuxLogPatterns(),
+    readMcpDomainSignals(),
   ]);
 
   const research_demands = [
@@ -548,19 +798,32 @@ async function buildWorldModel() {
   const unmet = allDemands.filter(d => !d.current_capability).length;
   const partiallyMet = allDemands.filter(d => d.current_capability).length;
 
+  // MCP domain summary stats
+  const mcpDomainCount = mcpDomains.length;
+  const mcpUncoveredDomains = mcpDomains.filter(d =>
+    d.existing_autoresearch_skills.length === 0 && d.existing_skills.length === 0
+  ).length;
+  const mcpPartialDomains = mcpDomains.filter(d =>
+    d.existing_autoresearch_skills.length === 0 && d.existing_skills.length > 0
+  ).length;
+
   const model = {
     timestamp: new Date().toISOString(),
-    version: '1.0',
+    version: '1.1',
     research_demands,
     system_demands,
     environmental_signals,
     user_intent_signals,
+    mcp_domains: mcpDomains,
     summary: {
       total_demands: allDemands.length,
       unmet_demands: unmet,
       partially_met: partiallyMet,
       research_gap_count: research_demands.filter(d => !d.current_capability).length,
       system_gap_count: system_demands.filter(d => !d.current_capability).length,
+      mcp_domain_count: mcpDomainCount,
+      mcp_uncovered_domains: mcpUncoveredDomains,
+      mcp_partial_domains: mcpPartialDomains,
     },
   };
 
@@ -572,12 +835,27 @@ async function buildWorldModel() {
   console.log(`System demands:         ${system_demands.length}`);
   console.log(`Environmental signals:  ${environmental_signals.length}`);
   console.log(`User intent signals:    ${user_intent_signals.length}`);
+  console.log(`MCP domains detected:   ${mcpDomainCount}`);
   console.log(`─────────────────────────────────`);
   console.log(`Total demands:          ${model.summary.total_demands}`);
   console.log(`  Unmet:                ${model.summary.unmet_demands}`);
   console.log(`  Partially met:        ${model.summary.partially_met}`);
   console.log(`  Research gaps:        ${model.summary.research_gap_count}`);
   console.log(`  System gaps:          ${model.summary.system_gap_count}`);
+  console.log(`  MCP uncovered:        ${mcpUncoveredDomains}`);
+  console.log(`  MCP partial:          ${mcpPartialDomains}`);
+
+  // Print MCP domain details
+  if (mcpDomains.length > 0) {
+    console.log(`\nMCP Domain Details:`);
+    for (const d of mcpDomains) {
+      const tools = d.tool_count ? ` (${d.tool_count} tools)` : '';
+      const data = d.data_available ? ' [data available]' : '';
+      console.log(`  ${d.mcp_server}: ${d.domain}${tools} [${d.scope}]${data}`);
+      console.log(`    Gap: ${d.gap}`);
+    }
+  }
+
   console.log(`\nWritten: ${OUTPUT_PATH}`);
 
   return model;

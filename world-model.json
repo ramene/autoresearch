@@ -1,80 +1,7 @@
 {
-  "timestamp": "2026-03-16T15:39:27.319Z",
-  "version": "1.0",
+  "timestamp": "2026-03-16T19:00:34.316Z",
+  "version": "1.1",
   "research_demands": [
-    {
-      "signal": "Pipeline failure rate is 83% (5/6 runs failed)",
-      "source": "pipeline-runs/*.json",
-      "evidence": [
-        "Pipeline exited with code 1 (x4)",
-        "Server restarted while pipeline was running (x1)"
-      ],
-      "frequency": 5,
-      "current_capability": "cross-model-intelligence-pipeline"
-    },
-    {
-      "signal": "Stage \"Claude Execution\" fails frequently (1 failures)",
-      "source": "pipeline-runs/*.json stage analysis",
-      "evidence": [
-        "1 failures in Claude Execution"
-      ],
-      "frequency": 1,
-      "current_capability": "cross-model-intelligence-pipeline"
-    },
-    {
-      "signal": "Stage \"Claude Synthesis\" fails frequently (3 failures)",
-      "source": "pipeline-runs/*.json stage analysis",
-      "evidence": [
-        "3 failures in Claude Synthesis"
-      ],
-      "frequency": 3,
-      "current_capability": "cross-model-intelligence-pipeline"
-    },
-    {
-      "signal": "Run \"54ab33d0\" has incomplete stage outputs (missing: stage-1, stage-2, stage-3)",
-      "source": "pipeline-runs/54ab33d0/",
-      "evidence": [
-        "Existing files: input.md"
-      ],
-      "frequency": 1,
-      "current_capability": "cross-model-intelligence-pipeline"
-    },
-    {
-      "signal": "Run \"603e2c6d\" has incomplete stage outputs (missing: stage-1, stage-2, stage-3)",
-      "source": "pipeline-runs/603e2c6d/",
-      "evidence": [
-        "Existing files: input.md"
-      ],
-      "frequency": 1,
-      "current_capability": "cross-model-intelligence-pipeline"
-    },
-    {
-      "signal": "Run \"882aac75\" has incomplete stage outputs (missing: stage-1, stage-2, stage-3)",
-      "source": "pipeline-runs/882aac75/",
-      "evidence": [
-        "Existing files: input.md"
-      ],
-      "frequency": 1,
-      "current_capability": "cross-model-intelligence-pipeline"
-    },
-    {
-      "signal": "Run \"9275d5f5\" has incomplete stage outputs (missing: stage-1, stage-2, stage-3)",
-      "source": "pipeline-runs/9275d5f5/",
-      "evidence": [
-        "Existing files: input.md"
-      ],
-      "frequency": 1,
-      "current_capability": "cross-model-intelligence-pipeline"
-    },
-    {
-      "signal": "Run \"b7b8bbf1\" has incomplete stage outputs (missing: stage-1, stage-2, stage-3)",
-      "source": "pipeline-runs/b7b8bbf1/",
-      "evidence": [
-        "Existing files: input.md"
-      ],
-      "frequency": 1,
-      "current_capability": "cross-model-intelligence-pipeline"
-    },
     {
       "signal": "Requested language \"fr\" not fully generated for baseline-march7",
       "source": "pipeline-runs/baseline-march7-nblm.json",
@@ -150,6 +77,15 @@
       ],
       "frequency": 1,
       "current_capability": "environmental-monitoring"
+    },
+    {
+      "signal": "Strategic goal: capability-gap-detection — Periodically analyze system capabilities against world demands. Identify structural gaps. Propose new skills and goals. The system's meta-cognitive fu",
+      "source": "supervisor/strategic.md",
+      "evidence": [
+        "Periodically analyze system capabilities against world demands. Identify structural gaps. Propose new skills and goals. The system's meta-cognitive function — how it decides what to want."
+      ],
+      "frequency": 1,
+      "current_capability": "capability-gap-detection"
     }
   ],
   "environmental_signals": [
@@ -177,63 +113,166 @@
       "signal": "Skill \"scaffold\" has 11 unresolved failure(s) in round 5",
       "source": "skills/working-scaffold/rounds.json",
       "current_capability": "scaffold"
+    },
+    {
+      "signal": "Skill \"skill-improver\" score plateaued at 30 for 3 rounds",
+      "source": "skills/working-skill-improver/rounds.json",
+      "current_capability": "skill-improver"
+    },
+    {
+      "signal": "Skill \"skill-improver\" has 6 unresolved failure(s) in round 4",
+      "source": "skills/working-skill-improver/rounds.json",
+      "current_capability": "skill-improver"
     }
   ],
   "user_intent_signals": [
     {
       "signal": "User intent pattern: \"research pipeline\" detected across tmux transcripts",
-      "source": "tmux-logs transcripts (11 files scanned)",
-      "frequency": 317,
+      "source": "tmux-logs transcripts (14 files scanned)",
+      "frequency": 320,
       "current_capability": null
     },
     {
       "signal": "User intent pattern: \"skill improvement\" detected across tmux transcripts",
-      "source": "tmux-logs transcripts (11 files scanned)",
-      "frequency": 1179,
+      "source": "tmux-logs transcripts (14 files scanned)",
+      "frequency": 1590,
       "current_capability": null
     },
     {
       "signal": "User intent pattern: \"error debugging\" detected across tmux transcripts",
-      "source": "tmux-logs transcripts (11 files scanned)",
-      "frequency": 105,
-      "current_capability": null
-    },
-    {
-      "signal": "User intent pattern: \"deployment\" detected across tmux transcripts",
-      "source": "tmux-logs transcripts (11 files scanned)",
-      "frequency": 72,
-      "current_capability": null
-    },
-    {
-      "signal": "User intent pattern: \"testing\" detected across tmux transcripts",
-      "source": "tmux-logs transcripts (11 files scanned)",
-      "frequency": 65,
-      "current_capability": null
-    },
-    {
-      "signal": "User intent pattern: \"dashboard\" detected across tmux transcripts",
-      "source": "tmux-logs transcripts (11 files scanned)",
-      "frequency": 283,
+      "source": "tmux-logs transcripts (14 files scanned)",
+      "frequency": 178,
       "current_capability": null
     },
     {
       "signal": "User intent pattern: \"security audit\" detected across tmux transcripts",
-      "source": "tmux-logs transcripts (11 files scanned)",
-      "frequency": 22,
+      "source": "tmux-logs transcripts (14 files scanned)",
+      "frequency": 34,
+      "current_capability": null
+    },
+    {
+      "signal": "User intent pattern: \"deployment\" detected across tmux transcripts",
+      "source": "tmux-logs transcripts (14 files scanned)",
+      "frequency": 89,
+      "current_capability": null
+    },
+    {
+      "signal": "User intent pattern: \"testing\" detected across tmux transcripts",
+      "source": "tmux-logs transcripts (14 files scanned)",
+      "frequency": 89,
+      "current_capability": null
+    },
+    {
+      "signal": "User intent pattern: \"dashboard\" detected across tmux transcripts",
+      "source": "tmux-logs transcripts (14 files scanned)",
+      "frequency": 312,
       "current_capability": null
     },
     {
       "signal": "User intent pattern: \"documentation\" detected across tmux transcripts",
-      "source": "tmux-logs transcripts (11 files scanned)",
-      "frequency": 25,
+      "source": "tmux-logs transcripts (14 files scanned)",
+      "frequency": 27,
       "current_capability": null
     }
   ],
+  "mcp_domains": [
+    {
+      "mcp_server": "notebooklm-mcp",
+      "domain": "research_synthesis",
+      "subdomains": [
+        "audio_generation",
+        "document_analysis",
+        "interactive_qa"
+      ],
+      "tool_count": 29,
+      "tool_namespace": "mcp__notebooklm-mcp__",
+      "scope": "global",
+      "data_available": true,
+      "data_sources": [
+        {
+          "type": "nblm_state_files",
+          "count": 1,
+          "exists": true
+        }
+      ],
+      "existing_skills": [
+        "nate-synthesis-and-debate (seed-base)",
+        "nate-synthesis-and-debate (builds-karve-ai)"
+      ],
+      "existing_autoresearch_skills": [
+        "autoresearch-runner.mjs",
+        "autoresearch-runner.py"
+      ],
+      "gap": "Autoresearch skills exist for this domain"
+    },
+    {
+      "mcp_server": "substack",
+      "domain": "content_creation",
+      "subdomains": [
+        "writing",
+        "audience_growth",
+        "engagement",
+        "monetization"
+      ],
+      "tool_count": 27,
+      "tool_namespace": "mcp__substack__",
+      "scope": "project-local",
+      "project": "builds.karve.ai",
+      "data_available": true,
+      "data_sources": [
+        {
+          "type": "mcp_source",
+          "path": "/Users/ramene/.remote/@builds.karve.ai/apps/mcp/src",
+          "exists": true
+        },
+        {
+          "type": "mcp_package",
+          "path": "/Users/ramene/.remote/@builds.karve.ai/packages/mcp-substack-tools",
+          "exists": true
+        }
+      ],
+      "existing_skills": [
+        "mattgiaro-substack-agent (builds-karve-ai)",
+        "mattgiaro-substack-growth (builds-karve-ai)",
+        "mattgiaro-substack-guide (builds-karve-ai)"
+      ],
+      "existing_autoresearch_skills": [],
+      "gap": "Skills exist elsewhere but no autoresearch-optimizable skills for this domain"
+    },
+    {
+      "mcp_server": "eaas",
+      "domain": "monetization_platform",
+      "subdomains": [
+        "api_endpoints",
+        "x402_payments",
+        "service_delivery"
+      ],
+      "tool_count": 5,
+      "tool_namespace": "mcp__eaas__",
+      "scope": "project-local",
+      "project": "builds.karve.ai",
+      "data_available": false,
+      "existing_skills": [
+        "eaas-domain-expansion-agent-team-v1 (seed-base)",
+        "eaas-expansion-brainstorm-to-blueprint-v1 (seed-base)",
+        "eaas-platform-build-self-discovery-v1 (seed-base)",
+        "eaas-domain-expansion-agent-team-v1 (builds-karve-ai)",
+        "eaas-expansion-brainstorm-to-blueprint-v1 (builds-karve-ai)",
+        "eaas-platform-build-self-discovery-v1 (builds-karve-ai)",
+        "platform (builds-karve-ai)"
+      ],
+      "existing_autoresearch_skills": [],
+      "gap": "Skills exist elsewhere but no autoresearch-optimizable skills for this domain"
+    }
+  ],
   "summary": {
-    "total_demands": 29,
+    "total_demands": 24,
     "unmet_demands": 9,
-    "partially_met": 20,
+    "partially_met": 15,
     "research_gap_count": 1,
-    "system_gap_count": 0
+    "system_gap_count": 0,
+    "mcp_domain_count": 3,
+    "mcp_uncovered_domains": 0,
+    "mcp_partial_domains": 2
   }
 }
