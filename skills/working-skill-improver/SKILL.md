@@ -21,7 +21,7 @@ This skill addresses a critical meta-capability gap identified in `want-015`. Th
 
 *   A target skill name must be provided.
 *   The target skill's directory must exist at `~/.remote/@autoresearch/skills/working-{skill_name}/`.
-*   The directory must contain `SKILL.md`, `eval.json`, and `rounds.json`. The presence of `events.jsonl` is highly recommended for detailed failure analysis.
+*   The directory must contain `SKILL.md`, `eval.json`, and `rounds.json`. The presence of `events.jsonl` is recommended but not required for detailed failure analysis.
 *   The `autoresearch-runner` command-line tool must be available in the system's `PATH`.
 
 ## Execution Steps
@@ -40,11 +40,14 @@ The skill operates in five distinct phases: Triage, Hypothesis, Modification, Ev
         *   Note the `round_id` of the last few failed or low-scoring rounds.
     *   **Tool: `Read`**: Read `$SKILL_DIR/SKILL.md` to understand the skill's intended purpose, triggers, and steps. This provides context for the failures.
     *   **Tool: `Read`**: Read `$SKILL_DIR/eval.json` to understand how the skill is currently being measured.
-4.  **Analyze Failure Logs:**
-    *   **Tool: `Grep`**: Search `$SKILL_DIR/events.jsonl` for specific error indicators from recent failed rounds.
-    *   `grep '"event_type": "error"' $SKILL_DIR/events.jsonl`
-    *   `grep -i "FAIL\|Exception\|Traceback" $SKILL_DIR/events.jsonl`
-    *   Correlate the timestamps or `round_id` from the logs with the data from `rounds.json`. Pay close attention to the agent's thoughts (`"event_type": "thought"`) just before an error occurs.
+4.  **Analyze Failure Logs (if available):**
+    *   **Tool: `Bash`**: Check if `$SKILL_DIR/events.jsonl` exists: `[ -f $SKILL_DIR/events.jsonl ] && echo "exists" || echo "missing"`
+    *   If the file exists, proceed with log analysis:
+        *   **Tool: `Grep`**: Search `$SKILL_DIR/events.jsonl` for specific error indicators from recent failed rounds.
+        *   `grep '"event_type": "error"' $SKILL_DIR/events.jsonl`
+        *   `grep -i "FAIL\|Exception\|Traceback" $SKILL_DIR/events.jsonl`
+        *   Correlate the timestamps or `round_id` from the logs with the data from `rounds.json`. Pay close attention to the agent's thoughts (`"event_type": "thought"`) just before an error occurs.
+    *   If the file is absent, proceed with analysis based solely on `rounds.json` and `SKILL.md`. Note in the hypothesis that log-based evidence was unavailable.
 
 ### Phase 2: Hypothesis Formulation
 
@@ -74,15 +77,36 @@ The skill operates in five distinct phases: Triage, Hypothesis, Modification, Ev
 
 ### Phase 4: Re-evaluation and Analysis
 
-10. **Trigger New Evaluation:** Run the system's evaluation tool on the modified skill.
-    *   **Tool: `Bash`**: `autoresearch-runner --skill {skill_name} --eval`
-11. **Monitor and Parse Results:** Wait for the runner to complete. It will add a new entry to `$SKILL_DIR/rounds.json`.
-    *   **Tool: `Read`**: Read `$SKILL_DIR/rounds.json` again and parse the JSON to get the last (most recent) round's data.
+10. **Record Pre-Evaluation State:** Before starting the evaluation, determine the current number of rounds to establish a baseline for comparison.
+    *   **Tool: `Bash`**: `initial_round_count=$(jq '.rounds | length' $SKILL_DIR/rounds.json)`
+
+11. **Trigger Asynchronous Evaluation:** Launch the evaluation runner as a background process so this skill does not block and time out.
+    *   **Tool: `Bash`**: `autoresearch-runner --skill {skill_name} --eval &`
+
+12. **Poll for Evaluation Completion:** Periodically check for a new result in `rounds.json`. Implement a timeout to avoid an infinite loop.
+    *   **Tool: `Bash`**: Use a loop that runs for a maximum of 10 iterations with a 30-second sleep, effectively creating a 5-minute timeout.
+    ```bash
+    for i in {1..10}; do
+      current_round_count=$(jq '.rounds | length' $SKILL_DIR/rounds.json)
+      if [ "$current_round_count" -gt "$initial_round_count" ]; then
+        echo "Evaluation complete."
+        break
+      fi
+      if [ "$i" -eq 10 ]; then
+        echo "Error: Evaluation timed out after 5 minutes."
+        exit 1
+      fi
+      sleep 30
+    done
+    ```
+
+13. **Parse Results:** Once the new round appears, read the file and extract the latest result for analysis.
+    *   **Tool: `Read`**: Read `$SKILL_DIR/rounds.json` and parse the JSON to get the last (most recent) round's data.
     *   Compare the `score` and `outcome` of the new round with the previous one.
 
 ### Phase 5: Decision and Cleanup
 
-12. **Analyze Outcome:**
+14. **Analyze Outcome:**
     *   **If `outcome` is `kept` and `score` has improved:** The hypothesis was correct. The experiment was a success.
         *   Update the `changelog.md` entry's `Result` to "SUCCESS - Score improved to {new_score}. Change kept."
         *   **Tool: `Bash`**: `rm $SKILL_DIR/SKILL.md.bak` (or the relevant backup file).
@@ -130,8 +154,8 @@ Before completing, verify the following checks have passed:
 1.  [ ] **Correct Component Identified:** The analysis correctly pinpointed the failing component (prompt, code, or eval) based on log evidence.
 2.  [ ] **Targeted Modification:** The proposed change directly addresses a specific failure mode observed in the logs (e.g., an error message, a logical fallacy).
 3.  [ ] **Successful Application:** The modification was successfully applied to the target skill's definition file(s) using the `Edit` tool.
-4.  [ ] **Evaluation Triggered:** A new evaluation run for the modified skill was successfully initiated via `autoresearch-runner`.
-5.  [ ] **Result Parsed:** The new evaluation results were correctly parsed from `rounds.json` and compared against the baseline performance.
+4.  [ ] **Evaluation Triggered:** A new evaluation run for the modified skill was successfully initiated via `autoresearch-runner` as a background process.
+5.  [ ] **Result Parsed:** The new evaluation results were correctly parsed from `rounds.json` and compared against the baseline performance after polling for completion.
 6.  [ ] **Reversion on Failure:** If the change did not result in an improvement, the modified files were successfully reverted to their original state.
 
 ## Integration Points
@@ -143,8 +167,9 @@ Before completing, verify the following checks have passed:
 ## Error Handling
 
 *   **Skill Not Found:** If the directory `~/.remote/@autoresearch/skills/working-{skill_name}/` does not exist, terminate with an error message.
-*   **Missing Data:** If `rounds.json` or `events.jsonl` are missing, terminate with a message stating that there is insufficient data for analysis.
-*   **Evaluation Runner Failure:** If the `autoresearch-runner` command fails, log the error output, revert any changes made to the skill files, and terminate.
+*   **Missing Data:** If `rounds.json` is missing, terminate with a message stating that there is insufficient data for analysis. If `events.jsonl` is missing, proceed with reduced analysis based on `rounds.json` and `SKILL.md` alone.
+*   **Evaluation Runner Failure:** If the `autoresearch-runner` command fails to launch, log the error output, revert any changes made to the skill files, and terminate.
+*   **Evaluation Timeout:** If the polling loop in Phase 4 exhausts all iterations without detecting a new round in `rounds.json`, revert any changes made to the skill files and terminate with a timeout error message.
 *   **File I/O Errors:** If unable to read, write, or backup files, terminate and report the I/O error. Ensure no partial changes are left behind.
 
 ## Examples
@@ -155,7 +180,7 @@ Before completing, verify the following checks have passed:
 *   **Analysis:** `rounds.json` shows the score is stuck at 0.5. `events.jsonl` reveals the skill correctly identifies drift but often fails to output the result in the required JSON format, causing the evaluation to fail.
 *   **Hypothesis:** The `SKILL.md` prompt's output format instructions are unclear.
 *   **Modification:** `Edit` the `SKILL.md` to add a clear, explicit example of the required JSON output format in the final step.
-*   **Evaluation:** Run `autoresearch-runner`. The new score is 0.9 and the outcome is `kept`.
+*   **Evaluation:** Launch `autoresearch-runner` in the background and poll `rounds.json` until a new round appears. The new score is 0.9 and the outcome is `kept`.
 *   **Output:** A success report is generated, and the change to `SKILL.md` is made permanent.
 
 ### Example 2: Fixing a Bug in a Skill's Tool
@@ -164,7 +189,7 @@ Before completing, verify the following checks have passed:
 *   **Analysis:** `events.jsonl` shows a consistent Python `KeyError` traceback originating from a helper script `scripts/format_citation.py`. `rounds.json` shows a score of 0.0 for the last 3 rounds.
 *   **Hypothesis:** The script `scripts/format_citation.py` does not correctly handle entries missing an 'author' key.
 *   **Modification:** `Edit` the script to use `.get('author', 'N/A')` instead of `['author']` to provide a default value and prevent the `KeyError`.
-*   **Evaluation:** Run `autoresearch-runner`. The script no longer crashes, and the score improves to 0.85.
+*   **Evaluation:** Launch `autoresearch-runner` in the background and poll for completion. The script no longer crashes, and the score improves to 0.85.
 *   **Output:** A success report is generated, and the change to the Python script is kept.
 
 ### Example 3: Reverting a Failed Experiment
@@ -173,5 +198,5 @@ Before completing, verify the following checks have passed:
 *   **Analysis:** The skill is slow. `rounds.json` shows it often times out.
 *   **Hypothesis:** Replacing a file-based cache with an in-memory dictionary will speed it up.
 *   **Modification:** `Edit` the skill's main script to change the caching mechanism.
-*   **Evaluation:** Run `autoresearch-runner`. The skill now fails with an `OutOfMemoryError`. The new score is 0.0 and the outcome is `rejected`.
+*   **Evaluation:** Launch `autoresearch-runner` in the background and poll for completion. The skill now fails with an `OutOfMemoryError`. The new score is 0.0 and the outcome is `rejected`.
 *   **Output:** A failure report is generated. The skill's script is automatically reverted from the backup to its previous, slower-but-functional state. The `changelog.md` is updated to document the failed experiment.

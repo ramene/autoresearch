@@ -131,7 +131,7 @@ async function callClaudeCli(prompt, systemPrompt) {
   try {
     const result = execSync(
       `cat "${tmpFile}" | claude --print --model ${CONFIG.claudeModel}`,
-      { maxBuffer: 1024 * 1024, timeout: 120000, encoding: 'utf8', shell: true }
+      { maxBuffer: 2 * 1024 * 1024, timeout: 300000, encoding: 'utf8', shell: true }
     )
     return result
   } finally {

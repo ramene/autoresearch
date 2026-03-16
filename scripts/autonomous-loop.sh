@@ -47,7 +47,8 @@ fi
 STUCK_COUNT=0
 for events_file in "$AUTORESEARCH_DIR"/skills/working-*/events.jsonl; do
     if [ -f "$events_file" ]; then
-        STUCK_COUNT=$((STUCK_COUNT + $(grep -c "stuck_escalation" "$events_file" 2>/dev/null || echo 0)))
+        SC=$(grep -c "stuck_escalation" "$events_file" 2>/dev/null || true)
+        STUCK_COUNT=$((STUCK_COUNT + ${SC:-0}))
     fi
 done
 if [ "$STUCK_COUNT" -ge 3 ]; then
