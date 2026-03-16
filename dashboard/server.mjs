@@ -34,6 +34,12 @@ const DIST_DIR = resolve(__dirname, 'dist')
 const PIPELINE_PATH = resolve(__dirname, '../reasoning-pipeline/pipeline.mjs')
 const PIPELINE_RUNS_DIR = resolve(__dirname, 'public/pipeline-runs')
 
+// Audio/media storage: GCS bucket (private, signed URLs for streaming)
+// Files uploaded via: gsutil cp <file> gs://autoresearch-media/pipeline-audio/
+const GCS_MEDIA_BUCKET = process.env.GCS_MEDIA_BUCKET || 'autoresearch-media'
+const GCS_MEDIA_PREFIX = 'pipeline-audio'
+const LOCAL_AUDIO_DIR = resolve(__dirname, 'public/pipeline-audio') // fallback for local dev
+
 let runnerProcess = null
 let runnerLog = []
 
@@ -554,6 +560,47 @@ Return ONLY valid JSON:
       error: r.error,
     }))
     jsonResponse(res, runs)
+    return
+  }
+
+  // ─── Media Proxy (GCS private bucket → authenticated streaming) ──
+
+  // GET /api/media/:filename — proxy audio/media from GCS with auth, fall back to local
+  const mediaMatch = path.match(/^\/api\/media\/(.+)$/)
+  if (mediaMatch && req.method === 'GET') {
+    const filename = decodeURIComponent(mediaMatch[1])
+    // Try local first (dev mode)
+    const localPath = join(LOCAL_AUDIO_DIR, filename)
+    if (existsSync(localPath)) {
+      serveStatic(res, localPath)
+      return
+    }
+    // Proxy from GCS with gcloud auth token
+    try {
+      const { execSync } = await import('child_process')
+      const token = execSync('gcloud auth print-access-token', { encoding: 'utf8', timeout: 5000 }).trim()
+      const gcsUrl = `https://storage.googleapis.com/${GCS_MEDIA_BUCKET}/${GCS_MEDIA_PREFIX}/${filename}`
+      const gcsRes = await fetch(gcsUrl, { headers: { Authorization: `Bearer ${token}` } })
+      if (!gcsRes.ok) { res.writeHead(404); res.end('Not found in GCS'); return }
+      const ext = '.' + filename.split('.').pop()
+      res.writeHead(200, {
+        'Content-Type': MIME[ext] || 'application/octet-stream',
+        'Content-Length': gcsRes.headers.get('content-length') || '',
+        'Accept-Ranges': 'bytes',
+        'Cache-Control': 'private, max-age=3600',
+      })
+      const reader = gcsRes.body.getReader()
+      const pump = async () => {
+        while (true) {
+          const { done, value } = await reader.read()
+          if (done) { res.end(); return }
+          res.write(value)
+        }
+      }
+      await pump()
+    } catch (err) {
+      res.writeHead(500); res.end(`Media proxy error: ${err.message}`)
+    }
     return
   }
 
