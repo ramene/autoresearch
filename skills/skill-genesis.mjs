@@ -12,13 +12,96 @@
 //   node skills/skill-genesis.mjs --want want-015 --approve  # Create specific skill
 // ─────────────────────────────────────────────────────────────────────────────
 
-import { readFileSync, writeFileSync, existsSync, mkdirSync, appendFileSync } from 'node:fs'
-import { resolve } from 'node:path'
+import { readFileSync, writeFileSync, existsSync, mkdirSync, appendFileSync, readdirSync } from 'node:fs'
+import { resolve, basename } from 'node:path'
 
 const BASE = resolve(import.meta.dirname, '..')
 const WANTS_PATH = resolve(BASE, 'wants.json')
 const SKILLS_DIR = resolve(BASE, 'skills')
+const WORLD_MODEL_PATH = resolve(BASE, 'world-model.json')
 const GEMINI_MODEL = 'gemini-2.5-pro'
+
+// ─── Domain-Specific Eval Templates ───────────────────────────────────────────
+// When skill-genesis processes a domain_coverage_gap want, these templates
+// produce richer, domain-aware eval scenarios instead of generic ones.
+// Extend this map for future domains.
+
+const DOMAIN_EVAL_TEMPLATES = {
+  content_creation: {
+    scenarios: [
+      { id: 1, type: 'analysis', title: 'Engagement Analysis', event: "User asks to analyze their last 10 posts' engagement metrics (likes, comments, restacks) and identify what content type performs best", expectedAction: 'use-engagement-data', expectedType: 'performance-analysis' },
+      { id: 2, type: 'gap-detection', title: 'Content Gap Discovery', event: "User wants to find topics their audience cares about that they haven't written about yet, based on network trends and comment patterns", expectedAction: 'analyze-gaps', expectedType: 'topic-discovery' },
+      { id: 3, type: 'strategy', title: 'Publishing Schedule Optimization', event: 'User publishes randomly and wants a data-driven publishing schedule based on when their audience is most engaged', expectedAction: 'optimize-schedule', expectedType: 'calendar-strategy' },
+      { id: 4, type: 'competitive', title: 'Network Trend Analysis', event: 'User wants to understand what topics are trending across their Substack network (recommendations, restacks) to ride emerging waves', expectedAction: 'analyze-trends', expectedType: 'competitive-intel' },
+      { id: 5, type: 'creation', title: 'Content Remix', event: 'User has a high-performing post and wants to create variations (thread, notes, newsletter) to maximize reach across formats', expectedAction: 'remix-content', expectedType: 'content-generation' },
+      { id: 6, type: 'monetization', title: 'Subscriber Growth Strategy', event: 'User has 500 free subscribers and wants a plan to convert 10% to paid, using engagement data to identify most-convertible audience segments', expectedAction: 'growth-plan', expectedType: 'monetization' },
+      { id: 7, type: 'edge-case', title: 'Cold Start — New Publication', event: 'User just started a Substack with 0 posts and 0 subscribers. No historical data exists. Skill should provide bootstrapping guidance', expectedAction: 'bootstrap-strategy', expectedType: 'cold-start' },
+      { id: 8, type: 'integration', title: 'Cross-Platform Content Strategy', event: 'User publishes on Substack and wants to understand how to repurpose content for other platforms using available tools', expectedAction: 'cross-platform-plan', expectedType: 'integration' },
+    ],
+    criteria: [
+      'Data Grounding: Does the skill\'s guidance reference specific metrics from MCP tools (engagement rates, comment sentiment, network trends) rather than generic advice?',
+      'Actionability: Does the skill produce concrete next steps with timelines, not vague recommendations?',
+      'Audience Awareness: Does the skill consider the specific audience\'s behavior patterns rather than generic Substack advice?',
+      'Tool Utilization: Does the skill reference specific MCP capabilities (analyze-engagement, discover-gaps, analyze-network-trends, generate-content-calendar) by name?',
+      'Measurement: Does the skill define success metrics that can be verified using MCP data after implementation?',
+      'Adaptation: Does the skill handle edge cases (cold start, declining engagement, niche topics) with different strategies?',
+    ],
+  },
+  // Future domain templates:
+  // software_development: { scenarios: [...], criteria: [...] },
+  // research_synthesis: { scenarios: [...], criteria: [...] },
+  // monetization_platform: { scenarios: [...], criteria: [...] },
+}
+
+// ─── Domain Context Discovery ─────────────────────────────────────────────────
+// Reads MCP tool descriptions and world-model domain info to enrich eval generation.
+
+function discoverDomainContext(want) {
+  const context = { domain: null, mcpServer: null, subdomains: [], toolNames: [], toolCount: 0 }
+
+  // Only applies to domain_coverage_gap wants
+  if (want.type !== 'domain_coverage_gap') return context
+
+  // Try to find domain info from world-model.json
+  if (existsSync(WORLD_MODEL_PATH)) {
+    try {
+      const worldModel = JSON.parse(readFileSync(WORLD_MODEL_PATH, 'utf8'))
+      const mcpDomains = worldModel.mcp_domains || []
+
+      // Match by MCP server name from evidence, or by domain from proposed_skill
+      for (const mcpDomain of mcpDomains) {
+        const evidenceStr = (want.evidence || []).join(' ').toLowerCase()
+        if (
+          evidenceStr.includes(mcpDomain.mcp_server) ||
+          evidenceStr.includes(mcpDomain.domain)
+        ) {
+          context.domain = mcpDomain.domain
+          context.mcpServer = mcpDomain.mcp_server
+          context.subdomains = mcpDomain.subdomains || []
+          context.toolCount = mcpDomain.tool_count || 0
+          break
+        }
+      }
+    } catch { /* ignore parse errors */ }
+  }
+
+  // For Substack specifically, read tool filenames for capability context
+  if (context.mcpServer === 'substack') {
+    const toolsDir = resolve(
+      process.env.HOME,
+      '.remote/@builds.karve.ai/packages/mcp-substack-tools/src/tools'
+    )
+    if (existsSync(toolsDir)) {
+      try {
+        context.toolNames = readdirSync(toolsDir)
+          .filter(f => f.endsWith('.ts'))
+          .map(f => basename(f, '.ts'))
+      } catch { /* ignore read errors */ }
+    }
+  }
+
+  return context
+}
 
 // ─── CLI Argument Parsing ───────────────────────────────────────────────────
 
@@ -180,7 +263,32 @@ Write the SKILL.md as a direct markdown document. Do NOT wrap it in code fences.
 
 // ─── Eval.json Generation ───────────────────────────────────────────────────
 
-function generateEvalJson(spec) {
+function generateEvalJson(spec, want = null) {
+  // Check if a domain-specific template exists for this want
+  const domainContext = want ? discoverDomainContext(want) : { domain: null }
+
+  if (domainContext.domain && DOMAIN_EVAL_TEMPLATES[domainContext.domain]) {
+    const template = DOMAIN_EVAL_TEMPLATES[domainContext.domain]
+    console.log(`  Using domain-specific eval template for "${domainContext.domain}"`)
+    if (domainContext.toolNames.length > 0) {
+      console.log(`  MCP tools discovered: ${domainContext.toolNames.length} (${domainContext.mcpServer})`)
+    }
+    return {
+      scenarios: template.scenarios,
+      criteria: template.criteria,
+      _meta: {
+        domain: domainContext.domain,
+        mcp_server: domainContext.mcpServer,
+        subdomains: domainContext.subdomains,
+        tool_count: domainContext.toolCount,
+        tool_names: domainContext.toolNames,
+        generated_at: new Date().toISOString(),
+        template_version: '1.0',
+      },
+    }
+  }
+
+  // Fallback: generic eval generation from proposed_skill spec
   const scenarios = spec.scenarios.map((s, i) => {
     // Determine type based on position — first few are happy, last ones are edge cases
     let type = 'happy'
@@ -330,8 +438,8 @@ async function main() {
       const skillMd = await generateSkillMd(want)
       console.log(`  Generated SKILL.md (${skillMd.length} chars)`)
 
-      // b) Generate eval.json from criteria + scenarios
-      const evalJson = generateEvalJson(spec)
+      // b) Generate eval.json from criteria + scenarios (domain-aware if applicable)
+      const evalJson = generateEvalJson(spec, want)
       console.log(`  Generated eval.json (${evalJson.scenarios.length} scenarios, ${evalJson.criteria.length} criteria)`)
 
       // c) Create working directory with all files

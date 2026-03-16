@@ -2,75 +2,117 @@
   "scenarios": [
     {
       "id": 1,
-      "type": "happy",
-      "title": "Given last month's Substack data, propose three article topics for the coming mo",
-      "event": "Given last month's Substack data, propose three article topics for the coming month.",
-      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
-      "expectedType": "action"
+      "type": "analysis",
+      "title": "Engagement Analysis",
+      "event": "User asks to analyze their last 10 posts' engagement metrics (likes, comments, restacks) and identify what content type performs best",
+      "expectedAction": "use-engagement-data",
+      "expectedType": "performance-analysis"
     },
     {
       "id": 2,
-      "type": "happy",
-      "title": "Analyze two successful posts and identify the common theme to suggest a follow-u",
-      "event": "Analyze two successful posts and identify the common theme to suggest a follow-up series.",
-      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
-      "expectedType": "action"
+      "type": "gap-detection",
+      "title": "Content Gap Discovery",
+      "event": "User wants to find topics their audience cares about that they haven't written about yet, based on network trends and comment patterns",
+      "expectedAction": "analyze-gaps",
+      "expectedType": "topic-discovery"
     },
     {
       "id": 3,
-      "type": "happy",
-      "title": "Given a draft article title, propose three alternative, higher-engagement headli",
-      "event": "Given a draft article title, propose three alternative, higher-engagement headlines.",
-      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
-      "expectedType": "action"
+      "type": "strategy",
+      "title": "Publishing Schedule Optimization",
+      "event": "User publishes randomly and wants a data-driven publishing schedule based on when their audience is most engaged",
+      "expectedAction": "optimize-schedule",
+      "expectedType": "calendar-strategy"
     },
     {
       "id": 4,
-      "type": "happy",
-      "title": "Analyze readership drop-off points and suggest structural changes to future arti",
-      "event": "Analyze readership drop-off points and suggest structural changes to future articles.",
-      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
-      "expectedType": "action"
+      "type": "competitive",
+      "title": "Network Trend Analysis",
+      "event": "User wants to understand what topics are trending across their Substack network (recommendations, restacks) to ride emerging waves",
+      "expectedAction": "analyze-trends",
+      "expectedType": "competitive-intel"
     },
     {
       "id": 5,
-      "type": "diagnostic",
-      "title": "Identify the day and time with the highest historical engagement and recommend i",
-      "event": "Identify the day and time with the highest historical engagement and recommend it for the next publication.",
-      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
-      "expectedType": "action"
+      "type": "creation",
+      "title": "Content Remix",
+      "event": "User has a high-performing post and wants to create variations (thread, notes, newsletter) to maximize reach across formats",
+      "expectedAction": "remix-content",
+      "expectedType": "content-generation"
     },
     {
       "id": 6,
-      "type": "diagnostic",
-      "title": "Compare this Substack's performance against a known competitor's public data and",
-      "event": "Compare this Substack's performance against a known competitor's public data and identify a content gap.",
-      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
-      "expectedType": "action"
+      "type": "monetization",
+      "title": "Subscriber Growth Strategy",
+      "event": "User has 500 free subscribers and wants a plan to convert 10% to paid, using engagement data to identify most-convertible audience segments",
+      "expectedAction": "growth-plan",
+      "expectedType": "monetization"
     },
     {
       "id": 7,
-      "type": "edge",
-      "title": "Generate a list of keywords to target based on popular search queries leading to",
-      "event": "Generate a list of keywords to target based on popular search queries leading to the publication.",
-      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
-      "expectedType": "action"
+      "type": "edge-case",
+      "title": "Cold Start — New Publication",
+      "event": "User just started a Substack with 0 posts and 0 subscribers. No historical data exists. Skill should provide bootstrapping guidance",
+      "expectedAction": "bootstrap-strategy",
+      "expectedType": "cold-start"
     },
     {
       "id": 8,
-      "type": "edge",
-      "title": "Analyze comment sections to identify frequently asked questions that could becom",
-      "event": "Analyze comment sections to identify frequently asked questions that could become a new article.",
-      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
-      "expectedType": "action"
+      "type": "integration",
+      "title": "Cross-Platform Content Strategy",
+      "event": "User publishes on Substack and wants to understand how to repurpose content for other platforms using available tools",
+      "expectedAction": "cross-platform-plan",
+      "expectedType": "integration"
     }
   ],
   "criteria": [
-    "Does the proposed topic align with previously successful content themes: Does the proposed topic align with previously successful content themes?",
-    "Is the proposed headline A/B testable and based on engagement patterns: Is the proposed headline A/B testable and based on engagement patterns?",
-    "Does the analysis leverage at least three different data signals from the MCP (e.g., open rates, shares, comment velocity): Does the analysis leverage at least three different data signals from the MCP (e.g., open rates, shares, comment velocity)?",
-    "Does the output include a data-driven rationale for its recommendations: Does the output include a data-driven rationale for its recommendations?",
-    "Avoid proposing topics that have recently underperformed: Does the skill avoid proposing topics that have recently underperformed?",
-    "Can the skill generate a content calendar for the next two weeks: Can the skill generate a content calendar for the next two weeks?"
-  ]
+    "Data Grounding: Does the skill's guidance reference specific metrics from MCP tools (engagement rates, comment sentiment, network trends) rather than generic advice?",
+    "Actionability: Does the skill produce concrete next steps with timelines, not vague recommendations?",
+    "Audience Awareness: Does the skill consider the specific audience's behavior patterns rather than generic Substack advice?",
+    "Tool Utilization: Does the skill reference specific MCP capabilities (analyze-engagement, discover-gaps, analyze-network-trends, generate-content-calendar) by name?",
+    "Measurement: Does the skill define success metrics that can be verified using MCP data after implementation?",
+    "Adaptation: Does the skill handle edge cases (cold start, declining engagement, niche topics) with different strategies?"
+  ],
+  "_meta": {
+    "domain": "content_creation",
+    "mcp_server": "substack",
+    "subdomains": [
+      "writing",
+      "audience_growth",
+      "engagement",
+      "monetization"
+    ],
+    "tool_count": 27,
+    "tool_names": [
+      "substack-analyze-engagement",
+      "substack-analyze-network-trends",
+      "substack-analyze-performance",
+      "substack-comment-assistance",
+      "substack-compare-network-gaps",
+      "substack-create-note-with-link",
+      "substack-create-note",
+      "substack-create-post",
+      "substack-discover-gaps",
+      "substack-draft-assistance",
+      "substack-extract-notion-content",
+      "substack-generate-content-calendar",
+      "substack-generate-content-remix",
+      "substack-get-chat-messages",
+      "substack-get-comments-by-url",
+      "substack-get-comments",
+      "substack-get-drafts",
+      "substack-get-network",
+      "substack-get-post-by-url",
+      "substack-get-post-links",
+      "substack-get-posts",
+      "substack-get-profile",
+      "substack-get-video-urls",
+      "substack-get-viral-notes",
+      "substack-publish-draft",
+      "substack-suggest-topics",
+      "substack-sync-to-hackmd"
+    ],
+    "generated_at": "2026-03-16T20:00:00.000Z",
+    "template_version": "1.0"
+  }
 }

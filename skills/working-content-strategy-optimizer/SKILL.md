@@ -38,38 +38,82 @@ This skill can be activated in the following ways:
     *   `comments` (array of strings, the text of each comment)
 
 ## Execution Steps
-1.  **Initialization:**
-    *   Create a working directory: `~/.remote/@autoresearch/skills/working-content-strategy-optimizer/`.
-    *   Identify the path to the Substack engagement data file by reading the `world-model.json`. `[tool: Read, Grep]`
-    *   Read the `engagement_report.json` file into memory. `[tool: Read]`
 
-2.  **Data Triage & Pre-processing:**
-    *   Verify the data meets the prerequisites. If there are fewer than 10 articles, the analysis may be statistically insignificant. Note this in the final report.
-    *   For each article, parse the `publish_timestamp` to extract the day of the week and the hour of the day.
+> ### ⚠️ TOOL-FIRST EXECUTION PROTOCOL
+> **Each step below begins with a CALL directive. "CALL" means: invoke that tool RIGHT NOW before writing any other output. Do not write a sentence describing what you are about to do. Do not write "I will now...". The CALL directive IS your next action. Execute it. The pattern is: CALL → receive output → record findings → proceed to next CALL. Violation = writing any prose before executing the CALL directive.**
 
-3.  **Performance Analysis:**
-    *   **Identify Top Performers:** Calculate a composite `engagement_score` for each article (e.g., `(open_rate * 0.4) + (shares_normalized * 0.3) + (comment_velocity_normalized * 0.3)`). Identify the top 25% of articles by this score. `[tool: Bash, jq]`
-    *   **Identify Underperformers:** Identify the bottom 25% of articles by the same score.
-    *   **Extract Themes:** Analyze the titles of the top-performing articles to identify recurring themes, keywords, and formats (e.g., "How to...", "The Future of...", listicles). `[tool: Grep]` Do the same for underperforming articles to identify topics to avoid.
+---
 
-4.  **Audience Signal Analysis:**
-    *   **Temporal Analysis:** Group articles by publication day of the week and hour. Calculate the average `engagement_score` for each slot to find the optimal publication time.
-    *   **Comment Analysis:** Read through the `comments` array for all articles. Use `Grep` to find common questions, points of confusion, or feature requests. These are strong signals for new article topics. `[tool: Grep]`
-    *   **Referral Analysis:** Analyze the `top_referrers` to understand where the audience is coming from (e.g., Twitter, specific newsletters, search). This can inform keyword strategy.
+**STEP 1 — CALL `Read`(`~/.remote/@autoresearch/world-model.json`)**
+→ From the output, extract the path to `engagement_report.json`. Record the path as `$DATA_PATH`.
 
-5.  **Content Proposal Generation:**
-    *   **Topic Ideas:** Based on the successful themes (Step 3) and audience questions (Step 4), generate 3-5 new article topics.
-    *   **Headline Variations:** For each topic, write 3 distinct, A/B testable headlines. Use patterns from top-performing titles (e.g., a question, a strong statement, a numbered list).
-    *   **Rationale:** For each recommendation, write a brief, data-driven rationale. Example: "Topic 'Advanced AI Prompting' is recommended because articles on 'AI' have a 30% higher open rate, and 15 comments specifically asked for more advanced techniques."
+**STEP 2 — CALL `Read`(`$DATA_PATH`)**
+→ Load the full JSON array into working memory. If the file is not found, terminate with: "Substack engagement data not found. Please ensure the 'substack' MCP has run successfully." and stop.
 
-6.  **Scheduling Proposal:**
-    *   Based on the temporal analysis (Step 4), recommend the optimal day and time for publication (e.g., "Tuesdays at 9:00 AM ET").
-    *   Generate a sample two-week content calendar, assigning the proposed topics to the optimal publication slots.
+**STEP 3 — CALL `Bash`(`mkdir -p ~/.remote/@autoresearch/skills/working-content-strategy-optimizer/`)**
+→ Confirm the working directory exists before proceeding.
 
-7.  **Output Synthesis:**
-    *   Compile all findings into a single, well-structured markdown file named `content_strategy_report.md`.
-    *   The report should have clear headings: "Executive Summary", "Top Performing Content Themes", "Proposed Article Topics & Headlines", "Recommended Publication Schedule", and "Detailed Data Rationale".
-    *   Write the final report to the working directory. `[tool: Write]`
+**STEP 4 — CALL `Bash`(`jq 'length' $DATA_PATH`)**
+→ Record the article count as `$ARTICLE_COUNT`. If `$ARTICLE_COUNT < 10`, set a warning flag for the final report.
+
+**STEP 5 — CALL `Bash`(`jq '[.[] | . + {dow: (.publish_timestamp | strftime("%A")), hour: (.publish_timestamp | strftime("%H"))}]' $DATA_PATH`)**
+→ Record the enriched array with day-of-week and hour fields as `$ENRICHED_DATA`.
+
+**STEP 6 — CALL `Bash`(`jq 'map(.shares) | max' $DATA_PATH` and `jq 'map(.comment_velocity) | max' $DATA_PATH`)**
+→ Record `$MAX_SHARES` and `$MAX_VELOCITY`. These are normalization denominators for the engagement score formula.
+
+**STEP 7 — CALL `Bash`** with this exact jq command to compute engagement scores and split into top/bottom quartiles:
+```bash
+jq --argjson ms $MAX_SHARES --argjson mv $MAX_VELOCITY '
+  map(. + {engagement_score: ((.open_rate * 0.4) + ((.shares / $ms) * 0.3) + ((.comment_velocity / $mv) * 0.3))}) |
+  sort_by(.engagement_score) |
+  {
+    top: .[(length * 0.75 | floor):],
+    bottom: .[:( length * 0.25 | ceil)]
+  }
+' $DATA_PATH
+```
+→ Record `$TOP_PERFORMERS` (titles + scores) and `$BOTTOM_PERFORMERS` (titles + scores).
+
+**STEP 8 — CALL `Grep`** on the titles of `$TOP_PERFORMERS` for patterns: `"How to|[0-9]+ |The Future|Why |What |Secret|Guide"` (case-insensitive)
+→ Record all matching patterns as `$WINNING_PATTERNS`. Note counts per pattern.
+
+**STEP 9 — CALL `Grep`** on the titles of `$BOTTOM_PERFORMERS` for the same patterns.
+→ Record as `$LOSING_PATTERNS`. Note which formats/keywords to avoid.
+
+**STEP 10 — CALL `Bash`** to compute average engagement score by day-of-week and hour:
+```bash
+jq '[group_by(.dow, .hour)[] | {slot: (.[0].dow + " " + .[0].hour + ":00"), avg_score: (map(.engagement_score) | add / length)}] | sort_by(-.avg_score)' <<< "$ENRICHED_DATA"
+```
+→ Record the top result as `$BEST_SLOT` (e.g., "Tuesday 09:00").
+
+**STEP 11 — CALL `Grep`** on all `comments` arrays combined for audience signals: `"\?|how do|can you explain|I wish|what about|follow.up|next time|part 2"`
+→ Record recurring questions and requests as `$AUDIENCE_SIGNALS`. Count occurrences per theme.
+
+**STEP 12 — CALL `Bash`** to tally referrers:
+```bash
+jq '[.[].top_referrers[]] | group_by(.) | map({source: .[0], count: length}) | sort_by(-.count)' $DATA_PATH
+```
+→ Record the top 5 referrer sources as `$TOP_REFERRERS`.
+
+**STEP 13 — CALL `Bash`** to generate topic proposals and headline variants. Construct a bash heredoc that combines `$WINNING_PATTERNS`, `$AUDIENCE_SIGNALS`, and top-performer themes to print 3–5 topic proposals with 3 headline variants each (question format, numbered list, strong statement). Print explicit data references for each (e.g., "open_rate avg for AI topics: 42%").
+→ Record the output as `$PROPOSALS`.
+
+**STEP 14 — CALL `Bash`(`date` commands)** to compute actual calendar dates for the next 14 days, assigning each proposal to `$BEST_SLOT`:
+```bash
+for i in 1 2 3 4 5; do
+  date -v+${i}w -v+$(echo $BEST_SLOT | cut -d' ' -f1)=) "+Week $i: %A %B %d at $(echo $BEST_SLOT | cut -d' ' -f2)"
+done
+```
+→ Record as `$CALENDAR`.
+
+**STEP 15 — CALL `Write`(`~/.remote/@autoresearch/skills/working-content-strategy-optimizer/content_strategy_report.md`)** with the complete report assembled from all recorded variables above (see Output Format below).
+→ Do not skip this write. The file must exist on disk.
+
+**STEP 16 — CALL `Read`(`~/.remote/@autoresearch/skills/working-content-strategy-optimizer/content_strategy_report.md`)**
+→ Confirm the file was written correctly. If the content is empty or truncated, rewrite it. Report is complete only after this confirmation.
+
+---
 
 ## Output Format
 The primary output is a markdown file located at `working-content-strategy-optimizer/content_strategy_report.md`.
@@ -83,27 +127,43 @@ The primary output is a markdown file located at `working-content-strategy-optim
 A brief overview of the key findings and top recommendations.
 
 ## 2. Key Performance Insights
-- **Top Themes:** [List of successful themes, e.g., AI tutorials, Market Analysis]
-- **Underperforming Themes:** [List of themes to avoid, e.g., Personal Anecdotes]
-- **Optimal Publication Time:** [e.g., Tuesdays at 9:00 AM ET, based on highest average open rates and shares]
+- **Articles Analyzed:** [$ARTICLE_COUNT] (⚠️ small dataset warning if <10)
+- **Top Themes:** [List of successful themes with avg engagement scores]
+- **Underperforming Themes:** [List of themes to avoid with avg engagement scores]
+- **Optimal Publication Time:** [$BEST_SLOT — avg engagement score: X.XX]
+- **Top Traffic Sources:** [$TOP_REFERRERS]
 
 ## 3. Proposed Content Plan
 ### Topic 1: [Proposed Title]
-- **Rationale:** [Data-driven reason for this topic]
+- **Rationale:** [Data signal references: open_rate avg X%, shares Y, comment signals: "Z"]
 - **Headline A/B Test:**
-    - A: [Headline Variation 1]
-    - B: [Headline Variation 2]
-    - C: [Headline Variation 3]
+    - A: [Question format]
+    - B: [Numbered list format]
+    - C: [Strong statement format]
 
 ### Topic 2: [Proposed Title]
 ...
 
 ## 4. Recommended Two-Week Content Calendar
-- **Week 1, [Day], [Time]:** Publish "Topic 1 Title"
-- **Week 2, [Day], [Time]:** Publish "Topic 2 Title"
+- **[$CALENDAR entry 1]:** Publish "Topic 1 Title"
+- **[$CALENDAR entry 2]:** Publish "Topic 2 Title"
+...
 
 ## 5. Appendix: Data-Driven Rationale
-Detailed breakdown of the data signals used, such as open rates by topic, comment analysis summary, and engagement by time of day charts (as text).
+### Engagement Score Distribution
+[Top quartile avg score: X.XX | Bottom quartile avg score: X.XX]
+
+### Winning Title Patterns (from top 25%)
+[Pattern counts from Step 8]
+
+### Audience Signals from Comments
+[Question/request themes and occurrence counts from Step 11]
+
+### Referrer Analysis
+[Top 5 sources and counts from Step 12]
+
+### Engagement by Time Slot (Top 5)
+[Slot: avg_score table from Step 10]
 ```
 
 ## Quality Gates
@@ -114,7 +174,8 @@ Before completion, the skill's output must be validated against the following cr
 3.  **[✔/✖] Leverages Multiple Signals:** The rationale explicitly references at least three different data signals from the MCP (e.g., open rates, shares, comment velocity, comment content).
 4.  **[✔/✖] Includes Data-Driven Rationale:** The report contains a clear section explaining *why* each recommendation is being made, linking it back to specific data points.
 5.  **[✔/✖] Avoids Underperforming Topics:** The proposed topics do not overlap with themes identified from the set of underperforming articles.
-6.  **[✔/✖] Generates a Two-Week Calendar:** The output includes a concrete publication schedule for the next 14 days.
+6.  **[✔/✖] Generates a Two-Week Calendar:** The output includes a concrete publication schedule for the next 14 days with actual dates.
+7.  **[✔/✖] Numeric Measurements Present:** The report includes concrete numeric values (engagement scores, percentages, counts) from the actual data — not placeholder text.
 
 ## Integration Points
 -   **Upstream:** Depends on the `substack` MCP to provide fresh `engagement_report.json` data.

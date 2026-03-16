@@ -1,1 +1,500 @@
-[]
+[
+  {
+    "round": 0,
+    "score": 13,
+    "max": 48,
+    "status": "baseline",
+    "mutation": "Changed tool annotations from optional bracket hints `[tool: X]` to mandatory \"**MUST use:** `ToolName`\" directives throughout all Execution Steps, and added missing tool directives to steps 2, 5, 6, and 7 that previously had no tool guidance.",
+    "cost": 0.05,
+    "criteria": [
+      3,
+      3,
+      3,
+      0,
+      3,
+      1
+    ],
+    "failures": [
+      {
+        "scenario": 1,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Adaptation"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Initial baseline evaluation",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-16T20:29:39.123Z",
+    "changelog": "**Mutation**: Changed tool annotations from optional bracket hints `[tool: X]` to mandatory \"**MUST use:** `ToolName`\" directives throughout all Execution Steps, and added missing tool directives to steps 2, 5, 6, and 7 that previously had no tool guidance.\n**Failures**: S1: Tool Utilization, S2: Tool Utilization, S2: Adaptation, S3: Tool Utilization, S3: Adaptation, S4: Data Grounding, S4: Actionability, S4: Audience Awareness, S4: Tool Utilization, S4: Measurement, S4: Adaptation, S5: Data Grounding, S5: Actionability, S5: Audience Awareness, S5: Tool Utilization, S5: Measurement, S5: Adaptation, S6: Data Grounding, S6: Actionability, S6: Audience Awareness, S6: Tool Utilization, S6: Measurement, S6: Adaptation, S7: Data Grounding, S7: Actionability, S7: Audience Awareness, S7: Tool Utilization, S7: Measurement, S7: Adaptation, S8: Data Grounding, S8: Actionability, S8: Audience Awareness, S8: Tool Utilization, S8: Measurement, S8: Adaptation\n**Per-criteria**: Data Grounding: 3/8, Actionability: 3/8, Audience Awareness: 3/8, Tool Utilization: 0/8, Measurement: 3/8, Adaptation: 1/8\n**Decision**: Initial baseline evaluation"
+  },
+  {
+    "round": 1,
+    "score": 15,
+    "max": 48,
+    "status": "kept",
+    "mutation": "Added a \"CRITICAL EXECUTION MANDATE\" block at the top of Execution Steps instructing the agent to invoke tools immediately and not narrate/simulate tool calls — targeting the root cause of Tool Utilization failing all 8 scenarios.",
+    "cost": 0.05,
+    "criteria": [
+      3,
+      3,
+      3,
+      0,
+      3,
+      3
+    ],
+    "failures": [
+      {
+        "scenario": 1,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Adaptation"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Improved from 13 to 15",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-16T20:31:40.885Z",
+    "changelog": "**Mutation**: Added a \"CRITICAL EXECUTION MANDATE\" block at the top of Execution Steps instructing the agent to invoke tools immediately and not narrate/simulate tool calls — targeting the root cause of Tool Utilization failing all 8 scenarios.\n**Failures**: S1: Tool Utilization, S2: Tool Utilization, S2: Adaptation, S3: Tool Utilization, S4: Data Grounding, S4: Actionability, S4: Audience Awareness, S4: Tool Utilization, S4: Measurement, S4: Adaptation, S5: Data Grounding, S5: Actionability, S5: Audience Awareness, S5: Tool Utilization, S5: Measurement, S5: Adaptation, S6: Data Grounding, S6: Actionability, S6: Audience Awareness, S6: Tool Utilization, S6: Measurement, S6: Adaptation, S7: Data Grounding, S7: Actionability, S7: Audience Awareness, S7: Tool Utilization, S7: Measurement, S8: Data Grounding, S8: Actionability, S8: Audience Awareness, S8: Tool Utilization, S8: Measurement, S8: Adaptation\n**Per-criteria**: Data Grounding: 3/8, Actionability: 3/8, Audience Awareness: 3/8, Tool Utilization: 0/8, Measurement: 3/8, Adaptation: 3/8\n**Decision**: Improved from 13 to 15"
+  },
+  {
+    "round": 2,
+    "score": 11,
+    "max": 48,
+    "status": "reverted",
+    "mutation": "Restructured all Execution Steps from \"description then MUST-use hint\" format into \"CALL [Tool] immediately → then process\" imperative format, making the tool invocation the syntactic first element of every step to eliminate narration-before-action failures.",
+    "cost": 0.05,
+    "criteria": [
+      3,
+      3,
+      3,
+      0,
+      0,
+      2
+    ],
+    "failures": [
+      {
+        "scenario": 1,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 1,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Adaptation"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 11 did not exceed best 15 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-16T20:34:21.381Z",
+    "changelog": "**Mutation**: Restructured all Execution Steps from \"description then MUST-use hint\" format into \"CALL [Tool] immediately → then process\" imperative format, making the tool invocation the syntactic first element of every step to eliminate narration-before-action failures.\n**Failures**: S1: Tool Utilization, S1: Measurement, S2: Tool Utilization, S2: Measurement, S2: Adaptation, S3: Tool Utilization, S3: Measurement, S4: Data Grounding, S4: Actionability, S4: Audience Awareness, S4: Tool Utilization, S4: Measurement, S4: Adaptation, S5: Data Grounding, S5: Actionability, S5: Audience Awareness, S5: Tool Utilization, S5: Measurement, S5: Adaptation, S6: Data Grounding, S6: Actionability, S6: Audience Awareness, S6: Tool Utilization, S6: Measurement, S6: Adaptation, S7: Data Grounding, S7: Actionability, S7: Audience Awareness, S7: Tool Utilization, S7: Measurement, S7: Adaptation, S8: Data Grounding, S8: Actionability, S8: Audience Awareness, S8: Tool Utilization, S8: Measurement, S8: Adaptation\n**Per-criteria**: Data Grounding: 3/8, Actionability: 3/8, Audience Awareness: 3/8, Tool Utilization: 0/8, Measurement: 0/8, Adaptation: 2/8\n**Decision**: Score 11 did not exceed best 15 — mutation produced worse or equal results"
+  }
+]
