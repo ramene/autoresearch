@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.autoresearch.loop</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>/Users/ramene/.remote/@autoresearch/scripts/autonomous-loop.sh</string>
+    </array>
+    <key>StartInterval</key>
+    <integer>43200</integer>
+    <!-- 43200 seconds = 12 hours -->
+    <key>StandardOutPath</key>
+    <string>/Users/ramene/.local/share/tmux-logs/autoresearch/launchd-stdout.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/ramene/.local/share/tmux-logs/autoresearch/launchd-stderr.log</string>
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>/usr/local/bin:/usr/bin:/bin:/opt/homebrew/bin:/Users/ramene/.local/bin</string>
+        <key>HOME</key>
+        <string>/Users/ramene</string>
+    </dict>
+    <key>RunAtLoad</key>
+    <false/>
+</dict>
+</plist>
