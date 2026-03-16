@@ -1,0 +1,239 @@
+{
+  "timestamp": "2026-03-16T15:39:27.319Z",
+  "version": "1.0",
+  "research_demands": [
+    {
+      "signal": "Pipeline failure rate is 83% (5/6 runs failed)",
+      "source": "pipeline-runs/*.json",
+      "evidence": [
+        "Pipeline exited with code 1 (x4)",
+        "Server restarted while pipeline was running (x1)"
+      ],
+      "frequency": 5,
+      "current_capability": "cross-model-intelligence-pipeline"
+    },
+    {
+      "signal": "Stage \"Claude Execution\" fails frequently (1 failures)",
+      "source": "pipeline-runs/*.json stage analysis",
+      "evidence": [
+        "1 failures in Claude Execution"
+      ],
+      "frequency": 1,
+      "current_capability": "cross-model-intelligence-pipeline"
+    },
+    {
+      "signal": "Stage \"Claude Synthesis\" fails frequently (3 failures)",
+      "source": "pipeline-runs/*.json stage analysis",
+      "evidence": [
+        "3 failures in Claude Synthesis"
+      ],
+      "frequency": 3,
+      "current_capability": "cross-model-intelligence-pipeline"
+    },
+    {
+      "signal": "Run \"54ab33d0\" has incomplete stage outputs (missing: stage-1, stage-2, stage-3)",
+      "source": "pipeline-runs/54ab33d0/",
+      "evidence": [
+        "Existing files: input.md"
+      ],
+      "frequency": 1,
+      "current_capability": "cross-model-intelligence-pipeline"
+    },
+    {
+      "signal": "Run \"603e2c6d\" has incomplete stage outputs (missing: stage-1, stage-2, stage-3)",
+      "source": "pipeline-runs/603e2c6d/",
+      "evidence": [
+        "Existing files: input.md"
+      ],
+      "frequency": 1,
+      "current_capability": "cross-model-intelligence-pipeline"
+    },
+    {
+      "signal": "Run \"882aac75\" has incomplete stage outputs (missing: stage-1, stage-2, stage-3)",
+      "source": "pipeline-runs/882aac75/",
+      "evidence": [
+        "Existing files: input.md"
+      ],
+      "frequency": 1,
+      "current_capability": "cross-model-intelligence-pipeline"
+    },
+    {
+      "signal": "Run \"9275d5f5\" has incomplete stage outputs (missing: stage-1, stage-2, stage-3)",
+      "source": "pipeline-runs/9275d5f5/",
+      "evidence": [
+        "Existing files: input.md"
+      ],
+      "frequency": 1,
+      "current_capability": "cross-model-intelligence-pipeline"
+    },
+    {
+      "signal": "Run \"b7b8bbf1\" has incomplete stage outputs (missing: stage-1, stage-2, stage-3)",
+      "source": "pipeline-runs/b7b8bbf1/",
+      "evidence": [
+        "Existing files: input.md"
+      ],
+      "frequency": 1,
+      "current_capability": "cross-model-intelligence-pipeline"
+    },
+    {
+      "signal": "Requested language \"fr\" not fully generated for baseline-march7",
+      "source": "pipeline-runs/baseline-march7-nblm.json",
+      "evidence": [
+        "Audio languages: en, es, de",
+        "Report languages: es, de",
+        "Requested: fr"
+      ],
+      "frequency": 1,
+      "current_capability": null
+    }
+  ],
+  "system_demands": [
+    {
+      "signal": "Pending tactical goal: Auto-generated from queue observation: [telegram:5857846698] Run a security audit on the OpenClaw production container. Check for CVE vulne",
+      "source": "supervisor/state/state.json (tactical_goals)",
+      "evidence": [
+        "queue: [telegram:5857846698] Run a security audit on the OpenClaw production container. Check for CVE vulnerabilities in node:22-slim base image, verify no-new-privileges is enforced, and scan npm dependencies for critical issues."
+      ],
+      "frequency": 1,
+      "current_capability": "security-posture"
+    },
+    {
+      "signal": "Goal \"security-posture\" proposed 12 times but not auto-executed (low confidence pattern)",
+      "source": "supervisor/state/state.json (evaluation_log)",
+      "evidence": [
+        "12 propose decisions, 1 executions"
+      ],
+      "frequency": 12,
+      "current_capability": "security-posture"
+    },
+    {
+      "signal": "Strategic goal: security-posture — Keep all owned projects secure. Run periodic Shannon audits on repos with recent commits. Monitor for CVE matches against dependencies. Alert on any c",
+      "source": "supervisor/strategic.md",
+      "evidence": [
+        "Keep all owned projects secure. Run periodic Shannon audits on repos with recent commits. Monitor for CVE matches against dependencies. Alert on any critical vulnerability."
+      ],
+      "frequency": 1,
+      "current_capability": "security-posture"
+    },
+    {
+      "signal": "Strategic goal: research-advancement — Advance olfactory neuroscience research. Monitor for new papers in relevant journals. Update citation databases. Identify gaps in current literature r",
+      "source": "supervisor/strategic.md",
+      "evidence": [
+        "Advance olfactory neuroscience research. Monitor for new papers in relevant journals. Update citation databases. Identify gaps in current literature review."
+      ],
+      "frequency": 1,
+      "current_capability": "research-advancement"
+    },
+    {
+      "signal": "Strategic goal: system-improvement — Improve the scaffold/skills system. Convert high-quality plans to reusable skills. Fix detected issues. Enhance existing skills based on usage pattern",
+      "source": "supervisor/strategic.md",
+      "evidence": [
+        "Improve the scaffold/skills system. Convert high-quality plans to reusable skills. Fix detected issues. Enhance existing skills based on usage patterns."
+      ],
+      "frequency": 1,
+      "current_capability": "system-improvement"
+    },
+    {
+      "signal": "Strategic goal: skill-optimization — Continuously improve Claude Code skill prompts via autoresearch. Run the skill scheduler to identify the weakest skill, optimize it for N rounds, then",
+      "source": "supervisor/strategic.md",
+      "evidence": [
+        "Continuously improve Claude Code skill prompts via autoresearch. Run the skill scheduler to identify the weakest skill, optimize it for N rounds, then rotate to the next. Escalate to reasoning pipeline when stuck."
+      ],
+      "frequency": 1,
+      "current_capability": "skill-optimization"
+    },
+    {
+      "signal": "Strategic goal: environmental-monitoring — Monitor environmental changes across owned infrastructure. CVE alerts, API changes, dependency updates, configuration drift.",
+      "source": "supervisor/strategic.md",
+      "evidence": [
+        "Monitor environmental changes across owned infrastructure. CVE alerts, API changes, dependency updates, configuration drift."
+      ],
+      "frequency": 1,
+      "current_capability": "environmental-monitoring"
+    }
+  ],
+  "environmental_signals": [
+    {
+      "signal": "Skill \"context-loader\" ready for promotion (score: 224/224)",
+      "source": "skills/working-context-loader/events.jsonl",
+      "current_capability": "context-loader"
+    },
+    {
+      "signal": "Skill \"cross-model-intelligence-pipeline\" last improved: 44 → 48/48",
+      "source": "skills/working-cross-model-intelligence-pipeline/events.jsonl",
+      "current_capability": "cross-model-intelligence-pipeline"
+    },
+    {
+      "signal": "Skill \"context-drift-detector\" score plateaued at 50 for 3 rounds",
+      "source": "skills/working-context-drift-detector/rounds.json",
+      "current_capability": "context-drift-detector"
+    },
+    {
+      "signal": "Skill \"context-drift-detector\" has 10 unresolved failure(s) in round 7",
+      "source": "skills/working-context-drift-detector/rounds.json",
+      "current_capability": "context-drift-detector"
+    },
+    {
+      "signal": "Skill \"scaffold\" has 11 unresolved failure(s) in round 5",
+      "source": "skills/working-scaffold/rounds.json",
+      "current_capability": "scaffold"
+    }
+  ],
+  "user_intent_signals": [
+    {
+      "signal": "User intent pattern: \"research pipeline\" detected across tmux transcripts",
+      "source": "tmux-logs transcripts (11 files scanned)",
+      "frequency": 317,
+      "current_capability": null
+    },
+    {
+      "signal": "User intent pattern: \"skill improvement\" detected across tmux transcripts",
+      "source": "tmux-logs transcripts (11 files scanned)",
+      "frequency": 1179,
+      "current_capability": null
+    },
+    {
+      "signal": "User intent pattern: \"error debugging\" detected across tmux transcripts",
+      "source": "tmux-logs transcripts (11 files scanned)",
+      "frequency": 105,
+      "current_capability": null
+    },
+    {
+      "signal": "User intent pattern: \"deployment\" detected across tmux transcripts",
+      "source": "tmux-logs transcripts (11 files scanned)",
+      "frequency": 72,
+      "current_capability": null
+    },
+    {
+      "signal": "User intent pattern: \"testing\" detected across tmux transcripts",
+      "source": "tmux-logs transcripts (11 files scanned)",
+      "frequency": 65,
+      "current_capability": null
+    },
+    {
+      "signal": "User intent pattern: \"dashboard\" detected across tmux transcripts",
+      "source": "tmux-logs transcripts (11 files scanned)",
+      "frequency": 283,
+      "current_capability": null
+    },
+    {
+      "signal": "User intent pattern: \"security audit\" detected across tmux transcripts",
+      "source": "tmux-logs transcripts (11 files scanned)",
+      "frequency": 22,
+      "current_capability": null
+    },
+    {
+      "signal": "User intent pattern: \"documentation\" detected across tmux transcripts",
+      "source": "tmux-logs transcripts (11 files scanned)",
+      "frequency": 25,
+      "current_capability": null
+    }
+  ],
+  "summary": {
+    "total_demands": 29,
+    "unmet_demands": 9,
+    "partially_met": 20,
+    "research_gap_count": 1,
+    "system_gap_count": 0
+  }
+}

@@ -1,0 +1,427 @@
+{
+  "timestamp": "2026-03-16T15:48:52.765Z",
+  "version": "1.0",
+  "self_model_timestamp": "2026-03-16T15:40:51.913Z",
+  "world_model_timestamp": "2026-03-16T15:39:27.319Z",
+  "wants": [
+    {
+      "id": "want-015",
+      "type": "gemini_insight",
+      "hypothesis": "The system lacks a crucial meta-capability to autonomously debug, analyze, and improve its own skills, leading to performance plateaus and reliance on manual intervention.",
+      "evidence": [
+        "User intent 'skill improvement' (freq: 1179)",
+        "User intent 'error debugging' (freq: 105)",
+        "Skill 'context-drift-detector' is stuck for 5 rounds",
+        "Skill 'scaffold' has had rounds but no kept improvements",
+        "Cross-skill pattern: '2 skills have had rounds but no kept improvements'",
+        "Strategic goals: 'system-improvement', 'skill-optimization'"
+      ],
+      "severity": 1,
+      "frequency": 1,
+      "feasibility": 0.7,
+      "proposed_skill": {
+        "name": "skill-improver",
+        "description": "Analyzes a skill's performance history and failures to propose and test improvements to its prompts, code, or evaluation criteria.",
+        "criteria": [
+          "Does the skill correctly identify the failing component (prompt, code, eval) of the target skill?",
+          "Does the proposed modification directly address an identified failure mode from the logs?",
+          "Does the skill successfully apply the modification to the target skill's definition files?",
+          "Does the skill trigger a new evaluation run for the modified skill?",
+          "Does the skill correctly parse the new evaluation results to determine if the change was an improvement?",
+          "Does the skill successfully revert the change if performance degrades?"
+        ],
+        "scenarios": [
+          "Given the stuck `context-drift-detector`, analyze its 10 unresolved failures and propose a prompt change.",
+          "Given the `scaffold` skill's failures, identify if the issue is in parameter gathering or execution.",
+          "Given `cross-model-intelligence-pipeline`'s low `Citation Accuracy`, propose a change to the prompt's citation format instructions.",
+          "Analyze a skill that is failing due to a deprecated API call and propose a code fix.",
+          "Analyze the evaluation criteria for `context-drift-detector` and suggest a new criterion to avoid the score plateau.",
+          "Take a new, unevaluated skill and design a basic evaluation plan for it."
+        ]
+      },
+      "proposed_goal": null,
+      "score": 0.7,
+      "status": "genesis_complete"
+    },
+    {
+      "id": "want-016",
+      "type": "gemini_insight",
+      "hypothesis": "The `cross-model-intelligence-pipeline` skill is critically unreliable in practice, and the system's self-evaluation metrics are producing a false positive (100% score) by not capturing real-world failure modes.",
+      "evidence": [
+        "Pipeline failure rate is 83% (5/6 runs failed)",
+        "User intent 'research pipeline' (freq: 317)",
+        "Skill score is 48/48 (1.0) despite widespread failures",
+        "Multiple runs have incomplete stage outputs",
+        "Frequent failures in 'Claude Execution' and 'Claude Synthesis' stages"
+      ],
+      "severity": 0.9,
+      "frequency": 0.9,
+      "feasibility": 0.7,
+      "proposed_skill": {
+        "name": "pipeline-diagnoser",
+        "description": "Inspects failed or incomplete multi-stage pipeline runs to identify the root cause of failure and suggest a repair.",
+        "criteria": [
+          "Does the skill correctly load the state and logs for a given pipeline run ID?",
+          "Does the skill identify the specific stage that failed?",
+          "Does the skill extract the relevant error message or malformed output from the failed stage?",
+          "Does the skill correctly hypothesize a root cause (e.g., API timeout, prompt failure, malformed JSON)?",
+          "Does the skill propose a concrete, actionable next step for debugging?",
+          "Can the skill successfully attempt to re-run only the failed stage?"
+        ],
+        "scenarios": [
+          "Diagnose run '54ab33d0' and report that all stage outputs are missing.",
+          "Analyze a run where the 'Claude Synthesis' stage failed and extract the API error.",
+          "Inspect a run with incomplete output and determine if it was due to a timeout or a content filter.",
+          "Compare a failed run's inputs to a successful run's inputs to find the difference.",
+          "Suggest a modification to the synthesis prompt to prevent future failures.",
+          "Given a failed run, attempt to rerun the final stage with a different model."
+        ]
+      },
+      "proposed_goal": null,
+      "score": 0.567,
+      "status": "monitor"
+    },
+    {
+      "id": "want-014",
+      "type": "gemini_insight",
+      "hypothesis": "The system's core strategic planning capability (`deep-plan-v2`) is completely untested, preventing it from autonomously pursuing high-level goals and turning strategic intent into action. This is the agent's central executive function.",
+      "evidence": [
+        "Skill 'deep-plan-v2' has status 'untested'",
+        "Goal 'security-posture' proposed 12 times but not auto-executed",
+        "Multiple strategic goals are defined but not being pursued (e.g., system-improvement, research-advancement)"
+      ],
+      "severity": 1,
+      "frequency": 1,
+      "feasibility": 0.5,
+      "proposed_skill": null,
+      "proposed_goal": "Activate and validate the `deep-plan-v2` skill. Create a test harness to evaluate its ability to decompose the existing 'security-posture' strategic goal into a sequence of executable skill calls (e.g., `security-auditor`). The primary metric for success is the generation of a valid, executable plan.",
+      "score": 0.5,
+      "status": "monitor"
+    },
+    {
+      "id": "want-008",
+      "type": "user_intent",
+      "hypothesis": "High-frequency user intent \"skill improvement\" (frequency: 1179) has no matching skill",
+      "evidence": [
+        "User intent pattern: \"skill improvement\" detected across tmux transcripts",
+        "Source: tmux-logs transcripts (11 files scanned)",
+        "Frequency: 1179"
+      ],
+      "severity": 0.7,
+      "frequency": 1179,
+      "feasibility": 0.65,
+      "proposed_skill": null,
+      "proposed_goal": "Create skill addressing user intent: skill improvement",
+      "score": 0.455,
+      "status": "monitor"
+    },
+    {
+      "id": "want-009",
+      "type": "user_intent",
+      "hypothesis": "High-frequency user intent \"error debugging\" (frequency: 105) has no matching skill",
+      "evidence": [
+        "User intent pattern: \"error debugging\" detected across tmux transcripts",
+        "Source: tmux-logs transcripts (11 files scanned)",
+        "Frequency: 105"
+      ],
+      "severity": 0.7,
+      "frequency": 105,
+      "feasibility": 0.65,
+      "proposed_skill": null,
+      "proposed_goal": "Create skill addressing user intent: error debugging",
+      "score": 0.455,
+      "status": "monitor"
+    },
+    {
+      "id": "want-010",
+      "type": "user_intent",
+      "hypothesis": "High-frequency user intent \"deployment\" (frequency: 72) has no matching skill",
+      "evidence": [
+        "User intent pattern: \"deployment\" detected across tmux transcripts",
+        "Source: tmux-logs transcripts (11 files scanned)",
+        "Frequency: 72"
+      ],
+      "severity": 0.7,
+      "frequency": 72,
+      "feasibility": 0.65,
+      "proposed_skill": null,
+      "proposed_goal": "Create skill addressing user intent: deployment",
+      "score": 0.455,
+      "status": "monitor"
+    },
+    {
+      "id": "want-011",
+      "type": "user_intent",
+      "hypothesis": "High-frequency user intent \"testing\" (frequency: 65) has no matching skill",
+      "evidence": [
+        "User intent pattern: \"testing\" detected across tmux transcripts",
+        "Source: tmux-logs transcripts (11 files scanned)",
+        "Frequency: 65"
+      ],
+      "severity": 0.7,
+      "frequency": 65,
+      "feasibility": 0.65,
+      "proposed_skill": null,
+      "proposed_goal": "Create skill addressing user intent: testing",
+      "score": 0.455,
+      "status": "monitor"
+    },
+    {
+      "id": "want-012",
+      "type": "user_intent",
+      "hypothesis": "High-frequency user intent \"dashboard\" (frequency: 283) has no matching skill",
+      "evidence": [
+        "User intent pattern: \"dashboard\" detected across tmux transcripts",
+        "Source: tmux-logs transcripts (11 files scanned)",
+        "Frequency: 283"
+      ],
+      "severity": 0.7,
+      "frequency": 283,
+      "feasibility": 0.65,
+      "proposed_skill": null,
+      "proposed_goal": "Create skill addressing user intent: dashboard",
+      "score": 0.455,
+      "status": "monitor"
+    },
+    {
+      "id": "want-013",
+      "type": "user_intent",
+      "hypothesis": "High-frequency user intent \"security audit\" (frequency: 22) has no matching skill",
+      "evidence": [
+        "User intent pattern: \"security audit\" detected across tmux transcripts",
+        "Source: tmux-logs transcripts (11 files scanned)",
+        "Frequency: 22"
+      ],
+      "severity": 0.7,
+      "frequency": 22,
+      "feasibility": 0.65,
+      "proposed_skill": null,
+      "proposed_goal": "Create skill addressing user intent: security audit",
+      "score": 0.455,
+      "status": "monitor"
+    },
+    {
+      "id": "want-019",
+      "type": "user_intent",
+      "hypothesis": "The user lacks a consolidated view of the system's status and performance, forcing them to manually query logs and state, as indicated by a strong intent for 'dashboarding'.",
+      "evidence": [
+        "User intent 'dashboard' (freq: 283)"
+      ],
+      "severity": 0.7,
+      "frequency": 0.8,
+      "feasibility": 0.8,
+      "proposed_skill": {
+        "name": "system-dashboard-generator",
+        "description": "Gathers key system metrics and generates a consolidated status report in text or HTML format.",
+        "criteria": [
+          "Does the report include the status of all registered skills (score, trajectory, stuck)?",
+          "Does the report list currently active and pending strategic goals?",
+          "Does the report show the top 5 most recent system-level errors?",
+          "Does the report include key performance indicators like average score ratio and number of unmet demands?",
+          "Is the generated output well-formatted and easy to read?",
+          "Can the skill filter the report for a specific component (e.g., only skill-related data)?"
+        ],
+        "scenarios": [
+          "Generate a full system status report and print it to the console.",
+          "Create an HTML dashboard and save it to `/tmp/dashboard.html`.",
+          "Generate a report focusing only on skills that are 'stuck' or 'untested'.",
+          "Provide a summary of the `cross-model-intelligence-pipeline`'s recent run history and failure rate.",
+          "List all unmet demands from the world model.",
+          "Generate a daily summary of system activity and save it to a file."
+        ]
+      },
+      "proposed_goal": null,
+      "score": 0.448,
+      "status": "monitor"
+    },
+    {
+      "id": "want-017",
+      "type": "uncovered_domain",
+      "hypothesis": "The system has no capability to assess or improve the security posture of its own code or the projects it manages, despite explicit strategic goals and user intent.",
+      "evidence": [
+        "Uncovered domains: security",
+        "System demand: 'Run a security audit on the OpenClaw production container.'",
+        "Strategic goal: 'security-posture'",
+        "User intent 'security audit' (freq: 22)"
+      ],
+      "severity": 0.9,
+      "frequency": 0.6,
+      "feasibility": 0.8,
+      "proposed_skill": {
+        "name": "security-auditor",
+        "description": "Scans code repositories and container images for known vulnerabilities (CVEs) and security misconfigurations.",
+        "criteria": [
+          "Does the skill correctly identify the target repository or container?",
+          "Does the skill successfully execute an underlying security scanner (e.g., Trivy, Semgrep)?",
+          "Does the skill parse the scanner's output into a structured format (e.g., JSON)?",
+          "Does the report correctly list identified vulnerabilities with their severity levels?",
+          "Does the skill filter out findings below a specified severity threshold?",
+          "Does the skill generate a concise summary of the security posture?"
+        ],
+        "scenarios": [
+          "Scan the local OpenClaw production container image for OS-level CVEs.",
+          "Scan the `context-loader` skill's source code for dependency vulnerabilities.",
+          "Run a static analysis scan (SAST) on a Python repository for common security flaws.",
+          "Given a list of dependencies, check them against a CVE database.",
+          "Generate a security report for a project and format it as a GitHub issue.",
+          "Scan a Dockerfile for security best-practice violations."
+        ]
+      },
+      "proposed_goal": null,
+      "score": 0.432,
+      "status": "monitor"
+    },
+    {
+      "id": "want-001",
+      "type": "uncovered_domain",
+      "hypothesis": "No skill covers testing",
+      "evidence": [
+        "uncovered_domains list in self-model"
+      ],
+      "severity": 0.6,
+      "frequency": 1,
+      "feasibility": 0.7,
+      "proposed_skill": null,
+      "proposed_goal": "Create a skill covering the \"testing\" domain",
+      "score": 0.42,
+      "status": "monitor"
+    },
+    {
+      "id": "want-002",
+      "type": "uncovered_domain",
+      "hypothesis": "No skill covers security",
+      "evidence": [
+        "uncovered_domains list in self-model"
+      ],
+      "severity": 0.6,
+      "frequency": 1,
+      "feasibility": 0.7,
+      "proposed_skill": null,
+      "proposed_goal": "Create a skill covering the \"security\" domain",
+      "score": 0.42,
+      "status": "monitor"
+    },
+    {
+      "id": "want-003",
+      "type": "uncovered_domain",
+      "hypothesis": "No skill covers deployment",
+      "evidence": [
+        "uncovered_domains list in self-model"
+      ],
+      "severity": 0.6,
+      "frequency": 1,
+      "feasibility": 0.7,
+      "proposed_skill": null,
+      "proposed_goal": "Create a skill covering the \"deployment\" domain",
+      "score": 0.42,
+      "status": "monitor"
+    },
+    {
+      "id": "want-004",
+      "type": "uncovered_domain",
+      "hypothesis": "No skill covers refactoring",
+      "evidence": [
+        "uncovered_domains list in self-model"
+      ],
+      "severity": 0.6,
+      "frequency": 1,
+      "feasibility": 0.7,
+      "proposed_skill": null,
+      "proposed_goal": "Create a skill covering the \"refactoring\" domain",
+      "score": 0.42,
+      "status": "monitor"
+    },
+    {
+      "id": "want-007",
+      "type": "unmet_demand",
+      "hypothesis": "Unmet demand: Requested language \"fr\" not fully generated for baseline-march7",
+      "evidence": [
+        "Audio languages: en, es, de",
+        "Report languages: es, de",
+        "Requested: fr"
+      ],
+      "severity": 0.7,
+      "frequency": 1,
+      "feasibility": 0.6,
+      "proposed_skill": null,
+      "proposed_goal": "Build capability to address: Requested language \"fr\" not fully generated for baseline-march7",
+      "score": 0.42,
+      "status": "monitor"
+    },
+    {
+      "id": "want-018",
+      "type": "uncovered_domain",
+      "hypothesis": "The system cannot generate tests for the code it produces, leading to a lack of quality assurance, increased risk of regressions, and inability to validate its own work.",
+      "evidence": [
+        "Uncovered domains: testing",
+        "User intent 'testing' (freq: 65)"
+      ],
+      "severity": 0.8,
+      "frequency": 0.5,
+      "feasibility": 0.9,
+      "proposed_skill": {
+        "name": "test-writer",
+        "description": "Generates unit, integration, or end-to-end tests for a given code file or function.",
+        "criteria": [
+          "Does the skill correctly identify the code to be tested?",
+          "Does the skill select the appropriate testing framework for the target language?",
+          "Does the generated test code have correct syntax and import statements?",
+          "Do the generated tests cover both happy paths and common edge cases?",
+          "Do the generated tests execute without syntax errors?",
+          "Does the skill successfully write the tests to a new or existing file?"
+        ],
+        "scenarios": [
+          "Write pytest unit tests for a specific Python function in `context_loader.py`.",
+          "Generate Jest tests for a React component.",
+          "Create an integration test for two interacting classes.",
+          "Write tests for a function to ensure it correctly handles invalid input (e.g., null, empty string).",
+          "Analyze a file and add tests to increase its test coverage.",
+          "Write a test for a known bug to create a regression test."
+        ]
+      },
+      "proposed_goal": null,
+      "score": 0.36,
+      "status": "dismiss"
+    },
+    {
+      "id": "want-005",
+      "type": "stuck_skill",
+      "hypothesis": "Skill \"context-drift-detector\" is stuck at 50/60 — eval criteria may need evolution",
+      "evidence": [
+        "stuck for 5 rounds",
+        "weakest criteria: \"Skill Integration\" with fail_rate 1"
+      ],
+      "severity": 0.8,
+      "frequency": 5,
+      "feasibility": 0.6,
+      "proposed_skill": null,
+      "proposed_goal": "Evolve evaluation criteria for \"context-drift-detector\" or apply meta-analysis to break plateau",
+      "score": 0.24,
+      "status": "dismiss"
+    },
+    {
+      "id": "want-006",
+      "type": "cross_skill_pattern",
+      "hypothesis": "Pattern: \"2 skills have had rounds but no kept improvements\" affects 2 skills — need a dedicated skill or systemic fix",
+      "evidence": [
+        "Affected skills: context-drift-detector, scaffold",
+        "Frequency: 2",
+        "Severity: high"
+      ],
+      "severity": 0.9,
+      "frequency": 2,
+      "feasibility": 0.5,
+      "proposed_skill": null,
+      "proposed_goal": "Address cross-skill pattern: 2 skills have had rounds but no kept improvements",
+      "score": 0.09,
+      "status": "dismiss"
+    }
+  ],
+  "summary": {
+    "total_wants": 19,
+    "actionable": 0,
+    "monitor": 16,
+    "dismissed": 3,
+    "top_want": "The system lacks a crucial meta-capability to autonomously debug, analyze, and improve its own skills, leading to performance plateaus and reliance on manual intervention."
+  }
+}

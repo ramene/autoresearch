@@ -1,0 +1,60 @@
+{
+  "scenarios": [
+    {
+      "id": 1,
+      "type": "happy",
+      "title": "Given the stuck `context-drift-detector`, analyze its 10 unresolved failures and",
+      "event": "Given the stuck `context-drift-detector`, analyze its 10 unresolved failures and propose a prompt change.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 2,
+      "type": "happy",
+      "title": "Given the `scaffold` skill's failures, identify if the issue is in parameter gat",
+      "event": "Given the `scaffold` skill's failures, identify if the issue is in parameter gathering or execution.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 3,
+      "type": "happy",
+      "title": "Given `cross-model-intelligence-pipeline`'s low `Citation Accuracy`, propose a c",
+      "event": "Given `cross-model-intelligence-pipeline`'s low `Citation Accuracy`, propose a change to the prompt's citation format instructions.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 4,
+      "type": "diagnostic",
+      "title": "Analyze a skill that is failing due to a deprecated API call and propose a code ",
+      "event": "Analyze a skill that is failing due to a deprecated API call and propose a code fix.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 5,
+      "type": "edge",
+      "title": "Analyze the evaluation criteria for `context-drift-detector` and suggest a new c",
+      "event": "Analyze the evaluation criteria for `context-drift-detector` and suggest a new criterion to avoid the score plateau.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 6,
+      "type": "edge",
+      "title": "Take a new, unevaluated skill and design a basic evaluation plan for it",
+      "event": "Take a new, unevaluated skill and design a basic evaluation plan for it.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    }
+  ],
+  "criteria": [
+    "Identify the failing component (prompt, code, eval) of the target skill: Does the skill correctly identify the failing component (prompt, code, eval) of the target skill?",
+    "Does the proposed modification directly address an identified failure mode from the logs: Does the proposed modification directly address an identified failure mode from the logs?",
+    "Apply the modification to the target skill's definition files: Does the skill successfully apply the modification to the target skill's definition files?",
+    "Trigger a new evaluation run for the modified skill: Does the skill trigger a new evaluation run for the modified skill?",
+    "Parse the new evaluation results to determine if the change was an improvement: Does the skill correctly parse the new evaluation results to determine if the change was an improvement?",
+    "Revert the change if performance degrades: Does the skill successfully revert the change if performance degrades?"
+  ]
+}

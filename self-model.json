@@ -1,0 +1,367 @@
+{
+  "timestamp": "2026-03-16T15:40:51.913Z",
+  "version": "1.0",
+  "skills": {
+    "backup": {
+      "score": 0,
+      "max": 0,
+      "ratio": 0,
+      "trajectory": "no_eval",
+      "weakest_criteria": [],
+      "strongest_criteria": [],
+      "rounds_completed": 0,
+      "rounds_kept": 0,
+      "cost_invested": 0,
+      "last_improvement": null,
+      "last_escalation": null,
+      "stuck_count": 0,
+      "criteria_names": [],
+      "scenario_count": 0,
+      "eval_coverage": []
+    },
+    "context-drift-detector": {
+      "score": 50,
+      "max": 60,
+      "ratio": 0.833,
+      "trajectory": "stuck",
+      "weakest_criteria": [
+        {
+          "name": "Skill Integration",
+          "fail_rate": 1
+        }
+      ],
+      "strongest_criteria": [
+        {
+          "name": "Detection Coverage",
+          "fail_rate": 0
+        },
+        {
+          "name": "Severity Classification",
+          "fail_rate": 0
+        },
+        {
+          "name": "Git Integration",
+          "fail_rate": 0
+        }
+      ],
+      "rounds_completed": 5,
+      "rounds_kept": 0,
+      "cost_invested": 0.23,
+      "last_improvement": null,
+      "last_escalation": null,
+      "stuck_count": 5,
+      "criteria_names": [
+        "Detection Coverage",
+        "Severity Classification",
+        "Git Integration",
+        "Ignore File",
+        "Fix Generation",
+        "Skill Integration"
+      ],
+      "scenario_count": 10,
+      "eval_coverage": [
+        "Detection Coverage",
+        "Severity Classification",
+        "Git Integration",
+        "Ignore File",
+        "Fix Generation",
+        "Skill Integration"
+      ]
+    },
+    "context-loader": {
+      "score": 224,
+      "max": 224,
+      "ratio": 1,
+      "trajectory": "improving",
+      "weakest_criteria": [
+        {
+          "name": "Argument Clarity",
+          "fail_rate": 0.8
+        },
+        {
+          "name": "Targeted Scans",
+          "fail_rate": 0.2
+        },
+        {
+          "name": "Implicit No-Op",
+          "fail_rate": 0.2
+        }
+      ],
+      "strongest_criteria": [
+        {
+          "name": "Default Behavior",
+          "fail_rate": 0
+        },
+        {
+          "name": "Depth Differentiation",
+          "fail_rate": 0
+        },
+        {
+          "name": "Refresh Logic",
+          "fail_rate": 0
+        }
+      ],
+      "rounds_completed": 5,
+      "rounds_kept": 3,
+      "cost_invested": 0.21,
+      "last_improvement": "2026-03-14T22:17:50.978Z",
+      "last_escalation": null,
+      "stuck_count": 2,
+      "criteria_names": [
+        "Default Behavior",
+        "Depth Differentiation",
+        "Refresh Logic",
+        "Targeted Scans",
+        "Output Specification",
+        "Implicit No-Op",
+        "Tool Requirements",
+        "Scope Definition",
+        "Error Handling (Permissions)",
+        "Error Handling (Invalid Target)",
+        "Argument Clarity",
+        "Conditional Execution",
+        "No-Op Gate Precedence",
+        "Input/Output Path Separation"
+      ],
+      "scenario_count": 16,
+      "eval_coverage": [
+        "Default Behavior",
+        "Depth Differentiation",
+        "Refresh Logic",
+        "Targeted Scans",
+        "Output Specification",
+        "Implicit No-Op",
+        "Tool Requirements",
+        "Scope Definition",
+        "Error Handling (Permissions)",
+        "Error Handling (Invalid Target)",
+        "Argument Clarity",
+        "Conditional Execution",
+        "No-Op Gate Precedence",
+        "Input/Output Path Separation"
+      ]
+    },
+    "cross-model-intelligence-pipeline": {
+      "score": 48,
+      "max": 48,
+      "ratio": 1,
+      "trajectory": "mixed",
+      "weakest_criteria": [
+        {
+          "name": "Citation Accuracy",
+          "fail_rate": 0.333
+        }
+      ],
+      "strongest_criteria": [
+        {
+          "name": "Synthesis Completeness",
+          "fail_rate": 0
+        },
+        {
+          "name": "Evidence Grounding",
+          "fail_rate": 0
+        },
+        {
+          "name": "Adversarial Rigor",
+          "fail_rate": 0
+        }
+      ],
+      "rounds_completed": 3,
+      "rounds_kept": 3,
+      "cost_invested": 0.15,
+      "last_improvement": "2026-03-15T22:12:05.675Z",
+      "last_escalation": null,
+      "stuck_count": 0,
+      "criteria_names": [
+        "Synthesis Completeness",
+        "Evidence Grounding",
+        "Adversarial Rigor",
+        "Actionability",
+        "Cross-Stage Coherence",
+        "Citation Accuracy"
+      ],
+      "scenario_count": 8,
+      "eval_coverage": [
+        "Synthesis Completeness",
+        "Evidence Grounding",
+        "Adversarial Rigor",
+        "Actionability",
+        "Cross-Stage Coherence",
+        "Citation Accuracy"
+      ]
+    },
+    "deep-plan-v2": {
+      "score": 0,
+      "max": 0,
+      "ratio": 0,
+      "trajectory": "untested",
+      "weakest_criteria": [],
+      "strongest_criteria": [],
+      "rounds_completed": 0,
+      "rounds_kept": 0,
+      "cost_invested": 0,
+      "last_improvement": null,
+      "last_escalation": null,
+      "stuck_count": 0,
+      "criteria_names": [
+        "Phase Detection",
+        "Question Quality",
+        "Quality Gate",
+        "Footgun Detection",
+        "Stuck/Checkpoint",
+        "Proportionality"
+      ],
+      "scenario_count": 10,
+      "eval_coverage": [
+        "Phase Detection",
+        "Question Quality",
+        "Quality Gate",
+        "Footgun Detection",
+        "Stuck/Checkpoint",
+        "Proportionality"
+      ]
+    },
+    "scaffold": {
+      "score": 49,
+      "max": 60,
+      "ratio": 0.817,
+      "trajectory": "insufficient_data",
+      "weakest_criteria": [
+        {
+          "name": "Parameter Gathering",
+          "fail_rate": 1
+        },
+        {
+          "name": "Execution Completeness",
+          "fail_rate": 1
+        },
+        {
+          "name": "Integration Awareness",
+          "fail_rate": 1
+        }
+      ],
+      "strongest_criteria": [
+        {
+          "name": "Mode Detection",
+          "fail_rate": 0
+        },
+        {
+          "name": "Vendor Detection",
+          "fail_rate": 0
+        },
+        {
+          "name": "Dependency Ordering",
+          "fail_rate": 0
+        }
+      ],
+      "rounds_completed": 1,
+      "rounds_kept": 0,
+      "cost_invested": 0.05,
+      "last_improvement": null,
+      "last_escalation": null,
+      "stuck_count": 1,
+      "criteria_names": [
+        "Mode Detection",
+        "Parameter Gathering",
+        "Execution Completeness",
+        "Vendor Detection",
+        "Dependency Ordering",
+        "Integration Awareness"
+      ],
+      "scenario_count": 10,
+      "eval_coverage": [
+        "Mode Detection",
+        "Parameter Gathering",
+        "Execution Completeness",
+        "Vendor Detection",
+        "Dependency Ordering",
+        "Integration Awareness"
+      ]
+    },
+    "system-self-correction-v2": {
+      "score": 0,
+      "max": 0,
+      "ratio": 0,
+      "trajectory": "untested",
+      "weakest_criteria": [],
+      "strongest_criteria": [],
+      "rounds_completed": 0,
+      "rounds_kept": 0,
+      "cost_invested": 0,
+      "last_improvement": null,
+      "last_escalation": null,
+      "stuck_count": 0,
+      "criteria_names": [
+        "Signal Detection",
+        "Classification",
+        "Quality Gate",
+        "Generalizability",
+        "No Duplication",
+        "Correct Action"
+      ],
+      "scenario_count": 10,
+      "eval_coverage": [
+        "Signal Detection",
+        "Classification",
+        "Quality Gate",
+        "Generalizability",
+        "No Duplication",
+        "Correct Action"
+      ]
+    }
+  },
+  "cross_skill_patterns": [
+    {
+      "pattern": "2 skills have had rounds but no kept improvements",
+      "affected_skills": [
+        "context-drift-detector",
+        "scaffold"
+      ],
+      "frequency": 2,
+      "severity": "high"
+    }
+  ],
+  "capability_map": {
+    "general": [
+      "backup"
+    ],
+    "analysis": [
+      "context-drift-detector",
+      "cross-model-intelligence-pipeline"
+    ],
+    "context_management": [
+      "context-drift-detector",
+      "context-loader"
+    ],
+    "documentation": [
+      "context-loader"
+    ],
+    "research": [
+      "cross-model-intelligence-pipeline"
+    ],
+    "planning": [
+      "deep-plan-v2"
+    ],
+    "code_generation": [
+      "scaffold"
+    ],
+    "self_correction": [
+      "system-self-correction-v2"
+    ]
+  },
+  "uncovered_domains": [
+    "testing",
+    "security",
+    "deployment",
+    "refactoring"
+  ],
+  "summary": {
+    "total_skills": 7,
+    "avg_ratio": 0.913,
+    "skills_at_target": 2,
+    "skills_stuck": 1,
+    "skills_untested": 3,
+    "total_cost": 0.64,
+    "total_rounds": 14
+  }
+}
