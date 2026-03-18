@@ -2,8 +2,9 @@
 # Autonomous Skill Improvement + Want Loop
 # Runs via launchd every 12 hours
 # Logs to ~/.local/share/tmux-logs/autoresearch/
+# ALERTS on failure via macOS notification + Resend email
 
-set -euo pipefail
+set -uo pipefail  # removed -e so we can trap errors
 
 AUTORESEARCH_DIR="$HOME/.remote/@autoresearch"
 OPENCLAW_DIR="$HOME/.remote/@openclaw-integration"
@@ -11,18 +12,72 @@ LOG_DIR="$HOME/.local/share/tmux-logs/autoresearch"
 DATE=$(date +%Y-%m-%d)
 TIME=$(date +%H%M%S)
 LOG_FILE="$LOG_DIR/$DATE/loop-$TIME.log"
+ERRORS_FOUND=0
+ERROR_DETAILS=""
 
 mkdir -p "$LOG_DIR/$DATE"
 
 exec > >(tee -a "$LOG_FILE") 2>&1
 
+# ─── Failure Alerting ─────────────────────────────────────────────────────────
+alert_failure() {
+    local msg="$1"
+    ERRORS_FOUND=$((ERRORS_FOUND + 1))
+    ERROR_DETAILS="${ERROR_DETAILS}\n- ${msg}"
+    echo "⚠ ERROR: $msg"
+
+    # macOS notification (always works, no external deps)
+    osascript -e "display notification \"$msg\" with title \"Autoresearch Loop FAILED\" sound name \"Basso\"" 2>/dev/null || true
+}
+
+send_error_summary() {
+    if [ "$ERRORS_FOUND" -gt 0 ]; then
+        echo ""
+        echo "═══ ERRORS DETECTED: $ERRORS_FOUND ═══"
+        echo -e "$ERROR_DETAILS"
+        echo "Log: $LOG_FILE"
+
+        # macOS notification with full summary
+        osascript -e "display notification \"$ERRORS_FOUND error(s) in autonomous loop. Check $LOG_FILE\" with title \"Autoresearch ALERT\" sound name \"Sosumi\"" 2>/dev/null || true
+
+        # Try Resend email alert (if key readable)
+        RESEND_KEY=$(cat "$HOME/.claude/.credentials/resend-api-key.txt" 2>/dev/null || echo "")
+        if [ -n "$RESEND_KEY" ]; then
+            curl -sf -X POST https://api.resend.com/emails \
+                -H "Authorization: Bearer $RESEND_KEY" \
+                -H "Content-Type: application/json" \
+                -d "{
+                    \"from\": \"alerts@micropaymnts.ai\",
+                    \"to\": \"ramene.anthony@gmail.com\",
+                    \"subject\": \"⚠ Autoresearch Loop: $ERRORS_FOUND error(s) — $(date +%Y-%m-%d)\",
+                    \"text\": \"Autonomous loop encountered $ERRORS_FOUND error(s):\\n$(echo -e "$ERROR_DETAILS")\\n\\nLog: $LOG_FILE\\nTime: $(date)\"
+                }" >/dev/null 2>&1 && echo "  → Error email sent" || echo "  → Email alert failed (non-critical)"
+        fi
+    fi
+}
+
+# ─── Pre-flight credential check ──────────────────────────────────────────────
 echo "═══ Autonomous Loop — $(date) ═══"
+echo ""
+echo "--- Pre-flight ---"
+for cred in gemini-api-key.txt anthropic-api-key.txt; do
+    if [ ! -r "$HOME/.claude/.credentials/$cred" ]; then
+        alert_failure "Cannot read credential: $cred"
+    else
+        echo "  ✓ $cred readable"
+    fi
+done
+
+if [ "$ERRORS_FOUND" -gt 0 ]; then
+    send_error_summary
+    exit 1
+fi
 
 # Step 1: Run the skill scheduler (picks weakest, runs 5 rounds)
 echo ""
 echo "--- Step 1: Skill Scheduler ---"
 cd "$AUTORESEARCH_DIR"
-node skills/skill-scheduler.mjs --budget 0.50 --rounds 5 2>&1 || echo "Scheduler exited: $?"
+node skills/skill-scheduler.mjs --budget 0.50 --rounds 5 2>&1 || alert_failure "Skill scheduler failed (exit $?)"
 
 # Step 2: Check promotions
 echo ""
@@ -75,6 +130,13 @@ else
     echo "--- Step 4: Want Loop — skipped (last run < 7 days, $STUCK_COUNT stuck) ---"
 fi
 
+# ─── Send error summary if any step failed ───────────────────────────────────
+send_error_summary
+
 echo ""
-echo "═══ Loop Complete — $(date) ═══"
+if [ "$ERRORS_FOUND" -gt 0 ]; then
+    echo "═══ Loop Complete WITH $ERRORS_FOUND ERROR(S) — $(date) ═══"
+else
+    echo "═══ Loop Complete — $(date) ═══"
+fi
 echo "Log: $LOG_FILE"
