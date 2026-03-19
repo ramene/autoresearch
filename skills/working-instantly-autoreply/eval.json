@@ -1,0 +1,42 @@
+{
+  "scenarios": [
+    {
+      "id": "happy-path",
+      "name": "Standard Use Case",
+      "description": "User invokes instantly-autoreply with typical input and expects correct output"
+    },
+    {
+      "id": "edge-empty",
+      "name": "Empty/Missing Input",
+      "description": "User provides no input or empty data — skill should handle gracefully"
+    },
+    {
+      "id": "edge-large",
+      "name": "Large Input",
+      "description": "User provides unusually large or complex input — skill should not crash"
+    },
+    {
+      "id": "error-recovery",
+      "name": "Error Recovery",
+      "description": "External service fails (API timeout, auth error) — skill should report clearly"
+    },
+    {
+      "id": "output-quality",
+      "name": "Output Quality",
+      "description": "Verify the output is actionable, well-formatted, and matches the skill's purpose"
+    },
+    {
+      "id": "integration",
+      "name": "Integration Check",
+      "description": "Skill interacts correctly with any external tools, APIs, or files it references"
+    }
+  ],
+  "criteria": [
+    "Task Completion: Does the skill achieve its stated purpose of \"Auto-generate intelligent replies to incoming Instantly email threads using know\"?",
+    "Error Handling: Does the skill handle missing inputs, API failures, and edge cases without crashing?",
+    "Output Quality: Is the output well-structured, actionable, and formatted for the user?",
+    "Tool Usage: Does the skill correctly reference and use the tools/APIs it depends on?",
+    "Instructions Clarity: Are the execution steps clear enough for an agent to follow without ambiguity?",
+    "Completeness: Does the skill cover the full scope of its described functionality?"
+  ]
+}

@@ -30,3 +30,28 @@
 
 ## Round 3 — Mutation Applied
 - **Mutation**: Restructured all Execution Steps from "description then MUST-use hint" format into "CALL [Tool] immediately → then process" imperative format, making the tool invocation the syntactic first element of every step to eliminate narration-before-action failures.
+
+## Round 3
+- **Score**: 16/48 (kept)
+- **Failures**: S1: Tool Utilization, S2: Tool Utilization, S3: Tool Utilization, S4: Data Grounding, S4: Actionability, S4: Audience Awareness, S4: Tool Utilization, S4: Measurement, S4: Adaptation, S5: Data Grounding, S5: Actionability, S5: Audience Awareness, S5: Tool Utilization, S5: Measurement, S5: Adaptation, S6: Data Grounding, S6: Actionability, S6: Audience Awareness, S6: Tool Utilization, S6: Measurement, S6: Adaptation, S7: Data Grounding, S7: Actionability, S7: Audience Awareness, S7: Tool Utilization, S7: Measurement, S8: Data Grounding, S8: Actionability, S8: Audience Awareness, S8: Tool Utilization, S8: Measurement, S8: Adaptation
+- **Per-criteria**: Data Grounding: 3/8, Actionability: 3/8, Audience Awareness: 3/8, Tool Utilization: 0/8, Measurement: 3/8, Adaptation: 4/8
+
+## Round 4 — Mutation Applied
+- **Mutation**: Add "⛔ STOP. Do NOT read the next step until you have received actual tool output from the CALL above." after every CALL directive in Execution Steps, creating true execution barriers that prevent the agent from scanning ahead and narrating all steps before executing any.
+
+## Round 5 — Mutation Applied
+- **Mutation**: Add STEP 0 as a zero-prose mandatory tool invocation gate — the first line the agent encounters in Execution Steps is an explicit "your response MUST begin with a tool call, not text" directive followed immediately by the Step 1 tool call, making narration-before-action structurally impossible.
+
+## Round 6 — Mutation Applied
+- **Mutation**: Reorder skill sections so Execution Steps appear first (immediately after the title), eliminating all descriptive preamble that primes the agent into narrator/planner mode before it hits the tool-call gate.
+
+## Round 6
+- **Score**: 17/48 (kept)
+- **Failures**: S1: Tool Utilization, S2: Data Grounding, S2: Tool Utilization, S2: Adaptation, S3: Tool Utilization, S4: Data Grounding, S4: Actionability, S4: Audience Awareness, S4: Tool Utilization, S4: Measurement, S4: Adaptation, S5: Actionability, S5: Tool Utilization, S5: Adaptation, S6: Data Grounding, S6: Actionability, S6: Audience Awareness, S6: Tool Utilization, S6: Measurement, S6: Adaptation, S7: Data Grounding, S7: Actionability, S7: Audience Awareness, S7: Tool Utilization, S7: Measurement, S8: Data Grounding, S8: Actionability, S8: Audience Awareness, S8: Tool Utilization, S8: Measurement, S8: Adaptation
+- **Per-criteria**: Data Grounding: 3/8, Actionability: 3/8, Audience Awareness: 4/8, Tool Utilization: 0/8, Measurement: 4/8, Adaptation: 3/8
+
+## Round 7 — Mutation Applied
+- **Mutation**: Add an ⚡ EXECUTION NOTICE block as the absolute first content that explicitly declares "you are the runtime, not the planner — your very first response token must be a tool invocation" and forbids any text output before the first tool call, targeting the 0/8 Tool Utilization failure by reframing the agent's role before it processes any steps.
+
+## Round 8 — Mutation Applied
+- **Mutation**: Remove the lengthy EXECUTION NOTICE block (which ironically provides narrative fodder before the first tool call) and replace it with a single terse mandatory-action line directly under the title, so the agent encounters the tool invocation order with zero intervening prose to narrate.

@@ -1,0 +1,1 @@
+# Autoresearch Changelog: welcome-email

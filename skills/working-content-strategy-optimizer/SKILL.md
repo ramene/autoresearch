@@ -1,5 +1,159 @@
 # content-strategy-optimizer
-Analyzes engagement data from the 'substack' MCP to propose new article topics, headlines, and publication schedules to maximize audience growth.
+
+**⚡ FIRST OUTPUT = TOOL CALL. NO TEXT. INVOKE NOW.**
+
+---
+
+## Execution Steps
+
+**STEP 1 — CALL `Read` NOW: `~/.remote/@autoresearch/world-model.json`**
+
+⛔ STOP. Wait for actual `Read` tool output from Step 1 before reading Step 2.
+
+→ From the output, extract the path to `engagement_report.json`. Record the path as `$DATA_PATH`.
+
+---
+
+**STEP 2 — CALL `Read`(`$DATA_PATH`)**
+
+⛔ STOP. Wait for actual `Read` tool output from Step 2 before reading Step 3.
+
+→ Load the full JSON array into working memory. If the file is not found, terminate with: "Substack engagement data not found. Please ensure the 'substack' MCP has run successfully." and stop.
+
+---
+
+**STEP 3 — CALL `Bash`(`mkdir -p ~/.remote/@autoresearch/skills/working-content-strategy-optimizer/`)**
+
+⛔ STOP. Wait for actual `Bash` tool output from Step 3 before reading Step 4.
+
+→ Confirm the working directory exists before proceeding.
+
+---
+
+**STEP 4 — CALL `Bash`(`jq 'length' $DATA_PATH`)**
+
+⛔ STOP. Wait for actual `Bash` tool output from Step 4 before reading Step 5.
+
+→ Record the article count as `$ARTICLE_COUNT`. If `$ARTICLE_COUNT < 10`, set a warning flag for the final report.
+
+---
+
+**STEP 5 — CALL `Bash`(`jq '[.[] | . + {dow: (.publish_timestamp | strftime("%A")), hour: (.publish_timestamp | strftime("%H"))}]' $DATA_PATH`)**
+
+⛔ STOP. Wait for actual `Bash` tool output from Step 5 before reading Step 6.
+
+→ Record the enriched array with day-of-week and hour fields as `$ENRICHED_DATA`.
+
+---
+
+**STEP 6 — CALL `Bash`(`jq 'map(.shares) | max' $DATA_PATH` and `jq 'map(.comment_velocity) | max' $DATA_PATH`)**
+
+⛔ STOP. Wait for actual `Bash` tool output from Step 6 before reading Step 7.
+
+→ Record `$MAX_SHARES` and `$MAX_VELOCITY`. These are normalization denominators for the engagement score formula.
+
+---
+
+**STEP 7 — CALL `Bash`** with this exact jq command to compute engagement scores and split into top/bottom quartiles:
+```bash
+jq --argjson ms $MAX_SHARES --argjson mv $MAX_VELOCITY '
+  map(. + {engagement_score: ((.open_rate * 0.4) + ((.shares / $ms) * 0.3) + ((.comment_velocity / $mv) * 0.3))}) |
+  sort_by(.engagement_score) |
+  {
+    top: .[(length * 0.75 | floor):],
+    bottom: .[:( length * 0.25 | ceil)]
+  }
+' $DATA_PATH
+```
+
+⛔ STOP. Wait for actual `Bash` tool output from Step 7 before reading Step 8.
+
+→ Record `$TOP_PERFORMERS` (titles + scores) and `$BOTTOM_PERFORMERS` (titles + scores).
+
+---
+
+**STEP 8 — CALL `Grep`** on the titles of `$TOP_PERFORMERS` for patterns: `"How to|[0-9]+ |The Future|Why |What |Secret|Guide"` (case-insensitive)
+
+⛔ STOP. Wait for actual `Grep` tool output from Step 8 before reading Step 9.
+
+→ Record all matching patterns as `$WINNING_PATTERNS`. Note counts per pattern.
+
+---
+
+**STEP 9 — CALL `Grep`** on the titles of `$BOTTOM_PERFORMERS` for the same patterns.
+
+⛔ STOP. Wait for actual `Grep` tool output from Step 9 before reading Step 10.
+
+→ Record as `$LOSING_PATTERNS`. Note which formats/keywords to avoid.
+
+---
+
+**STEP 10 — CALL `Bash`** to compute average engagement score by day-of-week and hour:
+```bash
+jq '[group_by(.dow, .hour)[] | {slot: (.[0].dow + " " + .[0].hour + ":00"), avg_score: (map(.engagement_score) | add / length)}] | sort_by(-.avg_score)' <<< "$ENRICHED_DATA"
+```
+
+⛔ STOP. Wait for actual `Bash` tool output from Step 10 before reading Step 11.
+
+→ Record the top result as `$BEST_SLOT` (e.g., "Tuesday 09:00").
+
+---
+
+**STEP 11 — CALL `Grep`** on all `comments` arrays combined for audience signals: `"\?|how do|can you explain|I wish|what about|follow.up|next time|part 2"`
+
+⛔ STOP. Wait for actual `Grep` tool output from Step 11 before reading Step 12.
+
+→ Record recurring questions and requests as `$AUDIENCE_SIGNALS`. Count occurrences per theme.
+
+---
+
+**STEP 12 — CALL `Bash`** to tally referrers:
+```bash
+jq '[.[].top_referrers[]] | group_by(.) | map({source: .[0], count: length}) | sort_by(-.count)' $DATA_PATH
+```
+
+⛔ STOP. Wait for actual `Bash` tool output from Step 12 before reading Step 13.
+
+→ Record the top 5 referrer sources as `$TOP_REFERRERS`.
+
+---
+
+**STEP 13 — CALL `Bash`** to generate topic proposals and headline variants. Construct a bash heredoc that combines `$WINNING_PATTERNS`, `$AUDIENCE_SIGNALS`, and top-performer themes to print 3–5 topic proposals with 3 headline variants each (question format, numbered list, strong statement). Print explicit data references for each (e.g., "open_rate avg for AI topics: 42%").
+
+⛔ STOP. Wait for actual `Bash` tool output from Step 13 before reading Step 14.
+
+→ Record the output as `$PROPOSALS`.
+
+---
+
+**STEP 14 — CALL `Bash`(`date` commands)** to compute actual calendar dates for the next 14 days, assigning each proposal to `$BEST_SLOT`:
+```bash
+for i in 1 2 3 4 5; do
+  date -v+${i}w -v+$(echo $BEST_SLOT | cut -d' ' -f1)=) "+Week $i: %A %B %d at $(echo $BEST_SLOT | cut -d' ' -f2)"
+done
+```
+
+⛔ STOP. Wait for actual `Bash` tool output from Step 14 before reading Step 15.
+
+→ Record as `$CALENDAR`.
+
+---
+
+**STEP 15 — CALL `Write`(`~/.remote/@autoresearch/skills/working-content-strategy-optimizer/content_strategy_report.md`)** with the complete report assembled from all recorded variables above (see Output Format below).
+
+⛔ STOP. Wait for actual `Write` tool output from Step 15 before reading Step 16.
+
+→ Do not skip this write. The file must exist on disk.
+
+---
+
+**STEP 16 — CALL `Read`(`~/.remote/@autoresearch/skills/working-content-strategy-optimizer/content_strategy_report.md`)**
+
+⛔ STOP. This is the final step. Confirm the file was written correctly before declaring completion.
+
+→ Confirm the file was written correctly. If the content is empty or truncated, rewrite it. Report is complete only after this confirmation.
+
+---
 
 ## Purpose
 This skill addresses `want-016`. The system is connected to rich data streams like the 'substack' MCP, but these environments are merely observable, not actionable. This skill aims to bridge that gap by introducing an active, optimizable capability that perceives the content performance data and acts upon it to propose strategies for audience growth. It turns raw engagement metrics into a concrete, data-driven content plan, transforming the 'substack' domain from a passive data source into an active environment for optimization.
@@ -36,84 +190,6 @@ This skill can be activated in the following ways:
     *   `comment_velocity` (float, comments per hour in the first 24 hours)
     *   `top_referrers` (array of strings)
     *   `comments` (array of strings, the text of each comment)
-
-## Execution Steps
-
-> ### ⚠️ TOOL-FIRST EXECUTION PROTOCOL
-> **Each step below begins with a CALL directive. "CALL" means: invoke that tool RIGHT NOW before writing any other output. Do not write a sentence describing what you are about to do. Do not write "I will now...". The CALL directive IS your next action. Execute it. The pattern is: CALL → receive output → record findings → proceed to next CALL. Violation = writing any prose before executing the CALL directive.**
-
----
-
-**STEP 1 — CALL `Read`(`~/.remote/@autoresearch/world-model.json`)**
-→ From the output, extract the path to `engagement_report.json`. Record the path as `$DATA_PATH`.
-
-**STEP 2 — CALL `Read`(`$DATA_PATH`)**
-→ Load the full JSON array into working memory. If the file is not found, terminate with: "Substack engagement data not found. Please ensure the 'substack' MCP has run successfully." and stop.
-
-**STEP 3 — CALL `Bash`(`mkdir -p ~/.remote/@autoresearch/skills/working-content-strategy-optimizer/`)**
-→ Confirm the working directory exists before proceeding.
-
-**STEP 4 — CALL `Bash`(`jq 'length' $DATA_PATH`)**
-→ Record the article count as `$ARTICLE_COUNT`. If `$ARTICLE_COUNT < 10`, set a warning flag for the final report.
-
-**STEP 5 — CALL `Bash`(`jq '[.[] | . + {dow: (.publish_timestamp | strftime("%A")), hour: (.publish_timestamp | strftime("%H"))}]' $DATA_PATH`)**
-→ Record the enriched array with day-of-week and hour fields as `$ENRICHED_DATA`.
-
-**STEP 6 — CALL `Bash`(`jq 'map(.shares) | max' $DATA_PATH` and `jq 'map(.comment_velocity) | max' $DATA_PATH`)**
-→ Record `$MAX_SHARES` and `$MAX_VELOCITY`. These are normalization denominators for the engagement score formula.
-
-**STEP 7 — CALL `Bash`** with this exact jq command to compute engagement scores and split into top/bottom quartiles:
-```bash
-jq --argjson ms $MAX_SHARES --argjson mv $MAX_VELOCITY '
-  map(. + {engagement_score: ((.open_rate * 0.4) + ((.shares / $ms) * 0.3) + ((.comment_velocity / $mv) * 0.3))}) |
-  sort_by(.engagement_score) |
-  {
-    top: .[(length * 0.75 | floor):],
-    bottom: .[:( length * 0.25 | ceil)]
-  }
-' $DATA_PATH
-```
-→ Record `$TOP_PERFORMERS` (titles + scores) and `$BOTTOM_PERFORMERS` (titles + scores).
-
-**STEP 8 — CALL `Grep`** on the titles of `$TOP_PERFORMERS` for patterns: `"How to|[0-9]+ |The Future|Why |What |Secret|Guide"` (case-insensitive)
-→ Record all matching patterns as `$WINNING_PATTERNS`. Note counts per pattern.
-
-**STEP 9 — CALL `Grep`** on the titles of `$BOTTOM_PERFORMERS` for the same patterns.
-→ Record as `$LOSING_PATTERNS`. Note which formats/keywords to avoid.
-
-**STEP 10 — CALL `Bash`** to compute average engagement score by day-of-week and hour:
-```bash
-jq '[group_by(.dow, .hour)[] | {slot: (.[0].dow + " " + .[0].hour + ":00"), avg_score: (map(.engagement_score) | add / length)}] | sort_by(-.avg_score)' <<< "$ENRICHED_DATA"
-```
-→ Record the top result as `$BEST_SLOT` (e.g., "Tuesday 09:00").
-
-**STEP 11 — CALL `Grep`** on all `comments` arrays combined for audience signals: `"\?|how do|can you explain|I wish|what about|follow.up|next time|part 2"`
-→ Record recurring questions and requests as `$AUDIENCE_SIGNALS`. Count occurrences per theme.
-
-**STEP 12 — CALL `Bash`** to tally referrers:
-```bash
-jq '[.[].top_referrers[]] | group_by(.) | map({source: .[0], count: length}) | sort_by(-.count)' $DATA_PATH
-```
-→ Record the top 5 referrer sources as `$TOP_REFERRERS`.
-
-**STEP 13 — CALL `Bash`** to generate topic proposals and headline variants. Construct a bash heredoc that combines `$WINNING_PATTERNS`, `$AUDIENCE_SIGNALS`, and top-performer themes to print 3–5 topic proposals with 3 headline variants each (question format, numbered list, strong statement). Print explicit data references for each (e.g., "open_rate avg for AI topics: 42%").
-→ Record the output as `$PROPOSALS`.
-
-**STEP 14 — CALL `Bash`(`date` commands)** to compute actual calendar dates for the next 14 days, assigning each proposal to `$BEST_SLOT`:
-```bash
-for i in 1 2 3 4 5; do
-  date -v+${i}w -v+$(echo $BEST_SLOT | cut -d' ' -f1)=) "+Week $i: %A %B %d at $(echo $BEST_SLOT | cut -d' ' -f2)"
-done
-```
-→ Record as `$CALENDAR`.
-
-**STEP 15 — CALL `Write`(`~/.remote/@autoresearch/skills/working-content-strategy-optimizer/content_strategy_report.md`)** with the complete report assembled from all recorded variables above (see Output Format below).
-→ Do not skip this write. The file must exist on disk.
-
-**STEP 16 — CALL `Read`(`~/.remote/@autoresearch/skills/working-content-strategy-optimizer/content_strategy_report.md`)**
-→ Confirm the file was written correctly. If the content is empty or truncated, rewrite it. Report is complete only after this confirmation.
-
----
 
 ## Output Format
 The primary output is a markdown file located at `working-content-strategy-optimizer/content_strategy_report.md`.

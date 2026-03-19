@@ -496,5 +496,823 @@
     },
     "timestamp": "2026-03-16T20:34:21.381Z",
     "changelog": "**Mutation**: Restructured all Execution Steps from \"description then MUST-use hint\" format into \"CALL [Tool] immediately → then process\" imperative format, making the tool invocation the syntactic first element of every step to eliminate narration-before-action failures.\n**Failures**: S1: Tool Utilization, S1: Measurement, S2: Tool Utilization, S2: Measurement, S2: Adaptation, S3: Tool Utilization, S3: Measurement, S4: Data Grounding, S4: Actionability, S4: Audience Awareness, S4: Tool Utilization, S4: Measurement, S4: Adaptation, S5: Data Grounding, S5: Actionability, S5: Audience Awareness, S5: Tool Utilization, S5: Measurement, S5: Adaptation, S6: Data Grounding, S6: Actionability, S6: Audience Awareness, S6: Tool Utilization, S6: Measurement, S6: Adaptation, S7: Data Grounding, S7: Actionability, S7: Audience Awareness, S7: Tool Utilization, S7: Measurement, S7: Adaptation, S8: Data Grounding, S8: Actionability, S8: Audience Awareness, S8: Tool Utilization, S8: Measurement, S8: Adaptation\n**Per-criteria**: Data Grounding: 3/8, Actionability: 3/8, Audience Awareness: 3/8, Tool Utilization: 0/8, Measurement: 0/8, Adaptation: 2/8\n**Decision**: Score 11 did not exceed best 15 — mutation produced worse or equal results"
+  },
+  {
+    "round": 3,
+    "score": 16,
+    "max": 48,
+    "status": "kept",
+    "mutation": "Add \"⛔ STOP. Do NOT read the next step until you have received actual tool output from the CALL above.\" after every CALL directive in Execution Steps, creating true execution barriers that prevent the agent from scanning ahead and narrating all steps before executing any.",
+    "cost": 0.05,
+    "criteria": [
+      3,
+      3,
+      3,
+      0,
+      3,
+      4
+    ],
+    "failures": [
+      {
+        "scenario": 1,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Adaptation"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Improved from 15 to 16",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-18T21:29:49.230Z",
+    "changelog": "**Mutation**: Add \"⛔ STOP. Do NOT read the next step until you have received actual tool output from the CALL above.\" after every CALL directive in Execution Steps, creating true execution barriers that prevent the agent from scanning ahead and narrating all steps before executing any.\n**Failures**: S1: Tool Utilization, S2: Tool Utilization, S3: Tool Utilization, S4: Data Grounding, S4: Actionability, S4: Audience Awareness, S4: Tool Utilization, S4: Measurement, S4: Adaptation, S5: Data Grounding, S5: Actionability, S5: Audience Awareness, S5: Tool Utilization, S5: Measurement, S5: Adaptation, S6: Data Grounding, S6: Actionability, S6: Audience Awareness, S6: Tool Utilization, S6: Measurement, S6: Adaptation, S7: Data Grounding, S7: Actionability, S7: Audience Awareness, S7: Tool Utilization, S7: Measurement, S8: Data Grounding, S8: Actionability, S8: Audience Awareness, S8: Tool Utilization, S8: Measurement, S8: Adaptation\n**Per-criteria**: Data Grounding: 3/8, Actionability: 3/8, Audience Awareness: 3/8, Tool Utilization: 0/8, Measurement: 3/8, Adaptation: 4/8\n**Decision**: Improved from 15 to 16"
+  },
+  {
+    "round": 4,
+    "score": 13,
+    "max": 48,
+    "status": "reverted",
+    "mutation": "Add STEP 0 as a zero-prose mandatory tool invocation gate — the first line the agent encounters in Execution Steps is an explicit \"your response MUST begin with a tool call, not text\" directive followed immediately by the Step 1 tool call, making narration-before-action structurally impossible.",
+    "cost": 0.05,
+    "criteria": [
+      3,
+      3,
+      4,
+      0,
+      0,
+      3
+    ],
+    "failures": [
+      {
+        "scenario": 1,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 1,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Adaptation"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 13 did not exceed best 16 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-18T21:32:30.761Z",
+    "changelog": "**Mutation**: Add STEP 0 as a zero-prose mandatory tool invocation gate — the first line the agent encounters in Execution Steps is an explicit \"your response MUST begin with a tool call, not text\" directive followed immediately by the Step 1 tool call, making narration-before-action structurally impossible.\n**Failures**: S1: Tool Utilization, S1: Measurement, S2: Tool Utilization, S2: Measurement, S2: Adaptation, S3: Tool Utilization, S3: Measurement, S4: Data Grounding, S4: Actionability, S4: Audience Awareness, S4: Tool Utilization, S4: Measurement, S4: Adaptation, S5: Data Grounding, S5: Actionability, S5: Tool Utilization, S5: Measurement, S5: Adaptation, S6: Data Grounding, S6: Actionability, S6: Audience Awareness, S6: Tool Utilization, S6: Measurement, S6: Adaptation, S7: Data Grounding, S7: Actionability, S7: Audience Awareness, S7: Tool Utilization, S7: Measurement, S8: Data Grounding, S8: Actionability, S8: Audience Awareness, S8: Tool Utilization, S8: Measurement, S8: Adaptation\n**Per-criteria**: Data Grounding: 3/8, Actionability: 3/8, Audience Awareness: 4/8, Tool Utilization: 0/8, Measurement: 0/8, Adaptation: 3/8\n**Decision**: Score 13 did not exceed best 16 — mutation produced worse or equal results"
+  },
+  {
+    "round": 5,
+    "score": 10,
+    "max": 48,
+    "status": "reverted",
+    "mutation": "Reorder skill sections so Execution Steps appear first (immediately after the title), eliminating all descriptive preamble that primes the agent into narrator/planner mode before it hits the tool-call gate.",
+    "cost": 0.05,
+    "criteria": [
+      3,
+      3,
+      3,
+      0,
+      0,
+      1
+    ],
+    "failures": [
+      {
+        "scenario": 1,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 1,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Adaptation"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 10 did not exceed best 16 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-18T21:35:26.159Z",
+    "changelog": "**Mutation**: Reorder skill sections so Execution Steps appear first (immediately after the title), eliminating all descriptive preamble that primes the agent into narrator/planner mode before it hits the tool-call gate.\n**Failures**: S1: Tool Utilization, S1: Measurement, S2: Tool Utilization, S2: Measurement, S2: Adaptation, S3: Tool Utilization, S3: Measurement, S3: Adaptation, S4: Data Grounding, S4: Actionability, S4: Audience Awareness, S4: Tool Utilization, S4: Measurement, S4: Adaptation, S5: Data Grounding, S5: Actionability, S5: Audience Awareness, S5: Tool Utilization, S5: Measurement, S5: Adaptation, S6: Data Grounding, S6: Actionability, S6: Audience Awareness, S6: Tool Utilization, S6: Measurement, S6: Adaptation, S7: Data Grounding, S7: Actionability, S7: Audience Awareness, S7: Tool Utilization, S7: Measurement, S7: Adaptation, S8: Data Grounding, S8: Actionability, S8: Audience Awareness, S8: Tool Utilization, S8: Measurement, S8: Adaptation\n**Per-criteria**: Data Grounding: 3/8, Actionability: 3/8, Audience Awareness: 3/8, Tool Utilization: 0/8, Measurement: 0/8, Adaptation: 1/8\n**Decision**: Score 10 did not exceed best 16 — mutation produced worse or equal results"
+  },
+  {
+    "round": 6,
+    "score": 17,
+    "max": 48,
+    "status": "kept",
+    "mutation": "Add an ⚡ EXECUTION NOTICE block as the absolute first content that explicitly declares \"you are the runtime, not the planner — your very first response token must be a tool invocation\" and forbids any text output before the first tool call, targeting the 0/8 Tool Utilization failure by reframing the agent's role before it processes any steps.",
+    "cost": 0.05,
+    "criteria": [
+      3,
+      3,
+      4,
+      0,
+      4,
+      3
+    ],
+    "failures": [
+      {
+        "scenario": 1,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Adaptation"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Improved from 16 to 17",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-18T21:38:23.510Z",
+    "changelog": "**Mutation**: Add an ⚡ EXECUTION NOTICE block as the absolute first content that explicitly declares \"you are the runtime, not the planner — your very first response token must be a tool invocation\" and forbids any text output before the first tool call, targeting the 0/8 Tool Utilization failure by reframing the agent's role before it processes any steps.\n**Failures**: S1: Tool Utilization, S2: Data Grounding, S2: Tool Utilization, S2: Adaptation, S3: Tool Utilization, S4: Data Grounding, S4: Actionability, S4: Audience Awareness, S4: Tool Utilization, S4: Measurement, S4: Adaptation, S5: Actionability, S5: Tool Utilization, S5: Adaptation, S6: Data Grounding, S6: Actionability, S6: Audience Awareness, S6: Tool Utilization, S6: Measurement, S6: Adaptation, S7: Data Grounding, S7: Actionability, S7: Audience Awareness, S7: Tool Utilization, S7: Measurement, S8: Data Grounding, S8: Actionability, S8: Audience Awareness, S8: Tool Utilization, S8: Measurement, S8: Adaptation\n**Per-criteria**: Data Grounding: 3/8, Actionability: 3/8, Audience Awareness: 4/8, Tool Utilization: 0/8, Measurement: 4/8, Adaptation: 3/8\n**Decision**: Improved from 16 to 17"
+  },
+  {
+    "round": 7,
+    "score": 12,
+    "max": 48,
+    "status": "reverted",
+    "mutation": "Remove the lengthy EXECUTION NOTICE block (which ironically provides narrative fodder before the first tool call) and replace it with a single terse mandatory-action line directly under the title, so the agent encounters the tool invocation order with zero intervening prose to narrate.",
+    "cost": 0.05,
+    "criteria": [
+      3,
+      3,
+      3,
+      0,
+      3,
+      0
+    ],
+    "failures": [
+      {
+        "scenario": 1,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 1,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Adaptation"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 12 did not exceed best 17 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-18T21:41:11.167Z",
+    "changelog": "**Mutation**: Remove the lengthy EXECUTION NOTICE block (which ironically provides narrative fodder before the first tool call) and replace it with a single terse mandatory-action line directly under the title, so the agent encounters the tool invocation order with zero intervening prose to narrate.\n**Failures**: S1: Tool Utilization, S1: Adaptation, S2: Tool Utilization, S2: Adaptation, S3: Tool Utilization, S3: Adaptation, S4: Data Grounding, S4: Actionability, S4: Audience Awareness, S4: Tool Utilization, S4: Measurement, S4: Adaptation, S5: Data Grounding, S5: Actionability, S5: Audience Awareness, S5: Tool Utilization, S5: Measurement, S5: Adaptation, S6: Data Grounding, S6: Actionability, S6: Audience Awareness, S6: Tool Utilization, S6: Measurement, S6: Adaptation, S7: Data Grounding, S7: Actionability, S7: Audience Awareness, S7: Tool Utilization, S7: Measurement, S7: Adaptation, S8: Data Grounding, S8: Actionability, S8: Audience Awareness, S8: Tool Utilization, S8: Measurement, S8: Adaptation\n**Per-criteria**: Data Grounding: 3/8, Actionability: 3/8, Audience Awareness: 3/8, Tool Utilization: 0/8, Measurement: 3/8, Adaptation: 0/8\n**Decision**: Score 12 did not exceed best 17 — mutation produced worse or equal results"
   }
 ]
