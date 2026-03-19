@@ -1,0 +1,36 @@
+{
+  "chain": "solar-business-development",
+  "timestamp": "2026-03-19T20:59:20.630Z",
+  "mode": "dry_run",
+  "duration_seconds": 0,
+  "steps_total": 5,
+  "steps_success": 5,
+  "steps_failed": 0,
+  "results": {
+    "prospect": {
+      "status": "dry_run",
+      "skill": "gmaps-leads",
+      "input_preview": "{\"query\":\"restaurantes hoteles negocios Mérida Yucatán\",\"filters\":[\"high electricity usage\",\"commerc"
+    },
+    "classify": {
+      "status": "dry_run",
+      "skill": "classify-leads",
+      "input_preview": "{\"leads\":\"[UNRESOLVED: prospect.raw_leads]\",\"criteria\":\"solar panel installation potential based on "
+    },
+    "welcome": {
+      "status": "dry_run",
+      "skill": "welcome-email",
+      "input_preview": "{\"recipients\":\"[UNRESOLVED: classify.classified_leads.warm]\",\"template\":\"va-studio-warm-intro\",\"lang"
+    },
+    "propose": {
+      "status": "dry_run",
+      "skill": "create-proposal",
+      "input_preview": "{\"leads\":\"[UNRESOLVED: classify.classified_leads.hot]\",\"template\":\"va-studio-solar-proposal\",\"pricin"
+    },
+    "organize": {
+      "status": "dry_run",
+      "skill": "gmail-label",
+      "input_preview": "{\"action\":\"apply\",\"labels\":{\"hot\":\"va-caliente\",\"warm\":\"va-tibio\",\"cold\":\"va-frio\"},\"messages\":\"[UNR"
+    }
+  }
+}
