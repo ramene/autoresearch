@@ -156,7 +156,7 @@ if [ -n "$RESEND_KEY" ]; then
             \"from\": \"Autoresearch <alerts@micropaymnts.ai>\",
             \"to\": \"ramene.anthony@gmail.com\",
             \"subject\": \"$SUBJECT\",
-            \"text\": \"$(echo -e "$SUMMARY")\"
+            \"text\": \"$(echo -e "$SUMMARY" | sed 's/"/\\"/g' | tr '\n' ' ' | sed 's/  */ /g')\"
         }" >/dev/null 2>&1 && echo "  → Report emailed" || echo "  → Email failed (non-critical)"
 fi
 
