@@ -10,8 +10,8 @@
         <string>/Users/ramene/.remote/@autoresearch/scripts/autonomous-loop.sh</string>
     </array>
     <key>StartInterval</key>
-    <integer>43200</integer>
-    <!-- 43200 seconds = 12 hours -->
+    <integer>7200</integer>
+    <!-- 7200 seconds = 12 hours -->
     <key>StandardOutPath</key>
     <string>/Users/ramene/.local/share/tmux-logs/autoresearch/launchd-stdout.log</string>
     <key>StandardErrorPath</key>

@@ -94,7 +94,7 @@ WANTS_FILE="$AUTORESEARCH_DIR/wants.json"
 WANT_LOOP_NEEDED=false
 if [ ! -f "$WANTS_FILE" ]; then
     WANT_LOOP_NEEDED=true
-elif [ "$(find "$WANTS_FILE" -mtime +7 2>/dev/null)" ]; then
+elif [ "$(find "$WANTS_FILE" -mtime +2 2>/dev/null)" ]; then
     WANT_LOOP_NEEDED=true
 fi
 
@@ -133,10 +133,37 @@ fi
 # ─── Send error summary if any step failed ───────────────────────────────────
 send_error_summary
 
+# ─── ALWAYS send completion report ────────────────────────────────────────────
+DURATION=$((SECONDS))
+SUMMARY="Autonomous Loop $([ "$ERRORS_FOUND" -gt 0 ] && echo "⚠ $ERRORS_FOUND error(s)" || echo "✓ clean")\n"
+SUMMARY+="Duration: ${DURATION}s | Cost: \$$(grep -o 'Total spent: \$[0-9.]*' "$LOG_FILE" 2>/dev/null | tail -1 | grep -o '[0-9.]*' || echo '0.00')\n"
+SUMMARY+="Skills: $(grep -c 'last run:' "$LOG_FILE" 2>/dev/null || echo '?') tracked\n"
+SUMMARY+="Optimized: $(grep 'KEPT\|BASELINE' "$LOG_FILE" 2>/dev/null | wc -l | tr -d ' ') improvements\n"
+SUMMARY+="Promotions: $(grep -c 'Promotion-ready' "$LOG_FILE" 2>/dev/null || echo '0')\n"
+SUMMARY+="Log: $LOG_FILE"
+
+# macOS notification — ALWAYS
+osascript -e "display notification \"$(echo -e "$SUMMARY" | head -3 | tr '\n' ' ')\" with title \"Autoresearch Loop $([ "$ERRORS_FOUND" -gt 0 ] && echo "⚠" || echo "✓")\" sound name \"$([ "$ERRORS_FOUND" -gt 0 ] && echo "Basso" || echo "Glass")\"" 2>/dev/null || true
+
+# Email report — ALWAYS
+RESEND_KEY=$(cat "$HOME/.claude/.credentials/resend-api-key.txt" 2>/dev/null || echo "")
+if [ -n "$RESEND_KEY" ]; then
+    SUBJECT="$([ "$ERRORS_FOUND" -gt 0 ] && echo "⚠" || echo "✓") Autoresearch: $(date +%Y-%m-%d\ %H:%M) | ${DURATION}s | $(grep 'KEPT' "$LOG_FILE" 2>/dev/null | wc -l | tr -d ' ') kept"
+    curl -sf -X POST https://api.resend.com/emails \
+        -H "Authorization: Bearer $RESEND_KEY" \
+        -H "Content-Type: application/json" \
+        -d "{
+            \"from\": \"Autoresearch <alerts@micropaymnts.ai>\",
+            \"to\": \"ramene.anthony@gmail.com\",
+            \"subject\": \"$SUBJECT\",
+            \"text\": \"$(echo -e "$SUMMARY")\"
+        }" >/dev/null 2>&1 && echo "  → Report emailed" || echo "  → Email failed (non-critical)"
+fi
+
 echo ""
 if [ "$ERRORS_FOUND" -gt 0 ]; then
     echo "═══ Loop Complete WITH $ERRORS_FOUND ERROR(S) — $(date) ═══"
 else
-    echo "═══ Loop Complete — $(date) ═══"
+    echo "═══ Loop Complete ✓ — $(date) ═══"
 fi
 echo "Log: $LOG_FILE"
