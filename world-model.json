@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-03-16T19:00:34.316Z",
+  "timestamp": "2026-03-19T14:34:44.508Z",
   "version": "1.1",
   "research_demands": [
     {
@@ -90,6 +90,11 @@
   ],
   "environmental_signals": [
     {
+      "signal": "Skill \"content-strategy-optimizer\" last improved: 16 → 17/48",
+      "source": "skills/working-content-strategy-optimizer/events.jsonl",
+      "current_capability": "content-strategy-optimizer"
+    },
+    {
       "signal": "Skill \"context-loader\" ready for promotion (score: 224/224)",
       "source": "skills/working-context-loader/events.jsonl",
       "current_capability": "context-loader"
@@ -98,6 +103,11 @@
       "signal": "Skill \"cross-model-intelligence-pipeline\" last improved: 44 → 48/48",
       "source": "skills/working-cross-model-intelligence-pipeline/events.jsonl",
       "current_capability": "cross-model-intelligence-pipeline"
+    },
+    {
+      "signal": "Skill \"content-strategy-optimizer\" has 36 unresolved failure(s) in round 7",
+      "source": "skills/working-content-strategy-optimizer/rounds.json",
+      "current_capability": "content-strategy-optimizer"
     },
     {
       "signal": "Skill \"context-drift-detector\" score plateaued at 50 for 3 rounds",
@@ -128,50 +138,50 @@
   "user_intent_signals": [
     {
       "signal": "User intent pattern: \"research pipeline\" detected across tmux transcripts",
-      "source": "tmux-logs transcripts (14 files scanned)",
-      "frequency": 320,
+      "source": "tmux-logs transcripts (10 files scanned)",
+      "frequency": 15,
       "current_capability": null
     },
     {
       "signal": "User intent pattern: \"skill improvement\" detected across tmux transcripts",
-      "source": "tmux-logs transcripts (14 files scanned)",
-      "frequency": 1590,
+      "source": "tmux-logs transcripts (10 files scanned)",
+      "frequency": 124,
       "current_capability": null
     },
     {
       "signal": "User intent pattern: \"error debugging\" detected across tmux transcripts",
-      "source": "tmux-logs transcripts (14 files scanned)",
-      "frequency": 178,
+      "source": "tmux-logs transcripts (10 files scanned)",
+      "frequency": 124,
       "current_capability": null
     },
     {
       "signal": "User intent pattern: \"security audit\" detected across tmux transcripts",
-      "source": "tmux-logs transcripts (14 files scanned)",
-      "frequency": 34,
-      "current_capability": null
-    },
-    {
-      "signal": "User intent pattern: \"deployment\" detected across tmux transcripts",
-      "source": "tmux-logs transcripts (14 files scanned)",
-      "frequency": 89,
-      "current_capability": null
-    },
-    {
-      "signal": "User intent pattern: \"testing\" detected across tmux transcripts",
-      "source": "tmux-logs transcripts (14 files scanned)",
-      "frequency": 89,
-      "current_capability": null
-    },
-    {
-      "signal": "User intent pattern: \"dashboard\" detected across tmux transcripts",
-      "source": "tmux-logs transcripts (14 files scanned)",
-      "frequency": 312,
+      "source": "tmux-logs transcripts (10 files scanned)",
+      "frequency": 17,
       "current_capability": null
     },
     {
       "signal": "User intent pattern: \"documentation\" detected across tmux transcripts",
-      "source": "tmux-logs transcripts (14 files scanned)",
-      "frequency": 27,
+      "source": "tmux-logs transcripts (10 files scanned)",
+      "frequency": 37,
+      "current_capability": null
+    },
+    {
+      "signal": "User intent pattern: \"deployment\" detected across tmux transcripts",
+      "source": "tmux-logs transcripts (10 files scanned)",
+      "frequency": 124,
+      "current_capability": null
+    },
+    {
+      "signal": "User intent pattern: \"testing\" detected across tmux transcripts",
+      "source": "tmux-logs transcripts (10 files scanned)",
+      "frequency": 92,
+      "current_capability": null
+    },
+    {
+      "signal": "User intent pattern: \"dashboard\" detected across tmux transcripts",
+      "source": "tmux-logs transcripts (10 files scanned)",
+      "frequency": 266,
       "current_capability": null
     }
   ],
@@ -196,6 +206,7 @@
         }
       ],
       "existing_skills": [
+        "literature-research (seed-base)",
         "nate-synthesis-and-debate (seed-base)",
         "nate-synthesis-and-debate (builds-karve-ai)"
       ],
@@ -236,8 +247,10 @@
         "mattgiaro-substack-growth (builds-karve-ai)",
         "mattgiaro-substack-guide (builds-karve-ai)"
       ],
-      "existing_autoresearch_skills": [],
-      "gap": "Skills exist elsewhere but no autoresearch-optimizable skills for this domain"
+      "existing_autoresearch_skills": [
+        "working-content-strategy-optimizer"
+      ],
+      "gap": "Autoresearch skills exist for this domain"
     },
     {
       "mcp_server": "eaas",
@@ -266,13 +279,13 @@
     }
   ],
   "summary": {
-    "total_demands": 24,
+    "total_demands": 26,
     "unmet_demands": 9,
-    "partially_met": 15,
+    "partially_met": 17,
     "research_gap_count": 1,
     "system_gap_count": 0,
     "mcp_domain_count": 3,
     "mcp_uncovered_domains": 0,
-    "mcp_partial_domains": 2
+    "mcp_partial_domains": 1
   }
 }

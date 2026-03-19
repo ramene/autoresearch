@@ -1,172 +1,93 @@
 {
-  "timestamp": "2026-03-16T19:01:48.185Z",
+  "timestamp": "2026-03-19T14:35:42.274Z",
   "version": "1.0",
-  "self_model_timestamp": "2026-03-16T19:00:46.455Z",
-  "world_model_timestamp": "2026-03-16T19:00:34.316Z",
+  "self_model_timestamp": "2026-03-19T14:34:13.731Z",
+  "world_model_timestamp": "2026-03-19T14:34:44.508Z",
   "wants": [
     {
       "id": "want-016",
-      "type": "domain_coverage_gap",
-      "hypothesis": "The system is connected to rich, high-value data streams ('substack' for content creation, 'eaas' for monetization) but lacks any active, optimizable skills to perceive and act within these domains, representing a major squandered opportunity.",
-      "evidence": [
-        "MCP 'substack' provides content_creation intelligence (27 tools) but no autoresearch-optimizable skills exist for this domain.",
-        "monetization_platform has 7 existing skill(s) in seed library... but none registered in autoresearch.",
-        "Connected MCP domains represent observable but not actionable environments."
-      ],
-      "severity": 0.9,
-      "frequency": 1,
-      "feasibility": 0.8,
-      "proposed_skill": {
-        "name": "content-strategy-optimizer",
-        "description": "Analyzes engagement data from the 'substack' MCP to propose new article topics, headlines, and publication schedules to maximize audience growth.",
-        "criteria": [
-          "Does the proposed topic align with previously successful content themes?",
-          "Is the proposed headline A/B testable and based on engagement patterns?",
-          "Does the analysis leverage at least three different data signals from the MCP (e.g., open rates, shares, comment velocity)?",
-          "Does the output include a data-driven rationale for its recommendations?",
-          "Does the skill avoid proposing topics that have recently underperformed?",
-          "Can the skill generate a content calendar for the next two weeks?"
-        ],
-        "scenarios": [
-          "Given last month's Substack data, propose three article topics for the coming month.",
-          "Analyze two successful posts and identify the common theme to suggest a follow-up series.",
-          "Given a draft article title, propose three alternative, higher-engagement headlines.",
-          "Analyze readership drop-off points and suggest structural changes to future articles.",
-          "Identify the day and time with the highest historical engagement and recommend it for the next publication.",
-          "Compare this Substack's performance against a known competitor's public data and identify a content gap.",
-          "Generate a list of keywords to target based on popular search queries leading to the publication.",
-          "Analyze comment sections to identify frequently asked questions that could become a new article."
-        ]
-      },
-      "proposed_goal": null,
-      "score": 0.72,
-      "status": "genesis_complete"
-    },
-    {
-      "id": "want-015",
-      "type": "gemini_insight",
-      "hypothesis": "The system's core self-improvement loop is critically impaired. The 'skill-improver' skill is itself stuck, preventing other skills like 'context-drift-detector' from evolving. This meta-level failure is the most significant blocker to overall system advancement.",
-      "evidence": [
-        "skill-improver: score=30/36 (0.833), trajectory=insufficient_data, stuck=3",
-        "context-drift-detector: score=50/60 (0.833), trajectory=stuck, stuck=5",
-        "Cross-skill pattern: '2 skills have had rounds but no kept improvements'",
-        "User intent pattern: 'skill improvement' detected across tmux transcripts (freq: 1590)"
-      ],
-      "severity": 1,
-      "frequency": 1,
-      "feasibility": 0.7,
-      "proposed_skill": {
-        "name": "stuck-skill-diagnoser",
-        "description": "Analyzes a skill that has plateaued in performance to identify the root cause of the failure, such as flawed evaluation criteria, prompt limitations, or environmental changes.",
-        "criteria": [
-          "Does the analysis correctly identify whether the failure is in the prompt, the code, or the evaluation harness?",
-          "Does the diagnosis pinpoint specific failing test cases or evaluation criteria?",
-          "Does the proposed solution concretely address the identified root cause?",
-          "Does the analysis differentiate between a skill hitting its performance ceiling and a fixable bug?",
-          "Does the output provide a ranked list of potential modifications for the 'skill-improver' to attempt?",
-          "Does the skill successfully analyze its own performance logs if targeted?"
-        ],
-        "scenarios": [
-          "Target 'context-drift-detector' and identify that its 'Skill Integration' weakness is due to an outdated dependency mock.",
-          "Target 'skill-improver' and determine its evaluation criteria are too vague to measure meaningful progress.",
-          "Target 'scaffold' and diagnose that its failures are concentrated in generating code for a newly introduced framework.",
-          "Analyze a high-performing skill like 'context-loader' and correctly conclude that it is not stuck.",
-          "Analyze a skill with noisy evaluation results and recommend stabilizing the test environment.",
-          "Given a skill failing due to API rate limits, correctly identify the external environmental factor.",
-          "Analyze a skill whose prompt is failing on complex edge cases and suggest specific prompt modifications.",
-          "Review a skill where the evaluation criteria no longer match the user's intent and propose new criteria."
-        ]
-      },
-      "proposed_goal": null,
-      "score": 0.7,
-      "status": "monitor"
-    },
-    {
-      "id": "want-domain-substack",
-      "type": "domain_coverage_gap",
-      "hypothesis": "MCP 'substack' provides content_creation intelligence (27 tools) but no autoresearch-optimizable skills exist for this domain",
-      "evidence": [
-        "27 MCP tools available for content_creation",
-        "Subdomains: writing, audience_growth, engagement, monetization",
-        "Existing non-autoresearch skills: mattgiaro-substack-agent (builds-karve-ai), mattgiaro-substack-growth (builds-karve-ai), mattgiaro-substack-guide (builds-karve-ai)"
-      ],
-      "severity": 0.85,
-      "frequency": 1,
-      "feasibility": 0.8,
-      "proposed_skill": {
-        "name": "content-creation-optimizer",
-        "description": "Analyzes content_creation performance via substack MCP tools and proposes improvements",
-        "criteria": [
-          "Does the skill effectively guide writing using substack data?",
-          "Does the skill effectively guide audience_growth using substack data?",
-          "Does the skill effectively guide engagement using substack data?",
-          "Does the skill effectively guide monetization using substack data?"
-        ],
-        "scenarios": [
-          "Analyze current content_creation performance and identify top 3 improvement areas",
-          "Given declining engagement metrics, propose a data-driven recovery strategy",
-          "Compare performance across content types and recommend optimal approach",
-          "Detect emerging trends in content_creation and suggest early-mover actions",
-          "Generate a content_creation improvement plan with measurable milestones",
-          "Evaluate ROI of recent content_creation activities and recommend budget allocation"
-        ]
-      },
-      "proposed_goal": "Create autoresearch-optimizable skill for content_creation domain using substack MCP",
-      "score": 0.68,
-      "status": "monitor"
-    },
-    {
-      "id": "want-017",
       "type": "uncovered_domain",
-      "hypothesis": "The system lacks fundamental software development lifecycle (SDLC) capabilities, specifically in security, testing, and deployment. This is confirmed by uncovered domains, strategic goals, and high-frequency user intents, indicating a critical gap in its utility as a developer assistant.",
+      "hypothesis": "The system lacks fundamental software development lifecycle (SDLC) capabilities, specifically in testing, deployment, and security, which are all high-frequency user intents and explicitly noted as uncovered domains.",
       "evidence": [
         "Uncovered domains: testing, security, deployment",
-        "User intent pattern: 'security audit' detected across tmux transcripts (freq: 34)",
-        "User intent pattern: 'testing' detected across tmux transcripts (freq: 89)",
-        "User intent pattern: 'deployment' detected across tmux transcripts (freq: 89)",
-        "Strategic goal: security-posture — Keep all owned projects secure.",
-        "Pending tactical goal: Run a security audit on the OpenClaw production container."
+        "User intent pattern: \"deployment\" detected across tmux transcripts (freq: 124)",
+        "User intent pattern: \"testing\" detected across tmux transcripts (freq: 92)",
+        "User intent pattern: \"security audit\" detected across tmux transcripts (freq: 17)",
+        "System demands: [security-posture] Goal \"security-posture\" proposed 12 times but not auto-executed"
       ],
-      "severity": 0.8,
+      "severity": 0.9,
       "frequency": 0.9,
       "feasibility": 0.7,
       "proposed_skill": {
-        "name": "container-security-auditor",
-        "description": "Scans a specified container image for known CVEs in its dependencies and analyzes its configuration for common security misconfigurations.",
+        "name": "test-case-generator",
+        "description": "Generates unit and integration tests for a given code file or function based on its structure and docstrings.",
         "criteria": [
-          "Does the scan successfully identify all dependencies in the container?",
-          "Does the report correctly match dependency versions against a CVE database?",
-          "Does the analysis identify insecure configurations (e.g., running as root, exposed sensitive ports)?",
-          "Does the output prioritize vulnerabilities by severity (e.g., CVSS score)?",
-          "Does the report suggest concrete remediation steps for each identified issue?",
-          "Does the skill produce a machine-readable report (e.g., JSON) in addition to a human-readable summary?"
+          "Does the skill correctly identify the public-facing functions/classes in the target code?",
+          "Does the skill generate syntactically valid test code for a specified framework (e.g., pytest, jest)?",
+          "Do the generated tests cover both expected success paths?",
+          "Do the generated tests cover common edge cases (e.g., null inputs, empty arrays, type errors)?",
+          "Does the skill produce a runnable test file that can be executed by a test runner?",
+          "Does the skill include necessary mocks for external dependencies (e.g., APIs, filesystems)?"
         ],
         "scenarios": [
-          "Scan the 'OpenClaw production container' and identify an outdated library with a known RCE vulnerability.",
-          "Analyze a Dockerfile and flag that the container is configured to run as the root user.",
-          "Scan a base image and report that it has no known critical vulnerabilities.",
-          "Given a container with multiple vulnerable packages, generate a report listing them in descending order of severity.",
-          "For a reported CVE, suggest the specific command to update the vulnerable package.",
-          "Analyze a container and identify an exposed, unauthenticated database port.",
-          "Scan a container and report that its base image is no longer supported.",
-          "Compare the scan results of two different container tags and report the security delta."
+          "Generate pytest tests for a simple Python function.",
+          "Generate jest tests for a React component.",
+          "Generate tests for a function that interacts with a filesystem.",
+          "Generate tests for a class, covering its constructor and methods.",
+          "Generate tests for code with complex conditional logic.",
+          "Refuse to generate tests for code with a syntax error, and report the error."
+        ]
+      },
+      "proposed_goal": "strategic goal: full-sdlc-automation — Develop a suite of skills for automated testing, security auditing, and containerized deployment to manage software projects end-to-end.",
+      "score": 0.567,
+      "status": "monitor"
+    },
+    {
+      "id": "want-014",
+      "type": "uncovered_domain",
+      "hypothesis": "The system has a critical observability gap, evidenced by the highest-frequency user intent for 'dashboarding', but possesses no skills to create, update, or manage status dashboards.",
+      "evidence": [
+        "User intent pattern: \"dashboard\" detected across tmux transcripts (freq: 266)",
+        "Total skills: 27, none of which relate to UI generation, data visualization, or status reporting."
+      ],
+      "severity": 0.9,
+      "frequency": 1,
+      "feasibility": 0.6,
+      "proposed_skill": {
+        "name": "status-dashboard-generator",
+        "description": "Generates a simple, self-contained HTML/JS dashboard to visualize system metrics or goal progress.",
+        "criteria": [
+          "Does the generated output produce a single, valid HTML file?",
+          "Does the dashboard correctly parse and display the provided JSON data?",
+          "Are all specified metrics from the input data represented in the dashboard?",
+          "Does the dashboard include an auto-refresh mechanism if requested?",
+          "Is the generated code free of dependencies that require a build step (i.e., uses CDN links)?",
+          "Does the skill handle malformed input data gracefully without crashing?"
+        ],
+        "scenarios": [
+          "Generate a dashboard for skill scores and trajectories.",
+          "Generate a dashboard for active goals and their current status.",
+          "Generate a dashboard showing the frequency of user intent signals.",
+          "Update an existing dashboard file with new data.",
+          "Generate a dashboard with a time-series chart from a list of timestamped values.",
+          "Attempt to generate a dashboard from invalid JSON and report the error."
         ]
       },
       "proposed_goal": null,
-      "score": 0.504,
+      "score": 0.54,
       "status": "monitor"
     },
     {
       "id": "want-007",
       "type": "user_intent",
-      "hypothesis": "High-frequency user intent \"skill improvement\" (frequency: 1590) has no matching skill",
+      "hypothesis": "High-frequency user intent \"skill improvement\" (frequency: 124) has no matching skill",
       "evidence": [
         "User intent pattern: \"skill improvement\" detected across tmux transcripts",
-        "Source: tmux-logs transcripts (14 files scanned)",
-        "Frequency: 1590"
+        "Source: tmux-logs transcripts (10 files scanned)",
+        "Frequency: 124"
       ],
       "severity": 0.7,
-      "frequency": 1590,
+      "frequency": 124,
       "feasibility": 0.65,
       "proposed_skill": null,
       "proposed_goal": "Create skill addressing user intent: skill improvement",
@@ -176,14 +97,14 @@
     {
       "id": "want-008",
       "type": "user_intent",
-      "hypothesis": "High-frequency user intent \"error debugging\" (frequency: 178) has no matching skill",
+      "hypothesis": "High-frequency user intent \"error debugging\" (frequency: 124) has no matching skill",
       "evidence": [
         "User intent pattern: \"error debugging\" detected across tmux transcripts",
-        "Source: tmux-logs transcripts (14 files scanned)",
-        "Frequency: 178"
+        "Source: tmux-logs transcripts (10 files scanned)",
+        "Frequency: 124"
       ],
       "severity": 0.7,
-      "frequency": 178,
+      "frequency": 124,
       "feasibility": 0.65,
       "proposed_skill": null,
       "proposed_goal": "Create skill addressing user intent: error debugging",
@@ -193,14 +114,14 @@
     {
       "id": "want-009",
       "type": "user_intent",
-      "hypothesis": "High-frequency user intent \"security audit\" (frequency: 34) has no matching skill",
+      "hypothesis": "High-frequency user intent \"security audit\" (frequency: 17) has no matching skill",
       "evidence": [
         "User intent pattern: \"security audit\" detected across tmux transcripts",
-        "Source: tmux-logs transcripts (14 files scanned)",
-        "Frequency: 34"
+        "Source: tmux-logs transcripts (10 files scanned)",
+        "Frequency: 17"
       ],
       "severity": 0.7,
-      "frequency": 34,
+      "frequency": 17,
       "feasibility": 0.65,
       "proposed_skill": null,
       "proposed_goal": "Create skill addressing user intent: security audit",
@@ -210,14 +131,14 @@
     {
       "id": "want-010",
       "type": "user_intent",
-      "hypothesis": "High-frequency user intent \"deployment\" (frequency: 89) has no matching skill",
+      "hypothesis": "High-frequency user intent \"deployment\" (frequency: 124) has no matching skill",
       "evidence": [
         "User intent pattern: \"deployment\" detected across tmux transcripts",
-        "Source: tmux-logs transcripts (14 files scanned)",
-        "Frequency: 89"
+        "Source: tmux-logs transcripts (10 files scanned)",
+        "Frequency: 124"
       ],
       "severity": 0.7,
-      "frequency": 89,
+      "frequency": 124,
       "feasibility": 0.65,
       "proposed_skill": null,
       "proposed_goal": "Create skill addressing user intent: deployment",
@@ -227,14 +148,14 @@
     {
       "id": "want-011",
       "type": "user_intent",
-      "hypothesis": "High-frequency user intent \"testing\" (frequency: 89) has no matching skill",
+      "hypothesis": "High-frequency user intent \"testing\" (frequency: 92) has no matching skill",
       "evidence": [
         "User intent pattern: \"testing\" detected across tmux transcripts",
-        "Source: tmux-logs transcripts (14 files scanned)",
-        "Frequency: 89"
+        "Source: tmux-logs transcripts (10 files scanned)",
+        "Frequency: 92"
       ],
       "severity": 0.7,
-      "frequency": 89,
+      "frequency": 92,
       "feasibility": 0.65,
       "proposed_skill": null,
       "proposed_goal": "Create skill addressing user intent: testing",
@@ -244,14 +165,14 @@
     {
       "id": "want-012",
       "type": "user_intent",
-      "hypothesis": "High-frequency user intent \"dashboard\" (frequency: 312) has no matching skill",
+      "hypothesis": "High-frequency user intent \"dashboard\" (frequency: 266) has no matching skill",
       "evidence": [
         "User intent pattern: \"dashboard\" detected across tmux transcripts",
-        "Source: tmux-logs transcripts (14 files scanned)",
-        "Frequency: 312"
+        "Source: tmux-logs transcripts (10 files scanned)",
+        "Frequency: 266"
       ],
       "severity": 0.7,
-      "frequency": 312,
+      "frequency": 266,
       "feasibility": 0.65,
       "proposed_skill": null,
       "proposed_goal": "Create skill addressing user intent: dashboard",
@@ -273,43 +194,6 @@
       "proposed_skill": null,
       "proposed_goal": "Import existing monetization_platform skills (eaas-domain-expansion-agent-team-v1 (seed-base), eaas-expansion-brainstorm-to-blueprint-v1 (seed-base), eaas-platform-build-self-discovery-v1 (seed-base), eaas-domain-expansion-agent-team-v1 (builds-karve-ai), eaas-expansion-brainstorm-to-blueprint-v1 (builds-karve-ai), eaas-platform-build-self-discovery-v1 (builds-karve-ai), platform (builds-karve-ai)) into autoresearch framework",
       "score": 0.45,
-      "status": "monitor"
-    },
-    {
-      "id": "want-019",
-      "type": "user_intent",
-      "hypothesis": "A frequent user need for 'error debugging' (178 mentions) is entirely unmet. The system lacks a dedicated capability to analyze code, stack traces, and logs to identify the root cause of software errors, a core task for any development assistant.",
-      "evidence": [
-        "User intent pattern: 'error debugging' detected across tmux transcripts (freq: 178)",
-        "No skill listed in the capability map covers 'debugging' or 'error analysis'."
-      ],
-      "severity": 0.7,
-      "frequency": 0.8,
-      "feasibility": 0.8,
-      "proposed_skill": {
-        "name": "root-cause-analyzer",
-        "description": "Analyzes provided source code, a stack trace, and error logs to form a hypothesis about the root cause of a software bug.",
-        "criteria": [
-          "Does the analysis correctly identify the exact line of code where the error originates from the stack trace?",
-          "Does the hypothesis plausibly explain the error message?",
-          "Does the analysis reference relevant lines from the provided log files?",
-          "Does the skill propose a concrete code modification to fix the bug?",
-          "Can the skill ask clarifying questions if the provided context is insufficient?",
-          "Does the explanation distinguish between the symptom (e.g., crash) and the cause (e.g., null pointer)?"
-        ],
-        "scenarios": [
-          "Given a Python stack trace for a 'NoneType' object error, identify the variable that is None and the line where it's used.",
-          "Given a JavaScript 'undefined is not a function' error, find the misnamed or uninitialized function call.",
-          "Analyze a Java NullPointerException and trace the object's origin to show where it should have been initialized.",
-          "From a web server's 500 error log, correlate the timestamp with a specific request and identify the failing code path.",
-          "Given a race condition scenario described in logs, hypothesize that the issue is a lack of synchronization.",
-          "Analyze a memory leak by reviewing code for unclosed resources or circular references.",
-          "Given a failing unit test, analyze the test code and the code-under-test to find the logic error.",
-          "Review a permissions error from a log file and correctly attribute it to a misconfigured service account."
-        ]
-      },
-      "proposed_goal": null,
-      "score": 0.448,
       "status": "monitor"
     },
     {
@@ -375,20 +259,75 @@
       "status": "monitor"
     },
     {
-      "id": "want-018",
+      "id": "want-015",
       "type": "gemini_insight",
-      "hypothesis": "The system exhibits 'strategic paralysis': it can formulate or receive strategic goals but cannot autonomously decompose them into actionable plans and execute them. The 'deep-plan-v2' skill is untested, and high-level goals like 'security-posture' are repeatedly proposed but never acted upon.",
+      "hypothesis": "The system's self-improvement loop is broken; multiple skills are 'stuck' and the primary `skill-improver` is also stuck. This indicates a meta-level failure in diagnosing the root cause of skill plateaus.",
       "evidence": [
-        "deep-plan-v2: score=0/0 (0), trajectory=untested",
-        "Goal 'security-posture' proposed 12 times but not auto-executed (low confidence pattern)",
-        "Multiple strategic goals defined ('research-advancement', 'system-improvement', etc.) with no evidence of progress."
+        "context-drift-detector: score=50/60 (0.833), trajectory=stuck, stuck=5",
+        "skill-improver: score=30/36 (0.833), trajectory=insufficient_data, stuck=3",
+        "Cross-skill patterns: 2 skills have had rounds but no kept improvements (affects: context-drift-detector, scaffold, severity: high)",
+        "User intent pattern: \"skill improvement\" detected across tmux transcripts (freq: 124)"
       ],
-      "severity": 0.9,
+      "severity": 1,
       "frequency": 0.8,
       "feasibility": 0.5,
-      "proposed_skill": null,
-      "proposed_goal": "Activate autonomous strategic execution. Create a comprehensive test and evaluation harness for 'deep-plan-v2'. Once validated, integrate it with the strategic goal queue, enabling it to select a goal, decompose it into sub-tasks, and dispatch those tasks to other skills.",
-      "score": 0.36,
+      "proposed_skill": {
+        "name": "stuck-skill-diagnostician",
+        "description": "Analyzes a skill's evaluation history and failure logs to hypothesize the root cause of its performance plateau.",
+        "criteria": [
+          "Does the analysis correctly identify the skill's name and current score from the logs?",
+          "Does the analysis cluster recurring failure messages into distinct categories?",
+          "Does the analysis identify the specific evaluation criteria that are most frequently failing?",
+          "Does the hypothesis clearly state whether the likely issue is in the prompt, the code, the evaluation criteria, or the test data?",
+          "Is the proposed remediation step concrete and actionable?",
+          "Does the skill avoid suggesting a modification that was already tried and failed in a previous round?"
+        ],
+        "scenarios": [
+          "Diagnose the 'context-drift-detector' skill using its logs.",
+          "Diagnose the 'skill-improver' skill itself.",
+          "Diagnose the 'scaffold' skill, which has no kept improvements.",
+          "Analyze a skill that is failing due to a consistently malformed prompt.",
+          "Analyze a skill that is failing due to overly strict or ambiguous evaluation criteria.",
+          "Analyze a high-performing skill to confirm it is not stuck."
+        ]
+      },
+      "proposed_goal": "strategic goal: meta-learning-optimization — Achieve a state where at least 80% of skills are consistently improving. Develop capabilities to diagnose and resolve skill performance plateaus automatically.",
+      "score": 0.4,
+      "status": "monitor"
+    },
+    {
+      "id": "want-018",
+      "type": "domain_coverage_gap",
+      "hypothesis": "The system is connected to a `monetization_platform` (eaas) with available seed skills but has no active, auto-researchable skills to act within that domain, representing a significant missed opportunity for value creation.",
+      "evidence": [
+        "Connected MCP domains: eaas: monetization_platform (5 tools, data=false, seed skills only...)",
+        "rule_based_wants: [domain_coverage_gap] monetization_platform has 7 existing skill(s) in seed library ... but none registered in autoresearch"
+      ],
+      "severity": 0.7,
+      "frequency": 0.6,
+      "feasibility": 0.8,
+      "proposed_skill": {
+        "name": "seed-skill-adapter",
+        "description": "Converts a seed skill into a fully-fledged, auto-researchable skill by generating evaluation criteria and test scenarios based on its description and code.",
+        "criteria": [
+          "Does the skill successfully parse the seed skill's code and description?",
+          "Does the skill generate at least four distinct, binary (yes/no) evaluation criteria?",
+          "Do the generated criteria accurately reflect the seed skill's intended purpose?",
+          "Does the skill generate at least five plausible test scenarios, including at least one edge case?",
+          "Does the skill create the necessary file structure for a new auto-researchable skill?",
+          "Does the generated skill definition pass a linter check?"
+        ],
+        "scenarios": [
+          "Convert the 'eaas-expansion-brainstorm-to-blueprint-v1' seed skill.",
+          "Convert the 'eaas-platform-build-self-discovery-v1' seed skill.",
+          "Attempt to convert a skill with no description and report the missing information.",
+          "Convert a simple seed skill that takes a string and returns its reverse.",
+          "Convert a more complex seed skill that calls an external API.",
+          "Analyze an existing auto-researchable skill and verify that it meets the generated criteria."
+        ]
+      },
+      "proposed_goal": "strategic goal: domain-expansion — Actively monitor connected MCP domains for seed skills and automatically convert them into improvable, auto-research skills to expand operational capabilities.",
+      "score": 0.336,
       "status": "dismiss"
     },
     {
@@ -404,6 +343,42 @@
       "feasibility": 0.6,
       "proposed_skill": null,
       "proposed_goal": "Evolve evaluation criteria for \"context-drift-detector\" or apply meta-analysis to break plateau",
+      "score": 0.24,
+      "status": "dismiss"
+    },
+    {
+      "id": "want-017",
+      "type": "gemini_insight",
+      "hypothesis": "The system has a 'plan-to-execution' gap; it can generate plans and scaffold code, but the `scaffold` skill is underperforming and stuck, specifically failing on integrating its output with the broader system.",
+      "evidence": [
+        "scaffold: score=49/60 (0.817), trajectory=insufficient_data, stuck=1",
+        "scaffold weakest=[Parameter Gathering(1), Execution Completeness(1), Integration Awareness(1)]",
+        "deep-plan-v2: score=0/0 (0), trajectory=untested"
+      ],
+      "severity": 0.8,
+      "frequency": 0.5,
+      "feasibility": 0.6,
+      "proposed_skill": {
+        "name": "plan-integrator",
+        "description": "Refines a high-level plan by mapping its steps to existing skills and tools, identifying necessary parameters and integration points before code generation.",
+        "criteria": [
+          "Does the skill correctly identify all steps in the input plan?",
+          "For each step, does the skill map it to one or more existing skills/tools if a match exists?",
+          "Does the skill list the required parameters for each identified skill/tool?",
+          "Does the skill explicitly identify steps that have no corresponding capability?",
+          "Does the output provide a clear, ordered sequence of operations with their required inputs?",
+          "Does the skill correctly identify how the output of one step becomes the input for a subsequent step?"
+        ],
+        "scenarios": [
+          "Integrate a plan to 'write a blog post', mapping steps to research, drafting, and editing skills.",
+          "Integrate a plan to 'fix a bug', mapping to file-reading, debugging, and code-writing skills.",
+          "Analyze a plan where a required skill is missing and flag the gap.",
+          "Analyze a plan with ambiguous steps and request clarification.",
+          "Create an integration plan for the `test-case-generator` skill to run after `scaffold`.",
+          "Take a multi-step plan and represent it as a directed acyclic graph (DAG) of skill executions."
+        ]
+      },
+      "proposed_goal": null,
       "score": 0.24,
       "status": "dismiss"
     },
@@ -426,10 +401,10 @@
     }
   ],
   "summary": {
-    "total_wants": 19,
-    "actionable": 1,
-    "monitor": 15,
-    "dismissed": 3,
-    "top_want": "The system is connected to rich, high-value data streams ('substack' for content creation, 'eaas' for monetization) but lacks any active, optimizable skills to perceive and act within these domains, representing a major squandered opportunity."
+    "total_wants": 18,
+    "actionable": 0,
+    "monitor": 14,
+    "dismissed": 4,
+    "top_want": "The system lacks fundamental software development lifecycle (SDLC) capabilities, specifically in testing, deployment, and security, which are all high-frequency user intents and explicitly noted as uncovered domains."
   }
 }

@@ -1,12 +1,12 @@
 {
-  "timestamp": "2026-03-16T19:00:46.455Z",
+  "timestamp": "2026-03-19T14:34:13.731Z",
   "version": "1.0",
   "skills": {
     "backup": {
       "score": 0,
       "max": 0,
       "ratio": 0,
-      "trajectory": "no_eval",
+      "trajectory": "untested",
       "weakest_criteria": [],
       "strongest_criteria": [],
       "rounds_completed": 0,
@@ -15,9 +15,98 @@
       "last_improvement": null,
       "last_escalation": null,
       "stuck_count": 0,
-      "criteria_names": [],
-      "scenario_count": 0,
-      "eval_coverage": []
+      "criteria_names": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ],
+      "scenario_count": 6,
+      "eval_coverage": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ]
+    },
+    "classify-leads": {
+      "score": 0,
+      "max": 0,
+      "ratio": 0,
+      "trajectory": "untested",
+      "weakest_criteria": [],
+      "strongest_criteria": [],
+      "rounds_completed": 0,
+      "rounds_kept": 0,
+      "cost_invested": 0,
+      "last_improvement": null,
+      "last_escalation": null,
+      "stuck_count": 0,
+      "criteria_names": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ],
+      "scenario_count": 6,
+      "eval_coverage": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ]
+    },
+    "content-strategy-optimizer": {
+      "score": 17,
+      "max": 48,
+      "ratio": 0.354,
+      "trajectory": "improving",
+      "weakest_criteria": [
+        {
+          "name": "Data Grounding",
+          "fail_rate": 1
+        },
+        {
+          "name": "Actionability",
+          "fail_rate": 1
+        },
+        {
+          "name": "Audience Awareness",
+          "fail_rate": 1
+        }
+      ],
+      "strongest_criteria": [],
+      "rounds_completed": 8,
+      "rounds_kept": 4,
+      "cost_invested": 0.4,
+      "last_improvement": "2026-03-18T21:38:23.510Z",
+      "last_escalation": null,
+      "stuck_count": 2,
+      "criteria_names": [
+        "Data Grounding",
+        "Actionability",
+        "Audience Awareness",
+        "Tool Utilization",
+        "Measurement",
+        "Adaptation"
+      ],
+      "scenario_count": 8,
+      "eval_coverage": [
+        "Data Grounding",
+        "Actionability",
+        "Audience Awareness",
+        "Tool Utilization",
+        "Measurement",
+        "Adaptation"
+      ]
     },
     "context-drift-detector": {
       "score": 50,
@@ -141,6 +230,37 @@
         "Input/Output Path Separation"
       ]
     },
+    "create-proposal": {
+      "score": 0,
+      "max": 0,
+      "ratio": 0,
+      "trajectory": "untested",
+      "weakest_criteria": [],
+      "strongest_criteria": [],
+      "rounds_completed": 0,
+      "rounds_kept": 0,
+      "cost_invested": 0,
+      "last_improvement": null,
+      "last_escalation": null,
+      "stuck_count": 0,
+      "criteria_names": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ],
+      "scenario_count": 6,
+      "eval_coverage": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ]
+    },
     "cross-model-intelligence-pipeline": {
       "score": 48,
       "max": 48,
@@ -190,6 +310,37 @@
         "Citation Accuracy"
       ]
     },
+    "cross-niche-outliers": {
+      "score": 0,
+      "max": 0,
+      "ratio": 0,
+      "trajectory": "untested",
+      "weakest_criteria": [],
+      "strongest_criteria": [],
+      "rounds_completed": 0,
+      "rounds_kept": 0,
+      "cost_invested": 0,
+      "last_improvement": null,
+      "last_escalation": null,
+      "stuck_count": 0,
+      "criteria_names": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ],
+      "scenario_count": 6,
+      "eval_coverage": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ]
+    },
     "deep-plan-v2": {
       "score": 0,
       "max": 0,
@@ -219,6 +370,285 @@
         "Footgun Detection",
         "Stuck/Checkpoint",
         "Proportionality"
+      ]
+    },
+    "gmail": {
+      "score": 0,
+      "max": 0,
+      "ratio": 0,
+      "trajectory": "untested",
+      "weakest_criteria": [],
+      "strongest_criteria": [],
+      "rounds_completed": 0,
+      "rounds_kept": 0,
+      "cost_invested": 0,
+      "last_improvement": null,
+      "last_escalation": null,
+      "stuck_count": 0,
+      "criteria_names": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ],
+      "scenario_count": 6,
+      "eval_coverage": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ]
+    },
+    "gmail-inbox": {
+      "score": 0,
+      "max": 0,
+      "ratio": 0,
+      "trajectory": "untested",
+      "weakest_criteria": [],
+      "strongest_criteria": [],
+      "rounds_completed": 0,
+      "rounds_kept": 0,
+      "cost_invested": 0,
+      "last_improvement": null,
+      "last_escalation": null,
+      "stuck_count": 0,
+      "criteria_names": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ],
+      "scenario_count": 6,
+      "eval_coverage": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ]
+    },
+    "gmail-label": {
+      "score": 0,
+      "max": 0,
+      "ratio": 0,
+      "trajectory": "untested",
+      "weakest_criteria": [],
+      "strongest_criteria": [],
+      "rounds_completed": 0,
+      "rounds_kept": 0,
+      "cost_invested": 0,
+      "last_improvement": null,
+      "last_escalation": null,
+      "stuck_count": 0,
+      "criteria_names": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ],
+      "scenario_count": 6,
+      "eval_coverage": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ]
+    },
+    "gmaps-leads": {
+      "score": 0,
+      "max": 0,
+      "ratio": 0,
+      "trajectory": "untested",
+      "weakest_criteria": [],
+      "strongest_criteria": [],
+      "rounds_completed": 0,
+      "rounds_kept": 0,
+      "cost_invested": 0,
+      "last_improvement": null,
+      "last_escalation": null,
+      "stuck_count": 0,
+      "criteria_names": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ],
+      "scenario_count": 6,
+      "eval_coverage": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ]
+    },
+    "inbox-cleaner": {
+      "score": 0,
+      "max": 0,
+      "ratio": 0,
+      "trajectory": "untested",
+      "weakest_criteria": [],
+      "strongest_criteria": [],
+      "rounds_completed": 0,
+      "rounds_kept": 0,
+      "cost_invested": 0,
+      "last_improvement": null,
+      "last_escalation": null,
+      "stuck_count": 0,
+      "criteria_names": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ],
+      "scenario_count": 6,
+      "eval_coverage": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ]
+    },
+    "instantly-autoreply": {
+      "score": 0,
+      "max": 0,
+      "ratio": 0,
+      "trajectory": "untested",
+      "weakest_criteria": [],
+      "strongest_criteria": [],
+      "rounds_completed": 0,
+      "rounds_kept": 0,
+      "cost_invested": 0,
+      "last_improvement": null,
+      "last_escalation": null,
+      "stuck_count": 0,
+      "criteria_names": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ],
+      "scenario_count": 6,
+      "eval_coverage": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ]
+    },
+    "instantly-campaigns": {
+      "score": 0,
+      "max": 0,
+      "ratio": 0,
+      "trajectory": "untested",
+      "weakest_criteria": [],
+      "strongest_criteria": [],
+      "rounds_completed": 0,
+      "rounds_kept": 0,
+      "cost_invested": 0,
+      "last_improvement": null,
+      "last_escalation": null,
+      "stuck_count": 0,
+      "criteria_names": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ],
+      "scenario_count": 6,
+      "eval_coverage": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ]
+    },
+    "linkedin-response": {
+      "score": 0,
+      "max": 0,
+      "ratio": 0,
+      "trajectory": "untested",
+      "weakest_criteria": [],
+      "strongest_criteria": [],
+      "rounds_completed": 0,
+      "rounds_kept": 0,
+      "cost_invested": 0,
+      "last_improvement": null,
+      "last_escalation": null,
+      "stuck_count": 0,
+      "criteria_names": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ],
+      "scenario_count": 6,
+      "eval_coverage": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ]
+    },
+    "onboarding-kickoff": {
+      "score": 0,
+      "max": 0,
+      "ratio": 0,
+      "trajectory": "untested",
+      "weakest_criteria": [],
+      "strongest_criteria": [],
+      "rounds_completed": 0,
+      "rounds_kept": 0,
+      "cost_invested": 0,
+      "last_improvement": null,
+      "last_escalation": null,
+      "stuck_count": 0,
+      "criteria_names": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ],
+      "scenario_count": 6,
+      "eval_coverage": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
       ]
     },
     "scaffold": {
@@ -276,6 +706,37 @@
         "Vendor Detection",
         "Dependency Ordering",
         "Integration Awareness"
+      ]
+    },
+    "scrape-leads": {
+      "score": 0,
+      "max": 0,
+      "ratio": 0,
+      "trajectory": "untested",
+      "weakest_criteria": [],
+      "strongest_criteria": [],
+      "rounds_completed": 0,
+      "rounds_kept": 0,
+      "cost_invested": 0,
+      "last_improvement": null,
+      "last_escalation": null,
+      "stuck_count": 0,
+      "criteria_names": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ],
+      "scenario_count": 6,
+      "eval_coverage": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
       ]
     },
     "skill-improver": {
@@ -355,6 +816,161 @@
         "No Duplication",
         "Correct Action"
       ]
+    },
+    "title-variants": {
+      "score": 0,
+      "max": 0,
+      "ratio": 0,
+      "trajectory": "untested",
+      "weakest_criteria": [],
+      "strongest_criteria": [],
+      "rounds_completed": 0,
+      "rounds_kept": 0,
+      "cost_invested": 0,
+      "last_improvement": null,
+      "last_escalation": null,
+      "stuck_count": 0,
+      "criteria_names": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ],
+      "scenario_count": 6,
+      "eval_coverage": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ]
+    },
+    "video-to-action": {
+      "score": 0,
+      "max": 0,
+      "ratio": 0,
+      "trajectory": "untested",
+      "weakest_criteria": [],
+      "strongest_criteria": [],
+      "rounds_completed": 0,
+      "rounds_kept": 0,
+      "cost_invested": 0,
+      "last_improvement": null,
+      "last_escalation": null,
+      "stuck_count": 0,
+      "criteria_names": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ],
+      "scenario_count": 6,
+      "eval_coverage": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ]
+    },
+    "welcome-email": {
+      "score": 0,
+      "max": 0,
+      "ratio": 0,
+      "trajectory": "untested",
+      "weakest_criteria": [],
+      "strongest_criteria": [],
+      "rounds_completed": 0,
+      "rounds_kept": 0,
+      "cost_invested": 0,
+      "last_improvement": null,
+      "last_escalation": null,
+      "stuck_count": 0,
+      "criteria_names": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ],
+      "scenario_count": 6,
+      "eval_coverage": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ]
+    },
+    "youtube-channel-analysis": {
+      "score": 0,
+      "max": 0,
+      "ratio": 0,
+      "trajectory": "untested",
+      "weakest_criteria": [],
+      "strongest_criteria": [],
+      "rounds_completed": 0,
+      "rounds_kept": 0,
+      "cost_invested": 0,
+      "last_improvement": null,
+      "last_escalation": null,
+      "stuck_count": 0,
+      "criteria_names": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ],
+      "scenario_count": 6,
+      "eval_coverage": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ]
+    },
+    "youtube-outliers": {
+      "score": 0,
+      "max": 0,
+      "ratio": 0,
+      "trajectory": "untested",
+      "weakest_criteria": [],
+      "strongest_criteria": [],
+      "rounds_completed": 0,
+      "rounds_kept": 0,
+      "cost_invested": 0,
+      "last_improvement": null,
+      "last_escalation": null,
+      "stuck_count": 0,
+      "criteria_names": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ],
+      "scenario_count": 6,
+      "eval_coverage": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ]
     }
   },
   "cross_skill_patterns": [
@@ -370,7 +986,26 @@
   ],
   "capability_map": {
     "general": [
-      "backup"
+      "backup",
+      "classify-leads",
+      "content-strategy-optimizer",
+      "create-proposal",
+      "cross-niche-outliers",
+      "gmail",
+      "gmail-inbox",
+      "gmail-label",
+      "gmaps-leads",
+      "inbox-cleaner",
+      "instantly-autoreply",
+      "instantly-campaigns",
+      "linkedin-response",
+      "onboarding-kickoff",
+      "scrape-leads",
+      "title-variants",
+      "video-to-action",
+      "welcome-email",
+      "youtube-channel-analysis",
+      "youtube-outliers"
     ],
     "analysis": [
       "context-drift-detector",
@@ -405,12 +1040,12 @@
     "deployment"
   ],
   "summary": {
-    "total_skills": 8,
-    "avg_ratio": 0.897,
+    "total_skills": 27,
+    "avg_ratio": 0.806,
     "skills_at_target": 2,
     "skills_stuck": 1,
-    "skills_untested": 3,
-    "total_cost": 0.86,
-    "total_rounds": 20
+    "skills_untested": 21,
+    "total_cost": 1.26,
+    "total_rounds": 28
   }
 }
