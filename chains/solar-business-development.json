@@ -1,0 +1,80 @@
+{
+  "name": "solar-business-development",
+  "description": "End-to-end: scrape solar prospects from Google Maps in Yucatan → classify hot/warm/cold → generate proposals for hot leads → send welcome sequence → organize inbox",
+  "schedule": "weekly",
+  "domain": "va-studio",
+  "steps": [
+    {
+      "id": "prospect",
+      "skill": "gmaps-leads",
+      "input": {
+        "query": "restaurantes hoteles negocios Mérida Yucatán",
+        "filters": ["high electricity usage", "commercial", "no solar panels visible"],
+        "limit": 50
+      },
+      "output_key": "raw_leads",
+      "timeout": 300
+    },
+    {
+      "id": "classify",
+      "skill": "classify-leads",
+      "input": {
+        "leads": "{{prospect.raw_leads}}",
+        "criteria": "solar panel installation potential based on business type, size, and location in Yucatan"
+      },
+      "output_key": "classified_leads",
+      "depends_on": "prospect"
+    },
+    {
+      "id": "propose",
+      "skill": "create-proposal",
+      "input": {
+        "leads": "{{classify.classified_leads.hot}}",
+        "template": "va-studio-solar-proposal",
+        "pricing_source": "config/resource-ids.json",
+        "language": "es"
+      },
+      "output_key": "proposals",
+      "depends_on": "classify",
+      "filter": "hot_only"
+    },
+    {
+      "id": "welcome",
+      "skill": "welcome-email",
+      "input": {
+        "recipients": "{{classify.classified_leads.warm}}",
+        "template": "va-studio-warm-intro",
+        "language": "es",
+        "from": "ventas@va-studiomx.com"
+      },
+      "output_key": "emails_sent",
+      "depends_on": "classify",
+      "filter": "warm_only"
+    },
+    {
+      "id": "organize",
+      "skill": "gmail-label",
+      "input": {
+        "action": "apply",
+        "labels": {
+          "hot": "va-caliente",
+          "warm": "va-tibio",
+          "cold": "va-frio"
+        },
+        "messages": "{{classify.classified_leads}}"
+      },
+      "depends_on": ["propose", "welcome"]
+    }
+  ],
+  "success_criteria": {
+    "min_leads_scraped": 10,
+    "min_hot_leads": 2,
+    "proposals_sent": true,
+    "emails_sent": true
+  },
+  "notifications": {
+    "on_complete": "ramene.anthony@gmail.com",
+    "on_error": "ramene.anthony@gmail.com",
+    "summary_format": "Scraped {{prospect.count}} leads → {{classify.hot}} hot, {{classify.warm}} warm → {{propose.count}} proposals sent, {{welcome.count}} intros sent"
+  }
+}

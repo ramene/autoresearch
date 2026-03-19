@@ -1,0 +1,53 @@
+{
+  "name": "inbox-zero-lead-capture",
+  "description": "Clean inbox → identify business opportunities hiding in email → classify → route to CRM",
+  "schedule": "daily",
+  "domain": "operations",
+  "steps": [
+    {
+      "id": "clean",
+      "skill": "inbox-cleaner",
+      "input": {
+        "account": "ventas@va-studiomx.com",
+        "preserve": ["from:*@gmail.com", "from:*@hotmail.com", "subject:solar", "subject:cotización"],
+        "auto_archive": ["newsletters", "promotions", "social"]
+      },
+      "output_key": "cleaned"
+    },
+    {
+      "id": "scan",
+      "skill": "gmail-inbox",
+      "input": {
+        "account": "ventas@va-studiomx.com",
+        "filter": "is:unread -label:va-processed",
+        "extract": ["sender", "subject", "body_preview", "date"]
+      },
+      "output_key": "unread_emails",
+      "depends_on": "clean"
+    },
+    {
+      "id": "classify",
+      "skill": "classify-leads",
+      "input": {
+        "leads": "{{scan.unread_emails}}",
+        "criteria": "potential solar panel customer in Yucatan/Mexico"
+      },
+      "output_key": "email_leads",
+      "depends_on": "scan"
+    },
+    {
+      "id": "label",
+      "skill": "gmail-label",
+      "input": {
+        "messages": "{{classify.email_leads}}",
+        "labels": {
+          "hot": "va-caliente",
+          "warm": "va-tibio",
+          "cold": "va-frio",
+          "not_lead": "va-processed"
+        }
+      },
+      "depends_on": "classify"
+    }
+  ]
+}

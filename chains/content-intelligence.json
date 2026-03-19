@@ -1,0 +1,57 @@
+{
+  "name": "content-intelligence",
+  "description": "Find viral solar/energy content → extract cross-niche patterns → generate title variants → extract actionable steps for our content strategy",
+  "schedule": "weekly",
+  "domain": "content-marketing",
+  "steps": [
+    {
+      "id": "find-viral",
+      "skill": "youtube-outliers",
+      "input": {
+        "niches": ["solar energy Mexico", "energía solar paneles", "CFE ahorro electricidad"],
+        "min_views": 50000,
+        "days": 30
+      },
+      "output_key": "viral_videos"
+    },
+    {
+      "id": "cross-niche",
+      "skill": "cross-niche-outliers",
+      "input": {
+        "source_niche": "solar energy",
+        "adjacent_niches": ["home improvement Mexico", "ahorro energía", "construcción sustentable", "real estate Yucatan"],
+        "min_outlier_score": 5
+      },
+      "output_key": "cross_patterns",
+      "parallel_with": "find-viral"
+    },
+    {
+      "id": "titles",
+      "skill": "title-variants",
+      "input": {
+        "source_titles": "{{find-viral.viral_videos.titles}}",
+        "patterns": "{{cross-niche.cross_patterns.hooks}}",
+        "brand": "VA Studio",
+        "language": "es",
+        "variants_per_title": 5
+      },
+      "output_key": "title_options",
+      "depends_on": ["find-viral", "cross-niche"]
+    },
+    {
+      "id": "actions",
+      "skill": "video-to-action",
+      "input": {
+        "videos": "{{find-viral.viral_videos.top_5}}",
+        "extract": ["installation steps", "customer objection handling", "pricing strategies", "before/after transformations"]
+      },
+      "output_key": "actionable_content",
+      "depends_on": "find-viral"
+    }
+  ],
+  "success_criteria": {
+    "viral_videos_found": 10,
+    "title_variants_generated": 25,
+    "actionable_steps_extracted": true
+  }
+}

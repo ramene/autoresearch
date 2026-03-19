@@ -1,0 +1,71 @@
+{
+  "name": "upwork-revenue",
+  "description": "Find solar/energy Upwork jobs → scrape poster details → classify opportunity quality → generate tailored proposals → auto-apply with personalized cover letters",
+  "schedule": "daily",
+  "domain": "freelance-revenue",
+  "steps": [
+    {
+      "id": "find-jobs",
+      "skill": "upwork-apply",
+      "input": {
+        "search_terms": ["solar panel installation", "renewable energy consultant", "solar system design", "photovoltaic engineering"],
+        "filters": {
+          "budget_min": 500,
+          "client_rating_min": 4.0,
+          "posted_within": "3d"
+        },
+        "max_results": 20
+      },
+      "output_key": "upwork_jobs"
+    },
+    {
+      "id": "enrich",
+      "skill": "scrape-leads",
+      "input": {
+        "sources": "{{find-jobs.upwork_jobs.client_profiles}}",
+        "enrich_with": ["company_size", "previous_hires", "budget_history"]
+      },
+      "output_key": "enriched_clients",
+      "depends_on": "find-jobs"
+    },
+    {
+      "id": "classify",
+      "skill": "classify-leads",
+      "input": {
+        "leads": "{{enrich.enriched_clients}}",
+        "criteria": "likelihood to hire, budget alignment, project complexity match for VA Studio capabilities"
+      },
+      "output_key": "classified_opportunities",
+      "depends_on": "enrich"
+    },
+    {
+      "id": "propose",
+      "skill": "create-proposal",
+      "input": {
+        "opportunities": "{{classify.classified_opportunities.hot}}",
+        "portfolio": "VA Studio — 50+ installations in Yucatan, 25-year warranty, CFE interconnection specialists",
+        "differentiator": "Only firm with AI-powered autonomous project management",
+        "language": "en"
+      },
+      "output_key": "proposals",
+      "depends_on": "classify",
+      "filter": "hot_only"
+    },
+    {
+      "id": "kickoff",
+      "skill": "onboarding-kickoff",
+      "input": {
+        "accepted_projects": "{{propose.proposals.submitted}}",
+        "setup": ["crm_entry", "calendar_block", "contractor_alert", "welcome_sequence"]
+      },
+      "output_key": "onboarded",
+      "depends_on": "propose",
+      "trigger": "on_acceptance"
+    }
+  ],
+  "success_criteria": {
+    "jobs_found": 5,
+    "proposals_submitted": 3,
+    "response_rate_target": 0.3
+  }
+}
