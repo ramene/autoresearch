@@ -1,0 +1,60 @@
+{
+  "scenarios": [
+    {
+      "id": 1,
+      "type": "happy",
+      "title": "Generate tests for the untested 'deep-plan-v2' skill",
+      "event": "Generate tests for the untested 'deep-plan-v2' skill.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 2,
+      "type": "happy",
+      "title": "Generate tests for the existing 'gmail-label' skill",
+      "event": "Generate tests for the existing 'gmail-label' skill.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 3,
+      "type": "happy",
+      "title": "Generate tests for a skill with a simple, single-function implementation",
+      "event": "Generate tests for a skill with a simple, single-function implementation.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 4,
+      "type": "diagnostic",
+      "title": "Generate tests for a skill that interacts with an external API",
+      "event": "Generate tests for a skill that interacts with an external API.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 5,
+      "type": "edge",
+      "title": "Given an existing skill with tests, refine and add to its test suite",
+      "event": "Given an existing skill with tests, refine and add to its test suite.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 6,
+      "type": "edge",
+      "title": "Generate tests for a skill description that is intentionally vague, and ask for ",
+      "event": "Generate tests for a skill description that is intentionally vague, and ask for clarification.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    }
+  ],
+  "criteria": [
+    "Generate a list of 6-8 relevant test scenarios: Does the skill generate a list of 6-8 relevant test scenarios?",
+    "Generate a list of 4-6 binary (yes/no) evaluation criteria: Does the skill generate a list of 4-6 binary (yes/no) evaluation criteria?",
+    "Are the generated criteria specific and unambiguous: Are the generated criteria specific and unambiguous?",
+    "Are the generated scenarios diverse, covering both success and failure cases: Are the generated scenarios diverse, covering both success and failure cases?",
+    "Does the output conform to the system's skill definition schema: Does the output conform to the system's skill definition schema?",
+    "Analyze the skill's code to suggest tests for specific functions or parameters: Does the skill analyze the skill's code to suggest tests for specific functions or parameters?"
+  ]
+}

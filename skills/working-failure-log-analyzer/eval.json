@@ -1,0 +1,60 @@
+{
+  "scenarios": [
+    {
+      "id": 1,
+      "type": "happy",
+      "title": "Analyze a failure log caused by a Python exception",
+      "event": "Analyze a failure log caused by a Python exception.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 2,
+      "type": "happy",
+      "title": "Analyze a failure log caused by an unexpected response from an external API",
+      "event": "Analyze a failure log caused by an unexpected response from an external API.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 3,
+      "type": "happy",
+      "title": "Analyze a failure log where the skill produced output that failed a quality crit",
+      "event": "Analyze a failure log where the skill produced output that failed a quality criterion.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 4,
+      "type": "diagnostic",
+      "title": "Analyze a log where the tool call had incorrect parameters",
+      "event": "Analyze a log where the tool call had incorrect parameters.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 5,
+      "type": "edge",
+      "title": "Analyze a successful run log and correctly report that no errors were found",
+      "event": "Analyze a successful run log and correctly report that no errors were found.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 6,
+      "type": "edge",
+      "title": "Compare logs from a failed run and a successful run to identify the key differen",
+      "event": "Compare logs from a failed run and a successful run to identify the key difference.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    }
+  ],
+  "criteria": [
+    "Parse the structured log data: Does the skill correctly parse the structured log data?",
+    "Identify the specific tool call or code line that produced the error: Does the skill identify the specific tool call or code line that produced the error?",
+    "Does the hypothesis distinguish between transient (e.g., API timeout) and systemic (e.g., bad prompt) errors: Does the hypothesis distinguish between transient (e.g., API timeout) and systemic (e.g., bad prompt) errors?",
+    "Does the analysis pinpoint the specific evaluation criterion that failed: Does the analysis pinpoint the specific evaluation criterion that failed?",
+    "Is the output a concise summary of the likely cause: Is the output a concise summary of the likely cause?",
+    "Suggest a next step for debugging (e.g., 'rerun with verbose logging', 'examine prompt for ambiguity'): Does the skill suggest a next step for debugging (e.g., 'rerun with verbose logging', 'examine prompt for ambiguity')?"
+  ]
+}

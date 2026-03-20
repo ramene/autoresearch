@@ -41,7 +41,7 @@
       "_preference_boost": 2,
       "_preference_note": "Boosted by user preference (×2.0)",
       "score": 1,
-      "status": "actionable"
+      "status": "genesis_complete"
     },
     {
       "id": "want-022",
@@ -80,7 +80,7 @@
       "_preference_boost": 2,
       "_preference_note": "Boosted by user preference (×2.0)",
       "score": 1,
-      "status": "actionable"
+      "status": "genesis_complete"
     },
     {
       "id": "want-013",
@@ -285,7 +285,7 @@
       "_preference_boost": 2,
       "_preference_note": "Boosted by user preference (×2.0)",
       "score": 0.81,
-      "status": "actionable"
+      "status": "genesis_complete"
     },
     {
       "id": "want-023",
@@ -321,7 +321,7 @@
       "_preference_boost": 2,
       "_preference_note": "Boosted by user preference (×2.0)",
       "score": 0.784,
-      "status": "actionable"
+      "status": "genesis_complete"
     },
     {
       "id": "want-021",
@@ -359,7 +359,7 @@
       "_preference_boost": 2,
       "_preference_note": "Boosted by user preference (×2.0)",
       "score": 0.756,
-      "status": "actionable"
+      "status": "genesis_complete"
     },
     {
       "id": "want-019",

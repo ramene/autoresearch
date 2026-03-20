@@ -1,0 +1,60 @@
+{
+  "scenarios": [
+    {
+      "id": 1,
+      "type": "happy",
+      "title": "Create a payment link for service 'S-123' for $10 USD",
+      "event": "Create a payment link for service 'S-123' for $10 USD.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 2,
+      "type": "happy",
+      "title": "Create a payment link for service 'S-456' for €50 EUR",
+      "event": "Create a payment link for service 'S-456' for €50 EUR.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 3,
+      "type": "happy",
+      "title": "Attempt to create a link for a non-existent service 'S-999'",
+      "event": "Attempt to create a link for a non-existent service 'S-999'.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 4,
+      "type": "diagnostic",
+      "title": "Attempt to create a link with a negative or zero amount",
+      "event": "Attempt to create a link with a negative or zero amount.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 5,
+      "type": "edge",
+      "title": "Create a link and then use another tool to verify its status",
+      "event": "Create a link and then use another tool to verify its status.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 6,
+      "type": "edge",
+      "title": "Create 10 unique links in a loop and verify they are all different",
+      "event": "Create 10 unique links in a loop and verify they are all different.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    }
+  ],
+  "criteria": [
+    "Authenticate with the 'eaas' API: Does the skill successfully authenticate with the 'eaas' API?",
+    "Generate a valid, clickable payment URL: Does the skill generate a valid, clickable payment URL?",
+    "Is the generated link associated with the correct service ID: Is the generated link associated with the correct service ID?",
+    "Is the generated link for the correct currency and amount: Is the generated link for the correct currency and amount?",
+    "Handle API errors gracefully (e.g., invalid service ID): Does the skill handle API errors gracefully (e.g., invalid service ID)?",
+    "Log the generated link and associated metadata for tracking: Does the skill log the generated link and associated metadata for tracking?"
+  ]
+}

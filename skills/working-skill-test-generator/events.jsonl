@@ -1,0 +1,1 @@
+{"type":"skill_genesis","skill":"skill-test-generator","want_id":"want-021","hypothesis":"The system cannot create or execute tests for its own skills, resulting in 15/27 skills being completely untested and leaving the system blind to their actual performance.","timestamp":"2026-03-20T17:29:04.071Z"}

@@ -1,0 +1,1 @@
+{"type":"skill_genesis","skill":"system-status-reporter","want_id":"want-024","hypothesis":"The system cannot summarize its own complex state, hindering observability. High user demand for 'dashboards' indicates a need for a skill that can synthesize and report on key system metrics.","timestamp":"2026-03-20T17:27:37.999Z"}
