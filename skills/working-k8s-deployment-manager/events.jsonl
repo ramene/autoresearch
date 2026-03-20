@@ -1,0 +1,1 @@
+{"type":"skill_genesis","skill":"k8s-deployment-manager","want_id":"want-021","hypothesis":"The system cannot manage software deployments, a core operational function with high user intent, preventing it from autonomously updating its own services.","timestamp":"2026-03-20T20:37:35.334Z"}

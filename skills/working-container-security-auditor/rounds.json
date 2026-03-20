@@ -1,0 +1,48 @@
+[
+  {
+    "round": 0,
+    "score": 37,
+    "max": 42,
+    "status": "baseline",
+    "mutation": "Replace the placeholder trivy installation comment with concrete, cross-platform installation commands so the skill doesn't silently exit when trivy is missing.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      7
+    ],
+    "failures": [
+      {
+        "scenario": 5,
+        "criterion": "Scan the target container image"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Does the output list identified vulnerabilities with severity levels"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Check for common misconfigurations (e.g., running as root)"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Is the final report structured in a machine-readable format (e.g., JSON)"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Provide actionable remediation advice for high-severity findings"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Initial baseline evaluation",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-20T20:35:59.486Z",
+    "changelog": "**Mutation**: Replace the placeholder trivy installation comment with concrete, cross-platform installation commands so the skill doesn't silently exit when trivy is missing.\n**Failures**: S5: Scan the target container image, S5: Does the output list identified vulnerabilities with severity levels, S5: Check for common misconfigurations (e.g., running as root), S5: Is the final report structured in a machine-readable format (e.g., JSON), S5: Provide actionable remediation advice for high-severity findings\n**Per-criteria**: Scan the target container image: 6/7, Does the output list identified vulnerabilities with severity levels: 6/7, Check for common misconfigurations (e.g., running as root): 6/7, Is the final report structured in a machine-readable format (e.g., JSON): 6/7, Provide actionable remediation advice for high-severity findings: 6/7, Complete the scan without crashing or timing out: 7/7\n**Decision**: Initial baseline evaluation"
+  }
+]

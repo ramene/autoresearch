@@ -1,0 +1,60 @@
+{
+  "scenarios": [
+    {
+      "id": 1,
+      "type": "happy",
+      "title": "Refine the prompt for 'classify-leads', focusing on its 'Task Completion' weakne",
+      "event": "Refine the prompt for 'classify-leads', focusing on its 'Task Completion' weakness.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 2,
+      "type": "happy",
+      "title": "Refine the prompt for 'gmail-inbox', focusing on its 'Instructions Clarity' weak",
+      "event": "Refine the prompt for 'gmail-inbox', focusing on its 'Instructions Clarity' weakness.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 3,
+      "type": "happy",
+      "title": "Refine the prompt for 'create-proposal', focusing on 'Error Handling'",
+      "event": "Refine the prompt for 'create-proposal', focusing on 'Error Handling'.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 4,
+      "type": "diagnostic",
+      "title": "Input a high-quality prompt and verify the skill suggests minimal or no changes",
+      "event": "Input a high-quality prompt and verify the skill suggests minimal or no changes.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 5,
+      "type": "edge",
+      "title": "Provide a prompt with no examples and verify the skill adds them",
+      "event": "Provide a prompt with no examples and verify the skill adds them.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 6,
+      "type": "edge",
+      "title": "Provide a prompt that leads to malformed JSON output and verify the skill adds f",
+      "event": "Provide a prompt that leads to malformed JSON output and verify the skill adds formatting instructions.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    }
+  ],
+  "criteria": [
+    "Identify the weakest part of the input prompt: Does the skill identify the weakest part of the input prompt?",
+    "Does the proposed rewrite explicitly address a known failure mode (e.g., ambiguity): Does the proposed rewrite explicitly address a known failure mode (e.g., ambiguity)?",
+    "Add or improve few-shot examples for better guidance: Does the skill add or improve few-shot examples for better guidance?",
+    "Suggest adding explicit instructions for error handling and output formatting: Does the skill suggest adding explicit instructions for error handling and output formatting?",
+    "Is the refined prompt syntactically correct and ready to be used: Is the refined prompt syntactically correct and ready to be used?",
+    "Can the skill explain why its proposed change should improve performance: Can the skill explain why its proposed change should improve performance?"
+  ]
+}

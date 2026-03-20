@@ -1,0 +1,60 @@
+{
+  "scenarios": [
+    {
+      "id": 1,
+      "type": "happy",
+      "title": "Generate a default text-based dashboard",
+      "event": "Generate a default text-based dashboard.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 2,
+      "type": "happy",
+      "title": "Generate an HTML dashboard and save it to a file",
+      "event": "Generate an HTML dashboard and save it to a file.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 3,
+      "type": "happy",
+      "title": "Generate a JSON summary of the system status",
+      "event": "Generate a JSON summary of the system status.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 4,
+      "type": "diagnostic",
+      "title": "Request a dashboard focused only on skill performance metrics",
+      "event": "Request a dashboard focused only on skill performance metrics.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 5,
+      "type": "edge",
+      "title": "Request a dashboard focused only on unmet demands and user intents",
+      "event": "Request a dashboard focused only on unmet demands and user intents.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 6,
+      "type": "edge",
+      "title": "Schedule the dashboard to be generated every hour",
+      "event": "Schedule the dashboard to be generated every hour.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    }
+  ],
+  "criteria": [
+    "Does the dashboard include the overall skill score ratio: Does the dashboard include the overall skill score ratio?",
+    "Does the dashboard list the top 3 lowest-scoring skills: Does the dashboard list the top 3 lowest-scoring skills?",
+    "Does the dashboard show the number of stuck and untested skills: Does the dashboard show the number of stuck and untested skills?",
+    "Does the dashboard include recent high-frequency user intent signals: Does the dashboard include recent high-frequency user intent signals?",
+    "Can the output format be specified (e.g., 'text', 'html', 'json'): Can the output format be specified (e.g., 'text', 'html', 'json')?",
+    "Execute successfully and produce a coherent report: Does the skill execute successfully and produce a coherent report?"
+  ]
+}

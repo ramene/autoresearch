@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-03-20T20:07:08.928Z",
+  "timestamp": "2026-03-20T20:13:56.233Z",
   "version": "1.1",
   "research_demands": [
     {
@@ -165,7 +165,12 @@
       "current_capability": "cross-niche-outliers"
     },
     {
-      "signal": "Skill \"failure-log-analyzer\" has 6 unresolved failure(s) in round 0",
+      "signal": "Skill \"failure-log-analyzer\" score plateaued at 30 for 3 rounds",
+      "source": "skills/working-failure-log-analyzer/rounds.json",
+      "current_capability": "failure-log-analyzer"
+    },
+    {
+      "signal": "Skill \"failure-log-analyzer\" has 6 unresolved failure(s) in round 4",
       "source": "skills/working-failure-log-analyzer/rounds.json",
       "current_capability": "failure-log-analyzer"
     },
@@ -265,11 +270,7 @@
           "exists": true
         }
       ],
-      "existing_skills": [
-        "literature-research (seed-base)",
-        "nate-synthesis-and-debate (seed-base)",
-        "nate-synthesis-and-debate (builds-karve-ai)"
-      ],
+      "existing_skills": [],
       "existing_autoresearch_skills": [
         "autoresearch-runner.mjs",
         "autoresearch-runner.py"
@@ -341,11 +342,7 @@
           "exists": true
         }
       ],
-      "existing_skills": [
-        "mattgiaro-substack-agent (builds-karve-ai)",
-        "mattgiaro-substack-growth (builds-karve-ai)",
-        "mattgiaro-substack-guide (builds-karve-ai)"
-      ],
+      "existing_skills": [],
       "existing_autoresearch_skills": [
         "working-content-strategy-optimizer"
       ],
@@ -373,15 +370,7 @@
           "exists": true
         }
       ],
-      "existing_skills": [
-        "eaas-domain-expansion-agent-team-v1 (seed-base)",
-        "eaas-expansion-brainstorm-to-blueprint-v1 (seed-base)",
-        "eaas-platform-build-self-discovery-v1 (seed-base)",
-        "eaas-domain-expansion-agent-team-v1 (builds-karve-ai)",
-        "eaas-expansion-brainstorm-to-blueprint-v1 (builds-karve-ai)",
-        "eaas-platform-build-self-discovery-v1 (builds-karve-ai)",
-        "platform (builds-karve-ai)"
-      ],
+      "existing_skills": [],
       "existing_autoresearch_skills": [
         "working-eaas-payment-linker"
       ],
@@ -389,9 +378,9 @@
     }
   ],
   "summary": {
-    "total_demands": 38,
+    "total_demands": 39,
     "unmet_demands": 9,
-    "partially_met": 29,
+    "partially_met": 30,
     "research_gap_count": 1,
     "system_gap_count": 0,
     "mcp_domain_count": 5,

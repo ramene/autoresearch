@@ -1,0 +1,68 @@
+{
+  "scenarios": [
+    {
+      "id": 1,
+      "type": "happy",
+      "title": "Scan the latest 'ubuntu' image from Docker Hub",
+      "event": "Scan the latest 'ubuntu' image from Docker Hub.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 2,
+      "type": "happy",
+      "title": "Scan a local container image by its ID",
+      "event": "Scan a local container image by its ID.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 3,
+      "type": "happy",
+      "title": "Scan a production container specified by a Kubernetes pod name",
+      "event": "Scan a production container specified by a Kubernetes pod name.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 4,
+      "type": "happy",
+      "title": "Generate a JSON report of all vulnerabilities found in 'nginx:latest'",
+      "event": "Generate a JSON report of all vulnerabilities found in 'nginx:latest'.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 5,
+      "type": "diagnostic",
+      "title": "Attempt to scan a non-existent container image and handle the error gracefully",
+      "event": "Attempt to scan a non-existent container image and handle the error gracefully.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 6,
+      "type": "edge",
+      "title": "Scan an old, known-vulnerable image and verify that specific CVEs are detected",
+      "event": "Scan an old, known-vulnerable image and verify that specific CVEs are detected.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 7,
+      "type": "edge",
+      "title": "Filter the scan results to show only 'CRITICAL' or 'HIGH' severity vulnerabiliti",
+      "event": "Filter the scan results to show only 'CRITICAL' or 'HIGH' severity vulnerabilities.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    }
+  ],
+  "criteria": [
+    "Scan the target container image: Does the skill successfully scan the target container image?",
+    "Does the output list identified vulnerabilities with severity levels: Does the output list identified vulnerabilities with severity levels?",
+    "Check for common misconfigurations (e.g., running as root): Does the skill check for common misconfigurations (e.g., running as root)?",
+    "Is the final report structured in a machine-readable format (e.g., JSON): Is the final report structured in a machine-readable format (e.g., JSON)?",
+    "Provide actionable remediation advice for high-severity findings: Does the skill provide actionable remediation advice for high-severity findings?",
+    "Complete the scan without crashing or timing out: Does the skill complete the scan without crashing or timing out?"
+  ]
+}
