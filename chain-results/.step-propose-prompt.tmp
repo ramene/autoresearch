@@ -154,10 +154,10 @@ allowed-tools: Read, Grep, Glob, Bash, Write, WebFetch, mcp__gmail__send_email
 
 CHAIN STEP INPUT:
 {
-  "leads": "[UNRESOLVED: classify.classified_leads.hot]",
-  "template": "va-studio-solar-proposal",
-  "pricing_source": "config/resource-ids.json",
-  "language": "es"
+  "opportunities": "[UNRESOLVED: classify.classified_opportunities.hot]",
+  "portfolio": "VA Studio — 50+ installations in Yucatan, 25-year warranty, CFE interconnection specialists",
+  "differentiator": "Only firm with AI-powered autonomous project management",
+  "language": "en"
 }
 
 Execute the skill against this input. Return structured output as JSON where possible.

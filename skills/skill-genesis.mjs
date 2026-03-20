@@ -123,7 +123,7 @@ const SPECIFIC_WANT = getArgValue('--want')
 function loadGeminiKey() {
   if (process.env.GEMINI_API_KEY) return process.env.GEMINI_API_KEY
   const paths = [
-    resolve(process.env.HOME, '.claude/.credentials/gemini-api-key.txt'),
+    '/usr/local/etc/autoresearch-credentials/gemini-api-key.txt', resolve(process.env.HOME, '.claude/.credentials/gemini-api-key.txt'),
   ]
   for (const p of paths) {
     if (existsSync(p)) return readFileSync(p, 'utf8').trim()

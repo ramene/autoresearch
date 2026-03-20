@@ -41,7 +41,7 @@ send_error_summary() {
         osascript -e "display notification \"$ERRORS_FOUND error(s) in autonomous loop. Check $LOG_FILE\" with title \"Autoresearch ALERT\" sound name \"Sosumi\"" 2>/dev/null || true
 
         # Try Resend email alert (if key readable)
-        RESEND_KEY=$(cat "$HOME/.claude/.credentials/resend-api-key.txt" 2>/dev/null || echo "")
+        RESEND_KEY=$(cat "/usr/local/etc/autoresearch-credentials/resend-api-key.txt" 2>/dev/null || echo "")
         if [ -n "$RESEND_KEY" ]; then
             curl -sf -X POST https://api.resend.com/emails \
                 -H "Authorization: Bearer $RESEND_KEY" \
@@ -61,7 +61,7 @@ echo "═══ Autonomous Loop — $(date) ═══"
 echo ""
 echo "--- Pre-flight ---"
 for cred in gemini-api-key.txt anthropic-api-key.txt; do
-    if [ ! -r "$HOME/.claude/.credentials/$cred" ]; then
+    if [ ! -r "/usr/local/etc/autoresearch-credentials/$cred" ]; then
         alert_failure "Cannot read credential: $cred"
     else
         echo "  ✓ $cred readable"
@@ -146,7 +146,7 @@ SUMMARY+="Log: $LOG_FILE"
 osascript -e "display notification \"$(echo -e "$SUMMARY" | head -3 | tr '\n' ' ')\" with title \"Autoresearch Loop $([ "$ERRORS_FOUND" -gt 0 ] && echo "⚠" || echo "✓")\" sound name \"$([ "$ERRORS_FOUND" -gt 0 ] && echo "Basso" || echo "Glass")\"" 2>/dev/null || true
 
 # Email report — ALWAYS
-RESEND_KEY=$(cat "$HOME/.claude/.credentials/resend-api-key.txt" 2>/dev/null || echo "")
+RESEND_KEY=$(cat "/usr/local/etc/autoresearch-credentials/resend-api-key.txt" 2>/dev/null || echo "")
 if [ -n "$RESEND_KEY" ]; then
     SUBJECT="$([ "$ERRORS_FOUND" -gt 0 ] && echo "⚠" || echo "✓") Autoresearch: $(date +%Y-%m-%d\ %H:%M) | ${DURATION}s | $(grep 'KEPT' "$LOG_FILE" 2>/dev/null | wc -l | tr -d ' ') kept"
     curl -sf -X POST https://api.resend.com/emails \

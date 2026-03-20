@@ -60,27 +60,23 @@ const CONFIG = {
 
 // ─── API Helpers ─────────────────────────────────────────────────────────────
 
-function loadAnthropicKey() {
-  if (process.env.ANTHROPIC_API_KEY) return process.env.ANTHROPIC_API_KEY
-  const paths = [
-    resolve(process.env.HOME, '.claude/.credentials/anthropic-api-key.txt'),
-  ]
-  for (const p of paths) {
+// Credential paths: prefer non-Drive location (no xattr issues), fall back to .claude
+const CRED_PATHS = [
+  '/usr/local/etc/autoresearch-credentials',
+  resolve(process.env.HOME, '.claude/.credentials'),
+]
+
+function loadCredential(filename, envVar) {
+  if (process.env[envVar]) return process.env[envVar]
+  for (const dir of CRED_PATHS) {
+    const p = resolve(dir, filename)
     if (existsSync(p)) return readFileSync(p, 'utf8').trim()
   }
-  throw new Error('ANTHROPIC_API_KEY not found')
+  throw new Error(`${envVar} not found in env or ${CRED_PATHS.map(d => d + '/' + filename).join(', ')}`)
 }
 
-function loadGeminiKey() {
-  if (process.env.GEMINI_API_KEY) return process.env.GEMINI_API_KEY
-  const paths = [
-    resolve(process.env.HOME, '.claude/.credentials/gemini-api-key.txt'),
-  ]
-  for (const p of paths) {
-    if (existsSync(p)) return readFileSync(p, 'utf8').trim()
-  }
-  throw new Error('GEMINI_API_KEY not found')
-}
+function loadAnthropicKey() { return loadCredential('anthropic-api-key.txt', 'ANTHROPIC_API_KEY') }
+function loadGeminiKey() { return loadCredential('gemini-api-key.txt', 'GEMINI_API_KEY') }
 
 async function callClaude(prompt, systemPrompt) {
   // Use claude CLI for models that start with 'sonnet', 'opus', 'haiku' (short names)
