@@ -2,8 +2,7 @@
   "version": "1.0",
   "description": "User preference signals — NOT directives. These weight the want engine's scoring. The system discovers its own path within these interest domains.",
   "updated": "2026-03-20",
-  "note": "Awareness, not direction. The AI observes what the human likes and lets that influence — not dictate — what it wants to explore.",
-
+  "note": "Awareness, not direction. Bigger toys in the sandbox. The child surfs when ready.",
   "interests": {
     "financial_markets": {
       "weight": 1.8,
@@ -12,7 +11,13 @@
         "Algorithmic trading and automation",
         "MEV/frontrunning research (bug bounty angle)",
         "DeFi protocols and liquidity provision",
-        "Token economics and market making"
+        "Token economics and market making",
+        "Statistical arbitrage across fragmented markets (cross-exchange price gaps)",
+        "Chaos theory signal detection (strange attractors, fractal patterns, Hurst exponent)",
+        "Kelly criterion position sizing (probability-weighted, emotion-free)",
+        "Funding rate arbitrage (perpetual vs spot spread)",
+        "Cross-exchange latency arbitrage (infrastructure edge)",
+        "Mean reversion strategies in volatile crypto markets"
       ],
       "existing_infrastructure": [
         "builds.karve.ai: BASE chain payments (Chain ID 8453)",
@@ -29,7 +34,10 @@
         "Smart contract security auditing",
         "Bug bounty research on L2 chains",
         "Threshold encryption attack surfaces",
-        "MEV protection mechanisms"
+        "MEV protection mechanisms",
+        "Chaos theory applied to MEV — finding order in apparently random transaction sequences",
+        "Adversarial game theory in DeFi (sandwich attacks, backrunning, JIT liquidity)",
+        "Stress testing protocol assumptions under extreme market conditions"
       ],
       "existing_infrastructure": [
         "builds.karve.ai: /api/bite/encrypt, /api/bite/audit, /api/bite/validate",
@@ -38,7 +46,7 @@
       ]
     },
     "income_automation": {
-      "weight": 2.0,
+      "weight": 2,
       "signals": [
         "$10,000/week income target from autonomous skill chains",
         "Passive income through automated systems",
@@ -94,21 +102,50 @@
         "March 7 baseline (129KB pipeline output)",
         "NotebookLM notebook with 3 sources"
       ]
+    },
+    "quantitative_research": {
+      "weight": 1.7,
+      "signals": [
+        "Expected value calculation and probability-weighted decisions",
+        "Market microstructure analysis (order book depth, bid-ask spread)",
+        "Volatility surface modeling and regime detection",
+        "On-chain analytics (whale movements, smart money tracking)",
+        "Sentiment analysis from social feeds (X/Twitter, Reddit, Telegram)",
+        "Backtesting frameworks for strategy validation before live deployment",
+        "Risk management: max drawdown limits, correlation-based position limits",
+        "Monte Carlo simulation for strategy stress testing"
+      ],
+      "existing_infrastructure": [
+        "mcp-defi-tools: arbitrage-scan, frontrun-detect, mempool-watch",
+        "mcp-tradfi-tools: arb-scanner, paper-trade, signal-aggregator",
+        "agent-preflight: footgun detection before execution",
+        "budget-gate: transaction spending limits"
+      ]
     }
   },
-
   "income_targets": {
     "weekly": 10000,
     "currency": "USD",
     "strategy": "Multiple autonomous income streams, each contributing partial target",
     "current_streams": {
-      "va_studio_solar": { "status": "operational", "potential": "variable" },
-      "eaas_platform": { "status": "built", "potential": "$279.9K/year at scale" },
-      "defi_amm": { "status": "infrastructure_ready", "potential": "unknown — needs exploration" },
-      "content_monetization": { "status": "tools_ready", "potential": "variable" }
+      "va_studio_solar": {
+        "status": "operational",
+        "potential": "variable"
+      },
+      "eaas_platform": {
+        "status": "built",
+        "potential": "$279.9K/year at scale"
+      },
+      "defi_amm": {
+        "status": "infrastructure_ready",
+        "potential": "unknown — needs exploration"
+      },
+      "content_monetization": {
+        "status": "tools_ready",
+        "potential": "variable"
+      }
     }
   },
-
   "how_preferences_affect_wants": {
     "mechanism": "Multiply want score by preference alignment factor",
     "formula": "adjusted_score = base_score × max(matching_interest_weights)",
