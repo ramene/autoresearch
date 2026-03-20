@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-03-19T14:34:44.508Z",
+  "timestamp": "2026-03-20T20:07:08.928Z",
   "version": "1.1",
   "research_demands": [
     {
@@ -90,6 +90,11 @@
   ],
   "environmental_signals": [
     {
+      "signal": "Skill \"classify-leads\" last improved: 17 → 19/36",
+      "source": "skills/working-classify-leads/events.jsonl",
+      "current_capability": "classify-leads"
+    },
+    {
       "signal": "Skill \"content-strategy-optimizer\" last improved: 16 → 17/48",
       "source": "skills/working-content-strategy-optimizer/events.jsonl",
       "current_capability": "content-strategy-optimizer"
@@ -100,9 +105,44 @@
       "current_capability": "context-loader"
     },
     {
+      "signal": "Skill \"create-proposal\" last improved: 30 → 36/36",
+      "source": "skills/working-create-proposal/events.jsonl",
+      "current_capability": "create-proposal"
+    },
+    {
       "signal": "Skill \"cross-model-intelligence-pipeline\" last improved: 44 → 48/48",
       "source": "skills/working-cross-model-intelligence-pipeline/events.jsonl",
       "current_capability": "cross-model-intelligence-pipeline"
+    },
+    {
+      "signal": "Skill \"cross-niche-outliers\" last improved: 35 → 36/36",
+      "source": "skills/working-cross-niche-outliers/events.jsonl",
+      "current_capability": "cross-niche-outliers"
+    },
+    {
+      "signal": "Skill \"eaas-payment-linker\" last improved: 27 → 36/36",
+      "source": "skills/working-eaas-payment-linker/events.jsonl",
+      "current_capability": "eaas-payment-linker"
+    },
+    {
+      "signal": "Skill \"gmail\" last improved: 28 → 36/36",
+      "source": "skills/working-gmail/events.jsonl",
+      "current_capability": "gmail"
+    },
+    {
+      "signal": "Skill \"gmail-inbox\" last improved: 30 → 36/36",
+      "source": "skills/working-gmail-inbox/events.jsonl",
+      "current_capability": "gmail-inbox"
+    },
+    {
+      "signal": "Skill \"gmail-label\" last improved: 31 → 34/36",
+      "source": "skills/working-gmail-label/events.jsonl",
+      "current_capability": "gmail-label"
+    },
+    {
+      "signal": "Skill \"classify-leads\" has 22 unresolved failure(s) in round 4",
+      "source": "skills/working-classify-leads/rounds.json",
+      "current_capability": "classify-leads"
     },
     {
       "signal": "Skill \"content-strategy-optimizer\" has 36 unresolved failure(s) in round 7",
@@ -118,6 +158,26 @@
       "signal": "Skill \"context-drift-detector\" has 10 unresolved failure(s) in round 7",
       "source": "skills/working-context-drift-detector/rounds.json",
       "current_capability": "context-drift-detector"
+    },
+    {
+      "signal": "Skill \"cross-niche-outliers\" has 9 unresolved failure(s) in round 4",
+      "source": "skills/working-cross-niche-outliers/rounds.json",
+      "current_capability": "cross-niche-outliers"
+    },
+    {
+      "signal": "Skill \"failure-log-analyzer\" has 6 unresolved failure(s) in round 0",
+      "source": "skills/working-failure-log-analyzer/rounds.json",
+      "current_capability": "failure-log-analyzer"
+    },
+    {
+      "signal": "Skill \"gmail-inbox\" has 18 unresolved failure(s) in round 4",
+      "source": "skills/working-gmail-inbox/rounds.json",
+      "current_capability": "gmail-inbox"
+    },
+    {
+      "signal": "Skill \"gmail-label\" has 2 unresolved failure(s) in round 4",
+      "source": "skills/working-gmail-label/rounds.json",
+      "current_capability": "gmail-label"
     },
     {
       "signal": "Skill \"scaffold\" has 11 unresolved failure(s) in round 5",
@@ -137,51 +197,51 @@
   ],
   "user_intent_signals": [
     {
-      "signal": "User intent pattern: \"research pipeline\" detected across tmux transcripts",
-      "source": "tmux-logs transcripts (10 files scanned)",
-      "frequency": 15,
-      "current_capability": null
-    },
-    {
       "signal": "User intent pattern: \"skill improvement\" detected across tmux transcripts",
-      "source": "tmux-logs transcripts (10 files scanned)",
-      "frequency": 124,
-      "current_capability": null
-    },
-    {
-      "signal": "User intent pattern: \"error debugging\" detected across tmux transcripts",
-      "source": "tmux-logs transcripts (10 files scanned)",
-      "frequency": 124,
+      "source": "tmux-logs transcripts (14 files scanned)",
+      "frequency": 457,
       "current_capability": null
     },
     {
       "signal": "User intent pattern: \"security audit\" detected across tmux transcripts",
-      "source": "tmux-logs transcripts (10 files scanned)",
-      "frequency": 17,
+      "source": "tmux-logs transcripts (14 files scanned)",
+      "frequency": 34,
       "current_capability": null
     },
     {
       "signal": "User intent pattern: \"documentation\" detected across tmux transcripts",
-      "source": "tmux-logs transcripts (10 files scanned)",
-      "frequency": 37,
+      "source": "tmux-logs transcripts (14 files scanned)",
+      "frequency": 44,
       "current_capability": null
     },
     {
       "signal": "User intent pattern: \"deployment\" detected across tmux transcripts",
-      "source": "tmux-logs transcripts (10 files scanned)",
-      "frequency": 124,
+      "source": "tmux-logs transcripts (14 files scanned)",
+      "frequency": 170,
       "current_capability": null
     },
     {
       "signal": "User intent pattern: \"testing\" detected across tmux transcripts",
-      "source": "tmux-logs transcripts (10 files scanned)",
-      "frequency": 92,
+      "source": "tmux-logs transcripts (14 files scanned)",
+      "frequency": 112,
       "current_capability": null
     },
     {
       "signal": "User intent pattern: \"dashboard\" detected across tmux transcripts",
-      "source": "tmux-logs transcripts (10 files scanned)",
-      "frequency": 266,
+      "source": "tmux-logs transcripts (14 files scanned)",
+      "frequency": 419,
+      "current_capability": null
+    },
+    {
+      "signal": "User intent pattern: \"research pipeline\" detected across tmux transcripts",
+      "source": "tmux-logs transcripts (14 files scanned)",
+      "frequency": 127,
+      "current_capability": null
+    },
+    {
+      "signal": "User intent pattern: \"error debugging\" detected across tmux transcripts",
+      "source": "tmux-logs transcripts (14 files scanned)",
+      "frequency": 382,
       "current_capability": null
     }
   ],
@@ -215,6 +275,45 @@
         "autoresearch-runner.py"
       ],
       "gap": "Autoresearch skills exist for this domain"
+    },
+    {
+      "mcp_server": "defi-tools",
+      "domain": "defi_trading",
+      "subdomains": [
+        "token_operations",
+        "amm_trading",
+        "liquidity_management",
+        "mev_research",
+        "yield_optimization",
+        "arbitrage",
+        "frontrunning_detection",
+        "portfolio_tracking"
+      ],
+      "tool_count": 80,
+      "tool_namespace": "mcp__defi-tools__",
+      "scope": "global",
+      "data_available": false,
+      "existing_skills": [],
+      "existing_autoresearch_skills": [],
+      "gap": "Active MCP with no matching skills — domain entirely uncovered"
+    },
+    {
+      "mcp_server": "tradfi-tools",
+      "domain": "traditional_finance",
+      "subdomains": [
+        "price_feeds",
+        "arbitrage_scanning",
+        "paper_trading",
+        "macro_analysis",
+        "signal_aggregation"
+      ],
+      "tool_count": 24,
+      "tool_namespace": "mcp__tradfi-tools__",
+      "scope": "global",
+      "data_available": false,
+      "existing_skills": [],
+      "existing_autoresearch_skills": [],
+      "gap": "Active MCP with no matching skills — domain entirely uncovered"
     },
     {
       "mcp_server": "substack",
@@ -264,7 +363,16 @@
       "tool_namespace": "mcp__eaas__",
       "scope": "project-local",
       "project": "builds.karve.ai",
-      "data_available": false,
+      "data_available": true,
+      "data_sources": [
+        {
+          "type": "dashboard_results",
+          "files": [
+            "results-eaas-payment-linker.json"
+          ],
+          "exists": true
+        }
+      ],
       "existing_skills": [
         "eaas-domain-expansion-agent-team-v1 (seed-base)",
         "eaas-expansion-brainstorm-to-blueprint-v1 (seed-base)",
@@ -274,18 +382,20 @@
         "eaas-platform-build-self-discovery-v1 (builds-karve-ai)",
         "platform (builds-karve-ai)"
       ],
-      "existing_autoresearch_skills": [],
-      "gap": "Skills exist elsewhere but no autoresearch-optimizable skills for this domain"
+      "existing_autoresearch_skills": [
+        "working-eaas-payment-linker"
+      ],
+      "gap": "Autoresearch skills exist for this domain"
     }
   ],
   "summary": {
-    "total_demands": 26,
+    "total_demands": 38,
     "unmet_demands": 9,
-    "partially_met": 17,
+    "partially_met": 29,
     "research_gap_count": 1,
     "system_gap_count": 0,
-    "mcp_domain_count": 3,
-    "mcp_uncovered_domains": 0,
-    "mcp_partial_domains": 1
+    "mcp_domain_count": 5,
+    "mcp_uncovered_domains": 2,
+    "mcp_partial_domains": 0
   }
 }

@@ -46,6 +46,8 @@ const MCP_DOMAIN_MAP = {
   'github': { domain: 'software_development', subdomains: ['code_review', 'ci_cd', 'issue_tracking'] },
   'playwright': { domain: 'testing', subdomains: ['e2e_testing', 'visual_testing', 'performance'] },
   'eaas': { domain: 'monetization_platform', subdomains: ['api_endpoints', 'x402_payments', 'service_delivery'] },
+  'defi-tools': { domain: 'defi_trading', subdomains: ['token_operations', 'amm_trading', 'liquidity_management', 'mev_research', 'yield_optimization', 'arbitrage', 'frontrunning_detection', 'portfolio_tracking'] },
+  'tradfi-tools': { domain: 'traditional_finance', subdomains: ['price_feeds', 'arbitrage_scanning', 'paper_trading', 'macro_analysis', 'signal_aggregation'] },
 };
 
 // ---------------------------------------------------------------------------
