@@ -10,7 +10,8 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { readFileSync, writeFileSync, existsSync } from 'node:fs'
-import { resolve } from 'node:path'
+import { resolve, dirname } from 'node:path'
+import { fileURLToPath } from 'node:url'
 
 const BASE = resolve(import.meta.dirname, '..')
 const SELF_MODEL_PATH = resolve(BASE, 'self-model.json')
@@ -67,11 +68,53 @@ async function callGemini(prompt, systemInstruction) {
   }
 }
 
+// ─── Preference Model (awareness, not direction) ─────────────────────────────
+// Preferences BOOST wants that align with user interests, never BLOCK others.
+// A want about "AMM liquidity" gets boosted by financial_markets weight (1.8).
+// A want about "testing" gets no boost (1.0) — still evaluated on its own merit.
+
+const AUTORESEARCH_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..')
+const PREF_PATH = resolve(AUTORESEARCH_ROOT, 'preference-model.json')
+let PREFERENCES = null
+try {
+  if (existsSync(PREF_PATH)) {
+    PREFERENCES = JSON.parse(readFileSync(PREF_PATH, 'utf8'))
+    console.log(`  Preferences: loaded (${Object.keys(PREFERENCES.interests || {}).length} interest domains)`)
+  }
+} catch { /* no preferences — all wants weighted equally */ }
+
+function getPreferenceBoost(want) {
+  if (!PREFERENCES?.interests) return 1.0
+  const text = `${want.hypothesis || ''} ${want.evidence?.join(' ') || ''} ${want.proposed_skill?.name || ''} ${want.proposed_skill?.description || ''}`.toLowerCase()
+
+  let maxWeight = 1.0
+  for (const [domain, pref] of Object.entries(PREFERENCES.interests)) {
+    const signals = pref.signals || []
+    const keywords = signals.join(' ').toLowerCase().split(/\s+/)
+    // Check if any signal keywords match the want text
+    const matches = keywords.filter(kw => kw.length > 3 && text.includes(kw)).length
+    if (matches >= 2) {
+      maxWeight = Math.max(maxWeight, pref.weight || 1.0)
+    } else if (matches >= 1) {
+      // Partial match — half the boost
+      maxWeight = Math.max(maxWeight, 1.0 + (((pref.weight || 1.0) - 1.0) / 2))
+    }
+  }
+  return maxWeight
+}
+
 function scoreWant(w) {
   // If frequency is already 0-1 (from Gemini), use directly; otherwise normalize raw counts
   const freq = w.frequency || 1
   const freqNorm = freq <= 1.0 ? freq : Math.min(freq / 10, 1.0)
-  return +(w.severity * freqNorm * w.feasibility).toFixed(4)
+  const baseScore = w.severity * freqNorm * w.feasibility
+  const prefBoost = getPreferenceBoost(w)
+  const finalScore = Math.min(baseScore * prefBoost, 1.0) // cap at 1.0
+  if (prefBoost > 1.0) {
+    w._preference_boost = +prefBoost.toFixed(2)
+    w._preference_note = `Boosted by user preference (×${prefBoost.toFixed(1)})`
+  }
+  return +finalScore.toFixed(4)
 }
 
 function statusFromScore(score) {
