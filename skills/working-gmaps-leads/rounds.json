@@ -1,1 +1,173 @@
-[]
+[
+  {
+    "round": 0,
+    "score": 36,
+    "max": 36,
+    "status": "baseline",
+    "mutation": "No failures detected — added a \"Quick Start\" section near the top to improve discoverability of the most common usage pattern, since all criteria pass but clarity can always be improved.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Initial baseline evaluation",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-20T20:16:24.957Z",
+    "changelog": "**Mutation**: No failures detected — added a \"Quick Start\" section near the top to improve discoverability of the most common usage pattern, since all criteria pass but clarity can always be improved.\n**Failures**: none\n**Per-criteria**: Task Completion: 6/6, Error Handling: 6/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 6/6, Completeness: 6/6\n**Decision**: Initial baseline evaluation"
+  },
+  {
+    "round": 1,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "No failures detected — added an explicit \"State-Wide Query Warning\" callout box near the top to surface the most common user mistake (querying entire states instead of cities), since this is a non-obvious limitation that causes silent failures.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-20T20:17:40.764Z",
+    "changelog": "**Mutation**: No failures detected — added an explicit \"State-Wide Query Warning\" callout box near the top to surface the most common user mistake (querying entire states instead of cities), since this is a non-obvious limitation that causes silent failures.\n**Failures**: none\n**Per-criteria**: Task Completion: 6/6, Error Handling: 6/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 6/6, Completeness: 6/6\n**Decision**: Score 36 did not exceed best 36 — mutation produced worse or equal results"
+  },
+  {
+    "round": 2,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "No failures detected — added a \"Quick Results Preview\" section showing expected output format after a successful run, since all criteria pass but users benefit from knowing what success looks like before running the pipeline.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-20T20:19:08.752Z",
+    "changelog": "**Mutation**: No failures detected — added a \"Quick Results Preview\" section showing expected output format after a successful run, since all criteria pass but users benefit from knowing what success looks like before running the pipeline.\n**Failures**: none\n**Per-criteria**: Task Completion: 6/6, Error Handling: 6/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 6/6, Completeness: 6/6\n**Decision**: Score 36 did not exceed best 36 — mutation produced worse or equal results"
+  },
+  {
+    "round": 3,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "No failures detected — added a \"Performance Tuning\" section documenting the relationship between --workers and throughput, since all criteria pass but users often don't know how to optimize for speed vs. API limits.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-20T20:20:38.826Z",
+    "changelog": "**Mutation**: No failures detected — added a \"Performance Tuning\" section documenting the relationship between --workers and throughput, since all criteria pass but users often don't know how to optimize for speed vs. API limits.\n**Failures**: none\n**Per-criteria**: Task Completion: 6/6, Error Handling: 6/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 6/6, Completeness: 6/6\n**Decision**: Score 36 did not exceed best 36 — mutation produced worse or equal results"
+  },
+  {
+    "round": 3,
+    "score": 36,
+    "max": 36,
+    "status": "escalation",
+    "mutation": "Stuck escalation: The optimization loop is stuck because the skill has reached the performance ceiling of the current evaluation suite. The 36/36 score indicates it perfectly satisfies all existing test criteria for ta",
+    "cost": 0.03,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "decisionReason": "Stuck escalation triggered after 3+ rounds with no improvement",
+    "escalation": {
+      "diagnosis": "The optimization loop is stuck because the skill has reached the performance ceiling of the current evaluation suite. The 36/36 score indicates it perfectly satisfies all existing test criteria for task completion, error handling, and clarity. The system, detecting no functional failures, has correctly defaulted to making documentation and usability improvements. However, these improvements (adding Quick Start, warnings, previews) are not measured by the current tests, so the score remains unchanged. The problem is not the skill's quality but the evaluation's inability to measure or demand further functional improvement. The system is polishing a skill that already aces its exam.",
+      "evalRedesignNeeded": true,
+      "strategy": "Shift from incremental documentation improvements to **capability expansion**. The current local optimum can only be broken by introducing a new, testable feature that extends the skill's core value proposition. Instead of making the skill *easier* to use, we must make it *more powerful*. This will necessitate new evaluation criteria to verify the new functionality, creating a new dimension for optimization and a higher potential score ceiling. The focus should be on adding a post-processing step that leverages the scraped data in a novel way.",
+      "suggestedMutation": "Add an AI-powered lead qualification feature. This involves adding a new optional flag (`--qualify`) that, when enabled, performs an additional step after data extraction. For each lead, it will use an LLM to generate a concise, one-sentence summary qualifying the lead for a specific sales purpose (e.g., \"Good fit: High-rated local plumber with a listed owner email, ideal for B2B service outreach.\").\n\n**Specific Changes:**\n1.  **Add a new parameter:** Introduce `--qualify` to the `gmaps_lead_pipeline.py` script.\n2.  **Add a new pipeline step:** If `--qualify` is present, after step 4 (Claude Extraction), add a new step 4.5 that sends the structured lead data to Claude with a prompt to generate a qualification summary.\n3.  **Update the output schema:** Add a new field, `qualification_summary`, to the output and the corresponding column in the Google Sheet.\n4.  **Update documentation:**\n    *   Add `--qualify` to the \"Inputs\" table.\n    *   Add a new example under \"Execution\" showing its usage.\n    *   Add `qualification_summary` to the \"Output Schema\" section.\n    *   Briefly mention the new feature in the \"Overview\" section."
+    },
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-20T20:22:07.790Z"
+  },
+  {
+    "round": 4,
+    "score": 32,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Added AI-powered lead qualification feature (`--qualify` flag) that generates a one-sentence sales-fit summary per lead using Claude, with new pipeline step 4.5, updated output schema, new usage example, and overview mention — addressing Task Completion, Output Quality, Instructions Clarity, and Completeness failures by expanding the skill's core value proposition.",
+    "cost": 0.05,
+    "criteria": [
+      5,
+      6,
+      5,
+      6,
+      5,
+      5
+    ],
+    "failures": [
+      {
+        "scenario": 2,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Completeness"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Task Completion"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 32 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-20T20:22:36.064Z",
+    "changelog": "**Mutation**: Added AI-powered lead qualification feature (`--qualify` flag) that generates a one-sentence sales-fit summary per lead using Claude, with new pipeline step 4.5, updated output schema, new usage example, and overview mention — addressing Task Completion, Output Quality, Instructions Clarity, and Completeness failures by expanding the skill's core value proposition.\n**Failures**: S2: Output Quality, S2: Instructions Clarity, S2: Completeness, S4: Task Completion\n**Per-criteria**: Task Completion: 5/6, Error Handling: 6/6, Output Quality: 5/6, Tool Usage: 6/6, Instructions Clarity: 5/6, Completeness: 5/6\n**Decision**: Score 32 did not exceed best 36 — mutation produced worse or equal results"
+  }
+]

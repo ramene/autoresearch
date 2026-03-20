@@ -14,48 +14,92 @@ This skill should be activated under the following conditions:
 The following files and directory structures must be present in the `~/.remote/@autoresearch/` directory for the skill to function correctly:
 1.  A `skills/` directory containing subdirectories for each skill.
 2.  Each skill subdirectory (e.g., `skills/working-code-generator/`) must contain:
-    *   `eval.json`: Contains evaluation scores and status.
+    *   `eval.json` OR `rounds.json`: Contains evaluation scores and status. `eval.json` is preferred; `rounds.json` is used as a fallback.
     *   `events.jsonl`: A log of significant events, including failures.
 3.  A root-level `wants.json` file tracking unmet demands and capability gaps.
 
 ## Execution Steps
-1.  **Acknowledge and Initialize:**
-    *   Acknowledge the trigger command.
-    *   Note any parameters provided, such as `--format=json` or `--focus=failing`.
-    *   Initialize an empty data structure (e.g., a dictionary or object) to hold the report data.
 
-2.  **Scan Skill Directories:**
+> **⚠️ CRITICAL OUTPUT RULE: DO NOT WRITE ANYTHING TO THE CONSOLE UNTIL STEP 7.**
+> Steps 1–6 are entirely internal. No acknowledgment messages, no "Processing…" text, no bash script output, no intermediate data, no progress updates. The ONLY console output for this entire skill is the formatted report produced in Step 7. Any text appearing before `# System Status Report` (markdown) or `{` (JSON) is a failure.
+
+1.  **Initialize Internally (NO CONSOLE OUTPUT):**
+    *   Internally note the trigger command and any parameters (e.g., `--format=json`, `--focus=failing`).
+    *   Do NOT print anything to the console. Do NOT acknowledge the command. Do NOT say "Acknowledged" or "Initializing" or anything else. This step produces zero console output.
+
+2.  **Collect All Skill Data in One Pass:**
     *   **Tool:** `Bash`
-    *   **Action:** Execute `ls -d ~/.remote/@autoresearch/skills/working-*/` to get a list of all skill directories.
-    *   Store the list of skill paths. The total count of these directories is the "Total Skills".
+    *   **IMPORTANT:** The bash script below must be executed with all output captured into an internal variable — do NOT let any part of this script print to the console. Use `output=$(...)` to capture it entirely.
+    *   **Action:** Run the following single script to gather all skill names, their latest eval scores, and failure counts at once:
+        ```bash
+        SKILLS_DIR=~/.remote/@autoresearch/skills
+        for skill_dir in "$SKILLS_DIR"/working-*/; do
+          skill_name=$(basename "$skill_dir")
+          eval_file="$skill_dir/eval.json"
+          rounds_file="$skill_dir/rounds.json"
+          events_file="$skill_dir/events.jsonl"
 
-3.  **Analyze Each Skill's State:**
-    *   Iterate through the list of skill paths gathered in the previous step.
-    *   For each skill directory:
-        *   **a. Read Evaluation Data:**
-            *   **Tool:** `Read`
-            *   **Action:** Read the contents of the `eval.json` file within the skill's directory. If the file doesn't exist or is empty, mark the skill as "Untested".
-        *   **b. Determine Skill Status:**
-            *   Parse the `eval.json` data.
-            *   If `score` is `null` or the file was missing, status is **Untested**.
-            *   If `score` has not increased in the last 3 evaluation entries in `history`, status is **Stuck**.
-            *   If `score` is `>= 0.9`, status is **At Target**.
-            *   Otherwise, the status is **Improving**.
-        *   **c. Count Failures:**
-            *   **Tool:** `Grep`
-            *   **Action:** Execute `grep -c '"event_type": "failure"' path/to/skill/events.jsonl`.
-            *   Store the skill name and its failure count.
-        *   **d. Aggregate Data:** Add the skill's name, status, score, and failure count to your internal data structure.
+          # Get score — prefer eval.json, fall back to rounds.json
+          score="null"
+          history=""
+          if [ -f "$eval_file" ]; then
+            score=$(python3 -c "import json; d=json.load(open('$eval_file')); print(d.get('score','null'))" 2>/dev/null || echo "null")
+            history=$(python3 -c "import json; d=json.load(open('$eval_file')); h=d.get('history',[]); scores=[e.get('score') for e in h[-3:]]; print(','.join(str(s) for s in scores))" 2>/dev/null || echo "")
+          elif [ -f "$rounds_file" ]; then
+            score=$(python3 -c "
+import json
+rounds = json.load(open('$rounds_file'))
+if isinstance(rounds, list) and rounds:
+    last = rounds[-1]
+    s = last.get('score', last.get('eval_score', last.get('total_score', 'null')))
+    print(s if s is not None else 'null')
+elif isinstance(rounds, dict):
+    s = rounds.get('score', rounds.get('eval_score', 'null'))
+    print(s if s is not None else 'null')
+else:
+    print('null')
+" 2>/dev/null || echo "null")
+            history=$(python3 -c "
+import json
+rounds = json.load(open('$rounds_file'))
+if isinstance(rounds, list):
+    scores = [str(r.get('score', r.get('eval_score', ''))) for r in rounds[-3:] if r.get('score') is not None or r.get('eval_score') is not None]
+    print(','.join(scores))
+else:
+    print('')
+" 2>/dev/null || echo "")
+          fi
+
+          # Count failures from events.jsonl
+          if [ -f "$events_file" ]; then
+            failures=$(grep -c '"event_type": "failure"' "$events_file" 2>/dev/null || echo 0)
+          else
+            failures=0
+          fi
+
+          echo "SKILL|$skill_name|$score|$history|$failures"
+        done
+        ```
+    *   Store the full output internally for processing in subsequent steps. Each line is pipe-delimited: `SKILL|<name>|<score>|<last3scores>|<failure_count>`.
+    *   The total number of lines is the **Total Skills** count.
+
+3.  **Classify Each Skill's Status from the Collected Data:**
+    *   For each line from Step 2, parse the fields and determine status:
+        *   If `score` is `null` or neither eval file was found → **Untested**
+        *   If `score` is `>= 0.9` → **At Target**
+        *   If the last 3 history scores all show no increase (i.e., score has not improved) → **Stuck**
+        *   Otherwise → **Improving**
+    *   Record each skill's: name, status, score, failure count.
 
 4.  **Analyze System-Wide Goals:**
     *   **Tool:** `Read`
     *   **Action:** Read the contents of `~/.remote/@autoresearch/wants.json`.
-    *   Parse the JSON and count the number of objects where the `status` field is "open" or "unmet". This is the "Unmet Demands" count.
+    *   Parse the JSON and count the number of objects where the `status` field is `"open"` or `"unmet"`. This is the **Unmet Demands** count.
 
 5.  **Synthesize Report Data:**
-    *   Calculate the total counts for each skill status (At Target, Stuck, Untested, Improving).
+    *   Calculate the total counts for each skill status (At Target, Stuck, Untested, Improving). Verify these sum to Total Skills.
     *   Sort the skills by their failure count in descending order and select the top 3 for the "Top Failing Skills" list.
-    *   Identify any skills whose status changed to "Stuck" within the last 24 hours by checking the timestamp of the relevant entry in `eval.json`. These are your "System Alerts".
+    *   Identify any skills whose status is "Stuck" and whose eval.json or rounds.json was last modified within the last 24 hours. These are your "System Alerts".
 
 6.  **Format the Output:**
     *   Check the `--format` parameter.
@@ -63,16 +107,17 @@ The following files and directory structures must be present in the `~/.remote/@
         *   Assemble a human-readable Markdown string using the synthesized data. Use headings (`##`), bold text (`**`), and bullet points (`-`).
         *   The structure should be:
             *   `# System Status Report (YYYY-MM-DD HH:MM)`
-            *   `## Skill Health Summary` (Total, At Target, Stuck, Untested)
+            *   `## Skill Health Summary` (Total, At Target, Stuck, Untested, Improving)
             *   `## Goal Progress` (Unmet Demands)
             *   `## System Alerts` (List of newly stuck skills)
             *   `## Top 3 Skills by Failure Count` (List with skill names and failure counts)
     *   **If `json`:**
-        *   Serialize the internal data structure you've been building into a well-formatted JSON string.
+        *   Serialize the internal data structure into a well-formatted JSON string.
 
 7.  **Deliver the Report:**
-    *   **Tool:** `Write` or `Bash (echo)`
-    *   **Action:** Print the formatted Markdown or JSON string to the console. If a file output is requested (e.g., `/status > report.md`), write the content to the specified file.
+    *   Print ONLY the formatted Markdown or JSON string to the console — no other text, no raw data, no intermediate output, no preamble, no trailing commentary.
+    *   The report must begin with EXACTLY `# System Status Report` (for markdown) or `{` (for JSON) as the very first character(s) output.
+    *   If a file output is requested (e.g., `/status > report.md`), write the content to the specified file.
 
 ## Output Format
 The primary output is a Markdown formatted report printed to standard output.
@@ -132,21 +177,23 @@ The primary output is a Markdown formatted report printed to standard output.
 ## Quality Gates
 Before marking the task as complete, verify the following:
 - [ ] The report correctly states the total number of skills found.
-- [ ] The counts for "At Target", "Stuck", and "Untested" skills sum correctly.
+- [ ] The counts for "At Target", "Stuck", "Untested", and "Improving" skills sum to Total Skills.
 - [ ] The report lists the top 3 skills with the most unresolved failures, correctly sourced from `events.jsonl`.
 - [ ] The number of open unmet demands matches the count from `wants.json`.
 - [ ] The report highlights any skills that have recently become 'stuck'.
-- [ ] The output is formatted in clean, human-readable Markdown (or valid JSON if requested).
+- [ ] The output is formatted in clean, human-readable Markdown (or valid JSON if requested) with NO raw data or intermediate output mixed in.
+- [ ] The report begins with `# System Status Report` (markdown) or `{` (JSON) as the absolute first output — no preceding text of any kind.
 - [ ] The entire report generation process completed in under 10 seconds.
 
 ## Integration Points
-- **Consumes data from:** The `autoresearch-runner`'s output files (`eval.json`, `events.jsonl`).
+- **Consumes data from:** The `autoresearch-runner`'s output files (`eval.json`, `rounds.json`, `events.jsonl`).
 - **Can be triggered by:** A `scheduler-skill` for automated daily/hourly reports.
 - **Output can be piped to:** A `notification-skill` to send alerts (e.g., via Slack or email) when critical thresholds are met (e.g., >3 stuck skills).
 
 ## Error Handling
 - **Missing `skills/` directory:** If the main skills directory is not found, terminate and report that the core system structure is missing.
-- **Missing `eval.json` or `events.jsonl`:** If a skill is missing a required file, mark it as "Untested" or "Data Missing" in the report and continue processing other skills. Log a warning to the console.
+- **Missing `eval.json` and `rounds.json`:** If a skill is missing both score files, mark it as "Untested" in the report and continue processing other skills. Log a warning to the console.
+- **Missing `events.jsonl`:** Treat failure count as 0 and continue.
 - **Corrupt JSON:** If a JSON file is malformed and cannot be parsed, report a data corruption error for that specific file/skill in a dedicated "Errors" section of the report and continue.
 - **Permission Denied:** If unable to read a file due to permissions, report the specific file path and the permission error.
 

@@ -84,6 +84,11 @@ echo ""
 echo "--- Step 2: Promotion Check ---"
 node skills/promotion-pipeline.mjs --list 2>&1 || true
 
+# Step 2.5: Board Sync — update GitHub Project #19 with skill lifecycle
+echo ""
+echo "--- Step 2.5: Board Sync ---"
+node skills/board-sync.mjs 2>&1 || true
+
 # Step 3: Run reflection loop (check if wants were satisfied)
 echo ""
 echo "--- Step 3: Reflection ---"

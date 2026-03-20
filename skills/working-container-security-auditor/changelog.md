@@ -14,3 +14,15 @@
 
 ## Round 1 — Mutation Applied
 - **Mutation**: Replace the placeholder trivy installation comment with concrete, cross-platform installation commands so the skill doesn't silently exit when trivy is missing.
+
+## Round 2 — Mutation Applied
+- **Mutation**: Add `--exit-code 0` to trivy scan commands and fix Quality Gate #1 to accept exit code 0 or 1 (vulnerabilities found), preventing the scan from aborting before producing output when vulnerabilities are discovered.
+
+## Round 3 — Mutation Applied
+- **Mutation**: Add post-scan file existence check with fallback retry using `--scanners vuln` only, ensuring the JSON report is always produced even when the config scanner fails in S5.
+
+## Round 4 — Mutation Applied
+- **Mutation**: Replace the dynamically-generated `$JSON_OUTPUT_FILE` bash variable with a fixed, deterministic output filename `trivy-report.json` so Claude can reliably reference the file in subsequent Read/Grep/Write steps without bash variable persistence.
+
+## Round 5 — Mutation Applied
+- **Mutation**: Replace Step 2 Target Resolution with a parameterized script that parses `INPUT_TARGET` into variables, handling both Kubernetes pod references and direct image names explicitly, removing reliance on AI generalization from a static non-executable example.

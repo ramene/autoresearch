@@ -1,1 +1,344 @@
-[]
+[
+  {
+    "round": 0,
+    "score": 26,
+    "max": 36,
+    "status": "baseline",
+    "mutation": "Fix Step 3c grep command to use the actual skill directory path variable instead of the literal placeholder \"path/to/skill/events.jsonl\", so failure counts are correctly read from each skill's events.jsonl.",
+    "cost": 0.05,
+    "criteria": [
+      3,
+      3,
+      4,
+      4,
+      6,
+      6
+    ],
+    "failures": [
+      {
+        "scenario": 2,
+        "criterion": "Does the report correctly state the total number of skills, and their status (at target, stuck, untested)"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Does the report list the top 3 skills with the most unresolved failures"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Does the report correctly state the total number of skills, and their status (at target, stuck, untested)"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Does the report list the top 3 skills with the most unresolved failures"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Does the report include the number of open unmet demands"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Does the report highlight any skills that have recently become 'stuck' or 'plateauing'"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Does the report correctly state the total number of skills, and their status (at target, stuck, untested)"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Does the report list the top 3 skills with the most unresolved failures"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Does the report include the number of open unmet demands"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Does the report highlight any skills that have recently become 'stuck' or 'plateauing'"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Initial baseline evaluation",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-20T22:25:26.732Z",
+    "changelog": "**Mutation**: Fix Step 3c grep command to use the actual skill directory path variable instead of the literal placeholder \"path/to/skill/events.jsonl\", so failure counts are correctly read from each skill's events.jsonl.\n**Failures**: S2: Does the report correctly state the total number of skills, and their status (at target, stuck, untested), S2: Does the report list the top 3 skills with the most unresolved failures, S3: Does the report correctly state the total number of skills, and their status (at target, stuck, untested), S3: Does the report list the top 3 skills with the most unresolved failures, S3: Does the report include the number of open unmet demands, S3: Does the report highlight any skills that have recently become 'stuck' or 'plateauing', S6: Does the report correctly state the total number of skills, and their status (at target, stuck, untested), S6: Does the report list the top 3 skills with the most unresolved failures, S6: Does the report include the number of open unmet demands, S6: Does the report highlight any skills that have recently become 'stuck' or 'plateauing'\n**Per-criteria**: Does the report correctly state the total number of skills, and their status (at target, stuck, untested): 3/6, Does the report list the top 3 skills with the most unresolved failures: 3/6, Does the report include the number of open unmet demands: 4/6, Does the report highlight any skills that have recently become 'stuck' or 'plateauing': 4/6, Is the output formatted in clean, human-readable Markdown: 6/6, Complete its report generation in under 10 seconds: 6/6\n**Decision**: Initial baseline evaluation"
+  },
+  {
+    "round": 1,
+    "score": 26,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Replace the per-skill iteration in Steps 2-3 with a single comprehensive bash script that collects all skill names, eval scores, and failure counts in one pass — ensuring accurate total counts and complete failure data for ranking.",
+    "cost": 0.05,
+    "criteria": [
+      3,
+      3,
+      4,
+      4,
+      6,
+      6
+    ],
+    "failures": [
+      {
+        "scenario": 2,
+        "criterion": "Does the report correctly state the total number of skills, and their status (at target, stuck, untested)"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Does the report list the top 3 skills with the most unresolved failures"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Does the report correctly state the total number of skills, and their status (at target, stuck, untested)"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Does the report list the top 3 skills with the most unresolved failures"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Does the report include the number of open unmet demands"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Does the report highlight any skills that have recently become 'stuck' or 'plateauing'"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Does the report correctly state the total number of skills, and their status (at target, stuck, untested)"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Does the report list the top 3 skills with the most unresolved failures"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Does the report include the number of open unmet demands"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Does the report highlight any skills that have recently become 'stuck' or 'plateauing'"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 26 did not exceed best 26 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-20T22:27:27.306Z",
+    "changelog": "**Mutation**: Replace the per-skill iteration in Steps 2-3 with a single comprehensive bash script that collects all skill names, eval scores, and failure counts in one pass — ensuring accurate total counts and complete failure data for ranking.\n**Failures**: S2: Does the report correctly state the total number of skills, and their status (at target, stuck, untested), S2: Does the report list the top 3 skills with the most unresolved failures, S3: Does the report correctly state the total number of skills, and their status (at target, stuck, untested), S3: Does the report list the top 3 skills with the most unresolved failures, S3: Does the report include the number of open unmet demands, S3: Does the report highlight any skills that have recently become 'stuck' or 'plateauing', S6: Does the report correctly state the total number of skills, and their status (at target, stuck, untested), S6: Does the report list the top 3 skills with the most unresolved failures, S6: Does the report include the number of open unmet demands, S6: Does the report highlight any skills that have recently become 'stuck' or 'plateauing'\n**Per-criteria**: Does the report correctly state the total number of skills, and their status (at target, stuck, untested): 3/6, Does the report list the top 3 skills with the most unresolved failures: 3/6, Does the report include the number of open unmet demands: 4/6, Does the report highlight any skills that have recently become 'stuck' or 'plateauing': 4/6, Is the output formatted in clean, human-readable Markdown: 6/6, Complete its report generation in under 10 seconds: 6/6\n**Decision**: Score 26 did not exceed best 26 — mutation produced worse or equal results"
+  },
+  {
+    "round": 2,
+    "score": 25,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Update the bash script in Step 2 to fall back to `rounds.json` when `eval.json` is missing, extracting score from the latest round entry — fixing the root cause of widespread null scores that corrupt skill counts and failure rankings.",
+    "cost": 0.05,
+    "criteria": [
+      3,
+      3,
+      4,
+      4,
+      5,
+      6
+    ],
+    "failures": [
+      {
+        "scenario": 2,
+        "criterion": "Does the report correctly state the total number of skills, and their status (at target, stuck, untested)"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Does the report list the top 3 skills with the most unresolved failures"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Does the report correctly state the total number of skills, and their status (at target, stuck, untested)"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Does the report list the top 3 skills with the most unresolved failures"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Does the report include the number of open unmet demands"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Does the report highlight any skills that have recently become 'stuck' or 'plateauing'"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Is the output formatted in clean, human-readable Markdown"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Does the report correctly state the total number of skills, and their status (at target, stuck, untested)"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Does the report list the top 3 skills with the most unresolved failures"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Does the report include the number of open unmet demands"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Does the report highlight any skills that have recently become 'stuck' or 'plateauing'"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 25 did not exceed best 26 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-20T22:29:03.594Z",
+    "changelog": "**Mutation**: Update the bash script in Step 2 to fall back to `rounds.json` when `eval.json` is missing, extracting score from the latest round entry — fixing the root cause of widespread null scores that corrupt skill counts and failure rankings.\n**Failures**: S2: Does the report correctly state the total number of skills, and their status (at target, stuck, untested), S2: Does the report list the top 3 skills with the most unresolved failures, S3: Does the report correctly state the total number of skills, and their status (at target, stuck, untested), S3: Does the report list the top 3 skills with the most unresolved failures, S3: Does the report include the number of open unmet demands, S3: Does the report highlight any skills that have recently become 'stuck' or 'plateauing', S5: Is the output formatted in clean, human-readable Markdown, S6: Does the report correctly state the total number of skills, and their status (at target, stuck, untested), S6: Does the report list the top 3 skills with the most unresolved failures, S6: Does the report include the number of open unmet demands, S6: Does the report highlight any skills that have recently become 'stuck' or 'plateauing'\n**Per-criteria**: Does the report correctly state the total number of skills, and their status (at target, stuck, untested): 3/6, Does the report list the top 3 skills with the most unresolved failures: 3/6, Does the report include the number of open unmet demands: 4/6, Does the report highlight any skills that have recently become 'stuck' or 'plateauing': 4/6, Is the output formatted in clean, human-readable Markdown: 5/6, Complete its report generation in under 10 seconds: 6/6\n**Decision**: Score 25 did not exceed best 26 — mutation produced worse or equal results"
+  },
+  {
+    "round": 3,
+    "score": 28,
+    "max": 36,
+    "status": "kept",
+    "mutation": "Add explicit instruction in Step 2 that bash output must be captured into a variable (not printed), and in Step 7 that the formatted markdown report must be the ONLY thing output to the console.",
+    "cost": 0.05,
+    "criteria": [
+      5,
+      5,
+      6,
+      4,
+      2,
+      6
+    ],
+    "failures": [
+      {
+        "scenario": 2,
+        "criterion": "Does the report correctly state the total number of skills, and their status (at target, stuck, untested)"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Does the report list the top 3 skills with the most unresolved failures"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Does the report highlight any skills that have recently become 'stuck' or 'plateauing'"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Is the output formatted in clean, human-readable Markdown"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Is the output formatted in clean, human-readable Markdown"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Does the report highlight any skills that have recently become 'stuck' or 'plateauing'"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Is the output formatted in clean, human-readable Markdown"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Is the output formatted in clean, human-readable Markdown"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Improved from 26 to 28",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-20T22:30:47.752Z",
+    "changelog": "**Mutation**: Add explicit instruction in Step 2 that bash output must be captured into a variable (not printed), and in Step 7 that the formatted markdown report must be the ONLY thing output to the console.\n**Failures**: S2: Does the report correctly state the total number of skills, and their status (at target, stuck, untested), S2: Does the report list the top 3 skills with the most unresolved failures, S2: Does the report highlight any skills that have recently become 'stuck' or 'plateauing', S2: Is the output formatted in clean, human-readable Markdown, S3: Is the output formatted in clean, human-readable Markdown, S4: Does the report highlight any skills that have recently become 'stuck' or 'plateauing', S4: Is the output formatted in clean, human-readable Markdown, S6: Is the output formatted in clean, human-readable Markdown\n**Per-criteria**: Does the report correctly state the total number of skills, and their status (at target, stuck, untested): 5/6, Does the report list the top 3 skills with the most unresolved failures: 5/6, Does the report include the number of open unmet demands: 6/6, Does the report highlight any skills that have recently become 'stuck' or 'plateauing': 4/6, Is the output formatted in clean, human-readable Markdown: 2/6, Complete its report generation in under 10 seconds: 6/6\n**Decision**: Improved from 26 to 28"
+  },
+  {
+    "round": 4,
+    "score": 22,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Add a top-level \"NO EARLY OUTPUT\" rule to Execution Steps and rewrite Step 1 to explicitly forbid any console output until Step 7 — fixing the root cause of markdown formatting failures where acknowledgment text or debug output precedes or contaminates the report.",
+    "cost": 0.05,
+    "criteria": [
+      3,
+      3,
+      3,
+      3,
+      4,
+      6
+    ],
+    "failures": [
+      {
+        "scenario": 2,
+        "criterion": "Does the report correctly state the total number of skills, and their status (at target, stuck, untested)"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Does the report list the top 3 skills with the most unresolved failures"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Does the report include the number of open unmet demands"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Does the report highlight any skills that have recently become 'stuck' or 'plateauing'"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Does the report correctly state the total number of skills, and their status (at target, stuck, untested)"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Does the report list the top 3 skills with the most unresolved failures"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Does the report include the number of open unmet demands"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Does the report highlight any skills that have recently become 'stuck' or 'plateauing'"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Is the output formatted in clean, human-readable Markdown"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Does the report correctly state the total number of skills, and their status (at target, stuck, untested)"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Does the report list the top 3 skills with the most unresolved failures"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Does the report include the number of open unmet demands"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Does the report highlight any skills that have recently become 'stuck' or 'plateauing'"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Is the output formatted in clean, human-readable Markdown"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 22 did not exceed best 28 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-20T22:32:10.879Z",
+    "changelog": "**Mutation**: Add a top-level \"NO EARLY OUTPUT\" rule to Execution Steps and rewrite Step 1 to explicitly forbid any console output until Step 7 — fixing the root cause of markdown formatting failures where acknowledgment text or debug output precedes or contaminates the report.\n**Failures**: S2: Does the report correctly state the total number of skills, and their status (at target, stuck, untested), S2: Does the report list the top 3 skills with the most unresolved failures, S2: Does the report include the number of open unmet demands, S2: Does the report highlight any skills that have recently become 'stuck' or 'plateauing', S3: Does the report correctly state the total number of skills, and their status (at target, stuck, untested), S3: Does the report list the top 3 skills with the most unresolved failures, S3: Does the report include the number of open unmet demands, S3: Does the report highlight any skills that have recently become 'stuck' or 'plateauing', S3: Is the output formatted in clean, human-readable Markdown, S6: Does the report correctly state the total number of skills, and their status (at target, stuck, untested), S6: Does the report list the top 3 skills with the most unresolved failures, S6: Does the report include the number of open unmet demands, S6: Does the report highlight any skills that have recently become 'stuck' or 'plateauing', S6: Is the output formatted in clean, human-readable Markdown\n**Per-criteria**: Does the report correctly state the total number of skills, and their status (at target, stuck, untested): 3/6, Does the report list the top 3 skills with the most unresolved failures: 3/6, Does the report include the number of open unmet demands: 3/6, Does the report highlight any skills that have recently become 'stuck' or 'plateauing': 3/6, Is the output formatted in clean, human-readable Markdown: 4/6, Complete its report generation in under 10 seconds: 6/6\n**Decision**: Score 22 did not exceed best 28 — mutation produced worse or equal results"
+  }
+]

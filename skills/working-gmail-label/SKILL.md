@@ -11,6 +11,26 @@ allowed-tools: Bash, Read, Write, Edit, Glob, Grep, Task
 ## Goal
 Fetch inbox emails, classify them via parallel subagents into Action Required / Waiting On / Reference, and apply labels in bulk via Gmail API.
 
+## Prerequisites — Run First
+
+Before executing any step, resolve the `ACCOUNT` value:
+
+```bash
+cat gmail_accounts.json
+```
+
+This file lists configured accounts. Each entry has a key (the account name) and an `email` field. Use the key as `ACCOUNT` in all commands below. Example: if the file contains `{"work": {"email": "you@example.com", ...}}`, then `ACCOUNT=work`.
+
+If `gmail_accounts.json` is missing or empty, add an account first:
+```bash
+python3 .claude/skills/gmail-inbox/scripts/gmail_multi_auth.py --account ACCOUNT_NAME --email EMAIL
+```
+
+Also ensure `.tmp/` directory exists:
+```bash
+mkdir -p .tmp/chunks
+```
+
 ## Scripts
 - `./scripts/gmail_label_fetch.py` - Fetch email summaries as compact JSON
 - `./scripts/gmail_label_split.py` - Split emails into N chunks for parallel classification
@@ -30,37 +50,72 @@ python3 .claude/skills/gmail-label/scripts/gmail_label_fetch.py \
   --account ACCOUNT --query "in:inbox" --limit 100 --output .tmp/emails.json
 ```
 
+**Error handling:** If this fails, check:
+1. `gmail_accounts.json` exists and contains the account key
+2. OAuth token is valid — re-run `gmail_multi_auth.py` if you get an auth error
+3. `.tmp/` directory exists (`mkdir -p .tmp/chunks`)
+
+Do not proceed to Step 2 if `.tmp/emails.json` was not created.
+
 ### Step 2: Split into chunks
 ```bash
 python3 .claude/skills/gmail-label/scripts/gmail_label_split.py \
   --input .tmp/emails.json --chunks 10 --output-dir .tmp/chunks
 ```
 
-### Step 3: Classify in parallel (spawn 10 subagents)
-Spawn 10 `email-classifier` subagents in background, one per chunk. Each subagent:
-- Reads `.tmp/chunks/chunk_N.json`
-- Classifies each email
-- Writes `.tmp/chunks/classified_N.json`
+**Error handling:** If this fails or produces fewer than expected chunk files, check that `.tmp/emails.json` is non-empty. If the inbox has fewer than 10 emails, the script may produce fewer chunks — note the actual count and use that count (not 10) in Steps 3 and 4.
 
-Use the Task tool with `run_in_background: true` and `model: "sonnet"`. Launch ALL 10 in a single message for true parallelism:
+After this step, capture the actual chunk count for use in Steps 3 and 4:
+```bash
+CHUNKS=$(ls .tmp/chunks/chunk_*.json 2>/dev/null | wc -l | tr -d ' ')
+echo "Chunk count: $CHUNKS"
+```
+
+### Step 3: Classify in parallel (spawn subagents per chunk)
+
+First, capture the absolute working directory — subagents need full paths:
+```bash
+pwd
+```
+Save the output as `WORKDIR` (e.g. `/Users/you/project`). Use this value in every subagent prompt below.
+
+Spawn one `email-classifier` subagent per chunk in background. Each subagent:
+- Reads `WORKDIR/.tmp/chunks/chunk_N.json`
+- Classifies each email
+- Writes `WORKDIR/.tmp/chunks/classified_N.json`
+
+Use the Task tool with `run_in_background: true` and `model: "sonnet"`. Launch ALL at once in a single message for true parallelism:
 
 ```
-For each chunk 0-9, spawn a Task with:
+For each chunk 0-(N-1), spawn a Task with:
   subagent_type: "email-classifier"
   model: "sonnet"
   run_in_background: true
-  prompt: "Read /absolute/path/.tmp/chunks/chunk_N.json, classify each email, write results to /absolute/path/.tmp/chunks/classified_N.json"
+  prompt: "Read WORKDIR/.tmp/chunks/chunk_N.json, classify each email, write results to WORKDIR/.tmp/chunks/classified_N.json"
 ```
+
+Replace `WORKDIR` with the actual absolute path from `pwd` and `N` with the chunk index. Do NOT use a literal placeholder — subagents cannot resolve relative paths.
 
 **CRITICAL: Do NOT use TaskOutput to read subagent results.** The subagents write their results to files — the main agent never needs to see the classification data. Reading TaskOutput will flood the context window and cause "prompt too long" errors with large batches (500+ emails).
 
-Instead, poll for file existence:
+Instead, poll for file existence using the `CHUNKS` count captured in Step 2:
 ```bash
-# Wait until all classified files exist (timeout after 120s)
-for i in $(seq 0 9); do
-  while [ ! -f ".tmp/chunks/classified_$i.json" ]; do sleep 2; done
+TIMEOUT=120
+START=$(date +%s)
+for i in $(seq 0 $((CHUNKS-1))); do
+  while [ ! -f ".tmp/chunks/classified_$i.json" ]; do
+    sleep 2
+    NOW=$(date +%s)
+    if [ $((NOW - START)) -ge $TIMEOUT ]; then
+      echo "TIMEOUT waiting for classified_$i.json after ${TIMEOUT}s"
+      exit 1
+    fi
+  done
 done
+echo "All $CHUNKS classified files ready"
 ```
+
+**Error handling:** If the polling loop times out or exits with an error, check which `classified_N.json` files are missing. Re-spawn subagents only for the missing chunks before proceeding.
 
 Then proceed directly to Step 4 (merge).
 
@@ -70,11 +125,28 @@ python3 .claude/skills/gmail-label/scripts/gmail_label_merge.py \
   --input-dir .tmp/chunks --output .tmp/labels.json
 ```
 
+**Error handling:** If this fails, verify all `classified_N.json` files exist and are valid JSON (`python3 -m json.tool .tmp/chunks/classified_0.json`). A malformed classified file from a subagent is the most common cause of merge failure.
+
 ### Step 5: Apply labels
 ```bash
 python3 .claude/skills/gmail-label/scripts/gmail_label_apply.py \
   --account ACCOUNT --input .tmp/labels.json
 ```
+
+**Error handling:** If this fails with an auth error, re-authenticate the account. If it fails partway through, it is safe to re-run — already-labeled emails will be skipped or re-labeled idempotently.
+
+## Expected Output
+
+After Step 5 completes, report a summary to the user in this format:
+```
+Labeled 100 emails:
+  Action Required: 12
+  Waiting On: 8
+  Reference: 80
+Labels applied to: you@example.com
+```
+
+If `gmail_label_apply.py` prints a summary, use those counts. Otherwise count entries in `.tmp/labels.json` grouped by label.
 
 ## Classification Guidelines
 

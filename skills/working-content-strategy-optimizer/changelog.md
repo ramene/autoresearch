@@ -55,3 +55,23 @@
 
 ## Round 8 — Mutation Applied
 - **Mutation**: Remove the lengthy EXECUTION NOTICE block (which ironically provides narrative fodder before the first tool call) and replace it with a single terse mandatory-action line directly under the title, so the agent encounters the tool invocation order with zero intervening prose to narrate.
+
+## Round 9 — Mutation Applied
+- **Mutation**: Replace all "⛔ STOP. Wait for..." barriers with silent inline `↩ →` continuation markers, and harden the opening directive to make narration before the first tool call a self-detected failure requiring immediate retry — reducing narration surface area while keeping sequential enforcement.
+
+## Round 10 — Mutation Applied
+- **Mutation**: Remove the self-contradicting [RETRY] text-output fallback (outputting "[RETRY]" IS text before a tool call) and replace the opening directive with a bare imperative that names the exact tool+path to invoke with zero meta-instructions, eliminating the narration escape hatch.
+
+## Round 11 — Mutation Applied
+- **Mutation**: Consolidate Steps 4–13 into a single Bash heredoc that runs the entire analysis pipeline in one shell process (fixing cross-call variable death), and replace the unfixable Grep-on-variable steps with inline grep via pipe within that same script.
+
+## Round 12 — Mutation Applied
+- **Mutation**: Decompose monolithic Step 4 into a sequential pipeline of small Bash steps, each writing an intermediate JSON file — so state persists across tool calls via disk rather than shell variables that die between invocations.
+
+## Round 12
+- **Score**: 18/48 (kept)
+- **Failures**: S1: Tool Utilization, S2: Tool Utilization, S2: Adaptation, S3: Tool Utilization, S4: Data Grounding, S4: Actionability, S4: Audience Awareness, S4: Tool Utilization, S4: Measurement, S4: Adaptation, S5: Tool Utilization, S5: Adaptation, S6: Data Grounding, S6: Actionability, S6: Audience Awareness, S6: Tool Utilization, S6: Measurement, S6: Adaptation, S7: Data Grounding, S7: Actionability, S7: Audience Awareness, S7: Tool Utilization, S7: Measurement, S7: Adaptation, S8: Data Grounding, S8: Actionability, S8: Audience Awareness, S8: Tool Utilization, S8: Measurement, S8: Adaptation
+- **Per-criteria**: Data Grounding: 4/8, Actionability: 4/8, Audience Awareness: 4/8, Tool Utilization: 0/8, Measurement: 4/8, Adaptation: 2/8
+
+## Round 13 — Mutation Applied
+- **Mutation**: Replace `DATA_PATH="$DATA_PATH"  # substitute actual resolved path here` in Steps 4 and 6 with inline jq that reads the path from world-model.json within each Bash script, fixing the cross-call variable death that causes the entire pipeline to fail on every scenario.

@@ -36,9 +36,9 @@ Before execution, the following conditions must be met:
     *   `currency`: A 3-letter ISO 4217 currency code (e.g., USD, EUR, GBP).
 
 ## Execution Steps
-1.  **Setup Working Directory:** Create a dedicated directory for this task instance.
+1.  **Setup Working Directory:** Tear down any previous working directory (which may contain stale `response.json` or `error.log` from a prior failed run) and create a fresh one.
     *   **Tool:** `Bash`
-    *   **Command:** `mkdir -p ~/.remote/@autoresearch/skills/working-eaas-payment-linker/`
+    *   **Command:** `rm -rf ~/.remote/@autoresearch/skills/working-eaas-payment-linker/ && mkdir -p ~/.remote/@autoresearch/skills/working-eaas-payment-linker/`
 
 2.  **Parse and Validate Inputs:**
     *   Extract `service_id`, `amount`, and `currency` from the trigger command or context.
@@ -46,29 +46,49 @@ Before execution, the following conditions must be met:
     *   Validate that `currency` is a 3-character uppercase string.
     *   If validation fails, terminate execution and report an "Invalid Input" error (see Error Handling).
 
-3.  **Construct API Command:** Assemble the `eaas` tool command using the validated inputs. The expected command format is: `eaas create-link --service-id "<service_id>" --amount <amount> --currency <currency> --output json`
-    *   **Example:** `eaas create-link --service-id "S-123" --amount 19.99 --currency "USD" --output json`
+3.  **Construct API Command:** Assemble the `eaas` tool command using the validated inputs. The expected command format is: `eaas create-link --service-id "<service_id>" --amount <amount> --currency <currency> --api-key "$EaaS_API_KEY" --output json`
+    *   **Example:** `eaas create-link --service-id "S-123" --amount 19.99 --currency "USD" --api-key "$EaaS_API_KEY" --output json`
 
-4.  **Execute API Call:** Run the command, redirecting standard output to `response.json` and standard error to `error.log`.
+4.  **Execute API Call:** Run the command, passing the API key explicitly via `--api-key`, redirecting standard output to `response.json` and standard error to `error.log`.
     *   **Tool:** `Bash`
-    *   **Command:** `cd ~/.remote/@autoresearch/skills/working-eaas-payment-linker/ && eaas create-link --service-id "<service_id>" --amount <amount> --currency <currency> --output json > response.json 2> error.log`
+    *   **Command:** `cd ~/.remote/@autoresearch/skills/working-eaas-payment-linker/ && eaas create-link --service-id "<service_id>" --amount <amount> --currency <currency> --api-key "$EaaS_API_KEY" --output json > response.json 2> error.log`
 
 5.  **Process Response:**
     *   Check the exit code of the previous command.
     *   **If exit code is 0 (Success):**
         *   Read the contents of `response.json`. (Tool: `Read`)
-        *   Parse the JSON and extract the `payment_url`, `link_id`, `service_id`, `amount`, and `currency`.
-        *   Proceed to Step 6.
+        *   Extract each required field using `jq` — do NOT rely on implicit JSON parsing:
+            *   **Tool:** `Bash`
+            *   ```bash
+                cd ~/.remote/@autoresearch/skills/working-eaas-payment-linker/
+                PAYMENT_URL=$(jq -r '.payment_url' response.json)
+                LINK_ID=$(jq -r '.link_id' response.json)
+                RESP_SERVICE_ID=$(jq -r '.service_id' response.json)
+                RESP_AMOUNT=$(jq -r '.amount' response.json)
+                RESP_CURRENCY=$(jq -r '.currency' response.json)
+                echo "payment_url=$PAYMENT_URL link_id=$LINK_ID service_id=$RESP_SERVICE_ID amount=$RESP_AMOUNT currency=$RESP_CURRENCY"
+                ```
+        *   **Null-check:** After extraction, verify that NONE of the variables equal `null` or are empty string. Run:
+            *   **Tool:** `Bash`
+            *   ```bash
+                for VAR in "$PAYMENT_URL" "$LINK_ID" "$RESP_SERVICE_ID" "$RESP_AMOUNT" "$RESP_CURRENCY"; do
+                  if [ -z "$VAR" ] || [ "$VAR" = "null" ]; then
+                    echo "PARSE_FAILURE: one or more required fields missing from response.json" >&2
+                    exit 1
+                  fi
+                done
+                ```
+            *   If this check fails, treat as a parse failure and report an API error (do NOT proceed to Step 6).
+        *   Proceed to Step 6 using the extracted shell variable values.
     *   **If exit code is not 0 (Failure):**
         *   Read the contents of `error.log`. (Tool: `Read`)
         *   Initiate the error handling protocol for API errors.
 
 6.  **Log Transaction:**
     *   Create a single-line JSON object containing the essential details of the successful transaction: `timestamp`, `request_id`, `link_id`, `payment_url`, `service_id`, `amount`, `currency`.
-    *   Append this JSON line to the central transaction log.
-    *   **Tool:** `Edit`
-    *   **File:** `~/.remote/@autoresearch/logs/payment_links.jsonl`
-    *   **Content (Example):** `{"timestamp": "2023-10-27T10:00:00Z", "request_id": "req_abc123", "link_id": "pl_xyz789", "payment_url": "https://pay.eaas.com/link/xyz789", "service_id": "S-123", "amount": 19.99, "currency": "USD"}`
+    *   Append this JSON line to the central transaction log using `Bash` with `>>` to ensure the file is created if it does not exist.
+    *   **Tool:** `Bash`
+    *   **Command:** `mkdir -p ~/.remote/@autoresearch/logs && echo '{"timestamp": "<timestamp>", "request_id": "<request_id>", "link_id": "<link_id>", "payment_url": "<payment_url>", "service_id": "<service_id>", "amount": <amount>, "currency": "<currency>"}' >> ~/.remote/@autoresearch/logs/payment_links.jsonl`
 
 7.  **Format and Deliver Output:**
     *   Present the final result in the specified output format.

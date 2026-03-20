@@ -8,7 +8,39 @@ allowed-tools: Read, Grep, Glob, Bash
 
 # Google Maps Lead Generation
 
-Generate high-quality B2B leads from Google Maps with deep contact enrichment.
+Generate high-quality B2B leads from Google Maps with deep contact enrichment — including optional AI-powered lead qualification summaries.
+
+## Quick Start
+
+```bash
+# Simplest usage — 10 leads, auto-creates a Google Sheet
+python3 .claude/skills/gmaps-leads/gmaps_lead_pipeline.py --search "plumbers in Austin TX"
+```
+
+Requires `.env` with `APIFY_API_TOKEN` and `credentials.json` for Google Sheets OAuth. See [Dependencies](#dependencies) and [Troubleshooting](#troubleshooting) if setup is needed.
+
+> **⚠️ Use city-level queries, not state-wide.** Google Maps rejects searches spanning >2500km. "HVAC in Texas" fails silently — use "HVAC in Houston TX" instead. For broad coverage, pass multiple `--search` args (one per city).
+
+## Quick Results Preview
+
+After a successful run, you'll see output like:
+
+```
+✓ Scraped 10 businesses from Google Maps
+✓ Enriched 9/10 (1 site returned 403)
+✓ Added 10 new leads to sheet "Plumbers Austin TX"
+  Sheet URL: https://docs.google.com/spreadsheets/d/...
+
+Sample lead:
+  Business: Austin Plumbing Co
+  Phone: (512) 555-0123
+  Email: info@austinplumbing.com
+  Owner: John Smith (john@austinplumbing.com)
+  Address: 123 Main St, Austin, TX 78701
+  Qualification: Good fit: High-rated local plumber with owner email, ideal for B2B service outreach.
+```
+
+10 leads typically take ~60–90 seconds with default 3 workers. 50 leads take ~3–4 minutes.
 
 ## Overview
 
@@ -16,6 +48,7 @@ This pipeline scrapes Google Maps for businesses, then enriches each result by:
 1. Scraping their website (main page + up to 5 contact pages)
 2. Searching DuckDuckGo for additional contact info
 3. Using Claude to extract structured contact data from all sources
+4. Optionally using Claude to generate a one-sentence sales qualification summary per lead (`--qualify`)
 
 **Tested at scale**: 94 HVAC leads across 4 Texas cities in one run.
 
@@ -37,6 +70,7 @@ This pipeline scrapes Google Maps for businesses, then enriches each result by:
 | `--sheet-name` | No | Name for new sheet if creating |
 | `--workers` | No | Parallel workers for enrichment (default: 3) |
 | `--enrich` | No | Run Anymailfinder bulk email enrichment after scraping |
+| `--qualify` | No | Generate AI qualification summary per lead using Claude (adds `qualification_summary` column to sheet) |
 
 ## Execution
 
@@ -49,8 +83,16 @@ python3 .claude/skills/gmaps-leads/gmaps_lead_pipeline.py \
   --search "HVAC in Houston TX" "HVAC in Dallas TX" "HVAC in Austin TX" \
   --limit 30 --workers 5 --sheet-name "HVAC Texas"
 
+# With AI lead qualification — adds a one-sentence sales-fit summary to each lead
+python3 .claude/skills/gmaps-leads/gmaps_lead_pipeline.py \
+  --search "plumbers in Austin TX" --limit 25 --qualify
+
 # With Anymailfinder email enrichment
 python3 .claude/skills/gmaps-leads/gmaps_lead_pipeline.py --search "plumbers in Austin TX" --limit 25 --enrich
+
+# Full pipeline: scrape + qualify + enrich
+python3 .claude/skills/gmaps-leads/gmaps_lead_pipeline.py \
+  --search "roofing contractors in Austin TX" --limit 25 --qualify --enrich
 
 # Append to existing sheet
 python3 .claude/skills/gmaps-leads/gmaps_lead_pipeline.py --search "dentists in Miami FL" --limit 25 \
@@ -62,7 +104,28 @@ python3 .claude/skills/gmaps-leads/gmaps_lead_pipeline.py \
   --limit 50 --workers 5 --enrich
 ```
 
-## Output Schema (36 fields)
+## Performance Tuning
+
+The `--workers` flag controls how many businesses are enriched in parallel. Tuning this correctly is the single biggest lever for speed vs. stability:
+
+| Workers | Use Case | Notes |
+|---------|----------|-------|
+| 1 | Debugging, slow sites | Sequential — easiest to trace errors |
+| 3 | Default — balanced | Good for most runs up to 50 leads |
+| 5 | Faster bulk runs | Recommended for 50–100 leads |
+| 8+ | High volume only | May trigger rate limits on some sites; watch for timeouts |
+
+**Rule of thumb**: If you're seeing many timeout errors, reduce `--workers`. If a run completes cleanly and you want more speed, increase to 5.
+
+**Expected throughput**:
+- 10 leads @ 3 workers: ~60–90 seconds
+- 50 leads @ 3 workers: ~3–4 minutes
+- 50 leads @ 5 workers: ~2–3 minutes
+- 100 leads @ 5 workers: ~5–7 minutes
+
+Google Maps caps at ~20–30 results per single city query (pagination limit), so use multiple `--search` args for larger lists.
+
+## Output Schema (37 fields)
 
 ### Business Basics (from Google Maps)
 - `business_name`, `category`, `address`, `city`, `state`, `zip_code`, `country`
@@ -83,6 +146,9 @@ python3 .claude/skills/gmaps-leads/gmaps_lead_pipeline.py \
 ### Team Contacts
 - `team_contacts` - JSON array of team members with name, title, email, phone, linkedin
 
+### AI Qualification (optional, populated when `--qualify` is used)
+- `qualification_summary` - One-sentence AI-generated sales-fit summary (e.g., "Good fit: High-rated local plumber with a listed owner email, ideal for B2B service outreach.")
+
 ### Metadata
 - `lead_id` - Unique identifier (MD5 hash of name|address, for deduplication)
 - `scraped_at` - ISO timestamp
@@ -97,8 +163,9 @@ python3 .claude/skills/gmaps-leads/gmaps_lead_pipeline.py \
 2. **Website Scraping** - Fetches main page + up to 5 prioritized contact pages (/contact, /about, /team, etc.)
 3. **Web Search Enrichment** - DuckDuckGo search for `"{business}" owner email contact` + scrapes first relevant result
 4. **Claude Extraction** - Claude Haiku 4.5 extracts structured contacts from all gathered content
-5. **Google Sheet Sync** - Appends new leads, automatically deduplicates by `lead_id` across all queries
-6. **Email Enrichment (optional)** - `--enrich` flag triggers Anymailfinder bulk API for leads with owner_name + website but no owner_email
+5. **Lead Qualification (optional)** - If `--qualify` is set, Claude Haiku 4.5 receives the structured lead data and generates a concise one-sentence summary qualifying the lead for sales outreach (e.g., contact availability, rating, category fit). Result is stored in `qualification_summary`.
+6. **Google Sheet Sync** - Appends new leads, automatically deduplicates by `lead_id` across all queries
+7. **Email Enrichment (optional)** - `--enrich` flag triggers Anymailfinder bulk API for leads with owner_name + website but no owner_email
 
 ## Contact Page Patterns (22 total, priority-ordered)
 
@@ -112,12 +179,14 @@ Lower: `/company`, `/meet-us`, `/our-story`, `/the-team`, `/employees`, `/direct
 |-----------|---------------|
 | Apify Google Maps | ~$0.01-0.02 |
 | Claude Haiku extraction | ~$0.002 |
+| Claude Haiku qualification (`--qualify`) | ~$0.001 |
 | DuckDuckGo search | Free |
 | HTTP requests (6-7 pages) | Free |
 | Google Sheets | Free |
-| **Total** | **~$0.012-0.022** |
+| **Total (without --qualify)** | **~$0.012-0.022** |
+| **Total (with --qualify)** | **~$0.013-0.023** |
 
-**For 100 leads**: ~$1.50-2.50 total
+**For 100 leads**: ~$1.50-2.50 total (add ~$0.10 for `--qualify`)
 
 The pipeline maximizes value per Apify dollar by scraping 6+ pages + web search per business.
 
@@ -146,6 +215,7 @@ python-dotenv
 ### "No businesses found"
 - Check search query is valid
 - Include location in query (e.g., "plumbers in Austin, TX" not just "plumbers")
+- **Do not use state-wide queries** — Google Maps rejects results spanning >2500km. Use city-level queries instead (e.g., "plumbers in Austin TX", not "plumbers in Texas")
 
 ### 403 Forbidden errors
 - ~10-15% of sites block scrapers with 403/503 errors
@@ -169,6 +239,10 @@ python-dotenv
 - Pipeline uses `lead_id` (MD5 of name|address) to skip existing leads
 - Running same search twice will show "No new leads to add (all duplicates)"
 
+### `qualification_summary` is empty
+- Only populated when `--qualify` flag is passed
+- If Claude API call fails for a lead, the field is left blank and the lead is still saved
+
 ## Learnings
 
 - Google Maps actor returns `website` field directly - no need to scrape for it
@@ -186,6 +260,7 @@ python-dotenv
 - Multiple `--search` args run sequentially into one sheet with cross-query dedup
 - AMF enrichment only targets leads with owner_name + website but no owner_email — success-based pricing means you only pay for valid results
 - Credentials path must use absolute paths from script location (`active/config/`), not relative `config/`
+- `--qualify` adds ~$0.001/lead and ~1-2s per lead (sequential Claude call after extraction); run without it for speed-sensitive bulk jobs
 
 ## Production Sheet
 

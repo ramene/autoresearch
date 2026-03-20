@@ -1,1 +1,185 @@
-[]
+[
+  {
+    "round": 0,
+    "score": 36,
+    "max": 36,
+    "status": "baseline",
+    "mutation": "Fix missing space between `--output_prefix` flag and its value in all bash command examples (currently `--output_prefixactive/...` which would fail at runtime).",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Initial baseline evaluation",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-20T21:40:00.080Z",
+    "changelog": "**Mutation**: Fix missing space between `--output_prefix` flag and its value in all bash command examples (currently `--output_prefixactive/...` which would fail at runtime).\n**Failures**: none\n**Per-criteria**: Task Completion: 6/6, Error Handling: 6/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 6/6, Completeness: 6/6\n**Decision**: Initial baseline evaluation"
+  },
+  {
+    "round": 1,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "No failures to fix — all criteria at 100%. Applied a minor clarity improvement to the Self-Annealing Notes section to explicitly call out the `--no-email-filter` flag as required for test and full scrapes to avoid runtime errors from missing email filter configuration.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-20T21:41:16.876Z",
+    "changelog": "**Mutation**: No failures to fix — all criteria at 100%. Applied a minor clarity improvement to the Self-Annealing Notes section to explicitly call out the `--no-email-filter` flag as required for test and full scrapes to avoid runtime errors from missing email filter configuration.\n**Failures**: none\n**Per-criteria**: Task Completion: 6/6, Error Handling: 6/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 6/6, Completeness: 6/6\n**Decision**: Score 36 did not exceed best 36 — mutation produced worse or equal results"
+  },
+  {
+    "round": 2,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "No failures to fix — all criteria at 100%. Applied a minor clarity improvement to the Edge Cases section to explicitly document the `--location` format requirement inline where location is discussed (Step 2 and Step 5), rather than only in Self-Annealing Notes, reducing the chance of location format errors during scraping.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-20T21:42:28.567Z",
+    "changelog": "**Mutation**: No failures to fix — all criteria at 100%. Applied a minor clarity improvement to the Edge Cases section to explicitly document the `--location` format requirement inline where location is discussed (Step 2 and Step 5), rather than only in Self-Annealing Notes, reducing the chance of location format errors during scraping.\n**Failures**: none\n**Per-criteria**: Task Completion: 6/6, Error Handling: 6/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 6/6, Completeness: 6/6\n**Decision**: Score 36 did not exceed best 36 — mutation produced worse or equal results"
+  },
+  {
+    "round": 3,
+    "score": 29,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Fix Step 7 to explicitly handle both cases — use `classified_leads.json` when Step 6 was run, or `leads_final.json` when Step 6 was skipped — preventing upload failures when LLM classification is not performed.",
+    "cost": 0.05,
+    "criteria": [
+      4,
+      6,
+      6,
+      5,
+      4,
+      4
+    ],
+    "failures": [
+      {
+        "scenario": 2,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Completeness"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Tool Usage"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Completeness"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 29 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-20T21:43:47.422Z",
+    "changelog": "**Mutation**: Fix Step 7 to explicitly handle both cases — use `classified_leads.json` when Step 6 was run, or `leads_final.json` when Step 6 was skipped — preventing upload failures when LLM classification is not performed.\n**Failures**: S2: Task Completion, S2: Instructions Clarity, S2: Completeness, S6: Task Completion, S6: Tool Usage, S6: Instructions Clarity, S6: Completeness\n**Per-criteria**: Task Completion: 4/6, Error Handling: 6/6, Output Quality: 6/6, Tool Usage: 5/6, Instructions Clarity: 4/6, Completeness: 4/6\n**Decision**: Score 29 did not exceed best 36 — mutation produced worse or equal results"
+  },
+  {
+    "round": 3,
+    "score": 29,
+    "max": 36,
+    "status": "escalation",
+    "mutation": "Stuck escalation: The optimization loop is stuck in a local optimum of \"clarification through addition.\" The initial skill was perfect, but subsequent mutations, intended as minor improvements, added redundant inline n",
+    "cost": 0.03,
+    "criteria": [
+      4,
+      6,
+      6,
+      5,
+      4,
+      4
+    ],
+    "failures": [],
+    "decisionReason": "Stuck escalation triggered after 3+ rounds with no improvement",
+    "escalation": {
+      "diagnosis": "The optimization loop is stuck in a local optimum of \"clarification through addition.\" The initial skill was perfect, but subsequent mutations, intended as minor improvements, added redundant inline notes and warnings (e.g., for location format, `--no-email-filter`). This increased verbosity and scattered critical information throughout the document, likely confusing the agent and causing the score to drop from 36 to 29. The system is now thrashing, attempting further minor additions (like the redundant Step 7 clarification) that fail to address the root cause: the prompt's structure has become less effective due to information overload and repetition.",
+      "evalRedesignNeeded": false,
+      "strategy": "Adopt a new mutation strategy of **\"Instructional Refactoring and Consolidation.\"** Instead of adding more text, the focus should be on improving the structure and conciseness of existing instructions. This involves identifying repeated critical parameters, consolidating them into a single, authoritative source (like a table), and removing the now-redundant notes from the main workflow. This simplifies the prompt, reduces cognitive load for the agent, and makes the core process easier to follow.",
+      "suggestedMutation": "Create a new section named \"## Critical Command Parameters\" immediately after the \"Inputs\" section. Centralize all critical, repeated CLI flag requirements (for `location`, `--no-email-filter`, `--output_prefix`, and `--query`) into a markdown table within this new section. Then, delete the now-redundant \"Note:\" sections from Step 2 and Step 5 to clean up the process flow.\n\n**Example Implementation:**\n\n1.  **ADD** this new section after the \"Inputs\" section:\n    ```markdown\n    ## Critical Command Parameters\n\n    | Parameter | Requirement | Example |\n    |---|---|---|\n    | `location` | Must use exact Apify format. US states require `, us`. | `\"texas, us\"`, `\"united states\"` |\n    | `--query` | Use this flag for the search keywords. | `\"<validated_keywords>\"` |\n    | `--output_prefix` | Path for output files. A space is required after the flag. | `active/leads_final.json` |\n    | `--no-email-filter` | **Required on all `scrape_apify.py` and `scrape_apify_parallel.py` commands.** | N/A |\n    ```\n\n2.  **REMOVE** the entire \"Note:\" block from under the code block in \"### 2. Test Scrape\".\n3.  **REMOVE** the entire \"Note:\" block from under the first code block in \"### 5. Full Scrape\"."
+    },
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-20T21:45:19.863Z"
+  },
+  {
+    "round": 4,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Restructure instructions by adding a \"Critical Command Parameters\" table after the Inputs section and removing redundant Note blocks from Steps 2 and 5 to reduce cognitive load and consolidate authoritative parameter references.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-20T21:45:48.027Z",
+    "changelog": "**Mutation**: Restructure instructions by adding a \"Critical Command Parameters\" table after the Inputs section and removing redundant Note blocks from Steps 2 and 5 to reduce cognitive load and consolidate authoritative parameter references.\n**Failures**: none\n**Per-criteria**: Task Completion: 6/6, Error Handling: 6/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 6/6, Completeness: 6/6\n**Decision**: Score 36 did not exceed best 36 — mutation produced worse or equal results"
+  }
+]

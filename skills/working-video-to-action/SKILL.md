@@ -11,6 +11,42 @@ allowed-tools: Read, Grep, Glob, Bash
 ## Goal
 Take a YouTube URL → send the video to Gemini → get back structured, actionable steps that Claude can understand and execute. Works for tutorials, demos, how-tos, and any procedural video content.
 
+## Claude Execution Steps
+
+When this skill is invoked, Claude must follow these steps in order:
+
+1. **Identify the YouTube URL** from the user's message
+2. **Check environment** — verify `NANO_BANANA_API_KEY` is set in `.env` (run `grep NANO_BANANA_API_KEY .env 2>/dev/null || echo "MISSING"`)
+3. **Check dependencies** — verify `yt-dlp` and `python3` are available (`which yt-dlp && python3 -c "import google.generativeai" 2>&1`)
+4. **Construct and run the command** — use the Bash tool with this decision table:
+
+   | User requested quick? | User asked a question? | Command to run |
+   |----------------------|----------------------|----------------|
+   | No | No | `python3 .claude/skills/video-to-action/video_to_action.py "<URL>"` |
+   | No | Yes | `python3 .claude/skills/video-to-action/video_to_action.py "<URL>" -q "<question>"` |
+   | Yes | No | `python3 .claude/skills/video-to-action/video_to_action.py "<URL>" --quick` |
+   | Yes | Yes | `python3 .claude/skills/video-to-action/video_to_action.py "<URL>" --quick -q "<question>"` |
+
+   **Quick mode triggers**: user says "quick", "fast", or "transcript", OR video is clearly a talk/lecture/podcast with no visual interaction. Default to full mode otherwise.
+
+   **Additional flags** — append any of these to the base command above as needed:
+   - User wants output saved to a file → add `-o <filepath>` (e.g. `-o steps.md`)
+   - User wants JSON output → add `--json`
+   - User requests maximum detail or a specific model → add `-m gemini-2.5-pro` (or the model they named)
+   - These flags are independent and can be combined: e.g. `python3 ... "<URL>" --quick -q "..." --json -o results.json`
+
+5. **Parse the output** — read the structured steps returned by Gemini
+6. **Present results** — show the extracted steps to the user with context
+7. **Offer next actions** — ask if user wants to execute steps, save as checklist, or build automation
+
+### Error Handling
+- If `NANO_BANANA_API_KEY` is missing: tell the user to add it to `.env` and stop
+- If `yt-dlp` is missing: tell the user to run `pip install yt-dlp` and stop
+- If video download fails (private/age-restricted): suggest `--quick` mode if captions exist, or inform user the video is inaccessible
+- If script exits with error: show the error output and suggest trying `--quick` mode as fallback
+- If `--quick` fails (no captions available): automatically retry with full mode (no `--quick` flag) — do not ask the user, just switch and inform them
+- If both full mode and `--quick` fail: report both error outputs and ask the user for a different video
+
 ## How It Works
 
 1. **Full mode** (default): Downloads video at low res → uploads to Gemini File API → Gemini watches the video and returns structured analysis
@@ -29,6 +65,9 @@ python3 .claude/skills/video-to-action/video_to_action.py "https://youtube.com/w
 # Quick mode: transcript only (faster, cheaper)
 python3 .claude/skills/video-to-action/video_to_action.py "https://youtube.com/watch?v=VIDEO_ID" --quick
 
+# Quick mode with a specific question
+python3 .claude/skills/video-to-action/video_to_action.py "https://youtube.com/watch?v=VIDEO_ID" --quick -q "What are the main takeaways?"
+
 # Save to file
 python3 .claude/skills/video-to-action/video_to_action.py "https://youtube.com/watch?v=VIDEO_ID" -o active/steps.md
 
@@ -45,6 +84,8 @@ python3 .claude/skills/video-to-action/video_to_action.py "https://youtube.com/w
 |------|------|-------|------|----------|
 | Full | (default) | ~1-3 min | ~$0.05-0.20 | Visual tutorials (Blender, Figma, code editors), demos with UI |
 | Quick | `--quick` | ~15-30s | ~$0.01-0.03 | Talks, lectures, podcasts, text-heavy content |
+
+**Decision rule**: Use full mode by default. Only use `--quick` if the user says "quick", "fast", or "transcript", or if the video is clearly a talk/lecture/podcast (no visual interaction expected).
 
 ## Workflow: Video → Action
 

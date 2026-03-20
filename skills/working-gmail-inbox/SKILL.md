@@ -11,6 +11,21 @@ allowed-tools: Bash, Read, Write, Edit, Glob, Grep
 ## Goal
 Check and manage emails across multiple Gmail accounts using unified tooling.
 
+## Workflow
+
+When this skill is invoked, follow these steps:
+
+1. **List registered accounts** — run `python3 ./scripts/gmail_unified.py --accounts` to confirm which accounts are available.
+2. **Fetch emails** — run the appropriate query (see Quick Reference below) based on what the user asked for. Default to `is:unread` across all accounts if no specific query is given.
+3. **Handle auth errors immediately** — if any step produces an auth error, do NOT continue. Instead:
+   - For "Token file not found": run `python3 ./scripts/gmail_multi_auth.py --account <account> --email <email>` for the failing account, then retry.
+   - For "invalid_scope: Bad Request": delete the failing token (`rm token_<account>.json`), re-run `python3 ./scripts/gmail_multi_auth.py --account <account> --email <email>`, then retry.
+   - For "Failed to authenticate": check that `credentials.json` exists in the workspace root, then retry.
+   - After re-authing, resume from the step that failed.
+4. **Display results clearly** — summarize emails in a table or list showing: account, sender, subject, date, and any labels. Group by account if multiple accounts are checked.
+5. **Perform requested actions** — if the user asked to label, archive, or mark-read, execute those commands directly. Use `--dry-run` only when the user explicitly requests a preview or when the action scope is unclear (e.g. query would match more than 100 emails unexpectedly).
+6. **Confirm completion** — report what was done: how many emails found, how many actioned, on which accounts.
+
 ## Scripts
 - `./scripts/gmail_unified.py` - Check and manage inboxes
 - `./scripts/gmail_multi_auth.py` - Authenticate accounts
@@ -36,7 +51,7 @@ python3 ./scripts/gmail_unified.py --query "from:notifications@" --label "Notifi
 # Mark as read
 python3 ./scripts/gmail_unified.py --query "from:noreply@" --mark-read
 
-# Dry run (preview)
+# Dry run (preview only — use when scope is uncertain)
 python3 ./scripts/gmail_unified.py --query "subject:invoice" --label "Invoices" --dry-run
 ```
 
@@ -46,22 +61,6 @@ python3 ./scripts/gmail_unified.py --query "subject:invoice" --label "Invoices" 
 |---------|-------|-------------|-------|
 | youruser | you@example.com | credentials.json | token_youruser.json |
 | yourcompany | you@yourdomain.com | credentials_yourcompany.json | token_yourcompany.json |
-
-## Troubleshooting Auth Errors
-
-**"Token file not found"**
-```bash
-python3 ./scripts/gmail_multi_auth.py --account yourcompany --email you@yourdomain.com
-```
-
-**"invalid_scope: Bad Request"**
-```bash
-rm token_youruser.json
-python3 ./scripts/gmail_multi_auth.py --account youruser --email you@example.com
-```
-
-**"Failed to authenticate"**
-Check that credentials.json exists in root directory.
 
 ## Required Scopes
 - `gmail.modify` - Read/write emails

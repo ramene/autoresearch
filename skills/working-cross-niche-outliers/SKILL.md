@@ -11,6 +11,57 @@ allowed-tools: Bash, Read, Write, Edit, Glob, Grep
 ## Goal
 Identify high-performing videos from adjacent business niches to extract transferable content patterns, hooks, and structures. These outliers provide inspiration for content ideation without being directly competitive.
 
+## Quick Start (End-to-End)
+
+Follow these steps in order for a complete run:
+
+**Step 1 — Verify environment**
+```bash
+echo $TUBELAB_API_KEY      # Must be non-empty
+echo $ANTHROPIC_API_KEY    # Must be non-empty
+```
+If either is missing, set them now:
+```bash
+export TUBELAB_API_KEY=your_tubelab_key_here
+export ANTHROPIC_API_KEY=your_anthropic_key_here
+export APIFY_API_TOKEN=your_apify_token_here   # optional, for transcript fallback
+```
+
+**Step 2 — Run the scraper**
+```bash
+python3 ./scripts/scrape_cross_niche_tubelab.py
+```
+This fetches ~100 outliers from the last 30 days using the default search terms. Costs 5 TubeLab credits.
+
+**Step 3 — Wait for completion**
+The script will print progress as it fetches videos, scores them, and generates transcripts. Expect 2–5 minutes depending on transcript availability.
+
+**Step 4 — Review results**
+Open the Google Sheet created at the end (link printed in terminal). Sort by **Cross-Niche Score** (column A) descending. Use this table to prioritize:
+
+| Score Range | Priority |
+|-------------|----------|
+| 1.6+ | Exceptional — act immediately |
+| 1.3–1.6 | Strong outlier — high priority |
+| 1.1–1.3 | Worth reviewing |
+| Below 1.1 | Skip |
+
+Focus on scores above 1.3. Within those, prioritize rows with money hooks ($, revenue, income) or curiosity gaps (?) — these transfer best across niches.
+
+**Step 5 — Pick an outlier and adapt**
+- Read the Claude summary (column K) for hook structure and adaptation notes
+- Use Title Variants 1–3 (columns L–N) as starting points for your own title
+- Recreate the thumbnail style using the `recreate-thumbnails` skill
+
+**Step 6 — Generate more title variants (optional)**
+```bash
+python3 ./scripts/generate_title_variants.py
+```
+
+If anything fails at any step, see the Troubleshooting section below.
+
+---
+
 ## Two Approaches
 
 ### 1. TubeLab API (RECOMMENDED)
@@ -38,6 +89,69 @@ python3 ./scripts/scrape_cross_niche_outliers.py
 - `./scripts/scrape_cross_niche_tubelab.py` - TubeLab API (recommended)
 - `./scripts/scrape_cross_niche_outliers.py` - yt-dlp direct scraping
 - `./scripts/generate_title_variants.py` - Generate title variants for outliers
+
+## Troubleshooting & Error Handling
+
+### Common Failures and Fixes
+
+**TubeLab script exits with auth error / 401**
+→ `TUBELAB_API_KEY` is missing or invalid. Verify the key at your TubeLab dashboard and re-export it.
+
+**TubeLab script exits with credit error / 402**
+→ Credits exhausted. Fall back to yt-dlp: `python3 ./scripts/scrape_cross_niche_outliers.py`
+
+**yt-dlp returns 0 results or HTTP 429 (rate limited)**
+→ Wait 10–15 minutes and retry with fewer keywords, or reduce `--queries` to 1.
+
+**Transcript fetch fails for some videos**
+→ Normal — not all videos have transcripts. The script skips them. Add `--skip_transcripts` to bypass entirely.
+
+**Google Sheet not created / permission error**
+→ Ensure Google Sheets API credentials are configured. As a fallback, results are also saved locally as CSV in `./output/`.
+
+**Script not found**
+→ Run from the project root directory where `./scripts/` exists. Confirm with: `ls ./scripts/`
+
+### Fallback Priority Order
+1. TubeLab API (default)
+2. yt-dlp scraping (if TubeLab credits gone)
+3. **Manual YouTube search** (if all automated methods fail — see below)
+
+### Manual Fallback: Finding Outliers Without Scripts
+
+Use this when Python is unavailable, scripts are missing, or all APIs are exhausted.
+
+**Step 1 — Search YouTube manually**
+Go to YouTube and search each of these terms, filtered to "This month":
+- "AI for business", "scale your business", "increase revenue", "passive income systems"
+- Sort results by "View count" (click Filters → Sort by → View count)
+
+**Step 2 — Identify outlier candidates**
+For each result in the top 10, check the channel's other recent videos:
+- Click the channel name → Videos tab → sort by "Date"
+- If the video you found has **3–5× more views** than typical recent videos on that channel, it's an outlier
+
+**Step 3 — Apply the cross-niche filter**
+Mentally score each candidate (skip if it fails):
+- ❌ Reject: title contains technical terms (API, Python, SDK, code)
+- ✅ Bonus: title has money hooks ($, revenue, income, profit)
+- ✅ Bonus: title has curiosity gap (?, "this changed everything", "secret")
+- ✅ Bonus: title has a number (listicle)
+
+**Step 4 — Extract the hook**
+Watch the first 30 seconds of each qualifying video. Note:
+- The opening line (this is the hook)
+- The promise made in the first 30 seconds
+- How the thumbnail reinforces the title
+
+**Step 5 — Record your findings**
+Create a simple table (paste into a doc or sheet):
+
+| Title | Channel | Views | Hook (first line) | Adaptation idea |
+|-------|---------|-------|-------------------|-----------------|
+| ...   | ...     | ...   | ...               | ...             |
+
+Target 5–10 rows. Prioritize videos with money hooks or curiosity gaps — these transfer most reliably to other niches.
 
 ## Process
 
@@ -100,15 +214,23 @@ Alex Hormozi, My First Million, Starter Story, Colin and Samir, Ali Abdaal, Thin
 - 3 title variants + raw transcript per outlier
 
 ## Environment
+
+Set these before running. Add to your shell profile (`~/.zshrc` or `~/.bashrc`) to persist across sessions:
+
+```bash
+export TUBELAB_API_KEY=your_tubelab_key_here        # Required — get from tubelab.io dashboard
+export ANTHROPIC_API_KEY=your_anthropic_key_here    # Required — get from console.anthropic.com
+export APIFY_API_TOKEN=your_apify_token_here        # Optional — fallback for transcript fetching
 ```
-TUBELAB_API_KEY=your_key
-ANTHROPIC_API_KEY=your_key
-APIFY_API_TOKEN=your_token (optional fallback)
+
+To verify they are set:
+```bash
+echo $TUBELAB_API_KEY && echo $ANTHROPIC_API_KEY
 ```
 
 ## Workflow
 1. Run weekly for ~100 outliers
-2. Review by Cross-Niche Score
+2. Review by Cross-Niche Score (target 1.3+)
 3. Pick outlier with good thumbnail/title
 4. Use title variants as starting points
 5. Recreate thumbnail with your face (see recreate-thumbnails skill)

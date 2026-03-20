@@ -1,1 +1,207 @@
-[]
+[
+  {
+    "round": 0,
+    "score": 31,
+    "max": 36,
+    "status": "baseline",
+    "mutation": "Added explicit \"Claude Execution Steps\" section to clarify the exact workflow Claude should follow when invoked, fixing Instructions Clarity failures which cascade into Task Completion, Error Handling, Output Quality, and Completeness failures.",
+    "cost": 0.05,
+    "criteria": [
+      5,
+      5,
+      5,
+      6,
+      5,
+      5
+    ],
+    "failures": [
+      {
+        "scenario": 2,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Completeness"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Initial baseline evaluation",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-20T22:39:36.821Z",
+    "changelog": "**Mutation**: Added explicit \"Claude Execution Steps\" section to clarify the exact workflow Claude should follow when invoked, fixing Instructions Clarity failures which cascade into Task Completion, Error Handling, Output Quality, and Completeness failures.\n**Failures**: S2: Task Completion, S2: Error Handling, S2: Output Quality, S2: Instructions Clarity, S2: Completeness\n**Per-criteria**: Task Completion: 5/6, Error Handling: 5/6, Output Quality: 5/6, Tool Usage: 6/6, Instructions Clarity: 5/6, Completeness: 5/6\n**Decision**: Initial baseline evaluation"
+  },
+  {
+    "round": 1,
+    "score": 34,
+    "max": 36,
+    "status": "kept",
+    "mutation": "Make Step 4 explicit about using the Bash tool with the exact command, and replace vague \"choose mode based on content type\" with a concrete decision rule (default to full mode, only use --quick if user explicitly requests it or video is a talk/lecture by keyword).",
+    "cost": 0.05,
+    "criteria": [
+      4,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [
+      {
+        "scenario": 2,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Task Completion"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Improved from 31 to 34",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-20T22:40:45.487Z",
+    "changelog": "**Mutation**: Make Step 4 explicit about using the Bash tool with the exact command, and replace vague \"choose mode based on content type\" with a concrete decision rule (default to full mode, only use --quick if user explicitly requests it or video is a talk/lecture by keyword).\n**Failures**: S2: Task Completion, S4: Task Completion\n**Per-criteria**: Task Completion: 4/6, Error Handling: 6/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 6/6, Completeness: 6/6\n**Decision**: Improved from 31 to 34"
+  },
+  {
+    "round": 2,
+    "score": 26,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Replace Step 4's separate mode/question instructions with a clear command-construction decision table showing all flag combinations explicitly, so Claude knows how to combine --quick and -q flags together.",
+    "cost": 0.05,
+    "criteria": [
+      4,
+      6,
+      4,
+      4,
+      4,
+      4
+    ],
+    "failures": [
+      {
+        "scenario": 2,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Tool Usage"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Completeness"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Tool Usage"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Completeness"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 26 did not exceed best 34 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-20T22:42:29.275Z",
+    "changelog": "**Mutation**: Replace Step 4's separate mode/question instructions with a clear command-construction decision table showing all flag combinations explicitly, so Claude knows how to combine --quick and -q flags together.\n**Failures**: S2: Task Completion, S2: Output Quality, S2: Tool Usage, S2: Instructions Clarity, S2: Completeness, S3: Task Completion, S3: Output Quality, S3: Tool Usage, S3: Instructions Clarity, S3: Completeness\n**Per-criteria**: Task Completion: 4/6, Error Handling: 6/6, Output Quality: 4/6, Tool Usage: 4/6, Instructions Clarity: 4/6, Completeness: 4/6\n**Decision**: Score 26 did not exceed best 34 — mutation produced worse or equal results"
+  },
+  {
+    "round": 3,
+    "score": 36,
+    "max": 36,
+    "status": "kept",
+    "mutation": "All criteria show 0 failures — skill is at 36/36. Adding a minor robustness note in error handling to clarify the automatic `--quick` → full mode fallback order, which prevents any edge-case confusion without changing core functionality.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Improved from 34 to 36",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-20T22:43:58.960Z",
+    "changelog": "**Mutation**: All criteria show 0 failures — skill is at 36/36. Adding a minor robustness note in error handling to clarify the automatic `--quick` → full mode fallback order, which prevents any edge-case confusion without changing core functionality.\n**Failures**: none\n**Per-criteria**: Task Completion: 6/6, Error Handling: 6/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 6/6, Completeness: 6/6\n**Decision**: Improved from 34 to 36"
+  },
+  {
+    "round": 4,
+    "score": 34,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Extend Step 4's decision table with a note on appending additional flags (-o, --json, -m) to any command variant, so Claude knows how to handle output/model options in all scenarios.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      5,
+      5
+    ],
+    "failures": [
+      {
+        "scenario": 3,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Completeness"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 34 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-20T22:45:29.411Z",
+    "changelog": "**Mutation**: Extend Step 4's decision table with a note on appending additional flags (-o, --json, -m) to any command variant, so Claude knows how to handle output/model options in all scenarios.\n**Failures**: S3: Instructions Clarity, S3: Completeness\n**Per-criteria**: Task Completion: 6/6, Error Handling: 6/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 5/6, Completeness: 5/6\n**Decision**: Score 34 did not exceed best 36 — mutation produced worse or equal results"
+  }
+]

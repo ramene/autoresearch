@@ -1,7 +1,7 @@
 ---
 name: create-proposal
 description: Create a PandaDoc proposal for a client and send follow-up email. Use when generating proposals, sales documents, or processing kickoff call transcripts into proposals.
-allowed-tools: Read, Grep, Glob, Bash, Write
+allowed-tools: Read, Grep, Glob, Bash, Write, WebFetch, mcp__gmail__send_email
 ---
 
 > **Demo Library Skill** — This skill is from a demo library. Some configuration values use placeholders (e.g. `{{USER_NAME}}`, `{{COMMUNITY_ID}}`). If something doesn't work, check for placeholder values and replace them with your own information first.
@@ -39,18 +39,18 @@ allowed-tools: Read, Grep, Glob, Bash, Write
 
    - If information is not already provided in either format, ask the user for the missing details
 
-1b. **Research Client (Optional)**
+2. **Research Client (Optional)**
    - **Goal:** Understand the client's brand voice and current context to personalize the proposal.
    - **Trigger:** If a website URL is provided or can be inferred from the client's email domain (and it's not a generic domain like gmail.com).
    - **Action:**
-     - Use `read_url_content` to fetch the client's landing page or "About Us" page.
+     - Use the **WebFetch tool** to fetch the client's landing page or "About Us" page (e.g., `https://clientdomain.com` or `https://clientdomain.com/about`).
      - **Analyze**:
        - **Brand Voice:** (e.g., Professional/Corporate, Friendly/Startup, Technical/Niche)
        - **Keywords:** Key terms they use to describe their own value.
        - **Recent Context:** Any recent news or specific focus areas mentioned on the site.
    - **Output:** A brief "Client Research Summary" to be used in the next step.
 
-2. **Generate Content**
+3. **Generate Content**
    - Using the gathered information **and the Client Research Summary (if available)**, generate the following expanded content:
      - **Problem Expansions**: Expand each of the 4 problems into 1-2 strategic paragraphs (max 50 words each).
        - **Contextualization:** Use the *Client Research Summary* to mirror their industry terms and brand voice where appropriate.
@@ -70,55 +70,63 @@ allowed-tools: Read, Grep, Glob, Bash, Write
      - **Contract Footer Slug**: "[Company]-[ProjectTitle]-[YYYY-MM]"
      - **Created Date**: Current date in YYYY-MM-DD format.
 
-3. **Execute Proposal Creation**
-   - **Tool:** `.claude/skills/create-proposal/create_proposal.py`
-   - **Usage:** Save the JSON to a file and run: `python3 .claude/skills/create-proposal/create_proposal.py < input.json`
-   - Construct a JSON object with the following structure:
-     ```json
+4. **Execute Proposal Creation**
+   - **Tool:** Run `.claude/skills/create-proposal/create_proposal.py` using the **Bash tool** with a heredoc.
+   - Construct the JSON object below, substituting all fields with the actual values gathered and generated in steps 1–3. Then run it using the heredoc form shown — replace the entire JSON block with your real JSON (do not leave any placeholder text):
+     ```bash
+     python3 .claude/skills/create-proposal/create_proposal.py <<'EOF'
      {
        "client": {
-         "firstName": "...",
-         "lastName": "...",
-         "email": "...",
-         "company": "..."
+         "firstName": "<actual first name>",
+         "lastName": "<actual last name>",
+         "email": "<actual email>",
+         "company": "<actual company>"
        },
        "project": {
-         "title": "...",
+         "title": "<actual project title>",
          "problems": {
-           "problem01": "[Expanded Problem 1]",
-           "problem02": "[Expanded Problem 2]",
-           "problem03": "[Expanded Problem 3]",
-           "problem04": "[Expanded Problem 4]"
+           "problem01": "<expanded problem 1 text>",
+           "problem02": "<expanded problem 2 text>",
+           "problem03": "<expanded problem 3 text>",
+           "problem04": "<expanded problem 4 text>"
          },
          "benefits": {
-           "benefit01": "[Expanded Benefit 1]",
-           "benefit02": "[Expanded Benefit 2]",
-           "benefit03": "[Expanded Benefit 3]",
-           "benefit04": "[Expanded Benefit 4]"
+           "benefit01": "<expanded benefit 1 text>",
+           "benefit02": "<expanded benefit 2 text>",
+           "benefit03": "<expanded benefit 3 text>",
+           "benefit04": "<expanded benefit 4 text>"
          },
-         "monthOneInvestment": "...",
-         "monthTwoInvestment": "...",
-         "monthThreeInvestment": "..."
+         "monthOneInvestment": "<month 1 amount>",
+         "monthTwoInvestment": "<month 2 amount>",
+         "monthThreeInvestment": "<month 3+ amount>"
        },
        "generated": {
-         "slideFooter": "...",
-         "contractFooterSlug": "...",
-         "createdDate": "..."
+         "slideFooter": "<slide footer text>",
+         "contractFooterSlug": "<contract footer slug>",
+         "createdDate": "<YYYY-MM-DD>"
        }
      }
-     ```
-   - Run the python script:
-     ```bash
-     # Pass the JSON as a string to the script
-     python3 .claude/skills/create-proposal/create_proposal.py <<'EOF'
-     [JSON_CONTENT]
      EOF
      ```
-   - **Note**: Ensure the JSON is valid and properly escaped if necessary.
+   - **Important**: Every `<...>` placeholder above must be replaced with actual content before running. The JSON must be valid.
+   - **Error Handling:** If the script exits with a non-zero exit code or prints an error:
+     - Display the full error output to the user
+     - **Stop here — do not proceed to the email step**
+     - Diagnose the likely cause based on the error message:
+       - `401` / `403` / authentication errors → "Check that your PandaDoc API key is correctly configured in the script or environment."
+       - `422` / validation errors → "One or more input fields may be malformed or missing. Review the JSON input above."
+       - Network/connection errors → "Could not reach the PandaDoc API. Check your internet connection and API endpoint."
+       - Any other error → Show the raw message and ask: "Would you like to fix the input and retry, or handle this manually?"
+     - Do not send the follow-up email until the proposal is confirmed created successfully.
 
-4. **Send Follow-Up Email**
-   - Immediately after proposal creation, send a follow-up email to the client using the template below.
-   - Use `gmail.send_email` with `mimeType="text/html"` to send the email in HTML format.
+5. **Send Follow-Up Email**
+   - Immediately after proposal creation, send a follow-up email to the client using the **`mcp__gmail__send_email` MCP tool** (not Bash — this is a direct MCP tool call).
+   - Call the tool with `mimeType="text/html"` to send the email in HTML format.
+   - **Determine the sender name for the signature:**
+     - First, run `git config user.name` via Bash to get the configured git user name.
+     - If that returns a name, use it as the signature name.
+     - If the git command returns empty or fails, ask the user: "What name should I use for the email signature?"
+     - Never use a literal placeholder like `{{USER_NAME}}` in the sent email.
    - **Email Template Structure:**
      - Subject: "Re: [Brief Project Context] Discussion"
      - Opening: Thank them for discussing their challenges/goals
@@ -128,7 +136,7 @@ allowed-tools: Read, Grep, Glob, Bash, Write
        - Brief description of what it accomplishes
        - "Steps:" subheading followed by bullet points (use `<ul>` and `<li>` HTML tags)
      - Closing: "I'll send you a full proposal for the above shortly. Let me know if you have any questions or want to discuss further."
-     - Signature: "Thanks, {{USER_NAME}}"
+     - Signature: "Thanks, [resolved sender name]"
    - **HTML Formatting Requirements:**
      - Use `mimeType="text/html"` parameter
      - Provide both `body` (plain text) and `htmlBody` (HTML version) parameters
@@ -137,6 +145,6 @@ allowed-tools: Read, Grep, Glob, Bash, Write
      - Do NOT bold body text or steps - only section headers
      - Avoid RFC 2822 plain text wrapping issues by using HTML format
 
-5. **Notify User**
+6. **Notify User**
    - Show the "internalLink" to the user for review and editing in PandaDoc
    - Confirm that the follow-up email was sent successfully

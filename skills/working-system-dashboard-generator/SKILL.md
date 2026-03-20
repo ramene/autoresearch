@@ -19,93 +19,102 @@ This skill should be activated under the following conditions:
 3.  **Tools:** The agent must have access to standard shell tools, especially `jq` for JSON processing.
 
 ## Execution Steps
+
 1.  **Parse Arguments:**
-    -   Identify the user's requested output format. Default to `text`. Supported formats: `text`, `html`, `json`.
-    -   Identify the user's requested output file path. If not provided, output to standard output.
-    -   Identify any focus areas requested (e.g., `skills`, `intents`). If none, generate a full dashboard.
+    -   Identify the user's requested output format (`text`, `html`, `json`). Default to `text`.
+    -   Identify the user's requested output file path. Default to `null` (stdout).
 
-2.  **Gather Skill Performance Metrics:**
-    -   **Tool:** `Glob`, `Bash`, `Read`
+2.  **Generate Skill Performance Section:**
+    -   **This is a self-contained sub-task.**
+    -   **Goal:** Produce a data object for the `skill_performance` section of the dashboard.
+    -   **On Success:** The function must return an object like:
+        ```json
+        {
+          "status": "success",
+          "data": {
+            "overall_score_ratio": "85/100 (85.0%)",
+            "total_skills": 50,
+            "untested_skills": 5,
+            "stuck_skills": 2,
+            "lowest_scoring_skills": [
+              {"name": "skill-a", "score": 1, "total": 10},
+              ...
+            ]
+          }
+        }
+        ```
+    -   **On Failure:** If no `eval.json` files are found, or they are unreadable, the function must return an error object:
+        ```json
+        {
+          "status": "error",
+          "reason": "No eval.json files found"
+        }
+        ```
     -   **Action:**
-        a. Use `Glob` to find all `eval.json` files located at `~/.remote/@autoresearch/skills/*/eval.json`.
-        b. Initialize counters: `total_score = 0`, `total_possible = 0`, `skill_count = 0`, `untested_count = 0`, `stuck_count = 0`.
-        c. Create an empty list to store individual skill data: `skill_list = []`.
-        d. Iterate through each `eval.json` file found:
-            i. Use `Read` to get the file content.
-            ii. Use `Bash` with `jq` to parse the JSON. Extract the skill name from the file path.
-            iii. Extract `score` and `total` from the `summary` object.
-            iv. If `total` is 0, increment `untested_count`.
-            v. If `score` is 0 and `total` > 0, check the skill's `rounds.json` or `events.jsonl` for signs of repeated failures to determine if it's "stuck". For this version, we will define "stuck" as a skill with a score of 0 and a non-zero total. Increment `stuck_count` if this condition is met.
-            vi. Add the extracted `score` to `total_score` and `total` to `total_possible`.
-            vii. Increment `skill_count`.
-            viii. Append a record `{ "name": skill_name, "score": score, "total": total, "ratio": score/total }` to `skill_list`. Handle division by zero for the ratio (if total is 0, ratio is 0).
+        a. Use `Glob` to find all `~/.remote/@autoresearch/skills/*/eval.json` files.
+        b. If no files are found, immediately return the failure object above.
+        c. If files are found, initialize local counters (`total_score`, `total_possible`, etc.) to zero and an empty `skill_list`.
+        d. Iterate through each file, parsing it with `jq`. Skip any unreadable or malformed files. Accumulate scores and skill details.
+        e. Calculate the final metrics (`overall_ratio`, sort for `lowest_scoring`, etc.).
+        f. Assemble and return the success object with the calculated data.
 
-3.  **Process Skill Metrics:**
-    -   **Tool:** `Bash` (in-memory processing)
+3.  **Generate User Demands Section:**
+    -   **This is a self-contained sub-task.**
+    -   **Goal:** Produce a data object for the `user_demands` section of the dashboard.
+    -   **On Success:** The function must return an object like:
+        ```json
+        {
+          "status": "success",
+          "data": {
+            "high_frequency_intents": [
+              {"intent": "dashboard", "frequency": 419},
+              ...
+            ]
+          }
+        }
+        ```
+    -   **On Failure:** If `wants.json` is missing or unparseable, the function must return an error object:
+        ```json
+        {
+          "status": "error",
+          "reason": "wants.json not found or is unparseable"
+        }
+        ```
     -   **Action:**
-        a. Calculate the overall skill score ratio: `overall_ratio = total_score / total_possible`. Handle division by zero.
-        b. Sort `skill_list` by the `ratio` in ascending order.
-        c. Identify the top 3 lowest-scoring skills from the sorted list (excluding untested skills).
+        a. Use `Read` to load `~/.remote/@autoresearch/wants.json`.
+        b. If the read fails, return the failure object.
+        c. Use `jq` to parse the JSON and extract the top 5 intents by frequency.
+        d. If parsing fails, return the failure object.
+        e. If successful, assemble and return the success object.
 
-4.  **Gather User Intent & Demand Metrics:**
-    -   **Tool:** `Read`, `Bash`
-    -   **Action:**
-        a. Use `Read` to load the contents of `~/.remote/@autoresearch/wants.json`.
-        b. Use `Bash` with `jq` to parse the JSON.
-        c. Extract the top 5 entries, sorted by the `frequency` field in descending order. These are the recent high-frequency user intent signals.
+4.  **Assemble Final Data Structure:**
+    -   Call the functions from Step 2 and Step 3 to get their results.
+    -   Construct the final output object, populating it based on the `status` of each result.
+    -   **Example logic:**
+        -   `skill_performance_result = call_step_2()`
+        -   `user_demands_result = call_step_3()`
+        -   `final_json.timestamp = <current_time>`
+        -   `if skill_performance_result.status == 'success'`:
+            -   `final_json.skill_performance = skill_performance_result.data`
+        -   `else`:
+            -   `final_json.skill_performance = { overall_score_ratio: "N/A", total_skills: 0, ..., "_data_note": skill_performance_result.reason }`
+        -   `if user_demands_result.status == 'success'`:
+            -   `final_json.user_demands = user_demands_result.data`
+        -   `else`:
+            -   `final_json.user_demands = { high_frequency_intents: [], "_data_note": user_demands_result.reason }`
 
-5.  **Assemble Data Structure:**
-    -   Create a single JSON object in memory to hold all the gathered data. This will be the source for all output formats.
-    ```json
-    {
-      "timestamp": "YYYY-MM-DDTHH:MM:SSZ",
-      "skill_performance": {
-        "overall_score_ratio": 0.85,
-        "total_skills": 50,
-        "untested_skills": 5,
-        "stuck_skills": 2,
-        "lowest_scoring_skills": [
-          {"name": "code-refactorer", "score": 1, "total": 10},
-          {"name": "log-analyzer", "score": 2, "total": 8},
-          {"name": "test-case-generator", "score": 5, "total": 15}
-        ]
-      },
-      "user_demands": {
-        "high_frequency_intents": [
-          {"intent": "dashboard", "frequency": 419},
-          {"intent": "refactor code", "frequency": 250},
-          {"intent": "summarize git log", "frequency": 180}
-        ]
-      }
-    }
-    ```
+5.  **Render Output:**
+    -   **REQUIRED FIELDS CONTRACT — these MUST appear in every output regardless of format or data availability:**
+        -   **Overall skill score ratio** (e.g., "85/100 (85.0%)" or "N/A — No skill eval.json files found")
+        -   **Top 3 lowest-scoring skills** (list by name with score/total, or "No skill data available")
+        -   **Count of stuck skills and untested skills** (e.g., "Stuck: 2, Untested: 5" — use 0 if no data)
+        -   **High-frequency user intent signals** (top entries, or "No intent data available: <reason>")
+    -   Based on the `output_format` from Step 1, render the assembled data from Step 4 into the chosen format (`text`, `html`, or `json`).
 
-6.  **Render Output:**
-    -   Based on the format argument from Step 1, render the assembled data.
-    -   **If `text`:**
-        -   Format the data into a human-readable ASCII report. Use headers and spacing for clarity.
-        -   Example section:
-            ```
-            === Skill Performance ===
-            Overall Score: 85/100 (85.0%)
-            Total Skills: 50 (Stuck: 2, Untested: 5)
-
-            Top 3 Lowest-Scoring Skills:
-            1. code-refactorer   (1/10)
-            2. log-analyzer      (2/8)
-            3. test-case-generator (5/15)
-            ```
-    -   **If `html`:**
-        -   Generate a simple, self-contained HTML document with basic CSS for readability. Use tables for lists of skills and intents.
-    -   **If `json`:**
-        -   Pretty-print the assembled JSON data structure from Step 5.
-
-7.  **Finalize Output:**
-    -   **Tool:** `Write`, `Bash`
-    -   **Action:**
-        a. If an output file was specified, use `Write` to save the rendered content to that file.
-        b. Otherwise, print the rendered content to standard output using `Bash` (`echo`).
-        c. Report success to the user, indicating where the dashboard was generated.
+6.  **Finalize Output:**
+    -   If an `output_file` was specified, write the rendered content to that file.
+    -   Otherwise, print the rendered content to standard output.
+    -   Report success to the user.
 
 ## Output Format
 -   **`text` (default):** A formatted string printed to standard output, using ASCII characters to structure the information.
@@ -114,10 +123,10 @@ This skill should be activated under the following conditions:
 
 ## Quality Gates
 Before marking the task as complete, verify the following:
-1.  [ ] **Overall Score:** The generated dashboard includes the overall skill score ratio (e.g., "85/100").
-2.  [ ] **Lowest Skills:** The dashboard lists the top 3 lowest-scoring, non-untested skills.
-3.  [ ] **Stuck/Untested:** The dashboard shows the count of stuck and untested skills.
-4.  [ ] **User Intents:** The dashboard includes a section for recent high-frequency user intent signals from `wants.json`.
+1.  [ ] **Overall Score:** The generated dashboard includes the overall skill score ratio (e.g., "85/100") or an explicit "N/A" with reason.
+2.  [ ] **Lowest Skills:** The dashboard lists the top 3 lowest-scoring, non-untested skills, or states "No skill data available".
+3.  [ ] **Stuck/Untested:** The dashboard shows the count of stuck and untested skills (even if both are 0).
+4.  [ ] **User Intents:** The dashboard includes a section for recent high-frequency user intent signals, or states "No intent data available" with a reason.
 5.  [ ] **Format Correctness:** The output matches the requested format (`text`, `html`, or `json`).
 6.  [ ] **Successful Execution:** The skill ran without errors and produced a coherent, non-empty report.
 
@@ -127,10 +136,10 @@ Before marking the task as complete, verify the following:
 -   **Notifier:** The output file (e.g., `status.html`) could be sent as an attachment by a `notification` skill.
 
 ## Error Handling
--   **Missing Files:** If `wants.json` or the `skills` directory is not found, report the error clearly and exit gracefully. The dashboard should indicate which sections could not be generated.
+-   **Missing Files:** If `wants.json` or the `skills` directory is not found, the self-contained sub-tasks in Steps 2 and 3 return structured error objects. Step 4 then uses those error objects to populate fallback values. The dashboard must still render all section headers.
 -   **Malformed JSON:** If any `eval.json` or `wants.json` file is unparseable, skip that file, log a warning, and continue generating the report with the available data.
 -   **Invalid Arguments:** If an unsupported format is requested, inform the user of the available formats (`text`, `html`, `json`) and exit.
--   **Zero Skills:** If no skills are found, the dashboard should state "No skills found" instead of showing errors from division by zero.
+-   **Zero Skills:** If no skills are found, the dashboard must still display the Skill Performance section with "Overall Score: N/A", "Total Skills: 0 (Stuck: 0, Untested: 0)", and "Top 3 Lowest-Scoring Skills: No skill data found".
 
 ## Examples
 **Example 1: Default Text Dashboard**
@@ -182,4 +191,25 @@ Before marking the task as complete, verify the following:
         ]
       }
     }
+    ```
+
+**Example 4: Dashboard with Missing Data**
+*   **User Command:** `/dashboard`
+*   **Scenario:** `wants.json` does not exist; no `eval.json` files are found.
+*   **Expected Output:**
+    ```
+    =======================================
+    ==      System Dashboard             ==
+    =======================================
+    Generated: 2023-10-27T10:05:00Z
+
+    === Skill Performance ===
+    Overall Score: N/A — No skill eval.json files found
+    Total Skills: 0 (Stuck: 0, Untested: 0)
+
+    Top 3 Lowest-Scoring Skills:
+    No skill data found
+
+    === High-Frequency User Demands ===
+    No intent data available — wants.json unavailable: file not found
     ```

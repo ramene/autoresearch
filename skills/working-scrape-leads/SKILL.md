@@ -13,9 +13,18 @@ Scrape leads using Apify (`code_crafter/leads-finder`), iteratively refine searc
 
 ## Inputs
 - **Industry / Target Profile**: The target industry or ideal customer description (e.g., "Plumbers", "B2B SaaS companies selling to enterprises, $5M+ revenue")
-- **Location**: The target location (e.g., "New York", "United States")
+- **Location**: The target location (e.g., `"new york, us"`, `"united states"`). **Format**: US states use `"texas, us"` format; countries use lowercase full names (e.g., `"united states"`). Must match Apify's allowed values exactly.
 - **Total Count**: The total number of leads desired (default: 5,000)
 - **Quality Threshold**: Minimum acceptable match rate (default: 80%)
+
+## Critical Command Parameters
+
+| Parameter | Requirement | Example |
+|---|---|---|
+| `location` | Must use exact Apify format. US states require `, us`. | `"texas, us"`, `"united states"` |
+| `--query` | Use this flag for the search keywords. | `"<validated_keywords>"` |
+| `--output_prefix` | Path for output files. A space is required after the flag. | `active/leads_final.json` |
+| `--no-email-filter` | **Required on all `scrape_apify.py` and `scrape_apify_parallel.py` commands.** | N/A |
 
 ## Tools/Scripts
 - Script: `.claude/skills/scrape-leads/scrape_apify.py` (single scrape, for <1000 leads)
@@ -48,7 +57,7 @@ python3 .claude/skills/scrape-leads/scrape_apify.py \
   --location "<location>" \
   --max_items 25 \
   --no-email-filter \
-  --output_prefixactive/test_leads.json
+  --output_prefix active/test_leads.json
 ```
 
 **Output**: `active/test_leads.json` (25 sample leads)
@@ -94,7 +103,7 @@ python3 .claude/skills/scrape-leads/scrape_apify.py \
   --location "<location>" \
   --max_items <total_count> \
   --no-email-filter \
-  --output_prefixactive/leads_final.json
+  --output_prefix active/leads_final.json
 ```
 
 #### Large Scrapes (1000+ leads) — Parallel Processing
@@ -105,7 +114,7 @@ python3 .claude/skills/scrape-leads/scrape_apify_parallel.py \
   --total_count <total_count> \
   --strategy regions \
   --no-email-filter \
-  --output_prefixactive/leads_final.json
+  --output_prefix active/leads_final.json
 ```
 
 **Geographic Partitioning (Cost-Neutral)**:
@@ -131,16 +140,28 @@ python3 .claude/skills/scrape-leads/scrape_apify_parallel.py \
 python3 .claude/skills/scrape-leads/classify_leads_llm.py active/leads_final.json \
   --classification_type product_saas \
   --min_confidence medium \
-  --output_prefixactive/classified_leads.json
+  --output_prefix active/classified_leads.json
 ```
 
 **Performance**: ~2 minutes for 3,000 leads, ~$0.30 per 1,000 leads
 
+**Output**: `active/classified_leads.json` (only exists if this step was run)
+
 ---
 
 ### 7. Upload to Google Sheet (DELIVERABLE)
+
+**IMPORTANT — Choose the correct input file**:
+- **If Step 6 (LLM Classification) was run** → use `active/classified_leads.json`
+- **If Step 6 was skipped** → use `active/leads_final.json`
+
 ```bash
+# If LLM classification was run (Step 6 completed):
 python3 .claude/skills/scrape-leads/update_sheet.py active/classified_leads.json \
+  --sheet_name "Qualified Leads - [Date]"
+
+# If LLM classification was skipped:
+python3 .claude/skills/scrape-leads/update_sheet.py active/leads_final.json \
   --sheet_name "Qualified Leads - [Date]"
 ```
 
@@ -170,7 +191,7 @@ python3 .claude/skills/scrape-leads/enrich_emails.py <SHEET_URL>
 **Intermediates** (temporary, NOT deliverables):
 - `active/test_leads.json` — Test sample
 - `active/leads_final.json` — Full scrape output
-- `active/classified_leads.json` — After LLM filtering
+- `active/classified_leads.json` — After LLM filtering (only exists if Step 6 was run)
 
 ---
 
@@ -198,6 +219,8 @@ python3 .claude/skills/scrape-leads/enrich_emails.py <SHEET_URL>
 - Test scrape shows agencies mixed with products → Add LLM classification step
 - User unclear about target → Ask for 3-5 example companies to reverse-engineer criteria
 - **CLI flag is `--query` not `--industry`** — the script uses `--query` for search terms
-- **CLI flag is `--output_prefix` not `--output`** — script appends timestamp automatically
+- **CLI flag is `--output_prefix <path>` not `--output`** — always include a space before the path value; script appends timestamp automatically
+- **`--no-email-filter` is required** on all scrape commands (both test and full) — omitting it causes the script to fail if email filter credentials are not configured
 - **Location format**: Must match Apify's allowed values exactly. US states use `"texas, us"` format, not bare `"texas"`. Countries use lowercase full names (e.g., `"united states"`)
 - **Output path**: Script respects `--output_prefix` path including directories (creates them automatically). Use `active/leads/` for organized output.
+- **Step 7 input file**: If Step 6 (LLM classification) was skipped, upload `active/leads_final.json` — not `active/classified_leads.json`, which won't exist.

@@ -1,1 +1,328 @@
-[]
+[
+  {
+    "round": 0,
+    "score": 0,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Added a direct fallback generation path so Claude generates title variants itself when scripts are missing/failing — this fixes Task Completion, Error Handling, and Tool Usage all at once since all scenarios likely fail due to missing script files.",
+    "cost": 0.05,
+    "criteria": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "failures": [
+      {
+        "scenario": 1,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 1,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 1,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 1,
+        "criterion": "Tool Usage"
+      },
+      {
+        "scenario": 1,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 1,
+        "criterion": "Completeness"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Tool Usage"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Completeness"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Tool Usage"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Completeness"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Tool Usage"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Completeness"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Tool Usage"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Completeness"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Tool Usage"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Completeness"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 0 did not exceed best 0 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-20T22:34:06.580Z",
+    "changelog": "**Mutation**: Added a direct fallback generation path so Claude generates title variants itself when scripts are missing/failing — this fixes Task Completion, Error Handling, and Tool Usage all at once since all scenarios likely fail due to missing script files.\n**Failures**: S1: Task Completion, S1: Error Handling, S1: Output Quality, S1: Tool Usage, S1: Instructions Clarity, S1: Completeness, S2: Task Completion, S2: Error Handling, S2: Output Quality, S2: Tool Usage, S2: Instructions Clarity, S2: Completeness, S3: Task Completion, S3: Error Handling, S3: Output Quality, S3: Tool Usage, S3: Instructions Clarity, S3: Completeness, S4: Task Completion, S4: Error Handling, S4: Output Quality, S4: Tool Usage, S4: Instructions Clarity, S4: Completeness, S5: Task Completion, S5: Error Handling, S5: Output Quality, S5: Tool Usage, S5: Instructions Clarity, S5: Completeness, S6: Task Completion, S6: Error Handling, S6: Output Quality, S6: Tool Usage, S6: Instructions Clarity, S6: Completeness\n**Per-criteria**: Task Completion: 0/6, Error Handling: 0/6, Output Quality: 0/6, Tool Usage: 0/6, Instructions Clarity: 0/6, Completeness: 0/6\n**Decision**: Score 0 did not exceed best 0 — mutation produced worse or equal results"
+  },
+  {
+    "round": 1,
+    "score": 33,
+    "max": 36,
+    "status": "kept",
+    "mutation": "Restructure Step 2 as an explicit decision tree with numbered sub-steps to eliminate ambiguity about when to use scripts vs. direct generation — the current \"if/if\" parallel blocks require inference about execution order, which is causing clarity failures.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      3,
+      6
+    ],
+    "failures": [
+      {
+        "scenario": 1,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Instructions Clarity"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Initial baseline evaluation",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-20T22:35:05.235Z",
+    "changelog": "**Mutation**: Restructure Step 2 as an explicit decision tree with numbered sub-steps to eliminate ambiguity about when to use scripts vs. direct generation — the current \"if/if\" parallel blocks require inference about execution order, which is causing clarity failures.\n**Failures**: S1: Instructions Clarity, S5: Instructions Clarity, S6: Instructions Clarity\n**Per-criteria**: Task Completion: 6/6, Error Handling: 6/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 3/6, Completeness: 6/6\n**Decision**: Initial baseline evaluation"
+  },
+  {
+    "round": 2,
+    "score": 33,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Make Step 1's post-check decision logic explicit — currently the bash check runs but the skill never states what to DO based on the result (use the file vs. ask user), causing Instructions Clarity failures in scenarios 1 and 6.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      4,
+      5
+    ],
+    "failures": [
+      {
+        "scenario": 1,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Completeness"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 33 did not exceed best 33 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-20T22:36:13.497Z",
+    "changelog": "**Mutation**: Make Step 1's post-check decision logic explicit — currently the bash check runs but the skill never states what to DO based on the result (use the file vs. ask user), causing Instructions Clarity failures in scenarios 1 and 6.\n**Failures**: S1: Instructions Clarity, S6: Instructions Clarity, S6: Completeness\n**Per-criteria**: Task Completion: 6/6, Error Handling: 6/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 4/6, Completeness: 5/6\n**Decision**: Score 33 did not exceed best 33 — mutation produced worse or equal results"
+  },
+  {
+    "round": 3,
+    "score": 35,
+    "max": 36,
+    "status": "kept",
+    "mutation": "Clarify Step 2b's Mode A vs Mode B selection — the skill lists both modes but never specifies which to choose, leaving an ambiguous decision point that causes Instructions Clarity failures.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      5,
+      6
+    ],
+    "failures": [
+      {
+        "scenario": 1,
+        "criterion": "Instructions Clarity"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Improved from 33 to 35",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-20T22:37:20.614Z",
+    "changelog": "**Mutation**: Clarify Step 2b's Mode A vs Mode B selection — the skill lists both modes but never specifies which to choose, leaving an ambiguous decision point that causes Instructions Clarity failures.\n**Failures**: S1: Instructions Clarity\n**Per-criteria**: Task Completion: 6/6, Error Handling: 6/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 5/6, Completeness: 6/6\n**Decision**: Improved from 33 to 35"
+  },
+  {
+    "round": 4,
+    "score": 30,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Add explicit \"then proceed to Step 3\" instruction after Step 2c and clarify the terminal summary table format — scenarios 2 and 3 share Instructions Clarity and Completeness failures, likely because the direct generation path in 2c doesn't state it must still write the JSON file and print the table.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      6,
+      5,
+      5,
+      4,
+      4
+    ],
+    "failures": [
+      {
+        "scenario": 2,
+        "criterion": "Tool Usage"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Completeness"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Completeness"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 30 did not exceed best 35 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-20T22:38:28.911Z",
+    "changelog": "**Mutation**: Add explicit \"then proceed to Step 3\" instruction after Step 2c and clarify the terminal summary table format — scenarios 2 and 3 share Instructions Clarity and Completeness failures, likely because the direct generation path in 2c doesn't state it must still write the JSON file and print the table.\n**Failures**: S2: Tool Usage, S2: Instructions Clarity, S2: Completeness, S3: Output Quality, S3: Instructions Clarity, S3: Completeness\n**Per-criteria**: Task Completion: 6/6, Error Handling: 6/6, Output Quality: 5/6, Tool Usage: 5/6, Instructions Clarity: 4/6, Completeness: 4/6\n**Decision**: Score 30 did not exceed best 35 — mutation produced worse or equal results"
+  }
+]
