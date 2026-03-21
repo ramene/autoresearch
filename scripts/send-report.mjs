@@ -1,14 +1,14 @@
 #!/usr/bin/env node
 /**
- * Send autoresearch loop report via Resend.
- * Usage: node scripts/send-report.mjs <log-file>
- * 
- * This replaces the fragile inline curl + bash string escaping
- * that has failed 8-9 times. Node handles JSON properly.
+ * Autoresearch Loop Report — Professional format
+ * Reads log file, extracts all metrics, sends rich structured email via Resend.
+ * This is the ONLY email path — no bash curl, no inline JSON escaping.
  */
-import { readFileSync } from 'fs'
+import { readFileSync, existsSync } from 'fs'
+import { resolve } from 'path'
 
-const CRED_PATH = '/usr/local/etc/autoresearch-credentials/resend-api-key.txt'
+const CRED = '/usr/local/etc/autoresearch-credentials/resend-api-key.txt'
+const SELF_MODEL = resolve(process.env.HOME, '.remote/@autoresearch/self-model.json')
 const TO = 'ramene.anthony@gmail.com'
 const FROM = 'Autoresearch <alerts@micropaymnts.ai>'
 
@@ -16,64 +16,117 @@ const logFile = process.argv[2]
 if (!logFile) { console.log('Usage: node send-report.mjs <log-file>'); process.exit(1) }
 
 let key
-try { key = readFileSync(CRED_PATH, 'utf8').trim() } 
-catch { console.log('No Resend key'); process.exit(0) }
+try { key = readFileSync(CRED, 'utf8').trim() }
+catch { console.log('→ No Resend key'); process.exit(0) }
 
 const log = readFileSync(logFile, 'utf8')
 
-// Extract data from log
-const skill = (log.match(/Optimizing:\s+(\S+)/)?.[1]) || 'none'
+// Extract metrics
+const skill = log.match(/Optimizing:\s+(\S+)/)?.[1] || 'none'
 const bestScore = log.match(/Final best score:\s+(\S+)/)?.[1] || '?'
 const cost = log.match(/Total spent:\s+\$(\S+)/)?.[1] || '0.00'
-const kept = (log.match(/KEPT/g) || []).length
-const reverted = (log.match(/REVERTED/g) || []).length
-const baseline = (log.match(/BASELINE/g) || []).length
-const errors = (log.match(/EPERM|Fatal error|command not found/g) || []).length
-const escalations = (log.match(/STUCK|escalat/gi) || []).length
-const icon = errors > 0 ? '⚠' : '✓'
-const duration = log.match(/Duration:\s+(\d+)/)?.[1] || '?'
+const keptCount = (log.match(/KEPT/g) || []).length
+const revertedCount = (log.match(/REVERTED/g) || []).length
+const baselineCount = (log.match(/BASELINE/g) || []).length
+const escalationCount = (log.match(/STUCK|Escalat/gi) || []).length
+const errorCount = (log.match(/⚠ ERROR|EPERM|Fatal error|command not found|ETIMEDOUT/g) || []).length
+const fixCount = (log.match(/→ Fix:|cleared xattrs|reset permissions|patched|reset corrupted/gi) || []).length
+const retryCount = (log.match(/↻ Retry/g) || []).length
 
-// Count fleet from self-model if available
-let fleet = ''
+// Step results
+const stepResults = []
+for (const m of log.matchAll(/^\s+([✓✗⊘])\s+(.+?)\s+—\s+(.+)$/gm)) {
+  stepResults.push({ icon: m[1], step: m[2], detail: m[3] })
+}
+
+// Mutations (last 3)
+const mutations = []
+for (const m of log.matchAll(/\[Mutation\]\s+(.{1,80})/g)) mutations.push(m[1])
+
+// Promotions
+const promos = []
+for (const m of log.matchAll(/^\s+(\S+):\s+(\d+\/\d+)\s+\(baseline/gm)) promos.push(`${m[1]}: ${m[2]}`)
+
+// Fleet from self-model
+let fleet = {}
 try {
-  const sm = JSON.parse(readFileSync('/Users/ramene/.remote/@autoresearch/self-model.json', 'utf8'))
-  fleet = `Skills: ${sm.summary.total_skills} | Perfect: ${sm.summary.skills_at_target} | Stuck: ${sm.summary.skills_stuck} | Untested: ${sm.summary.skills_untested}`
-} catch { fleet = 'Fleet data unavailable' }
+  const sm = JSON.parse(readFileSync(SELF_MODEL, 'utf8'))
+  const s = sm.summary || {}
+  fleet = {
+    total: s.total_skills || '?',
+    perfect: s.skills_at_target || '?',
+    untested: s.skills_untested || '?',
+    stuck: s.skills_stuck || '?',
+    avg: s.avg_ratio ? (s.avg_ratio * 100).toFixed(1) + '%' : '?',
+    cost: s.total_cost ? '$' + s.total_cost.toFixed(2) : '?',
+    rounds: s.total_rounds || '?',
+  }
+} catch { fleet = { total: '?', perfect: '?', untested: '?', stuck: '?', avg: '?', cost: '?', rounds: '?' } }
 
-const subject = `${icon} Autoresearch | ${skill}: ${bestScore} | $${cost} | ${kept} kept`
+// Duration
+const durMatch = log.match(/(\d+)s \| \d+ errors/)
+const duration = durMatch?.[1] || '?'
 
-const body = `${icon} AUTORESEARCH LOOP REPORT
-${'━'.repeat(40)}
+// Build report
+const icon = errorCount > 0 ? '⚠' : '✓'
+const hr = '━'.repeat(44)
 
-  Skill:      ${skill}
-  Best Score: ${bestScore}
-  Kept:       ${kept}
-  Reverted:   ${reverted}
-  Baseline:   ${baseline}
-  Escalations:${escalations}
-  Errors:     ${errors}
-  Cost:       $${cost}
+let r = ''
+r += `${icon} AUTORESEARCH LOOP REPORT\n`
+r += `${hr}\n\n`
+r += `  Time:     ${new Date().toLocaleString('en-US', { timeZone: 'America/Chicago', dateStyle: 'medium', timeStyle: 'short' })}\n`
+r += `  Duration: ${duration}s\n`
+r += `  Cost:     $${cost}\n`
+r += `  Health:   ${errorCount} errors  |  ${fixCount} auto-fixes  |  ${retryCount} retries\n`
+r += `\n`
 
-${'━'.repeat(40)}
-  ${fleet}
-${'━'.repeat(40)}
+r += `${hr}\n`
+r += `  SKILL OPTIMIZED\n`
+r += `${hr}\n\n`
+r += `  Name:       ${skill}\n`
+r += `  Best Score: ${bestScore}\n`
+r += `  Rounds:     ${keptCount} kept  |  ${revertedCount} reverted  |  ${baselineCount} baseline\n`
+if (escalationCount > 0) r += `  Escalations: ${escalationCount} (Gemini meta-analysis)\n`
+if (mutations.length > 0) {
+  r += `\n  Mutations:\n`
+  for (const m of mutations.slice(-3)) r += `    • ${m}\n`
+}
+r += `\n`
 
-  Log: ${logFile}
-  Time: ${new Date().toISOString()}
-`
+if (stepResults.length > 0) {
+  r += `${hr}\n`
+  r += `  PIPELINE\n`
+  r += `${hr}\n\n`
+  for (const s of stepResults) r += `  ${s.icon}  ${s.step} — ${s.detail}\n`
+  r += `\n`
+}
 
-const payload = JSON.stringify({
-  from: FROM,
-  to: TO,
-  subject: subject,
-  text: body,
-})
+r += `${hr}\n`
+r += `  FLEET (${fleet.total} skills)\n`
+r += `${hr}\n\n`
+r += `  ★ ${fleet.perfect} perfect  |  ○ ${fleet.untested} untested  |  ⚠ ${fleet.stuck} stuck\n`
+r += `  Avg: ${fleet.avg}  |  Cost: ${fleet.cost}  |  Rounds: ${fleet.rounds}\n`
+r += `\n`
+
+if (promos.length > 0) {
+  r += `${hr}\n`
+  r += `  PROMOTION READY (${promos.length})\n`
+  r += `${hr}\n\n`
+  for (const p of promos) r += `  ★ ${p}\n`
+  r += `\n`
+}
+
+r += `${hr}\n`
+r += `Log: ${logFile}\n`
+
+// Send
+const subject = `${icon} Autoresearch | ${skill}: ${bestScore} | $${cost} | ${keptCount} kept | ${errorCount} err`
 
 fetch('https://api.resend.com/emails', {
   method: 'POST',
   headers: { 'Authorization': `Bearer ${key}`, 'Content-Type': 'application/json' },
-  body: payload,
-}).then(r => r.json()).then(d => {
-  if (d.id) console.log('→ Report emailed (' + d.id + ')')
-  else console.log('→ Email error: ' + JSON.stringify(d))
-}).catch(e => console.log('→ Email failed: ' + e.message))
+  body: JSON.stringify({ from: FROM, to: TO, subject, text: r }),
+}).then(res => res.json()).then(d => {
+  if (d.id) console.log(`→ Report emailed (${d.id})`)
+  else console.log(`→ Email error: ${JSON.stringify(d)}`)
+}).catch(e => console.log(`→ Email failed: ${e.message}`))
