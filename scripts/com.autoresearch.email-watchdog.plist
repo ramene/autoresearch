@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.autoresearch.email-watchdog</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>/Users/ramene/.remote/@autoresearch/scripts/email-watchdog.sh</string>
+    </array>
+    <key>StartInterval</key>
+    <integer>3600</integer>
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>HOME</key>
+        <string>/Users/ramene</string>
+        <key>PATH</key>
+        <string>/usr/local/bin:/usr/bin:/bin:/Users/ramene/.nvm/versions/node/v23.11.1/bin</string>
+    </dict>
+</dict>
+</plist>

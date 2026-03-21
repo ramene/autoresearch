@@ -1,10 +1,12 @@
 #!/bin/bash
 # Autonomous Skill Improvement + Want Loop
-# Runs via launchd every 12 hours
+# Runs via launchd every 8 hours
 # Logs to ~/.local/share/tmux-logs/autoresearch/
 # ALERTS on failure via macOS notification + Resend email
+# Email sent via EXIT TRAP — fires no matter what, even on crash
 
-set -uo pipefail  # removed -e so we can trap errors
+set +e  # DO NOT exit on error — we handle errors ourselves
+set +o pipefail  # DO NOT kill on pipe failures
 
 AUTORESEARCH_DIR="$HOME/.remote/@autoresearch"
 OPENCLAW_DIR="$HOME/.remote/@openclaw-integration"
@@ -18,6 +20,17 @@ ERROR_DETAILS=""
 mkdir -p "$LOG_DIR/$DATE"
 
 exec > >(tee -a "$LOG_FILE") 2>&1
+
+# ─── EXIT TRAP: Email fires NO MATTER WHAT — crash, error, success ────────────
+cleanup_and_report() {
+    echo ""
+    echo "═══ Sending report via EXIT trap ═══"
+    osascript -e "display notification \"Loop finished\" with title \"Autoresearch\" sound name \"Glass\"" 2>/dev/null || true
+    /Users/ramene/.nvm/versions/node/v23.11.1/bin/node "$AUTORESEARCH_DIR/scripts/send-report.mjs" "$LOG_FILE" 2>&1 || echo "EMAIL TRAP FAILED"
+    echo "═══ Loop Complete — $(date) ═══"
+    echo "Log: $LOG_FILE"
+}
+trap cleanup_and_report EXIT SIGTERM SIGINT SIGHUP
 
 # ─── Failure Alerting ─────────────────────────────────────────────────────────
 alert_failure() {
@@ -138,20 +151,5 @@ fi
 # ─── Send error summary if any step failed ───────────────────────────────────
 send_error_summary
 
-# ─── ALWAYS send completion report (via Node — bash curl kept breaking) ────────
-OPTIMIZED_SKILL=$(grep 'Optimizing:' "$LOG_FILE" 2>/dev/null | head -1 | sed 's/.*Optimizing: //' | sed 's/ (.*//')
-BEST_SCORE=$(grep 'Final best score:' "$LOG_FILE" 2>/dev/null | grep -o '[0-9]*/[0-9]*' || echo '?')
-
-# macOS notification
-osascript -e "display notification \"${OPTIMIZED_SKILL:-none}: ${BEST_SCORE} | ${ERRORS_FOUND} errors\" with title \"Autoresearch $([ "$ERRORS_FOUND" -gt 0 ] && echo "⚠" || echo "✓")\" sound name \"$([ "$ERRORS_FOUND" -gt 0 ] && echo "Basso" || echo "Glass")\"" 2>/dev/null || true
-
-# Email via Node (handles JSON properly — no more bash escaping failures)
-/Users/ramene/.nvm/versions/node/v23.11.1/bin/node "$AUTORESEARCH_DIR/scripts/send-report.mjs" "$LOG_FILE" 2>&1
-
-echo ""
-if [ "$ERRORS_FOUND" -gt 0 ]; then
-    echo "═══ Loop Complete WITH $ERRORS_FOUND ERROR(S) — $(date) ═══"
-else
-    echo "═══ Loop Complete ✓ — $(date) ═══"
-fi
-echo "Log: $LOG_FILE"
+# Email + notification handled by EXIT trap (cleanup_and_report)
+# This fires even if the script crashes, gets killed, or any step fails
