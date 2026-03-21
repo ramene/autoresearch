@@ -1,3 +1,6 @@
+You are executing a skill chain step. Use the skill instructions below to process the input.
+
+SKILL INSTRUCTIONS:
 # SKILL: polymarket-5min-strategy
 Mundave-style 5-minute market trading strategy -- using CVD (Cumulative Volume Delta) and Binance liquidation signals to trade Polymarket short-duration crypto prediction markets with $10 position sizes.
 
@@ -191,3 +194,19 @@ Each line is a JSON object:
 - **Upstream:** `polymarket-market-discovery --5min` finds markets, external CVD/liquidation feeds
 - **Dependencies:** `polymarket-clob-trader` for execution, `polymarket-websocket-monitor` for Polymarket prices
 - **Downstream:** `polymarket-position-manager` for lifecycle management
+
+CHAIN STEP INPUT:
+{
+  "opportunities": "null",
+  "mode": "paper",
+  "entry_strategy": "discount_limit_bid",
+  "discount_pct": 0.1,
+  "bet_size_usd": 10,
+  "signals": {
+    "cvd": "check HyperLiquid cumulative volume delta",
+    "liquidations": "check Binance liquidation feed"
+  }
+}
+
+Execute the skill against this input. Return structured output as JSON where possible.
+If the skill requires external tools/APIs that aren't available, describe what you WOULD do and return mock structured data showing the expected output format.

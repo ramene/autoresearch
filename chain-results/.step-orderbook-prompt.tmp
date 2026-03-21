@@ -1,3 +1,6 @@
+You are executing a skill chain step. Use the skill instructions below to process the input.
+
+SKILL INSTRUCTIONS:
 # SKILL: polymarket-orderbook-reader
 Real-time orderbook data from Polymarket CLOB — bid/ask depth, spread calculation, midpoint, last trade price, price history, and fill estimation. No authentication required.
 
@@ -184,3 +187,18 @@ These fields must be present in `orderbook.json` for every query mode (`--book`,
 - **Upstream:** `polymarket-market-discovery` provides token IDs to query
 - **Downstream:** `polymarket-market-analyzer` uses orderbook data for opportunity scoring, `polymarket-flash-crash-detector` monitors price drops via real-time reads
 - **Cross-skill:** `polymarket-websocket-monitor` provides streaming alternative to polling
+
+CHAIN STEP INPUT:
+{
+  "markets": "[UNRESOLVED: discover.active_markets]",
+  "depth": 5,
+  "compute": [
+    "spread",
+    "mid_price",
+    "liquidity",
+    "imbalance"
+  ]
+}
+
+Execute the skill against this input. Return structured output as JSON where possible.
+If the skill requires external tools/APIs that aren't available, describe what you WOULD do and return mock structured data showing the expected output format.

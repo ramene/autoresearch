@@ -1,3 +1,6 @@
+You are executing a skill chain step. Use the skill instructions below to process the input.
+
+SKILL INSTRUCTIONS:
 # SKILL: polymarket-portfolio-tracker
 Track Polymarket positions, calculate FIFO P&L, monitor unrealized gains/losses, and generate risk scores across the portfolio.
 
@@ -143,3 +146,18 @@ This skill tracks all active positions on Polymarket, calculates profit/loss usi
 - **Upstream:** `polymarket-clob-trader` creates positions tracked here
 - **Downstream:** `polymarket-position-manager` uses P&L data for TP/SL decisions
 - **Cross-skill:** `polymarket-market-analyzer` considers existing positions in recommendations
+
+CHAIN STEP INPUT:
+{
+  "positions": "[UNRESOLVED: manage.position_status]",
+  "compute": [
+    "realized_pnl",
+    "unrealized_pnl",
+    "win_rate",
+    "avg_return"
+  ],
+  "timeframe": "session"
+}
+
+Execute the skill against this input. Return structured output as JSON where possible.
+If the skill requires external tools/APIs that aren't available, describe what you WOULD do and return mock structured data showing the expected output format.

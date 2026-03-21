@@ -1,3 +1,6 @@
+You are executing a skill chain step. Use the skill instructions below to process the input.
+
+SKILL INSTRUCTIONS:
 # SKILL: polymarket-flash-crash-detector
 Detect probability crashes on Polymarket prediction markets -- monitoring for 30%+ price drops within 10-second windows and generating buy signals on oversold conditions.
 
@@ -163,3 +166,14 @@ This skill implements a flash crash detection strategy for Polymarket's short-du
 - **Upstream:** `polymarket-market-discovery --5min` finds target markets
 - **Dependencies:** `polymarket-websocket-monitor` for real-time data, `polymarket-clob-trader` for execution
 - **Downstream:** `polymarket-position-manager` manages position lifecycle
+
+CHAIN STEP INPUT:
+{
+  "orderbook_state": "[UNRESOLVED: orderbook.orderbook_state]",
+  "lookback_seconds": 10,
+  "drop_threshold": 0.3,
+  "markets": "[UNRESOLVED: discover.active_markets]"
+}
+
+Execute the skill against this input. Return structured output as JSON where possible.
+If the skill requires external tools/APIs that aren't available, describe what you WOULD do and return mock structured data showing the expected output format.

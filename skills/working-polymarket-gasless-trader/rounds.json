@@ -1,1 +1,152 @@
-[]
+[
+  {
+    "round": 0,
+    "score": 19,
+    "max": 25,
+    "status": "baseline",
+    "mutation": "Expanded Execution Steps with explicit polling loop and readiness check before proceeding, since scenarios 4/5 likely fail because the skill doesn't clarify that subsequent operations (approvals, batches) must wait until the deployed Safe is CONFIRMED before use.",
+    "cost": 0.05,
+    "criteria": [
+      5,
+      3,
+      3,
+      3,
+      5
+    ],
+    "failures": [
+      {
+        "scenario": 4,
+        "criterion": "Safe wallet deployment succeeds"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Transactions reach confirmed state"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Batch operations are atomic"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Safe wallet deployment succeeds"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Transactions reach confirmed state"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Batch operations are atomic"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Initial baseline evaluation",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-21T09:25:13.472Z",
+    "changelog": "**Mutation**: Expanded Execution Steps with explicit polling loop and readiness check before proceeding, since scenarios 4/5 likely fail because the skill doesn't clarify that subsequent operations (approvals, batches) must wait until the deployed Safe is CONFIRMED before use.\n**Failures**: S4: Safe wallet deployment succeeds, S4: Transactions reach confirmed state, S4: Batch operations are atomic, S5: Safe wallet deployment succeeds, S5: Transactions reach confirmed state, S5: Batch operations are atomic\n**Per-criteria**: Builder HMAC authentication works: 5/5, Safe wallet deployment succeeds: 3/5, Transactions reach confirmed state: 3/5, Batch operations are atomic: 3/5, No POL gas required: 5/5\n**Decision**: Initial baseline evaluation"
+  },
+  {
+    "round": 1,
+    "score": 24,
+    "max": 25,
+    "status": "kept",
+    "mutation": "Added explicit HMAC header construction details (timestamp, signature algorithm, header names) since the 1 remaining failure is in Builder HMAC authentication — the skill lists the env vars but never shows how to assemble the actual request headers.",
+    "cost": 0.05,
+    "criteria": [
+      4,
+      5,
+      5,
+      5,
+      5
+    ],
+    "failures": [
+      {
+        "scenario": 4,
+        "criterion": "Builder HMAC authentication works"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Improved from 19 to 24",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-21T09:26:07.093Z",
+    "changelog": "**Mutation**: Added explicit HMAC header construction details (timestamp, signature algorithm, header names) since the 1 remaining failure is in Builder HMAC authentication — the skill lists the env vars but never shows how to assemble the actual request headers.\n**Failures**: S4: Builder HMAC authentication works\n**Per-criteria**: Builder HMAC authentication works: 4/5, Safe wallet deployment succeeds: 5/5, Transactions reach confirmed state: 5/5, Batch operations are atomic: 5/5, No POL gas required: 5/5\n**Decision**: Improved from 19 to 24"
+  },
+  {
+    "round": 2,
+    "score": 25,
+    "max": 25,
+    "status": "kept",
+    "mutation": "Clarified HMAC body serialization rule for GET vs POST to prevent edge-case auth failures — GET requests must pass empty string (not `undefined` or `null`) for the body component of the signature.",
+    "cost": 0.05,
+    "criteria": [
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Improved from 24 to 25",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-21T09:26:58.606Z",
+    "changelog": "**Mutation**: Clarified HMAC body serialization rule for GET vs POST to prevent edge-case auth failures — GET requests must pass empty string (not `undefined` or `null`) for the body component of the signature.\n**Failures**: none\n**Per-criteria**: Builder HMAC authentication works: 5/5, Safe wallet deployment succeeds: 5/5, Transactions reach confirmed state: 5/5, Batch operations are atomic: 5/5, No POL gas required: 5/5\n**Decision**: Improved from 24 to 25"
+  },
+  {
+    "round": 3,
+    "score": 25,
+    "max": 25,
+    "status": "reverted",
+    "mutation": "Added clock skew detection and retry guidance to the HMAC auth section — the ±30s timestamp window can silently cause auth failures in production environments with drifted clocks, and the skill gave no recovery path for this failure mode.",
+    "cost": 0.05,
+    "criteria": [
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 25 did not exceed best 25 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-21T09:28:11.481Z",
+    "changelog": "**Mutation**: Added clock skew detection and retry guidance to the HMAC auth section — the ±30s timestamp window can silently cause auth failures in production environments with drifted clocks, and the skill gave no recovery path for this failure mode.\n**Failures**: none\n**Per-criteria**: Builder HMAC authentication works: 5/5, Safe wallet deployment succeeds: 5/5, Transactions reach confirmed state: 5/5, Batch operations are atomic: 5/5, No POL gas required: 5/5\n**Decision**: Score 25 did not exceed best 25 — mutation produced worse or equal results"
+  },
+  {
+    "round": 4,
+    "score": 25,
+    "max": 25,
+    "status": "reverted",
+    "mutation": "Added concrete Polygon mainnet contract addresses for EXCHANGE, COLLATERAL (USDC.e), and CTF contracts since Step 2 references `EXCHANGE_ADDRESS` without defining it — missing or wrong addresses would silently cause failed approvals.",
+    "cost": 0.05,
+    "criteria": [
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 25 did not exceed best 25 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-21T09:29:31.562Z",
+    "changelog": "**Mutation**: Added concrete Polygon mainnet contract addresses for EXCHANGE, COLLATERAL (USDC.e), and CTF contracts since Step 2 references `EXCHANGE_ADDRESS` without defining it — missing or wrong addresses would silently cause failed approvals.\n**Failures**: none\n**Per-criteria**: Builder HMAC authentication works: 5/5, Safe wallet deployment succeeds: 5/5, Transactions reach confirmed state: 5/5, Batch operations are atomic: 5/5, No POL gas required: 5/5\n**Decision**: Score 25 did not exceed best 25 — mutation produced worse or equal results"
+  }
+]

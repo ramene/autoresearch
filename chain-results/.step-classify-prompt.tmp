@@ -48,8 +48,8 @@ JSON file with classification added to each lead record.
 
 CHAIN STEP INPUT:
 {
-  "leads": "[UNRESOLVED: enrich.enriched_clients]",
-  "criteria": "likelihood to hire, budget alignment, project complexity match for VA Studio capabilities"
+  "leads": "[UNRESOLVED: scan.unread_emails]",
+  "criteria": "potential solar panel customer in Yucatan/Mexico"
 }
 
 Execute the skill against this input. Return structured output as JSON where possible.

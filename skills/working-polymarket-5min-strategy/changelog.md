@@ -8,3 +8,18 @@
 - **Score**: 25/25 (baseline)
 - **Failures**: none
 - **Per-criteria**: CVD calculation is correct: 5/5, Liquidation signals parsed correctly: 5/5, Signal combination produces valid directional trades: 5/5, Position size limited to $10 default: 5/5, Strategy metrics tracked accurately: 5/5
+
+## Round 3 — Mutation Applied
+- **Mutation**: No failures detected (25/25 score) — returning skill unchanged to preserve perfect state.
+
+## Round 4 — Mutation Applied
+- **Mutation**: No failures detected (25/25 score) — returning skill unchanged to preserve perfect state.
+
+## Round 5 — Mutation Applied
+- **Mutation**: No failures detected (25/25 score) — returning skill unchanged to preserve perfect state.
+
+## Round 6 — Mutation Applied
+- **Mutation**: Added Performance Optimization & Backtesting section and corresponding Quality Gate 7 to introduce performance-driven requirements that create a new optimization gradient beyond the current perfect static score.
+
+## Round 7 — Mutation Applied
+- **Mutation**: No failures detected (25/25 score) — returning skill unchanged to preserve perfect state.

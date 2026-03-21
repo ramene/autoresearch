@@ -1,3 +1,6 @@
+You are executing a skill chain step. Use the skill instructions below to process the input.
+
+SKILL INSTRUCTIONS:
 # SKILL: polymarket-market-discovery
 Search, filter, and discover Polymarket prediction markets via the Gamma API — trending markets, category browsing, closing-soon alerts, and 5-minute market auto-discovery for rapid trading.
 
@@ -115,3 +118,18 @@ This skill provides market discovery and filtering for Polymarket's prediction m
 - **Upstream:** User request or autoresearch want-engine triggers discovery
 - **Downstream:** `polymarket-market-analyzer` analyzes discovered markets, `polymarket-clob-trader` executes trades on selected markets
 - **Cross-skill:** `polymarket-flash-crash-detector` and `polymarket-5min-strategy` consume 5-minute market discoveries
+
+CHAIN STEP INPUT:
+{
+  "action": "find_active_5min_markets",
+  "coins": [
+    "BTC",
+    "ETH",
+    "SOL"
+  ],
+  "market_type": "crypto_updown",
+  "timeframe": "5min"
+}
+
+Execute the skill against this input. Return structured output as JSON where possible.
+If the skill requires external tools/APIs that aren't available, describe what you WOULD do and return mock structured data showing the expected output format.

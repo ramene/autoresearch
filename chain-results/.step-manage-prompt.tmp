@@ -1,3 +1,6 @@
+You are executing a skill chain step. Use the skill instructions below to process the input.
+
+SKILL INSTRUCTIONS:
 # SKILL: polymarket-position-manager
 Take-profit and stop-loss lifecycle management for Polymarket positions -- monitoring prices, triggering exits, tracking win rate, and managing position state.
 
@@ -89,3 +92,15 @@ This skill manages the full lifecycle of Polymarket trading positions after entr
 - **Upstream:** `polymarket-clob-trader` opens positions, `polymarket-flash-crash-detector` and `polymarket-5min-strategy` register positions after entry
 - **Dependencies:** Price data from `polymarket-orderbook-reader` or `polymarket-websocket-monitor`
 - **Downstream:** `polymarket-portfolio-tracker` aggregates position data
+
+CHAIN STEP INPUT:
+{
+  "trade": "[UNRESOLVED: trade.trade_result]",
+  "tp_delta": 0.1,
+  "sl_delta": 0.05,
+  "max_positions": 1,
+  "auto_exit_on_resolution": true
+}
+
+Execute the skill against this input. Return structured output as JSON where possible.
+If the skill requires external tools/APIs that aren't available, describe what you WOULD do and return mock structured data showing the expected output format.

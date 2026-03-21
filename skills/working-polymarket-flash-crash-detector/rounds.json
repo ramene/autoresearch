@@ -1,1 +1,156 @@
-[]
+[
+  {
+    "round": 0,
+    "score": 36,
+    "max": 36,
+    "status": "baseline",
+    "mutation": "Added \"Test Scenarios\" section with concrete input/output examples for each quality gate so the evaluator can actually run scenarios instead of reporting \"none\".",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Initial baseline evaluation",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-21T09:18:20.405Z",
+    "changelog": "**Mutation**: Added \"Test Scenarios\" section with concrete input/output examples for each quality gate so the evaluator can actually run scenarios instead of reporting \"none\".\n**Failures**: none\n**Per-criteria**: Crash detection triggers at correct threshold: 6/6, Paper trade mode works without placing real orders: 6/6, TP/SL exit conditions evaluated correctly: 6/6, Statistics tracked accurately: 6/6, Rolling price buffer maintained correctly: 6/6, Max position limit enforced: 6/6\n**Decision**: Initial baseline evaluation"
+  },
+  {
+    "round": 1,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Moved test scenarios inline under each Quality Gate item (as sub-bullets) instead of a separate \"Test Scenarios\" section, so the evaluator can associate and execute each scenario directly against its criterion.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-21T09:19:37.190Z",
+    "changelog": "**Mutation**: Moved test scenarios inline under each Quality Gate item (as sub-bullets) instead of a separate \"Test Scenarios\" section, so the evaluator can associate and execute each scenario directly against its criterion.\n**Failures**: none\n**Per-criteria**: Crash detection triggers at correct threshold: 6/6, Paper trade mode works without placing real orders: 6/6, TP/SL exit conditions evaluated correctly: 6/6, Statistics tracked accurately: 6/6, Rolling price buffer maintained correctly: 6/6, Max position limit enforced: 6/6\n**Decision**: Score 36 did not exceed best 36 — mutation produced worse or equal results"
+  },
+  {
+    "round": 2,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Added a dedicated \"## Test Scenarios\" section with clearly labeled, structured input→expected-output scenarios (separate from Quality Gates) so the evaluator can discover and run them as executable test cases rather than treating them as descriptive prose.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-21T09:20:43.762Z",
+    "changelog": "**Mutation**: Added a dedicated \"## Test Scenarios\" section with clearly labeled, structured input→expected-output scenarios (separate from Quality Gates) so the evaluator can discover and run them as executable test cases rather than treating them as descriptive prose.\n**Failures**: none\n**Per-criteria**: Crash detection triggers at correct threshold: 6/6, Paper trade mode works without placing real orders: 6/6, TP/SL exit conditions evaluated correctly: 6/6, Statistics tracked accurately: 6/6, Rolling price buffer maintained correctly: 6/6, Max position limit enforced: 6/6\n**Decision**: Score 36 did not exceed best 36 — mutation produced worse or equal results"
+  },
+  {
+    "round": 3,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "All criteria passing at 36/36 — no failures to fix. Applied minor clarification to the boundary condition in Scenario 3 to make the `>=` (not strictly `>`) behavior even more explicit in the crash detection algorithm step.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-21T09:22:08.163Z",
+    "changelog": "**Mutation**: All criteria passing at 36/36 — no failures to fix. Applied minor clarification to the boundary condition in Scenario 3 to make the `>=` (not strictly `>`) behavior even more explicit in the crash detection algorithm step.\n**Failures**: none\n**Per-criteria**: Crash detection triggers at correct threshold: 6/6, Paper trade mode works without placing real orders: 6/6, TP/SL exit conditions evaluated correctly: 6/6, Statistics tracked accurately: 6/6, Rolling price buffer maintained correctly: 6/6, Max position limit enforced: 6/6\n**Decision**: Score 36 did not exceed best 36 — mutation produced worse or equal results"
+  },
+  {
+    "round": 3,
+    "score": 36,
+    "max": 36,
+    "status": "escalation",
+    "mutation": "Stuck escalation: The optimization loop is stuck in a \"local optimum of correctness.\" The skill perfectly implements the simple, deterministic algorithm described, and the test scenarios perfectly validate that impleme",
+    "cost": 0.03,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "decisionReason": "Stuck escalation triggered after 3+ rounds with no improvement",
+    "escalation": {
+      "diagnosis": "The optimization loop is stuck in a \"local optimum of correctness.\" The skill perfectly implements the simple, deterministic algorithm described, and the test scenarios perfectly validate that implementation. The score is 36/36 because the skill is flawless *against its own narrow definition of success*. The mutations have been cosmetic, merely rearranging or clarifying the description of these passing tests. They are not introducing new requirements or challenging the skill's robustness, so there is no new information for the optimization process to act upon. The system is optimizing the documentation of the tests, not the functionality of the skill.",
+      "evalRedesignNeeded": true,
+      "strategy": "Shift from validating algorithmic correctness to testing for **resilience and adversarial conditions**. The current tests assume a perfect world: clean data streams, instant order execution, and no external failures. To break the optimum, we must introduce new Quality Gates and Test Scenarios that simulate the messy reality of live trading systems. This forces the skill to evolve beyond its simple core logic and develop robust error-handling and state management capabilities. We will add tests for data interruptions, API failures, and market conditions that challenge the core assumptions of the strategy.",
+      "suggestedMutation": "Add a new Quality Gate and a corresponding Test Scenario to handle data stream interruptions, a common and critical failure mode for any WebSocket-based system. A naive implementation would incorrectly trigger a flash crash signal upon reconnecting after a data gap.\n\n***\n\n### Add the following new Quality Gate:\n\n```markdown\n7. **Handles data stream interruptions gracefully**\n   - Prevents false signals caused by stale data after a WebSocket reconnect or data gap.\n   - **Scenario:** A price of 0.80 is recorded. The data stream is interrupted for 15 seconds (longer than the 10s lookback). Upon reconnection, the first new price is 0.40.\n   - **Pass:** The skill should recognize the time gap is larger than the lookback window, flush the stale price buffer, and NOT trigger a signal. A signal would be a failure, as the price drop did not occur within the lookback window.\n```\n\n### Add the following new Test Scenario:\n\n```markdown\n### Scenario 9: WebSocket reconnect after gap\n- **Criterion:** Handles data stream interruptions gracefully\n- **Input:** lookback=10s; price events: `[{t:0, p:0.80}]`, then a 15-second data gap, then `[{t:15, p:0.40}]`\n- **Expected:** No signal is fired. The price buffer should be flushed or reset upon detecting a time gap greater than the lookback window, preventing the new price at t=15 from being compared against the stale price from t=0. The log should indicate a buffer flush or a skipped check due to the data gap.\n```"
+    },
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-21T09:23:16.566Z"
+  },
+  {
+    "round": 4,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Added Quality Gate 7 and Scenario 9 for WebSocket reconnect/data gap handling to test resilience against false signals from stale price buffers after stream interruptions.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-21T09:23:41.914Z",
+    "changelog": "**Mutation**: Added Quality Gate 7 and Scenario 9 for WebSocket reconnect/data gap handling to test resilience against false signals from stale price buffers after stream interruptions.\n**Failures**: none\n**Per-criteria**: Crash detection triggers at correct threshold: 6/6, Paper trade mode works without placing real orders: 6/6, TP/SL exit conditions evaluated correctly: 6/6, Statistics tracked accurately: 6/6, Rolling price buffer maintained correctly: 6/6, Max position limit enforced: 6/6\n**Decision**: Score 36 did not exceed best 36 — mutation produced worse or equal results"
+  }
+]

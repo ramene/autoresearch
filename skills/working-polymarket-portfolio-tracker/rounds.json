@@ -1,1 +1,219 @@
-[]
+[
+  {
+    "round": 0,
+    "score": 20,
+    "max": 25,
+    "status": "baseline",
+    "mutation": "Added explicit API endpoint URLs, query parameters, and response field mappings to Step 1 — the position fetch is the foundation all other calculations depend on, and vague \"query Data API\" instructions are the most likely cause of uniform failures across all criteria.",
+    "cost": 0.05,
+    "criteria": [
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "failures": [
+      {
+        "scenario": 5,
+        "criterion": "Positions accurately reflect on-chain state"
+      },
+      {
+        "scenario": 5,
+        "criterion": "FIFO P&L calculation is mathematically correct"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Risk score reflects portfolio concentration and exposure"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Safety limit utilization reported accurately"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Export format is structured and complete"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Initial baseline evaluation",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-21T09:51:57.567Z",
+    "changelog": "**Mutation**: Added explicit API endpoint URLs, query parameters, and response field mappings to Step 1 — the position fetch is the foundation all other calculations depend on, and vague \"query Data API\" instructions are the most likely cause of uniform failures across all criteria.\n**Failures**: S5: Positions accurately reflect on-chain state, S5: FIFO P&L calculation is mathematically correct, S5: Risk score reflects portfolio concentration and exposure, S5: Safety limit utilization reported accurately, S5: Export format is structured and complete\n**Per-criteria**: Positions accurately reflect on-chain state: 4/5, FIFO P&L calculation is mathematically correct: 4/5, Risk score reflects portfolio concentration and exposure: 4/5, Safety limit utilization reported accurately: 4/5, Export format is structured and complete: 4/5\n**Decision**: Initial baseline evaluation"
+  },
+  {
+    "round": 1,
+    "score": 16,
+    "max": 25,
+    "status": "reverted",
+    "mutation": "Fixed Step 2 FIFO P&L calculation — the current logic incorrectly ignores `cashPnl` on partially-closed positions (only counting it when `size == 0`), causing mathematically wrong totals in all scenarios with mixed open/partial-close positions.",
+    "cost": 0.05,
+    "criteria": [
+      4,
+      0,
+      4,
+      4,
+      4
+    ],
+    "failures": [
+      {
+        "scenario": 1,
+        "criterion": "FIFO P&L calculation is mathematically correct"
+      },
+      {
+        "scenario": 2,
+        "criterion": "FIFO P&L calculation is mathematically correct"
+      },
+      {
+        "scenario": 3,
+        "criterion": "FIFO P&L calculation is mathematically correct"
+      },
+      {
+        "scenario": 4,
+        "criterion": "FIFO P&L calculation is mathematically correct"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Positions accurately reflect on-chain state"
+      },
+      {
+        "scenario": 5,
+        "criterion": "FIFO P&L calculation is mathematically correct"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Risk score reflects portfolio concentration and exposure"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Safety limit utilization reported accurately"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Export format is structured and complete"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 16 did not exceed best 20 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-21T09:53:08.389Z",
+    "changelog": "**Mutation**: Fixed Step 2 FIFO P&L calculation — the current logic incorrectly ignores `cashPnl` on partially-closed positions (only counting it when `size == 0`), causing mathematically wrong totals in all scenarios with mixed open/partial-close positions.\n**Failures**: S1: FIFO P&L calculation is mathematically correct, S2: FIFO P&L calculation is mathematically correct, S3: FIFO P&L calculation is mathematically correct, S4: FIFO P&L calculation is mathematically correct, S5: Positions accurately reflect on-chain state, S5: FIFO P&L calculation is mathematically correct, S5: Risk score reflects portfolio concentration and exposure, S5: Safety limit utilization reported accurately, S5: Export format is structured and complete\n**Per-criteria**: Positions accurately reflect on-chain state: 4/5, FIFO P&L calculation is mathematically correct: 0/5, Risk score reflects portfolio concentration and exposure: 4/5, Safety limit utilization reported accurately: 4/5, Export format is structured and complete: 4/5\n**Decision**: Score 16 did not exceed best 20 — mutation produced worse or equal results"
+  },
+  {
+    "round": 2,
+    "score": 23,
+    "max": 25,
+    "status": "kept",
+    "mutation": "Changed sizeThreshold from 0.01 to 0 in the positions API query and added explicit instructions to include ALL positions (including closed ones) in P&L totals and export, while limiting the display table to active positions (size > 0.01).",
+    "cost": 0.05,
+    "criteria": [
+      4,
+      5,
+      5,
+      5,
+      4
+    ],
+    "failures": [
+      {
+        "scenario": 5,
+        "criterion": "Positions accurately reflect on-chain state"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Export format is structured and complete"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Improved from 20 to 23",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-21T09:54:37.981Z",
+    "changelog": "**Mutation**: Changed sizeThreshold from 0.01 to 0 in the positions API query and added explicit instructions to include ALL positions (including closed ones) in P&L totals and export, while limiting the display table to active positions (size > 0.01).\n**Failures**: S5: Positions accurately reflect on-chain state, S5: Export format is structured and complete\n**Per-criteria**: Positions accurately reflect on-chain state: 4/5, FIFO P&L calculation is mathematically correct: 5/5, Risk score reflects portfolio concentration and exposure: 5/5, Safety limit utilization reported accurately: 5/5, Export format is structured and complete: 4/5\n**Decision**: Improved from 20 to 23"
+  },
+  {
+    "round": 3,
+    "score": 19,
+    "max": 25,
+    "status": "reverted",
+    "mutation": "Added explicit closed-position handling — when `size == 0`, skip the CLOB midpoint query and set `current_price=0`, `current_value=0`, `unrealized_pnl=0`, `unrealized_pnl_pct=0` in the export, preventing division-by-zero and ensuring the export is structurally complete for all position states.",
+    "cost": 0.05,
+    "criteria": [
+      4,
+      4,
+      3,
+      4,
+      4
+    ],
+    "failures": [
+      {
+        "scenario": 4,
+        "criterion": "Risk score reflects portfolio concentration and exposure"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Positions accurately reflect on-chain state"
+      },
+      {
+        "scenario": 5,
+        "criterion": "FIFO P&L calculation is mathematically correct"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Risk score reflects portfolio concentration and exposure"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Safety limit utilization reported accurately"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Export format is structured and complete"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 19 did not exceed best 23 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-21T09:56:27.726Z",
+    "changelog": "**Mutation**: Added explicit closed-position handling — when `size == 0`, skip the CLOB midpoint query and set `current_price=0`, `current_value=0`, `unrealized_pnl=0`, `unrealized_pnl_pct=0` in the export, preventing division-by-zero and ensuring the export is structurally complete for all position states.\n**Failures**: S4: Risk score reflects portfolio concentration and exposure, S5: Positions accurately reflect on-chain state, S5: FIFO P&L calculation is mathematically correct, S5: Risk score reflects portfolio concentration and exposure, S5: Safety limit utilization reported accurately, S5: Export format is structured and complete\n**Per-criteria**: Positions accurately reflect on-chain state: 4/5, FIFO P&L calculation is mathematically correct: 4/5, Risk score reflects portfolio concentration and exposure: 3/5, Safety limit utilization reported accurately: 4/5, Export format is structured and complete: 4/5\n**Decision**: Score 19 did not exceed best 23 — mutation produced worse or equal results"
+  },
+  {
+    "round": 4,
+    "score": 24,
+    "max": 25,
+    "status": "kept",
+    "mutation": "Expanded the `summary` object in the JSON export schema to include explicit value mappings for each field (matching the same annotation style used in the `positions` array), eliminating ambiguity about ratio vs. percentage formatting and ensuring completeness.",
+    "cost": 0.05,
+    "criteria": [
+      5,
+      5,
+      5,
+      5,
+      4
+    ],
+    "failures": [
+      {
+        "scenario": 5,
+        "criterion": "Export format is structured and complete"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Improved from 23 to 24",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-21T09:58:01.394Z",
+    "changelog": "**Mutation**: Expanded the `summary` object in the JSON export schema to include explicit value mappings for each field (matching the same annotation style used in the `positions` array), eliminating ambiguity about ratio vs. percentage formatting and ensuring completeness.\n**Failures**: S5: Export format is structured and complete\n**Per-criteria**: Positions accurately reflect on-chain state: 5/5, FIFO P&L calculation is mathematically correct: 5/5, Risk score reflects portfolio concentration and exposure: 5/5, Safety limit utilization reported accurately: 5/5, Export format is structured and complete: 4/5\n**Decision**: Improved from 23 to 24"
+  }
+]

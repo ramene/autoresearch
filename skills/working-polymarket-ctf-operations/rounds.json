@@ -1,1 +1,152 @@
-[]
+[
+  {
+    "round": 0,
+    "score": 22,
+    "max": 25,
+    "status": "baseline",
+    "mutation": "Add an explicit approval matrix table defining which address to approve for each operation, since the \"Approval matrix\" is referenced in Quality Gates but never actually defined, causing incorrect contract targeting in scenarios 2, 3, and 5.",
+    "cost": 0.05,
+    "criteria": [
+      5,
+      5,
+      5,
+      5,
+      2
+    ],
+    "failures": [
+      {
+        "scenario": 2,
+        "criterion": "Approvals set for correct contracts"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Approvals set for correct contracts"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Approvals set for correct contracts"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Initial baseline evaluation",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-21T09:06:58.093Z",
+    "changelog": "**Mutation**: Add an explicit approval matrix table defining which address to approve for each operation, since the \"Approval matrix\" is referenced in Quality Gates but never actually defined, causing incorrect contract targeting in scenarios 2, 3, and 5.\n**Failures**: S2: Approvals set for correct contracts, S3: Approvals set for correct contracts, S5: Approvals set for correct contracts\n**Per-criteria**: Split produces correct token amounts: 5/5, Merge returns correct USDC.e: 5/5, Redeem only works on resolved markets: 5/5, Correct contracts used for neg risk vs standard: 5/5, Approvals set for correct contracts: 2/5\n**Decision**: Initial baseline evaluation"
+  },
+  {
+    "round": 1,
+    "score": 21,
+    "max": 25,
+    "status": "reverted",
+    "mutation": "Fix Approval Matrix by correcting Merge (standard) spender from CTF Exchange to CTF contract, and adding missing Redeem row (CTF ERC1155 → CTF contract), since mergePositions and redeemPositions are called on the CTF contract directly, not the exchange.",
+    "cost": 0.05,
+    "criteria": [
+      5,
+      5,
+      5,
+      4,
+      2
+    ],
+    "failures": [
+      {
+        "scenario": 2,
+        "criterion": "Correct contracts used for neg risk vs standard"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Approvals set for correct contracts"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Approvals set for correct contracts"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Approvals set for correct contracts"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 21 did not exceed best 22 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-21T09:07:52.422Z",
+    "changelog": "**Mutation**: Fix Approval Matrix by correcting Merge (standard) spender from CTF Exchange to CTF contract, and adding missing Redeem row (CTF ERC1155 → CTF contract), since mergePositions and redeemPositions are called on the CTF contract directly, not the exchange.\n**Failures**: S2: Correct contracts used for neg risk vs standard, S2: Approvals set for correct contracts, S3: Approvals set for correct contracts, S4: Approvals set for correct contracts\n**Per-criteria**: Split produces correct token amounts: 5/5, Merge returns correct USDC.e: 5/5, Redeem only works on resolved markets: 5/5, Correct contracts used for neg risk vs standard: 4/5, Approvals set for correct contracts: 2/5\n**Decision**: Score 21 did not exceed best 22 — mutation produced worse or equal results"
+  },
+  {
+    "round": 2,
+    "score": 25,
+    "max": 25,
+    "status": "kept",
+    "mutation": "No failures remain (5/5 on all criteria) — reinforce the approval matrix with a \"Key distinction\" callout clarifying that Split/Merge/Redeem approve the CTF contract directly while trading operations approve the exchange contracts, to make the correct behavior even more explicit and resilient.",
+    "cost": 0.05,
+    "criteria": [
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Improved from 22 to 25",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-21T09:08:52.768Z",
+    "changelog": "**Mutation**: No failures remain (5/5 on all criteria) — reinforce the approval matrix with a \"Key distinction\" callout clarifying that Split/Merge/Redeem approve the CTF contract directly while trading operations approve the exchange contracts, to make the correct behavior even more explicit and resilient.\n**Failures**: none\n**Per-criteria**: Split produces correct token amounts: 5/5, Merge returns correct USDC.e: 5/5, Redeem only works on resolved markets: 5/5, Correct contracts used for neg risk vs standard: 5/5, Approvals set for correct contracts: 5/5\n**Decision**: Improved from 22 to 25"
+  },
+  {
+    "round": 3,
+    "score": 25,
+    "max": 25,
+    "status": "reverted",
+    "mutation": "No failures remain (5/5 on all criteria) — add a concise \"Quick Reference\" section at the top summarizing the three most critical rules (approval targets, operation flow, neg risk flag) to make the skill more scannable and resilient to edge cases.",
+    "cost": 0.05,
+    "criteria": [
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 25 did not exceed best 25 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-21T09:09:40.117Z",
+    "changelog": "**Mutation**: No failures remain (5/5 on all criteria) — add a concise \"Quick Reference\" section at the top summarizing the three most critical rules (approval targets, operation flow, neg risk flag) to make the skill more scannable and resilient to edge cases.\n**Failures**: none\n**Per-criteria**: Split produces correct token amounts: 5/5, Merge returns correct USDC.e: 5/5, Redeem only works on resolved markets: 5/5, Correct contracts used for neg risk vs standard: 5/5, Approvals set for correct contracts: 5/5\n**Decision**: Score 25 did not exceed best 25 — mutation produced worse or equal results"
+  },
+  {
+    "round": 4,
+    "score": 25,
+    "max": 25,
+    "status": "reverted",
+    "mutation": "No failures remain (5/5 on all criteria) — add a \"Common Pitfalls\" section documenting the three most frequent mistakes (wrong spender for merge/redeem, missing setApprovalForAll for ERC1155, attempting redeem on unresolved market) to make the skill more resilient to edge cases.",
+    "cost": 0.05,
+    "criteria": [
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 25 did not exceed best 25 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-21T09:10:35.334Z",
+    "changelog": "**Mutation**: No failures remain (5/5 on all criteria) — add a \"Common Pitfalls\" section documenting the three most frequent mistakes (wrong spender for merge/redeem, missing setApprovalForAll for ERC1155, attempting redeem on unresolved market) to make the skill more resilient to edge cases.\n**Failures**: none\n**Per-criteria**: Split produces correct token amounts: 5/5, Merge returns correct USDC.e: 5/5, Redeem only works on resolved markets: 5/5, Correct contracts used for neg risk vs standard: 5/5, Approvals set for correct contracts: 5/5\n**Decision**: Score 25 did not exceed best 25 — mutation produced worse or equal results"
+  }
+]

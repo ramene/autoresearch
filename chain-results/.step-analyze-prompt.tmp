@@ -1,3 +1,6 @@
+You are executing a skill chain step. Use the skill instructions below to process the input.
+
+SKILL INSTRUCTIONS:
 # SKILL: polymarket-market-analyzer
 AI-powered market opportunity analysis for Polymarket -- scoring markets with BUY/SELL/HOLD/AVOID recommendations and confidence levels (0-100).
 
@@ -169,3 +172,15 @@ For `--compare` runs, the file contains a `"markets"` array of the above objects
 - **Upstream:** `polymarket-market-discovery` provides markets to analyze
 - **Downstream:** `polymarket-clob-trader` executes recommended trades
 - **Cross-skill:** `polymarket-portfolio-tracker` provides existing position context
+
+CHAIN STEP INPUT:
+{
+  "markets": "[UNRESOLVED: discover.active_markets]",
+  "crash_events": "{{flash-scan.crash_events}}",
+  "min_liquidity": 10000,
+  "max_spread": 0.05,
+  "strategy": "flash_crash_entry"
+}
+
+Execute the skill against this input. Return structured output as JSON where possible.
+If the skill requires external tools/APIs that aren't available, describe what you WOULD do and return mock structured data showing the expected output format.
