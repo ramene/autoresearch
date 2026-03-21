@@ -7,7 +7,7 @@
     <key>ProgramArguments</key>
     <array>
         <string>/bin/bash</string>
-        <string>/Users/ramene/.remote/@autoresearch/scripts/email-watchdog.sh</string>
+        <string>/Users/ramene/.remote/@autoresearch/scripts/self-healing-watchdog.sh</string>
     </array>
     <key>StartInterval</key>
     <integer>3600</integer>
