@@ -9,9 +9,22 @@
         <string>/bin/bash</string>
         <string>/Users/ramene/.remote/@autoresearch/scripts/autonomous-loop.sh</string>
     </array>
-    <key>StartInterval</key>
-    <integer>7200</integer>
-    <!-- 7200 seconds = 12 hours -->
+    <!-- StartCalendarInterval catches up after Mac sleep (StartInterval does NOT) -->
+    <key>StartCalendarInterval</key>
+    <array>
+        <dict><key>Hour</key><integer>0</integer><key>Minute</key><integer>0</integer></dict>
+        <dict><key>Hour</key><integer>2</integer><key>Minute</key><integer>0</integer></dict>
+        <dict><key>Hour</key><integer>4</integer><key>Minute</key><integer>0</integer></dict>
+        <dict><key>Hour</key><integer>6</integer><key>Minute</key><integer>0</integer></dict>
+        <dict><key>Hour</key><integer>8</integer><key>Minute</key><integer>0</integer></dict>
+        <dict><key>Hour</key><integer>10</integer><key>Minute</key><integer>0</integer></dict>
+        <dict><key>Hour</key><integer>12</integer><key>Minute</key><integer>0</integer></dict>
+        <dict><key>Hour</key><integer>14</integer><key>Minute</key><integer>0</integer></dict>
+        <dict><key>Hour</key><integer>16</integer><key>Minute</key><integer>0</integer></dict>
+        <dict><key>Hour</key><integer>18</integer><key>Minute</key><integer>0</integer></dict>
+        <dict><key>Hour</key><integer>20</integer><key>Minute</key><integer>0</integer></dict>
+        <dict><key>Hour</key><integer>22</integer><key>Minute</key><integer>0</integer></dict>
+    </array>
     <key>StandardOutPath</key>
     <string>/Users/ramene/.local/share/tmux-logs/autoresearch/launchd-stdout.log</string>
     <key>StandardErrorPath</key>
@@ -19,11 +32,9 @@
     <key>EnvironmentVariables</key>
     <dict>
         <key>PATH</key>
-        <string>/usr/local/bin:/usr/bin:/bin:/opt/homebrew/bin:/Users/ramene/.local/bin</string>
+        <string>/usr/local/bin:/usr/bin:/bin:/opt/homebrew/bin:/Users/ramene/.local/bin:/Users/ramene/.nvm/versions/node/v23.11.1/bin</string>
         <key>HOME</key>
         <string>/Users/ramene</string>
     </dict>
-    <key>RunAtLoad</key>
-    <false/>
 </dict>
 </plist>

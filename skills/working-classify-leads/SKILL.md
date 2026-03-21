@@ -22,12 +22,79 @@ Classify leads using Claude for complex distinctions that keyword matching can't
 - `./scripts/update_sheet.py` - Update sheets
 - `./scripts/read_sheet.py` - Read from sheets
 
-## Usage
+## Input Options
 
+There are **two starting points** depending on where your leads are:
+
+**Option A — Leads are in Google Sheets** → start at Step 1 below  
+**Option B — Leads are already in a local JSON file** → skip to Step 2b, pointing `--input` at your file
+
+## Step-by-Step Workflow
+
+Follow these steps in order — do not skip to step 3 without completing steps 1 and 2:
+
+**Step 0: Ensure the working directory exists**
+```bash
+mkdir -p .tmp
+```
+> Always run this first. Steps 1 and 2b write to `.tmp/` — if the directory doesn't exist, those steps will fail with a cryptic `FileNotFoundError`.
+
+**Step 1: (Sheet only) Export leads from the sheet**
+```bash
+python3 ./scripts/read_sheet.py --output .tmp/leads.json
+```
+> Skip this step if the user already has a local JSON file of leads.
+
+**Step 2a: Verify the exported file exists and has data**
+```bash
+ls -lh .tmp/leads.json
+python3 -c "import json; data=json.load(open('.tmp/leads.json')); print(f'Loaded {len(data)} leads')"
+```
+
+**Step 2b: (Local file) Verify your input file**
+
+If the user provided a local file (e.g. `leads.csv`, `my_leads.json`), check its format:
+```bash
+# For JSON:
+python3 -c "import json; data=json.load(open('PATH_TO_FILE')); print(f'Loaded {len(data)} leads'); print('Keys:', list(data[0].keys()) if data else 'empty')"
+# For CSV, convert to JSON first:
+python3 -c "
+import csv, json
+with open('PATH_TO_FILE') as f:
+    rows = list(csv.DictReader(f))
+json.dump(rows, open('.tmp/leads.json','w'))
+print(f'Converted {len(rows)} rows to .tmp/leads.json')
+"
+```
+
+**Step 3: Run classification**
 ```bash
 python3 ./scripts/classify_leads_llm.py .tmp/leads.json \
   --classification_type product_saas \
   --output .tmp/classified_leads.json
+```
+
+**Step 4: Review output — always report these to the user:**
+1. How many leads were in the input
+2. How many were classified (with breakdown by label: e.g. `product_saas`, `agency`, `unclear`)
+3. Path to the output file
+4. Any errors encountered with suggested next steps
+
+```bash
+python3 -c "
+import json
+data = json.load(open('.tmp/classified_leads.json'))
+from collections import Counter
+labels = Counter(d.get('classification') for d in data)
+print(f'Total: {len(data)}')
+for label, count in labels.items():
+    print(f'  {label}: {count}')
+"
+```
+
+**Step 5: (Optional) Update the sheet with results**
+```bash
+python3 ./scripts/update_sheet.py --input .tmp/classified_leads.json
 ```
 
 ## Performance
@@ -36,8 +103,43 @@ python3 ./scripts/classify_leads_llm.py .tmp/leads.json \
 - Default: includes "unclear" classifications (medium confidence)
 
 ## Classification Types
-- `product_saas`: Product companies vs service/consulting
-- Custom types can be added
+
+The `--classification_type` flag accepts any descriptive string — the LLM uses it to guide its decision. Use the exact values below for known use cases:
+
+| Use Case | `--classification_type` value | Output labels |
+|---|---|---|
+| Product SaaS vs agencies/consultants | `product_saas` | `product_saas`, `agency`, `unclear` |
+| High-ticket vs low-ticket businesses | `high_ticket` | `high_ticket`, `low_ticket`, `unclear` |
+| Subscription vs one-time payment models | `subscription_model` | `subscription`, `one_time`, `unclear` |
+| Custom distinction | any descriptive string | varies — the LLM will infer labels from the type string |
+
+**Example commands for each use case:**
+```bash
+# Product SaaS vs agencies
+python3 ./scripts/classify_leads_llm.py .tmp/leads.json --classification_type product_saas --output .tmp/classified_leads.json
+
+# High-ticket vs low-ticket
+python3 ./scripts/classify_leads_llm.py .tmp/leads.json --classification_type high_ticket --output .tmp/classified_leads.json
+
+# Subscription vs one-time
+python3 ./scripts/classify_leads_llm.py .tmp/leads.json --classification_type subscription_model --output .tmp/classified_leads.json
+```
+
+**If results look wrong (too many "unclear" or misclassified):** Try a more descriptive classification_type string, e.g. `high_ticket_b2b_saas` instead of `high_ticket`. The LLM uses this string as context, so more specific is better.
 
 ## Output
 JSON file with classification added to each lead record.
+
+## Error Handling
+
+**Common failures and fixes:**
+
+| Error | Cause | Fix |
+|---|---|---|
+| `FileNotFoundError: .tmp/leads.json` | Input file missing or `.tmp/` dir absent | Run `mkdir -p .tmp` (Step 0), then `read_sheet.py` (Step 1) or convert your local file (Step 2b) |
+| `ModuleNotFoundError` | Missing Python deps | Run `pip3 install -r requirements.txt` |
+| `ANTHROPIC_API_KEY not set` | Missing env var | Export the key: `export ANTHROPIC_API_KEY=sk-...` |
+| `JSONDecodeError` | Malformed input file | Inspect: `python3 -c "import json; json.load(open('.tmp/leads.json'))"` |
+| Empty output / 0 classified | Wrong classification_type | Check supported types above; use `product_saas` as default |
+| Most results are "unclear" | classification_type too vague | Use a more specific string, e.g. `high_ticket_b2b_saas` |
+| Script exits mid-run | Rate limit or timeout | Re-run — the script can resume from partial output |

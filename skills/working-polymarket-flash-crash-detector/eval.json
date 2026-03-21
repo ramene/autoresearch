@@ -1,0 +1,18 @@
+{
+  "scenarios": [
+    {"id": 1, "type": "happy", "title": "Detect a 35% probability crash within 8 seconds", "event": "ETH 5-minute market probability drops from 0.65 to 0.30 in 8 seconds", "expectedAction": "Detect crash signal, log it, execute buy order (or paper trade)", "expectedType": "action"},
+    {"id": 2, "type": "happy", "title": "Paper trade mode logs signal without placing orders", "event": "Flash crash detected with --paper flag", "expectedAction": "Log signal with full details but do not call trading API", "expectedType": "action"},
+    {"id": 3, "type": "happy", "title": "Take profit triggered after price recovery", "event": "Price recovers from crash entry by +$0.10", "expectedAction": "Detect TP condition, place sell order, log profit", "expectedType": "action"},
+    {"id": 4, "type": "diagnostic", "title": "No flash crashes during monitoring period", "event": "Market remains stable for 60 minutes", "expectedAction": "Report zero signals detected, show monitoring statistics", "expectedType": "action"},
+    {"id": 5, "type": "edge", "title": "Stop loss triggered on continued decline", "event": "Price drops further after initial crash buy", "expectedAction": "Detect SL condition, place sell order, log loss, continue monitoring", "expectedType": "action"},
+    {"id": 6, "type": "edge", "title": "Multiple rapid crashes within lookback window", "event": "Two crashes happen within 10 seconds", "expectedAction": "Detect first crash, skip second while position is open (max_positions=1)", "expectedType": "action"}
+  ],
+  "criteria": [
+    "Crash detection triggers at correct threshold: Does the skill detect drops >= configured threshold within lookback window?",
+    "Paper trade mode works without placing real orders: Does paper mode correctly simulate without API calls?",
+    "TP/SL exit conditions evaluated correctly: Does the skill exit positions at configured profit/loss levels?",
+    "Statistics tracked accurately: Does the skill maintain correct win rate and P&L running totals?",
+    "Rolling price buffer maintained correctly: Does the skill correctly manage the time-windowed price history?",
+    "Max position limit enforced: Does the skill prevent opening multiple positions simultaneously?"
+  ]
+}

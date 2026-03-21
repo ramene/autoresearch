@@ -1,0 +1,87 @@
+# SKILL: polymarket-bridge
+Cross-chain deposit and withdrawal for Polymarket -- bridge assets from 15+ chains (Ethereum, Solana, Bitcoin, Arbitrum, Base, etc.) to USDC.e on Polygon and withdraw back.
+
+## Purpose
+This skill handles cross-chain movement of funds to and from Polymarket. It creates deposit addresses for receiving assets from multiple chains (EVM, Solana, Bitcoin, Tron), monitors deposit status, previews withdrawal fees, executes withdrawals to destination chains, and tracks transaction status. All bridging goes through Polymarket's bridge API which handles routing, swapping, and delivery.
+
+## Trigger Conditions
+1. **Slash Command:** `/skill polymarket-bridge [flags]`
+   - `--deposit`: Create deposit addresses for receiving funds
+   - `--withdraw`: Initiate withdrawal to destination chain
+   - `--to-chain=<chain_id>`: Destination chain ID
+   - `--to-token=<address>`: Destination token address
+   - `--recipient=<address>`: Recipient address
+   - `--status=<address>`: Check deposit/withdrawal status
+   - `--quote`: Preview withdrawal fees and output
+   - `--supported`: List supported assets and chains
+   - `--amount=<float>`: Amount for withdrawal
+
+2. **Keywords:** "deposit to polymarket", "withdraw from polymarket", "bridge to polygon", "transfer USDC to polymarket"
+
+## Prerequisites
+1. **Working Directory:** `~/.remote/@autoresearch/skills/working-polymarket-bridge/`
+2. **Network:** Access to `https://bridge.polymarket.com`
+3. **For deposits:** Funds on source chain
+4. **For withdrawals:** USDC.e balance on Polymarket wallet
+
+## Bridge API
+
+| Endpoint | Method | Purpose |
+|----------|--------|---------|
+| `/deposit` | POST | Create deposit addresses |
+| `/withdraw` | POST | Create withdrawal addresses |
+| `/quote` | POST | Preview fees/output |
+| `/status/{address}` | GET | Track transaction status |
+| `/supported-assets` | GET | List supported chains/tokens |
+
+## Supported Chains (15+)
+
+| Chain | Type | Min Deposit | Example Tokens |
+|-------|------|-------------|----------------|
+| Ethereum | EVM | $7 | ETH, USDC, USDT, WBTC |
+| Polygon | EVM | $2 | POL, USDC, USDT |
+| Arbitrum | EVM | $2 | ETH, ARB, USDC |
+| Base | EVM | $2 | ETH, USDC |
+| Optimism | EVM | $2 | ETH, OP, USDC |
+| Solana | SVM | $2 | SOL, USDC |
+| Bitcoin | BTC | $9 | BTC |
+| Tron | TVM | $9 | USDT |
+| HyperEVM | EVM | $2 | HYPE, USDC |
+
+## Transaction Statuses
+
+| Status | Terminal | Description |
+|--------|----------|-------------|
+| DEPOSIT_DETECTED | No | Funds seen on source chain |
+| PROCESSING | No | Being routed/swapped |
+| SUBMITTED | No | Submitted to Polygon |
+| COMPLETED | Yes | Success |
+| FAILED | Yes | Error |
+
+## Execution Steps
+
+1. **Deposit:** POST /deposit with wallet address -> get EVM/SVM/BTC/TVM addresses -> send funds -> poll /status
+2. **Withdraw:** Check /supported-assets -> POST /quote for fees -> POST /withdraw -> send USDC.e -> poll /status
+3. **Status:** Poll every 10-30 seconds until COMPLETED or FAILED
+
+## Caveats
+- Withdrawals >$50,000: break into smaller amounts
+- Deposits below minimum will not be processed
+- Always check /supported-assets before depositing (assets change)
+- Withdrawals are instant and free (Polymarket pays fees)
+
+## Output Format
+- **Console:** Deposit addresses or withdrawal status
+- **`bridge_log.json`:** Transaction history with status tracking
+
+## Quality Gates
+1. Deposit addresses generated for correct chain type
+2. Withdrawal quote previews accurate fees
+3. Status polling correctly identifies terminal states
+4. Supported assets checked before operations
+5. Minimum deposit amounts enforced
+
+## Integration Points
+- **Upstream:** User needs to fund Polymarket account
+- **Downstream:** Funded account enables `polymarket-clob-trader` operations
+- **Cross-skill:** `polymarket-portfolio-tracker` reflects deposited/withdrawn amounts

@@ -1,0 +1,16 @@
+{
+  "scenarios": [
+    {"id": 1, "type": "happy", "title": "Take profit triggered on price recovery", "event": "Position entry at 0.35, price rises to 0.45 (TP at 0.45)", "expectedAction": "Detect TP condition, execute sell order, log winning trade", "expectedType": "action"},
+    {"id": 2, "type": "happy", "title": "Stop loss triggered on price decline", "event": "Position entry at 0.35, price drops to 0.30 (SL at 0.30)", "expectedAction": "Detect SL condition, execute sell order, log losing trade", "expectedType": "action"},
+    {"id": 3, "type": "happy", "title": "Show trading statistics after multiple trades", "event": "User asks for win rate and P&L after 10 trades", "expectedAction": "Calculate and display win rate, total P&L, average hold time", "expectedType": "action"},
+    {"id": 4, "type": "diagnostic", "title": "Max position limit reached", "event": "User tries to add position when at max_positions", "expectedAction": "Reject new position, report current position count vs limit", "expectedType": "action"},
+    {"id": 5, "type": "edge", "title": "Price gaps through both TP and SL simultaneously", "event": "Extreme volatility causes price to jump past both levels", "expectedAction": "Execute at best available price, log actual vs expected exit price", "expectedType": "action"}
+  ],
+  "criteria": [
+    "TP/SL calculated correctly from entry + delta: Does the skill compute exit prices accurately?",
+    "Exit orders triggered at threshold: Does the skill detect and execute at TP/SL levels?",
+    "Win rate tracked accurately: Does the skill correctly categorize wins/losses and compute win rate?",
+    "Position limits enforced: Does the skill prevent exceeding max_positions?",
+    "State persisted for monitoring restarts: Does the skill save and restore position state?"
+  ]
+}

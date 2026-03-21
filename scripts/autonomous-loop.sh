@@ -138,85 +138,15 @@ fi
 # ─── Send error summary if any step failed ───────────────────────────────────
 send_error_summary
 
-# ─── ALWAYS send completion report ────────────────────────────────────────────
-DURATION=$((SECONDS))
-COST=$(grep -o 'Total spent: \$[0-9.]*' "$LOG_FILE" 2>/dev/null | tail -1 | grep -o '[0-9.]*' || echo '0.00')
-SKILL_COUNT=$(grep -c 'last run:' "$LOG_FILE" 2>/dev/null || echo '?')
-KEPT_COUNT=$(grep -c 'KEPT' "$LOG_FILE" 2>/dev/null || echo '0')
-BASELINE_COUNT=$(grep -c 'BASELINE' "$LOG_FILE" 2>/dev/null || echo '0')
-REVERTED_COUNT=$(grep -c 'REVERTED' "$LOG_FILE" 2>/dev/null || echo '0')
-STUCK_COUNT_FINAL=$(grep -c 'STUCK' "$LOG_FILE" 2>/dev/null || echo '0')
-PROMO_COUNT=$(grep -c 'Promotion-ready' "$LOG_FILE" 2>/dev/null || echo '0')
+# ─── ALWAYS send completion report (via Node — bash curl kept breaking) ────────
 OPTIMIZED_SKILL=$(grep 'Optimizing:' "$LOG_FILE" 2>/dev/null | head -1 | sed 's/.*Optimizing: //' | sed 's/ (.*//')
 BEST_SCORE=$(grep 'Final best score:' "$LOG_FILE" 2>/dev/null | grep -o '[0-9]*/[0-9]*' || echo '?')
-STATUS_ICON=$([ "$ERRORS_FOUND" -gt 0 ] && echo "⚠" || echo "✓")
-
-# Build clean report
-REPORT="${STATUS_ICON} AUTORESEARCH LOOP REPORT"
-REPORT+="\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-REPORT+="\n"
-REPORT+="\n  Timestamp:  $(date '+%Y-%m-%d %H:%M %Z')"
-REPORT+="\n  Duration:   ${DURATION}s"
-REPORT+="\n  Cost:       \$${COST}"
-REPORT+="\n  Errors:     ${ERRORS_FOUND}"
-REPORT+="\n"
-REPORT+="\n━ SKILL OPTIMIZED ━━━━━━━━━━━━━━━━━━"
-REPORT+="\n"
-REPORT+="\n  Skill:      ${OPTIMIZED_SKILL:-none}"
-REPORT+="\n  Best Score: ${BEST_SCORE}"
-REPORT+="\n  Kept:       ${KEPT_COUNT}  |  Reverted: ${REVERTED_COUNT}  |  Baseline: ${BASELINE_COUNT}"
-[ "$STUCK_COUNT_FINAL" -gt 0 ] && REPORT+="\n  ⚠ Stuck:    ${STUCK_COUNT_FINAL} (escalated to Gemini)"
-REPORT+="\n"
-REPORT+="\n━ FLEET STATUS ━━━━━━━━━━━━━━━━━━━━━"
-REPORT+="\n"
-REPORT+="\n  Skills tracked:      ${SKILL_COUNT}"
-REPORT+="\n  Promotion-ready:     ${PROMO_COUNT}"
-
-# Top 5 skills by score
-REPORT+="\n"
-REPORT+="\n  Top performers:"
-grep 'last run:' "$LOG_FILE" 2>/dev/null | grep -v '0/1' | sort -t'(' -k2 -rn | head -5 | while read line; do
-    name=$(echo "$line" | awk '{print $1}')
-    score=$(echo "$line" | grep -o '[0-9]*/[0-9]*' | head -1)
-    pct=$(echo "$line" | grep -o '([0-9.]*%)' | head -1)
-    REPORT_LINE="    ${name}: ${score} ${pct}"
-    echo "$REPORT_LINE"
-done > /tmp/top_performers.txt
-REPORT+="\n$(cat /tmp/top_performers.txt 2>/dev/null)"
-
-# Skills still at 0
-ZERO_COUNT=$(grep 'last run:' "$LOG_FILE" 2>/dev/null | grep '0/1' | wc -l | tr -d ' ')
-REPORT+="\n"
-REPORT+="\n  Awaiting baseline:   ${ZERO_COUNT} skills"
-REPORT+="\n"
-REPORT+="\n━ PROMOTIONS READY ━━━━━━━━━━━━━━━━━"
-REPORT+="\n"
-grep 'Promotion-ready' -A20 "$LOG_FILE" 2>/dev/null | grep ':' | head -5 | while read line; do
-    echo "  $line"
-done > /tmp/promos.txt
-REPORT+="\n$(cat /tmp/promos.txt 2>/dev/null)"
-REPORT+="\n"
-REPORT+="\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-REPORT+="\nLog: ${LOG_FILE}"
 
 # macOS notification
-osascript -e "display notification \"${OPTIMIZED_SKILL}: ${BEST_SCORE} | \$${COST} | ${KEPT_COUNT} kept\" with title \"Autoresearch ${STATUS_ICON}\" sound name \"$([ "$ERRORS_FOUND" -gt 0 ] && echo "Basso" || echo "Glass")\"" 2>/dev/null || true
+osascript -e "display notification \"${OPTIMIZED_SKILL:-none}: ${BEST_SCORE} | ${ERRORS_FOUND} errors\" with title \"Autoresearch $([ "$ERRORS_FOUND" -gt 0 ] && echo "⚠" || echo "✓")\" sound name \"$([ "$ERRORS_FOUND" -gt 0 ] && echo "Basso" || echo "Glass")\"" 2>/dev/null || true
 
-# Email report
-RESEND_KEY=$(cat "/usr/local/etc/autoresearch-credentials/resend-api-key.txt" 2>/dev/null || echo "")
-if [ -n "$RESEND_KEY" ]; then
-    SUBJECT="${STATUS_ICON} Autoresearch | ${OPTIMIZED_SKILL}: ${BEST_SCORE} | \$${COST} | ${KEPT_COUNT} kept | $(date +%H:%M)"
-    EMAIL_BODY=$(echo -e "$REPORT" | sed 's/"/\\"/g' | tr '\n' '~' | sed 's/~/\\n/g')
-    curl -sf -X POST https://api.resend.com/emails \
-        -H "Authorization: Bearer $RESEND_KEY" \
-        -H "Content-Type: application/json" \
-        -d "{
-            \"from\": \"Autoresearch <alerts@micropaymnts.ai>\",
-            \"to\": \"ramene.anthony@gmail.com\",
-            \"subject\": \"$SUBJECT\",
-            \"text\": \"$EMAIL_BODY\"
-        }" >/dev/null 2>&1 && echo "  → Report emailed" || echo "  → Email failed (non-critical)"
-fi
+# Email via Node (handles JSON properly — no more bash escaping failures)
+/Users/ramene/.nvm/versions/node/v23.11.1/bin/node "$AUTORESEARCH_DIR/scripts/send-report.mjs" "$LOG_FILE" 2>&1
 
 echo ""
 if [ "$ERRORS_FOUND" -gt 0 ]; then

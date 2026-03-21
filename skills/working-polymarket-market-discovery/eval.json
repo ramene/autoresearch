@@ -1,0 +1,60 @@
+{
+  "scenarios": [
+    {
+      "id": 1,
+      "type": "happy",
+      "title": "Search for election-related prediction markets",
+      "event": "User asks to find markets related to 'presidential election'",
+      "expectedAction": "Query Gamma API with search term, return matching markets with prices and volumes",
+      "expectedType": "action"
+    },
+    {
+      "id": 2,
+      "type": "happy",
+      "title": "Get top 10 trending markets by 24h volume",
+      "event": "User asks for the most active prediction markets right now",
+      "expectedAction": "Fetch markets, sort by volume24hr descending, return top 10 with key metrics",
+      "expectedType": "action"
+    },
+    {
+      "id": 3,
+      "type": "happy",
+      "title": "Find 5-minute crypto markets for rapid trading",
+      "event": "User asks to discover active 5-minute BTC and ETH markets",
+      "expectedAction": "Search for short-resolution crypto markets, return token IDs for YES/NO outcomes",
+      "expectedType": "action"
+    },
+    {
+      "id": 4,
+      "type": "happy",
+      "title": "List markets closing within 2 hours",
+      "event": "User asks what markets are about to resolve",
+      "expectedAction": "Fetch active markets, filter by end_date within 2 hours, sort by soonest",
+      "expectedType": "action"
+    },
+    {
+      "id": 5,
+      "type": "diagnostic",
+      "title": "No markets found for obscure search query",
+      "event": "User searches for a topic with no matching markets",
+      "expectedAction": "Return empty results with helpful message suggesting broader search terms",
+      "expectedType": "action"
+    },
+    {
+      "id": 6,
+      "type": "edge",
+      "title": "Paginate through 200+ results",
+      "event": "User requests all active crypto markets (large result set)",
+      "expectedAction": "Paginate through multiple pages using offset, combine all results correctly",
+      "expectedType": "action"
+    }
+  ],
+  "criteria": [
+    "Search returns relevant markets matching text query: Does the skill correctly query the Gamma API and return matching markets?",
+    "Trending markets sorted by correct volume timeframe: Does the skill sort by the right volume field for the requested period?",
+    "Category filtering uses correct tag parameter: Does the skill filter markets using the Gamma API tag system?",
+    "Closing-soon accurately identifies markets within time window: Does the skill correctly parse end dates and filter?",
+    "5-minute market discovery finds short-resolution markets: Does the skill identify rapid-resolution crypto markets?",
+    "Output includes all IDs needed for downstream trading: Does the output contain tokenID, conditionID, and price data?"
+  ]
+}

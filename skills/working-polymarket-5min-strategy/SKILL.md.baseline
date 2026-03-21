@@ -1,0 +1,82 @@
+# SKILL: polymarket-5min-strategy
+Mundave-style 5-minute market trading strategy -- using CVD (Cumulative Volume Delta) and Binance liquidation signals to trade Polymarket short-duration crypto prediction markets with $10 position sizes.
+
+## Purpose
+This skill implements the 5-minute market trading strategy described in the Mundave transcript. It combines HyperLiquid CVD (Cumulative Volume Delta -- tracking whether buyers or sellers dominate) with Binance liquidation data (large forced position closures that signal market direction) to generate directional signals on Polymarket's 5-minute crypto resolution markets. Target position size: $10/trade with asymmetric TP/SL.
+
+## Trigger Conditions
+1. **Slash Command:** `/skill polymarket-5min-strategy [flags]`
+   - `--coin=<BTC|ETH|SOL>`: Target cryptocurrency (default: ETH)
+   - `--size=<float>`: Trade size in USDC (default: 10.0)
+   - `--paper`: Paper trade mode
+   - `--duration=<minutes>`: Strategy duration (default: 120)
+   - `--cvd-threshold=<float>`: CVD divergence threshold for signal
+   - `--liq-threshold=<float>`: Liquidation volume threshold for signal
+
+2. **Keywords:** "5 minute strategy polymarket", "mundave strategy", "CVD trading prediction market", "liquidation signal polymarket"
+
+## Prerequisites
+1. **Working Directory:** `~/.remote/@autoresearch/skills/working-polymarket-5min-strategy/`
+2. **Dependencies:** `polymarket-market-discovery`, `polymarket-websocket-monitor`, `polymarket-clob-trader`
+3. **External Data:** HyperLiquid CVD feed, Binance liquidation stream (via public WebSocket APIs)
+4. **For live trading:** `POLY_PRIVATE_KEY`, `POLY_SAFE_ADDRESS`
+
+## Execution Steps
+
+1. **Market Discovery:**
+   - Find active 5-minute resolution markets for target coin
+   - Get token IDs for UP/DOWN (or YES/NO) outcomes
+
+2. **Signal Sources:**
+   a. **CVD (Cumulative Volume Delta):**
+      - Connect to HyperLiquid or aggregator WebSocket
+      - Track buy volume vs sell volume over rolling window
+      - CVD rising = buyers dominating (bullish)
+      - CVD falling = sellers dominating (bearish)
+      - Signal: CVD divergence from price (price drops but CVD rises = bullish signal)
+
+   b. **Binance Liquidation Data:**
+      - Monitor Binance liquidation stream via `wss://fstream.binance.com/ws/!forceOrder@arr`
+      - Large long liquidations = bearish signal (cascade selling)
+      - Large short liquidations = bullish signal (short squeeze)
+      - Signal: liquidation volume exceeds threshold within time window
+
+3. **Signal Combination:**
+   - BUY signal (buy UP/YES): CVD bullish divergence + short liquidation cluster
+   - SELL signal (buy DOWN/NO): CVD bearish divergence + long liquidation cluster
+   - Confidence based on signal alignment and magnitude
+
+4. **Execution:**
+   - Paper mode: log signal and hypothetical trade
+   - Live mode: place $10 trade via `polymarket-clob-trader`
+   - Position management: TP +$0.10, SL -$0.05 (2:1 risk/reward)
+   - Max 1 position per market at a time
+
+5. **Tracking:**
+   - Log all signals, trades, and outcomes to `strategy_log.jsonl`
+   - Track: signal accuracy, win rate, total P&L, Sharpe ratio
+   - Periodic summary output
+
+## Default Parameters
+- Trade size: $10.00 (Mundave recommendation)
+- Take profit: +$0.10
+- Stop loss: -$0.05
+- Risk/reward ratio: 2:1
+- Max concurrent positions: 1
+
+## Output Format
+- **Console:** Real-time strategy display with signals and trade status
+- **`strategy_log.jsonl`:** Full signal and trade history
+
+## Quality Gates
+1. CVD correctly calculated from volume data
+2. Liquidation signals parsed from Binance feed
+3. Signal combination logic produces directional trades
+4. Paper mode simulates without real API calls
+5. Win rate and P&L tracked accurately
+6. Small position sizes ($10) enforced
+
+## Integration Points
+- **Upstream:** `polymarket-market-discovery --5min` finds markets, external CVD/liquidation feeds
+- **Dependencies:** `polymarket-clob-trader` for execution, `polymarket-websocket-monitor` for Polymarket prices
+- **Downstream:** `polymarket-position-manager` for lifecycle management

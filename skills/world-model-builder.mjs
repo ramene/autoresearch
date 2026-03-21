@@ -48,6 +48,8 @@ const MCP_DOMAIN_MAP = {
   'eaas': { domain: 'monetization_platform', subdomains: ['api_endpoints', 'x402_payments', 'service_delivery'] },
   'defi-tools': { domain: 'defi_trading', subdomains: ['token_operations', 'amm_trading', 'liquidity_management', 'mev_research', 'yield_optimization', 'arbitrage', 'frontrunning_detection', 'portfolio_tracking'] },
   'tradfi-tools': { domain: 'traditional_finance', subdomains: ['price_feeds', 'arbitrage_scanning', 'paper_trading', 'macro_analysis', 'signal_aggregation'] },
+  'polymarket-mcp': { domain: 'prediction_markets', subdomains: ['market_discovery', 'orderbook_trading', 'portfolio_tracking', 'flash_crash_detection', 'websocket_monitoring', 'ctf_operations', 'gasless_trading', 'probability_analysis'] },
+  'polymarket': { domain: 'prediction_markets', subdomains: ['market_discovery', 'orderbook_trading', 'portfolio_tracking', 'flash_crash_detection'] },
 };
 
 // ---------------------------------------------------------------------------

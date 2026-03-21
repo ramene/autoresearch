@@ -1,0 +1,16 @@
+{
+  "scenarios": [
+    {"id": 1, "type": "happy", "title": "Bullish CVD divergence + short liquidation cluster triggers buy", "event": "CVD rises while price drops, Binance shows short liquidations", "expectedAction": "Generate BUY signal, place $10 trade on UP/YES token", "expectedType": "action"},
+    {"id": 2, "type": "happy", "title": "Paper trade mode logs hypothetical trades", "event": "Valid signal detected with --paper flag", "expectedAction": "Log signal and simulated trade without API calls", "expectedType": "action"},
+    {"id": 3, "type": "happy", "title": "Take profit triggered on winning trade", "event": "Price moves +$0.10 from entry", "expectedAction": "Exit position at TP, log profit, continue monitoring", "expectedType": "action"},
+    {"id": 4, "type": "diagnostic", "title": "CVD and liquidation signals conflict", "event": "CVD is bullish but large long liquidation happening", "expectedAction": "No trade signal generated due to conflicting signals", "expectedType": "action"},
+    {"id": 5, "type": "edge", "title": "No active 5-minute markets found", "event": "Market discovery returns no active short-duration markets", "expectedAction": "Report no markets available, suggest waiting or broadening search", "expectedType": "action"}
+  ],
+  "criteria": [
+    "CVD calculation is correct: Does the skill accurately compute cumulative volume delta?",
+    "Liquidation signals parsed correctly: Does the skill process Binance forced liquidation events?",
+    "Signal combination produces valid directional trades: Does the skill combine CVD + liquidations logically?",
+    "Position size limited to $10 default: Does the skill enforce small position sizes as recommended?",
+    "Strategy metrics tracked accurately: Does the skill maintain correct win rate, P&L, and signal accuracy?"
+  ]
+}

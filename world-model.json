@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-03-20T20:13:56.233Z",
+  "timestamp": "2026-03-21T09:00:19.784Z",
   "version": "1.1",
   "research_demands": [
     {
@@ -90,12 +90,12 @@
   ],
   "environmental_signals": [
     {
-      "signal": "Skill \"classify-leads\" last improved: 17 → 19/36",
+      "signal": "Skill \"classify-leads\" last improved: 31 → 36/36",
       "source": "skills/working-classify-leads/events.jsonl",
       "current_capability": "classify-leads"
     },
     {
-      "signal": "Skill \"content-strategy-optimizer\" last improved: 16 → 17/48",
+      "signal": "Skill \"content-strategy-optimizer\" last improved: 17 → 18/48",
       "source": "skills/working-content-strategy-optimizer/events.jsonl",
       "current_capability": "content-strategy-optimizer"
     },
@@ -140,12 +140,87 @@
       "current_capability": "gmail-label"
     },
     {
-      "signal": "Skill \"classify-leads\" has 22 unresolved failure(s) in round 4",
-      "source": "skills/working-classify-leads/rounds.json",
-      "current_capability": "classify-leads"
+      "signal": "Skill \"inbox-cleaner\" last improved: 24 → 36/36",
+      "source": "skills/working-inbox-cleaner/events.jsonl",
+      "current_capability": "inbox-cleaner"
     },
     {
-      "signal": "Skill \"content-strategy-optimizer\" has 36 unresolved failure(s) in round 7",
+      "signal": "Skill \"instantly-autoreply\" last improved: 28 → 36/36",
+      "source": "skills/working-instantly-autoreply/events.jsonl",
+      "current_capability": "instantly-autoreply"
+    },
+    {
+      "signal": "Skill \"instantly-campaigns\" last improved: 27 → 29/36",
+      "source": "skills/working-instantly-campaigns/events.jsonl",
+      "current_capability": "instantly-campaigns"
+    },
+    {
+      "signal": "Skill \"linkedin-response\" last improved: 32 → 36/36",
+      "source": "skills/working-linkedin-response/events.jsonl",
+      "current_capability": "linkedin-response"
+    },
+    {
+      "signal": "Skill \"onboarding-kickoff\" last improved: 21 → 34/36",
+      "source": "skills/working-onboarding-kickoff/events.jsonl",
+      "current_capability": "onboarding-kickoff"
+    },
+    {
+      "signal": "Skill \"polymarket-bridge\" last improved: 19 → 25/25",
+      "source": "skills/working-polymarket-bridge/events.jsonl",
+      "current_capability": "polymarket-bridge"
+    },
+    {
+      "signal": "Skill \"skill-test-generator\" last improved: 30 → 36/36",
+      "source": "skills/working-skill-test-generator/events.jsonl",
+      "current_capability": "skill-test-generator"
+    },
+    {
+      "signal": "Skill \"system-dashboard-generator\" last improved: 32 → 34/36",
+      "source": "skills/working-system-dashboard-generator/events.jsonl",
+      "current_capability": "system-dashboard-generator"
+    },
+    {
+      "signal": "Skill \"system-status-reporter\" last improved: 26 → 28/36",
+      "source": "skills/working-system-status-reporter/events.jsonl",
+      "current_capability": "system-status-reporter"
+    },
+    {
+      "signal": "Skill \"title-variants\" last improved: 33 → 35/36",
+      "source": "skills/working-title-variants/events.jsonl",
+      "current_capability": "title-variants"
+    },
+    {
+      "signal": "Skill \"video-to-action\" last improved: 34 → 36/36",
+      "source": "skills/working-video-to-action/events.jsonl",
+      "current_capability": "video-to-action"
+    },
+    {
+      "signal": "Skill \"welcome-email\" last improved: 12 → 36/36",
+      "source": "skills/working-welcome-email/events.jsonl",
+      "current_capability": "welcome-email"
+    },
+    {
+      "signal": "Skill \"youtube-channel-analysis\" last improved: 25 → 36/36",
+      "source": "skills/working-youtube-channel-analysis/events.jsonl",
+      "current_capability": "youtube-channel-analysis"
+    },
+    {
+      "signal": "Skill \"youtube-outliers\" last improved: 8 → 36/36",
+      "source": "skills/working-youtube-outliers/events.jsonl",
+      "current_capability": "youtube-outliers"
+    },
+    {
+      "signal": "Skill \"container-security-auditor\" score plateaued at 37 for 3 rounds",
+      "source": "skills/working-container-security-auditor/rounds.json",
+      "current_capability": "container-security-auditor"
+    },
+    {
+      "signal": "Skill \"container-security-auditor\" has 5 unresolved failure(s) in round 4",
+      "source": "skills/working-container-security-auditor/rounds.json",
+      "current_capability": "container-security-auditor"
+    },
+    {
+      "signal": "Skill \"content-strategy-optimizer\" has 30 unresolved failure(s) in round 12",
       "source": "skills/working-content-strategy-optimizer/rounds.json",
       "current_capability": "content-strategy-optimizer"
     },
@@ -163,6 +238,11 @@
       "signal": "Skill \"cross-niche-outliers\" has 9 unresolved failure(s) in round 4",
       "source": "skills/working-cross-niche-outliers/rounds.json",
       "current_capability": "cross-niche-outliers"
+    },
+    {
+      "signal": "Skill \"defi-arbitrage-executor\" score plateaued at 36 for 3 rounds",
+      "source": "skills/working-defi-arbitrage-executor/rounds.json",
+      "current_capability": "defi-arbitrage-executor"
     },
     {
       "signal": "Skill \"failure-log-analyzer\" score plateaued at 30 for 3 rounds",
@@ -185,6 +265,41 @@
       "current_capability": "gmail-label"
     },
     {
+      "signal": "Skill \"gmaps-leads\" has 4 unresolved failure(s) in round 4",
+      "source": "skills/working-gmaps-leads/rounds.json",
+      "current_capability": "gmaps-leads"
+    },
+    {
+      "signal": "Skill \"inbox-cleaner\" has 1 unresolved failure(s) in round 4",
+      "source": "skills/working-inbox-cleaner/rounds.json",
+      "current_capability": "inbox-cleaner"
+    },
+    {
+      "signal": "Skill \"instantly-autoreply\" has 6 unresolved failure(s) in round 4",
+      "source": "skills/working-instantly-autoreply/rounds.json",
+      "current_capability": "instantly-autoreply"
+    },
+    {
+      "signal": "Skill \"instantly-campaigns\" has 7 unresolved failure(s) in round 4",
+      "source": "skills/working-instantly-campaigns/rounds.json",
+      "current_capability": "instantly-campaigns"
+    },
+    {
+      "signal": "Skill \"k8s-deployment-manager\" score plateaued at 36 for 3 rounds",
+      "source": "skills/working-k8s-deployment-manager/rounds.json",
+      "current_capability": "k8s-deployment-manager"
+    },
+    {
+      "signal": "Skill \"onboarding-kickoff\" has 2 unresolved failure(s) in round 4",
+      "source": "skills/working-onboarding-kickoff/rounds.json",
+      "current_capability": "onboarding-kickoff"
+    },
+    {
+      "signal": "Skill \"prompt-refiner-for-robustness\" score plateaued at 36 for 3 rounds",
+      "source": "skills/working-prompt-refiner-for-robustness/rounds.json",
+      "current_capability": "prompt-refiner-for-robustness"
+    },
+    {
       "signal": "Skill \"scaffold\" has 11 unresolved failure(s) in round 5",
       "source": "skills/working-scaffold/rounds.json",
       "current_capability": "scaffold"
@@ -198,55 +313,105 @@
       "signal": "Skill \"skill-improver\" has 6 unresolved failure(s) in round 4",
       "source": "skills/working-skill-improver/rounds.json",
       "current_capability": "skill-improver"
+    },
+    {
+      "signal": "Skill \"skill-optimizer-v2\" score plateaued at 36 for 3 rounds",
+      "source": "skills/working-skill-optimizer-v2/rounds.json",
+      "current_capability": "skill-optimizer-v2"
+    },
+    {
+      "signal": "Skill \"skill-test-generator\" score plateaued at 36 for 3 rounds",
+      "source": "skills/working-skill-test-generator/rounds.json",
+      "current_capability": "skill-test-generator"
+    },
+    {
+      "signal": "Skill \"skill-test-runner\" score plateaued at 36 for 3 rounds",
+      "source": "skills/working-skill-test-runner/rounds.json",
+      "current_capability": "skill-test-runner"
+    },
+    {
+      "signal": "Skill \"stuck-skill-diagnoser\" score plateaued at 42 for 3 rounds",
+      "source": "skills/working-stuck-skill-diagnoser/rounds.json",
+      "current_capability": "stuck-skill-diagnoser"
+    },
+    {
+      "signal": "Skill \"system-dashboard-generator\" has 2 unresolved failure(s) in round 4",
+      "source": "skills/working-system-dashboard-generator/rounds.json",
+      "current_capability": "system-dashboard-generator"
+    },
+    {
+      "signal": "Skill \"system-status-reporter\" has 14 unresolved failure(s) in round 4",
+      "source": "skills/working-system-status-reporter/rounds.json",
+      "current_capability": "system-status-reporter"
+    },
+    {
+      "signal": "Skill \"title-variants\" has 6 unresolved failure(s) in round 4",
+      "source": "skills/working-title-variants/rounds.json",
+      "current_capability": "title-variants"
+    },
+    {
+      "signal": "Skill \"video-to-action\" has 2 unresolved failure(s) in round 4",
+      "source": "skills/working-video-to-action/rounds.json",
+      "current_capability": "video-to-action"
+    },
+    {
+      "signal": "Skill \"welcome-email\" score plateaued at 36 for 3 rounds",
+      "source": "skills/working-welcome-email/rounds.json",
+      "current_capability": "welcome-email"
+    },
+    {
+      "signal": "Skill \"youtube-channel-analysis\" score plateaued at 36 for 3 rounds",
+      "source": "skills/working-youtube-channel-analysis/rounds.json",
+      "current_capability": "youtube-channel-analysis"
     }
   ],
   "user_intent_signals": [
     {
-      "signal": "User intent pattern: \"skill improvement\" detected across tmux transcripts",
-      "source": "tmux-logs transcripts (14 files scanned)",
-      "frequency": 457,
-      "current_capability": null
-    },
-    {
-      "signal": "User intent pattern: \"security audit\" detected across tmux transcripts",
-      "source": "tmux-logs transcripts (14 files scanned)",
-      "frequency": 34,
-      "current_capability": null
-    },
-    {
-      "signal": "User intent pattern: \"documentation\" detected across tmux transcripts",
-      "source": "tmux-logs transcripts (14 files scanned)",
-      "frequency": 44,
-      "current_capability": null
-    },
-    {
-      "signal": "User intent pattern: \"deployment\" detected across tmux transcripts",
-      "source": "tmux-logs transcripts (14 files scanned)",
-      "frequency": 170,
-      "current_capability": null
-    },
-    {
-      "signal": "User intent pattern: \"testing\" detected across tmux transcripts",
-      "source": "tmux-logs transcripts (14 files scanned)",
-      "frequency": 112,
-      "current_capability": null
-    },
-    {
-      "signal": "User intent pattern: \"dashboard\" detected across tmux transcripts",
-      "source": "tmux-logs transcripts (14 files scanned)",
-      "frequency": 419,
-      "current_capability": null
-    },
-    {
       "signal": "User intent pattern: \"research pipeline\" detected across tmux transcripts",
-      "source": "tmux-logs transcripts (14 files scanned)",
-      "frequency": 127,
+      "source": "tmux-logs transcripts (19 files scanned)",
+      "frequency": 146,
+      "current_capability": null
+    },
+    {
+      "signal": "User intent pattern: \"skill improvement\" detected across tmux transcripts",
+      "source": "tmux-logs transcripts (19 files scanned)",
+      "frequency": 1363,
       "current_capability": null
     },
     {
       "signal": "User intent pattern: \"error debugging\" detected across tmux transcripts",
-      "source": "tmux-logs transcripts (14 files scanned)",
-      "frequency": 382,
+      "source": "tmux-logs transcripts (19 files scanned)",
+      "frequency": 626,
+      "current_capability": null
+    },
+    {
+      "signal": "User intent pattern: \"security audit\" detected across tmux transcripts",
+      "source": "tmux-logs transcripts (19 files scanned)",
+      "frequency": 23,
+      "current_capability": null
+    },
+    {
+      "signal": "User intent pattern: \"deployment\" detected across tmux transcripts",
+      "source": "tmux-logs transcripts (19 files scanned)",
+      "frequency": 459,
+      "current_capability": null
+    },
+    {
+      "signal": "User intent pattern: \"testing\" detected across tmux transcripts",
+      "source": "tmux-logs transcripts (19 files scanned)",
+      "frequency": 246,
+      "current_capability": null
+    },
+    {
+      "signal": "User intent pattern: \"dashboard\" detected across tmux transcripts",
+      "source": "tmux-logs transcripts (19 files scanned)",
+      "frequency": 625,
+      "current_capability": null
+    },
+    {
+      "signal": "User intent pattern: \"documentation\" detected across tmux transcripts",
+      "source": "tmux-logs transcripts (19 files scanned)",
+      "frequency": 33,
       "current_capability": null
     }
   ],
@@ -270,7 +435,11 @@
           "exists": true
         }
       ],
-      "existing_skills": [],
+      "existing_skills": [
+        "literature-research (seed-base)",
+        "nate-synthesis-and-debate (seed-base)",
+        "nate-synthesis-and-debate (builds-karve-ai)"
+      ],
       "existing_autoresearch_skills": [
         "autoresearch-runner.mjs",
         "autoresearch-runner.py"
@@ -295,8 +464,10 @@
       "scope": "global",
       "data_available": false,
       "existing_skills": [],
-      "existing_autoresearch_skills": [],
-      "gap": "Active MCP with no matching skills — domain entirely uncovered"
+      "existing_autoresearch_skills": [
+        "working-defi-arbitrage-executor"
+      ],
+      "gap": "Autoresearch skills exist for this domain"
     },
     {
       "mcp_server": "tradfi-tools",
@@ -310,6 +481,27 @@
       ],
       "tool_count": 24,
       "tool_namespace": "mcp__tradfi-tools__",
+      "scope": "global",
+      "data_available": false,
+      "existing_skills": [],
+      "existing_autoresearch_skills": [],
+      "gap": "Active MCP with no matching skills — domain entirely uncovered"
+    },
+    {
+      "mcp_server": "polymarket-mcp",
+      "domain": "prediction_markets",
+      "subdomains": [
+        "market_discovery",
+        "orderbook_trading",
+        "portfolio_tracking",
+        "flash_crash_detection",
+        "websocket_monitoring",
+        "ctf_operations",
+        "gasless_trading",
+        "probability_analysis"
+      ],
+      "tool_count": null,
+      "tool_namespace": "mcp__polymarket-mcp__",
       "scope": "global",
       "data_available": false,
       "existing_skills": [],
@@ -342,7 +534,11 @@
           "exists": true
         }
       ],
-      "existing_skills": [],
+      "existing_skills": [
+        "mattgiaro-substack-agent (builds-karve-ai)",
+        "mattgiaro-substack-growth (builds-karve-ai)",
+        "mattgiaro-substack-guide (builds-karve-ai)"
+      ],
       "existing_autoresearch_skills": [
         "working-content-strategy-optimizer"
       ],
@@ -370,7 +566,15 @@
           "exists": true
         }
       ],
-      "existing_skills": [],
+      "existing_skills": [
+        "eaas-domain-expansion-agent-team-v1 (seed-base)",
+        "eaas-expansion-brainstorm-to-blueprint-v1 (seed-base)",
+        "eaas-platform-build-self-discovery-v1 (seed-base)",
+        "eaas-domain-expansion-agent-team-v1 (builds-karve-ai)",
+        "eaas-expansion-brainstorm-to-blueprint-v1 (builds-karve-ai)",
+        "eaas-platform-build-self-discovery-v1 (builds-karve-ai)",
+        "platform (builds-karve-ai)"
+      ],
       "existing_autoresearch_skills": [
         "working-eaas-payment-linker"
       ],
@@ -378,12 +582,12 @@
     }
   ],
   "summary": {
-    "total_demands": 39,
+    "total_demands": 72,
     "unmet_demands": 9,
-    "partially_met": 30,
+    "partially_met": 63,
     "research_gap_count": 1,
     "system_gap_count": 0,
-    "mcp_domain_count": 5,
+    "mcp_domain_count": 6,
     "mcp_uncovered_domains": 2,
     "mcp_partial_domains": 0
   }

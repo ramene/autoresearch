@@ -1,0 +1,16 @@
+{
+  "scenarios": [
+    {"id": 1, "type": "happy", "title": "Analyze a market with good liquidity and tight spread", "event": "User asks to analyze a high-volume prediction market", "expectedAction": "Generate BUY or HOLD recommendation with high confidence, cite metrics", "expectedType": "action"},
+    {"id": 2, "type": "happy", "title": "Analyze a market with low liquidity", "event": "User asks about a thinly traded market", "expectedAction": "Generate AVOID recommendation with low confidence, warn about liquidity risk", "expectedType": "action"},
+    {"id": 3, "type": "happy", "title": "Compare 5 markets and rank by opportunity", "event": "User asks to compare several markets side-by-side", "expectedAction": "Analyze all markets, rank by composite score, display comparison table", "expectedType": "action"},
+    {"id": 4, "type": "diagnostic", "title": "Market has closed or been resolved", "event": "User asks to analyze a resolved market", "expectedAction": "Report that market is no longer active, show resolution outcome", "expectedType": "action"},
+    {"id": 5, "type": "edge", "title": "Spread exceeds 5% tolerance", "event": "User asks about a market with very wide spread", "expectedAction": "Flag as high risk, generate AVOID recommendation, explain spread impact", "expectedType": "action"}
+  ],
+  "criteria": [
+    "Analysis uses real-time orderbook and volume data: Does the skill fetch current market data for analysis?",
+    "Risk assessment categorizes correctly: Does the skill identify high/medium/low risk based on metrics?",
+    "Recommendations are actionable with confidence scores: Does the skill produce BUY/SELL/HOLD/AVOID with 0-100 confidence?",
+    "Market comparison ranks meaningfully: Does the skill compare markets using consistent metrics?",
+    "Safety limits inform risk assessment: Does the skill consider configured safety thresholds?"
+  ]
+}
