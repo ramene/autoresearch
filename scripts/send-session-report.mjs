@@ -9,6 +9,7 @@
  */
 import { readFileSync, existsSync, readdirSync, statSync } from 'fs'
 import { resolve, basename } from 'path'
+import { EMAIL_STYLE } from './email-theme.mjs'
 
 const CRED = '/usr/local/etc/autoresearch-credentials/resend-api-key.txt'
 const TO = 'ramene.anthony@gmail.com'
@@ -61,7 +62,7 @@ if (planFile && existsSync(planFile)) {
   // Count phases
   const phases = (plan.match(/^###?\s+Phase\s+\d/gm) || []).length
   const targets = (plan.match(/\*\*Workspace\*\*/g) || []).length
-  planSummary = `${desc}\n  Phases: ${phases} | Targets: ${targets}`
+  planSummary = `${desc}\nPhases: ${phases} | Targets: ${targets}`
 }
 
 // MCP servers
@@ -91,66 +92,100 @@ try {
   if (remoteMatch) gitRemote = remoteMatch.trim()
 } catch {}
 
-// ─── Build report ────────────────────────────────────────────────────────────
+// ─── Build HTML report ───────────────────────────────────────────────────────
 
-const hr = '━'.repeat(50)
 const ts = new Date().toLocaleString('en-US', { timeZone: 'America/Chicago', dateStyle: 'medium', timeStyle: 'short' })
+const stateColor = planState === 'running' ? '#22c55e' : planState === 'completed' ? '#3b82f6' : '#9ca3af'
+const stateLabel = planState === 'running' ? 'ACTIVE' : planState === 'completed' ? 'COMPLETE' : planState.toUpperCase()
 
-let r = ''
-r += `🚀 SESSION PROVISIONED\n`
-r += `${hr}\n\n`
-r += `  Session:    ${sessionName}\n`
-r += `  Time:       ${ts}\n`
-r += `  State:      ${planState}\n`
-r += `\n`
+const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="supported-color-schemes" content="light">
+<style>${EMAIL_STYLE}</style>
+</head>
+<body style="background-color:#f1f5f9;margin:0;padding:0;">
+<div class="p-3 sm-p-6">
+<div class="card">
 
-r += `${hr}\n`
-r += `  WORKSPACE\n`
-r += `${hr}\n\n`
-r += `  Path:       ${workspace}\n`
-r += `  Git:        ${gitRemote}\n`
-r += `  Skills:     ${skillCount} installed\n`
-if (skillNames.length > 0) {
-  r += `              ${skillNames.join(', ')}${skillCount > 10 ? ', ...' : ''}\n`
-}
-r += `  Ecosystem:  ${ecosystemCount} sibling projects\n`
-r += `  Logs:       ${logsExist ? logsDir : 'not yet created'}\n`
-r += `\n`
+  <div class="header-session p-5 sm-px-7 border-b-2">
+    <div class="text-xs uppercase tracking-wider mb-1" style="color:#cbd5e1;">Session Provisioned</div>
+    <div class="text-lg sm-text-xl font-bold text-white" style="word-wrap:break-word;">${planTitle}</div>
+    <div class="mt-2">
+      <span class="inline-block rounded-full text-xs font-semibold" style="background:${stateColor}22;color:${stateColor};border:1px solid ${stateColor}66;padding:2px 10px;">${stateLabel}</span>
+      <span class="text-xs" style="color:#cbd5e1;margin-left:8px;">${ts}</span>
+    </div>
+  </div>
 
-r += `${hr}\n`
-r += `  PLAN\n`
-r += `${hr}\n\n`
-r += `  Title:      ${planTitle}\n`
-r += `  ${planSummary}\n`
-r += `\n`
+  <div class="px-4 py-3 sm-px-7 border-b">
+    <div class="section-label">Plan</div>
+    <div class="text-sm text-slate-700" style="line-height:1.5;font-size:13px;">${planSummary.replace(/\n/g, '<br>')}</div>
+  </div>
 
-r += `${hr}\n`
-r += `  MCP SERVERS (${mcpServers.length})\n`
-r += `${hr}\n\n`
-for (const mcp of mcpServers) {
-  r += `  • ${mcp}\n`
-}
-r += `\n`
+  <div class="flex flex-wrap border-b">
+    <div class="stat-item">
+      <div class="stat-num" style="color:#d97706;">${skillCount}</div>
+      <div class="stat-label">Skills</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" style="color:#7c3aed;">${ecosystemCount}</div>
+      <div class="stat-label">Ecosystem</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" style="color:#0891b2;">${mcpServers.length}</div>
+      <div class="stat-label">MCP Servers</div>
+    </div>
+  </div>
 
-r += `${hr}\n`
-r += `  CONFIGURATION\n`
-r += `${hr}\n\n`
-r += `  Agent Teams:      enabled\n`
-r += `  Permissions:      --dangerously-skip-permissions\n`
-r += `  Memory Bank:      5 files (activeContext, patterns, decisions, troubleshooting, ecosystem)\n`
-r += `\n`
+  <div class="px-4 py-3 sm-px-7 border-b">
+    <div class="section-label">Workspace</div>
+    <table class="info-table">
+      <tr><td class="info-key">Path</td><td class="info-val"><code class="code-val">${workspace}</code></td></tr>
+      <tr><td class="info-key">Git</td><td class="info-val">${gitRemote}</td></tr>
+      <tr><td class="info-key">Logs</td><td class="info-val">${logsExist ? logsDir : 'pending'}</td></tr>
+    </table>
+  </div>
 
-r += `${hr}\n`
-r += `Log: ${logsExist ? logsDir : 'pending'}\n`
+  <div class="px-4 py-3 sm-px-7 border-b">
+    <div class="section-label">MCP Servers</div>
+    <div>${mcpServers.map(m => `<span class="pill">${m}</span>`).join('')}</div>
+  </div>
 
-// ─── Send ────────────────────────────────────────────────────────────────────
+  <div class="px-4 py-3 sm-px-7 border-b">
+    <div class="section-label">Skills (${skillCount})</div>
+    <div>${skillNames.map(s => `<span class="skill-tag">${s}</span>`).join('')}${skillCount > 10 ? `<span class="text-slate-400" style="font-size:11px;">+${skillCount - 10} more</span>` : ''}</div>
+  </div>
 
-const subject = `🚀 Session: ${sessionName} | ${skillCount} skills | ${mcpServers.length} MCPs | ${planState}`
+  <div class="px-4 py-3 sm-px-7 border-b">
+    <div class="section-label">Configuration</div>
+    <div>
+      <span class="config-item"><span style="color:#16a34a;">●</span> Agent Teams</span>
+      <span class="config-item"><span style="color:#d97706;">●</span> Bypass Permissions</span>
+      <span class="config-item"><span style="color:#0891b2;">●</span> Memory Bank (5 files)</span>
+      <span class="config-item"><span style="color:#7c3aed;">●</span> tmux-logs</span>
+    </div>
+  </div>
+
+  <div class="px-4 py-3 sm-px-7 text-center">
+    <div class="text-slate-400" style="font-size:10px;">Session: <code class="font-mono" style="font-size:10px;color:#64748b;">${sessionName}</code></div>
+  </div>
+
+</div>
+</div>
+</body>
+</html>`
+
+// ─── Send HTML ───────────────────────────────────────────────────────────────
+
+const subject = `Session: ${planTitle.slice(0, 50)} | ${skillCount} skills | ${mcpServers.length} MCPs`
 
 fetch('https://api.resend.com/emails', {
   method: 'POST',
   headers: { 'Authorization': `Bearer ${key}`, 'Content-Type': 'application/json' },
-  body: JSON.stringify({ from: FROM, to: TO, subject, text: r }),
+  body: JSON.stringify({ from: FROM, to: TO, subject, html }),
 }).then(res => res.json()).then(d => {
   if (d.id) console.log(`→ Session report emailed (${d.id})`)
   else console.log(`→ Email error: ${JSON.stringify(d)}`)

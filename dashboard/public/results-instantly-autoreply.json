@@ -1,0 +1,314 @@
+{
+  "skill": "instantly-autoreply",
+  "criteria": [
+    "Task Completion",
+    "Error Handling",
+    "Output Quality",
+    "Tool Usage",
+    "Instructions Clarity",
+    "Completeness"
+  ],
+  "totalCost": 0.23,
+  "models": {
+    "mutator": "sonnet",
+    "evaluator": "gemini-2.5-pro"
+  },
+  "rounds": [
+    {
+      "round": 0,
+      "score": 8,
+      "max": 36,
+      "status": "baseline",
+      "mutation": "Added explicit agent action steps telling Claude what to DO when invoked, since all 6 scenarios fail on Instructions Clarity and Completeness — the skill only describes the system but never directs Claude's behavior.",
+      "cost": 0.05,
+      "criteria": [
+        1,
+        1,
+        1,
+        5,
+        0,
+        0
+      ],
+      "failures": [
+        {
+          "scenario": 1,
+          "criterion": "Instructions Clarity"
+        },
+        {
+          "scenario": 1,
+          "criterion": "Completeness"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Task Completion"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Error Handling"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Output Quality"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Instructions Clarity"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Completeness"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Task Completion"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Error Handling"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Output Quality"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Instructions Clarity"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Completeness"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Task Completion"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Error Handling"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Output Quality"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Instructions Clarity"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Completeness"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Task Completion"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Error Handling"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Output Quality"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Instructions Clarity"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Completeness"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Task Completion"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Error Handling"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Output Quality"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Tool Usage"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Instructions Clarity"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Completeness"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Initial baseline evaluation",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-20T20:30:49.172Z",
+      "changelog": "**Mutation**: Added explicit agent action steps telling Claude what to DO when invoked, since all 6 scenarios fail on Instructions Clarity and Completeness — the skill only describes the system but never directs Claude's behavior.\n**Failures**: S1: Instructions Clarity, S1: Completeness, S2: Task Completion, S2: Error Handling, S2: Output Quality, S2: Instructions Clarity, S2: Completeness, S3: Task Completion, S3: Error Handling, S3: Output Quality, S3: Instructions Clarity, S3: Completeness, S4: Task Completion, S4: Error Handling, S4: Output Quality, S4: Instructions Clarity, S4: Completeness, S5: Task Completion, S5: Error Handling, S5: Output Quality, S5: Instructions Clarity, S5: Completeness, S6: Task Completion, S6: Error Handling, S6: Output Quality, S6: Tool Usage, S6: Instructions Clarity, S6: Completeness\n**Per-criteria**: Task Completion: 1/6, Error Handling: 1/6, Output Quality: 1/6, Tool Usage: 5/6, Instructions Clarity: 0/6, Completeness: 0/6\n**Decision**: Initial baseline evaluation"
+    },
+    {
+      "round": 1,
+      "score": 28,
+      "max": 36,
+      "status": "kept",
+      "mutation": "Replace `cat` bash command in step 6 with explicit `Read` tool instruction, since CLAUDE.md prohibits using cat/bash for file reading and the Tool Usage failure in scenario 3 indicates Claude is using the wrong tool for script diagnosis.",
+      "cost": 0.05,
+      "criteria": [
+        3,
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "failures": [
+        {
+          "scenario": 3,
+          "criterion": "Task Completion"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Error Handling"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Output Quality"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Tool Usage"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Instructions Clarity"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Completeness"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Task Completion"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Task Completion"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Improved from 8 to 28",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-20T20:31:48.318Z",
+      "changelog": "**Mutation**: Replace `cat` bash command in step 6 with explicit `Read` tool instruction, since CLAUDE.md prohibits using cat/bash for file reading and the Tool Usage failure in scenario 3 indicates Claude is using the wrong tool for script diagnosis.\n**Failures**: S3: Task Completion, S3: Error Handling, S3: Output Quality, S3: Tool Usage, S3: Instructions Clarity, S3: Completeness, S4: Task Completion, S6: Task Completion\n**Per-criteria**: Task Completion: 3/6, Error Handling: 5/6, Output Quality: 5/6, Tool Usage: 5/6, Instructions Clarity: 5/6, Completeness: 5/6\n**Decision**: Improved from 8 to 28"
+    },
+    {
+      "round": 2,
+      "score": 36,
+      "max": 36,
+      "status": "kept",
+      "mutation": "Expand step 5 (Report results) to explicitly instruct Claude how to parse and present script output, including what to show when output is ambiguous or the reply status is unclear — addressing Task Completion failures where Claude doesn't extract the right information from script output.",
+      "cost": 0.05,
+      "criteria": [
+        6,
+        6,
+        6,
+        6,
+        6,
+        6
+      ],
+      "failures": [],
+      "geminiThoughts": null,
+      "decisionReason": "Improved from 28 to 36",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-20T20:32:54.633Z",
+      "changelog": "**Mutation**: Expand step 5 (Report results) to explicitly instruct Claude how to parse and present script output, including what to show when output is ambiguous or the reply status is unclear — addressing Task Completion failures where Claude doesn't extract the right information from script output.\n**Failures**: none\n**Per-criteria**: Task Completion: 6/6, Error Handling: 6/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 6/6, Completeness: 6/6\n**Decision**: Improved from 28 to 36"
+    },
+    {
+      "round": 3,
+      "score": 36,
+      "max": 36,
+      "status": "reverted",
+      "mutation": "No failures exist (36/36 score) — applied a minor clarification to step 3 to explicitly handle the edge case where a thread ID appears embedded in a URL or message body, preventing potential confusion in extraction.",
+      "cost": 0.05,
+      "criteria": [
+        6,
+        6,
+        6,
+        6,
+        6,
+        6
+      ],
+      "failures": [],
+      "geminiThoughts": null,
+      "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-20T20:34:20.397Z",
+      "changelog": "**Mutation**: No failures exist (36/36 score) — applied a minor clarification to step 3 to explicitly handle the edge case where a thread ID appears embedded in a URL or message body, preventing potential confusion in extraction.\n**Failures**: none\n**Per-criteria**: Task Completion: 6/6, Error Handling: 6/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 6/6, Completeness: 6/6\n**Decision**: Score 36 did not exceed best 36 — mutation produced worse or equal results"
+    },
+    {
+      "round": 4,
+      "score": 30,
+      "max": 36,
+      "status": "reverted",
+      "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-instantly-autoreply/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\nnode:internal/modules/cjs/loader:1408\n  throw err;\n  ^\n\nError: Cannot find module '/Users/ramene/.nvm/versions/node/v23.11.1/bin/claude'\n    at Function._resolveFilename (node:internal/modules/cjs/loader:1405:15)\n    at defaultResolveImpl (node:internal/modules/cjs/loader:1061:19)\n    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1066:22)\n    at Function._load (node:internal/modules/cjs/loader:1215:37)\n    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)\n    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:151:5)\n    at node:internal/main/run_main_module:33:47 {\n  code: 'MODULE_NOT_FOUND',\n  requireStack: []\n}\n\nNode.js v23.11.1\n",
+      "cost": 0.03,
+      "criteria": [
+        3,
+        5,
+        5,
+        6,
+        6,
+        5
+      ],
+      "failures": [
+        {
+          "scenario": 4,
+          "criterion": "Task Completion"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Task Completion"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Error Handling"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Output Quality"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Completeness"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Task Completion"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 30 did not exceed best 36 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-20T20:35:22.156Z",
+      "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-instantly-autoreply/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\nnode:internal/modules/cjs/loader:1408\n  throw err;\n  ^\n\nError: Cannot find module '/Users/ramene/.nvm/versions/node/v23.11.1/bin/claude'\n    at Function._resolveFilename (node:internal/modules/cjs/loader:1405:15)\n    at defaultResolveImpl (node:internal/modules/cjs/loader:1061:19)\n    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1066:22)\n    at Function._load (node:internal/modules/cjs/loader:1215:37)\n    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)\n    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:151:5)\n    at node:internal/main/run_main_module:33:47 {\n  code: 'MODULE_NOT_FOUND',\n  requireStack: []\n}\n\nNode.js v23.11.1\n\n**Failures**: S4: Task Completion, S5: Task Completion, S5: Error Handling, S5: Output Quality, S5: Completeness, S6: Task Completion"
+    }
+  ]
+}

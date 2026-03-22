@@ -1,0 +1,146 @@
+{
+  "skill": "polymarket-websocket-monitor",
+  "criteria": [
+    "WebSocket connection maintained with heartbeat",
+    "Events correctly parsed and filtered",
+    "User channel authenticates successfully",
+    "Dynamic subscription changes work",
+    "Events logged in structured format"
+  ],
+  "totalCost": 0.25,
+  "models": {
+    "mutator": "sonnet",
+    "evaluator": "gemini-2.5-pro"
+  },
+  "rounds": [
+    {
+      "round": 0,
+      "score": 23,
+      "max": 25,
+      "status": "baseline",
+      "mutation": "Added explicit reconnection-on-drop logic and clarified heartbeat failure handling in Execution Steps, since both failing criteria (heartbeat maintenance and dynamic subscriptions) break when a connection silently drops without reconnect.",
+      "cost": 0.05,
+      "criteria": [
+        4,
+        5,
+        5,
+        4,
+        5
+      ],
+      "failures": [
+        {
+          "scenario": 4,
+          "criterion": "WebSocket connection maintained with heartbeat"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Dynamic subscription changes work"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Initial baseline evaluation",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-21T10:05:12.897Z",
+      "changelog": "**Mutation**: Added explicit reconnection-on-drop logic and clarified heartbeat failure handling in Execution Steps, since both failing criteria (heartbeat maintenance and dynamic subscriptions) break when a connection silently drops without reconnect.\n**Failures**: S4: WebSocket connection maintained with heartbeat, S4: Dynamic subscription changes work\n**Per-criteria**: WebSocket connection maintained with heartbeat: 4/5, Events correctly parsed and filtered: 5/5, User channel authenticates successfully: 5/5, Dynamic subscription changes work: 4/5, Events logged in structured format: 5/5\n**Decision**: Initial baseline evaluation"
+    },
+    {
+      "round": 1,
+      "score": 25,
+      "max": 25,
+      "status": "kept",
+      "mutation": "Added explicit timeout (5 seconds) and fallback (treat as dropped, trigger reconnect+resubscribe) for dynamic subscription verification in Step 5, making the failure path concrete and testable rather than ambiguous.",
+      "cost": 0.05,
+      "criteria": [
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "failures": [],
+      "geminiThoughts": null,
+      "decisionReason": "Improved from 23 to 25",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-21T10:06:12.869Z",
+      "changelog": "**Mutation**: Added explicit timeout (5 seconds) and fallback (treat as dropped, trigger reconnect+resubscribe) for dynamic subscription verification in Step 5, making the failure path concrete and testable rather than ambiguous.\n**Failures**: none\n**Per-criteria**: WebSocket connection maintained with heartbeat: 5/5, Events correctly parsed and filtered: 5/5, User channel authenticates successfully: 5/5, Dynamic subscription changes work: 5/5, Events logged in structured format: 5/5\n**Decision**: Improved from 23 to 25"
+    },
+    {
+      "round": 2,
+      "score": 25,
+      "max": 25,
+      "status": "reverted",
+      "mutation": "No failures to fix — all criteria score 5/5. Applied a minor clarity improvement to the sports channel heartbeat note to make the bidirectional ping/pong behavior unambiguous and consistent with the other channels.",
+      "cost": 0.05,
+      "criteria": [
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "failures": [],
+      "geminiThoughts": null,
+      "decisionReason": "Score 25 did not exceed best 25 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-21T10:07:21.345Z",
+      "changelog": "**Mutation**: No failures to fix — all criteria score 5/5. Applied a minor clarity improvement to the sports channel heartbeat note to make the bidirectional ping/pong behavior unambiguous and consistent with the other channels.\n**Failures**: none\n**Per-criteria**: WebSocket connection maintained with heartbeat: 5/5, Events correctly parsed and filtered: 5/5, User channel authenticates successfully: 5/5, Dynamic subscription changes work: 5/5, Events logged in structured format: 5/5\n**Decision**: Score 25 did not exceed best 25 — mutation produced worse or equal results"
+    },
+    {
+      "round": 3,
+      "score": 25,
+      "max": 25,
+      "status": "reverted",
+      "mutation": "No failures present — all criteria score 5/5. Applied a minor structural improvement to the Quality Gates section to align gate #6 with the tick_size_change event description in the Event Types table, making the relationship between tick size events and order rejection prevention more explicit and actionable.",
+      "cost": 0.05,
+      "criteria": [
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "failures": [],
+      "geminiThoughts": null,
+      "decisionReason": "Score 25 did not exceed best 25 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-21T10:08:07.725Z",
+      "changelog": "**Mutation**: No failures present — all criteria score 5/5. Applied a minor structural improvement to the Quality Gates section to align gate #6 with the tick_size_change event description in the Event Types table, making the relationship between tick size events and order rejection prevention more explicit and actionable.\n**Failures**: none\n**Per-criteria**: WebSocket connection maintained with heartbeat: 5/5, Events correctly parsed and filtered: 5/5, User channel authenticates successfully: 5/5, Dynamic subscription changes work: 5/5, Events logged in structured format: 5/5\n**Decision**: Score 25 did not exceed best 25 — mutation produced worse or equal results"
+    },
+    {
+      "round": 4,
+      "score": 25,
+      "max": 25,
+      "status": "reverted",
+      "mutation": "No failures present — all criteria score 5/5. Applied a minor clarity improvement to the Integration Points section to make the dependency relationship between websocket-monitor and downstream skills more explicit, clarifying which specific event types each downstream skill consumes.",
+      "cost": 0.05,
+      "criteria": [
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "failures": [],
+      "geminiThoughts": null,
+      "decisionReason": "Score 25 did not exceed best 25 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-21T10:09:01.585Z",
+      "changelog": "**Mutation**: No failures present — all criteria score 5/5. Applied a minor clarity improvement to the Integration Points section to make the dependency relationship between websocket-monitor and downstream skills more explicit, clarifying which specific event types each downstream skill consumes.\n**Failures**: none\n**Per-criteria**: WebSocket connection maintained with heartbeat: 5/5, Events correctly parsed and filtered: 5/5, User channel authenticates successfully: 5/5, Dynamic subscription changes work: 5/5, Events logged in structured format: 5/5\n**Decision**: Score 25 did not exceed best 25 — mutation produced worse or equal results"
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "skill": "polymarket-clob-trader",
+  "criteria": [
+    "L1 EIP-712 credential derivation and L2 HMAC authentication succeed",
+    "Order price conforms to market tick size",
+    "All order types (GTC, GTD, FOK, FAK) placed correctly",
+    "Batch orders up to 15 submitted in single request",
+    "Safety limits enforced before order submission",
+    "Heartbeat maintained to prevent order cancellation",
+    "Order lifecycle tracked from MATCHED to CONFIRMED/FAILED",
+    "Negative risk markets handled with correct exchange contract"
+  ],
+  "totalCost": 0.03,
+  "models": {
+    "mutator": "sonnet",
+    "evaluator": "gemini-2.5-pro"
+  },
+  "rounds": [
+    {
+      "round": 0,
+      "score": 64,
+      "max": 64,
+      "status": "baseline",
+      "mutation": "Original SKILL.md — no mutations",
+      "cost": 0.03,
+      "criteria": [
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8
+      ],
+      "failures": [],
+      "geminiThoughts": null,
+      "decisionReason": "Initial baseline evaluation",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-21T09:06:37.083Z",
+      "changelog": "Target reached at 64/64 (100.0%)\n**Mutation that achieved this**: Original SKILL.md — no mutations"
+    }
+  ]
+}

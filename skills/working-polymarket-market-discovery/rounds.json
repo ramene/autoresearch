@@ -250,5 +250,159 @@
     },
     "timestamp": "2026-03-21T09:42:43.045Z",
     "changelog": "**Mutation**: Refactor Execution Steps to use a sequential filtering pipeline that supports composite flag combinations (e.g., --category + --trending + --closing-soon), replacing mutually exclusive modes with a fetch-then-filter architecture.\n**Failures**: S1: Trending markets sorted by correct volume timeframe, S1: Category filtering uses correct tag parameter, S1: Closing-soon accurately identifies markets within time window, S1: 5-minute market discovery finds short-resolution markets, S2: Search returns relevant markets matching text query, S2: Category filtering uses correct tag parameter, S2: Closing-soon accurately identifies markets within time window, S2: 5-minute market discovery finds short-resolution markets, S3: Search returns relevant markets matching text query, S3: Trending markets sorted by correct volume timeframe, S3: Category filtering uses correct tag parameter, S4: Search returns relevant markets matching text query, S4: Trending markets sorted by correct volume timeframe, S4: Category filtering uses correct tag parameter, S4: 5-minute market discovery finds short-resolution markets, S5: Trending markets sorted by correct volume timeframe, S5: Category filtering uses correct tag parameter, S5: Closing-soon accurately identifies markets within time window, S5: 5-minute market discovery finds short-resolution markets, S6: Search returns relevant markets matching text query, S6: Trending markets sorted by correct volume timeframe, S6: Closing-soon accurately identifies markets within time window, S6: 5-minute market discovery finds short-resolution markets\n**Per-criteria**: Search returns relevant markets matching text query: 2/6, Trending markets sorted by correct volume timeframe: 1/6, Category filtering uses correct tag parameter: 1/6, Closing-soon accurately identifies markets within time window: 2/6, 5-minute market discovery finds short-resolution markets: 1/6, Output includes all IDs needed for downstream trading: 6/6\n**Decision**: Score 13 did not exceed best 36 — mutation produced worse or equal results"
+  },
+  {
+    "round": 5,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Clarified `--featured` mode fallback behavior to explicitly use `order=liquidity&ascending=false` sort parameter when no native featured filter exists, ensuring deterministic output instead of undefined \"top markets by liquidity\".",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-21T14:00:33.748Z",
+    "changelog": "**Mutation**: Clarified `--featured` mode fallback behavior to explicitly use `order=liquidity&ascending=false` sort parameter when no native featured filter exists, ensuring deterministic output instead of undefined \"top markets by liquidity\".\n**Failures**: none\n**Per-criteria**: Search returns relevant markets matching text query: 6/6, Trending markets sorted by correct volume timeframe: 6/6, Category filtering uses correct tag parameter: 6/6, Closing-soon accurately identifies markets within time window: 6/6, 5-minute market discovery finds short-resolution markets: 6/6, Output includes all IDs needed for downstream trading: 6/6\n**Decision**: Score 36 did not exceed best 36 — mutation produced worse or equal results"
+  },
+  {
+    "round": 6,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "No failures exist (36/36); applying minor defensive clarification to the `--event` mode to explicitly note that both slug and numeric ID lookups should extract and return the full `tokens` array from nested markets, ensuring downstream trading skills always receive token IDs even in event-bypass mode.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-21T14:02:23.405Z",
+    "changelog": "**Mutation**: No failures exist (36/36); applying minor defensive clarification to the `--event` mode to explicitly note that both slug and numeric ID lookups should extract and return the full `tokens` array from nested markets, ensuring downstream trading skills always receive token IDs even in event-bypass mode.\n**Failures**: none\n**Per-criteria**: Search returns relevant markets matching text query: 6/6, Trending markets sorted by correct volume timeframe: 6/6, Category filtering uses correct tag parameter: 6/6, Closing-soon accurately identifies markets within time window: 6/6, 5-minute market discovery finds short-resolution markets: 6/6, Output includes all IDs needed for downstream trading: 6/6\n**Decision**: Score 36 did not exceed best 36 — mutation produced worse or equal results"
+  },
+  {
+    "round": 7,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Clarify the distinction between the API sort parameter name (`volume_24hr`) and the local data field name (`volume24hr`) to prevent implementations from using the wrong identifier during client-side sorting vs API-side ordering.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-21T14:06:41.411Z",
+    "changelog": "**Mutation**: Clarify the distinction between the API sort parameter name (`volume_24hr`) and the local data field name (`volume24hr`) to prevent implementations from using the wrong identifier during client-side sorting vs API-side ordering.\n**Failures**: none\n**Per-criteria**: Search returns relevant markets matching text query: 6/6, Trending markets sorted by correct volume timeframe: 6/6, Category filtering uses correct tag parameter: 6/6, Closing-soon accurately identifies markets within time window: 6/6, 5-minute market discovery finds short-resolution markets: 6/6, Output includes all IDs needed for downstream trading: 6/6\n**Decision**: Score 36 did not exceed best 36 — mutation produced worse or equal results"
+  },
+  {
+    "round": 7,
+    "score": 36,
+    "max": 36,
+    "status": "escalation",
+    "mutation": "Stuck escalation: The optimization loop is stuck in a \"perfection plateau\" because the skill has fully solved its existing evaluation suite, achieving a perfect score of 36/36. Subsequent mutations are not improving th",
+    "cost": 0.03,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "decisionReason": "Stuck escalation triggered after 3+ rounds with no improvement",
+    "escalation": {
+      "diagnosis": "The optimization loop is stuck in a \"perfection plateau\" because the skill has fully solved its existing evaluation suite, achieving a perfect score of 36/36. Subsequent mutations are not improving the score because there are no failures to correct. Instead, the optimizer is applying minor, \"defensive\" clarifications and refactors (e.g., clarifying field names, fallback logic, timestamp handling). While these changes improve the prompt's robustness and clarity, they do not add new functionality that could be measured by a more advanced test suite. The root cause is not a flaw in the skill, but rather an evaluation suite that is no longer challenging enough to drive meaningful evolution.",
+      "evalRedesignNeeded": true,
+      "strategy": "Shift from defensive clarification to proactive feature expansion. The current skill excels at categorical and state-based filtering (`--category`, `--closing-soon`) and sorting (`--trending`). However, it lacks the ability to perform quantitative filtering on key market metrics like volume and liquidity. The new strategy is to introduce flags that allow users to filter markets based on numerical thresholds, a common and powerful requirement for traders. This will force the creation of new, more demanding evaluation scenarios that the current skill would fail, thereby breaking the local optimum and providing a clear path for improvement.",
+      "suggestedMutation": "Add new flags and a corresponding client-side filtering step to the execution pipeline for quantitative filtering on market volume and liquidity.\n\n1.  **Introduce New Flags:** In the `Trigger Conditions` section, add the following flags:\n    *   `--min-volume=<amount>`: Filter for markets with 24h volume greater than `<amount>`.\n    *   `--min-liquidity=<amount>`: Filter for markets with current liquidity greater than `<amount>`.\n\n2.  **Update Execution Step 4:** Add a new filtering stage to the client-side pipeline. This step should occur after the initial dataset is fetched but before the final sorting and limiting.\n\n    *   **New Step (e.g., 4.e):**\n        -   **`--min-volume` filter:** If the flag is present, convert the market's `volume24hr` field to a number and keep only markets where `volume24hr` >= `<amount>`.\n        -   **`--min-liquidity` filter:** If the flag is present, convert the market's `liquidity` field to a number and keep only markets where `liquidity` >= `<amount>`.\n\nThis change introduces a fundamentally new capability (quantitative filtering) that integrates perfectly into the existing pipeline architecture and enables more sophisticated queries like finding \"all crypto markets closing in 24 hours with at least $50,000 in volume.\""
+    },
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-21T14:08:14.840Z"
+  },
+  {
+    "round": 8,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Add --min-volume and --min-liquidity flags with client-side quantitative filtering step in the pipeline, enabling threshold-based market filtering on volume and liquidity metrics.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-21T14:08:45.645Z",
+    "changelog": "**Mutation**: Add --min-volume and --min-liquidity flags with client-side quantitative filtering step in the pipeline, enabling threshold-based market filtering on volume and liquidity metrics.\n**Failures**: none\n**Per-criteria**: Search returns relevant markets matching text query: 6/6, Trending markets sorted by correct volume timeframe: 6/6, Category filtering uses correct tag parameter: 6/6, Closing-soon accurately identifies markets within time window: 6/6, 5-minute market discovery finds short-resolution markets: 6/6, Output includes all IDs needed for downstream trading: 6/6\n**Decision**: Score 36 did not exceed best 36 — mutation produced worse or equal results"
+  },
+  {
+    "round": 9,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Explicitly apply end-date field priority (`end_date_iso` → `endDate` → `end_date`) to the `--trending` past-market exclusion filter, matching the same UTC timestamp resolution logic used by `--closing-soon` to prevent field-miss inconsistencies.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-21T14:10:00.482Z",
+    "changelog": "**Mutation**: Explicitly apply end-date field priority (`end_date_iso` → `endDate` → `end_date`) to the `--trending` past-market exclusion filter, matching the same UTC timestamp resolution logic used by `--closing-soon` to prevent field-miss inconsistencies.\n**Failures**: none\n**Per-criteria**: Search returns relevant markets matching text query: 6/6, Trending markets sorted by correct volume timeframe: 6/6, Category filtering uses correct tag parameter: 6/6, Closing-soon accurately identifies markets within time window: 6/6, 5-minute market discovery finds short-resolution markets: 6/6, Output includes all IDs needed for downstream trading: 6/6\n**Decision**: Score 36 did not exceed best 36 — mutation produced worse or equal results"
   }
 ]

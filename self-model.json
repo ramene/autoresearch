@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-03-21T09:00:19.509Z",
+  "timestamp": "2026-03-21T22:43:48.081Z",
   "version": "1.0",
   "skills": {
     "backup": {
@@ -130,32 +130,32 @@
       ]
     },
     "content-strategy-optimizer": {
-      "score": 18,
+      "score": 19,
       "max": 48,
-      "ratio": 0.375,
+      "ratio": 0.396,
       "trajectory": "improving",
       "weakest_criteria": [
         {
           "name": "Data Grounding",
-          "fail_rate": 0.929
+          "fail_rate": 0.875
         },
         {
           "name": "Actionability",
-          "fail_rate": 0.929
+          "fail_rate": 0.875
         },
         {
           "name": "Audience Awareness",
-          "fail_rate": 0.929
+          "fail_rate": 0.875
         }
       ],
       "strongest_criteria": [],
-      "rounds_completed": 14,
-      "rounds_kept": 5,
-      "cost_invested": 0.68,
-      "last_improvement": "2026-03-20T23:23:40.428Z",
+      "rounds_completed": 24,
+      "rounds_kept": 6,
+      "cost_invested": 1.14,
+      "last_improvement": "2026-03-21T17:53:12.139Z",
       "last_escalation": {
-        "diagnosis": "The optimization loop is stuck in a local optimum because it is treating a symptom, not the root cause. The history of mutations reveals a hyper-focus on forcing the agent to use tools without preamble narration (the \"Tool Utilization: 0/8\" failure). However, this is a red herring. The true root cause is the skill's **monolithic and brittle architecture**. Step 4 is a single, massive, all-or-nothing Bash script. This design is fundamentally flawed because it is opaque to the agent, prevents adaptation (e.g., handling flags like `--propose-topics`), and has a single point of failure. When the script fails silently (due to a `jq` error on unexpected data, for instance), the agent has no intermediate state to reason about, causing cascading failures in Data Grounding, Measurement, and Actionability. The optimizer is trying to fix the agent's behavior instead of fixing the skill's unworkable design.",
-        "timestamp": "2026-03-20T23:20:48.175Z"
+        "diagnosis": "The optimization is stuck in a local optimum because all recent mutations (Rounds 17-21) are attempting to solve a behavioral problem (the model prefers to summarize or simulate rather than execute) with instructional force (e.g., `EXECUTION CONTRACT`, `EXECUTE NOW`). This is a fundamental misunderstanding of the root cause. The problem is not that the instructions are unclear; it's that the skill's architecture—a long, brittle chain of interdependent tool calls that pass state via the filesystem—is antithetical to how the LLM operates. The model sees the entire prompt, understands the final goal is a markdown report, and attempts to generate it in one step, short-circuiting the intermediate tool calls. The repeated `Tool Utilization: 0/8` failure is the primary symptom of this architectural mismatch. Adding more aggressive instructional text is failing because it's trying to coerce the model into a procedural execution flow it is not designed for.",
+        "timestamp": "2026-03-21T22:12:36.108Z"
       },
       "stuck_count": 4,
       "criteria_names": [
@@ -672,24 +672,27 @@
       "weakest_criteria": [
         {
           "name": "Instructions Clarity",
-          "fail_rate": 0.6
+          "fail_rate": 0.364
         },
         {
           "name": "Completeness",
-          "fail_rate": 0.6
+          "fail_rate": 0.364
         },
         {
           "name": "Output Quality",
-          "fail_rate": 0.4
+          "fail_rate": 0.273
         }
       ],
       "strongest_criteria": [],
-      "rounds_completed": 5,
+      "rounds_completed": 11,
       "rounds_kept": 3,
-      "cost_invested": 0.25,
+      "cost_invested": 0.53,
       "last_improvement": "2026-03-20T12:03:03.586Z",
-      "last_escalation": null,
-      "stuck_count": 2,
+      "last_escalation": {
+        "diagnosis": "The optimization is stuck in a local optimum because the skill has been perfected against the existing test suite. The score of 36/36 indicates that the current workflow successfully handles all scenarios thrown at it, including basic email fetching, actions (label, archive), and authentication error recovery. The mutations from Round 3 onwards are minor or null-operations because there are no failure signals to guide the optimizer toward meaningful changes. The problem is not with the skill's quality but with the evaluation's limited scope; it isn't testing the full range of capabilities hinted at by the available scripts (e.g., `gmail_create_filters.py`).",
+        "timestamp": "2026-03-21T18:05:44.872Z"
+      },
+      "stuck_count": 5,
       "criteria_names": [
         "Task Completion",
         "Error Handling",
@@ -1076,18 +1079,34 @@
       ]
     },
     "polymarket-5min-strategy": {
-      "score": 0,
-      "max": 0,
-      "ratio": 0,
-      "trajectory": "untested",
+      "score": 25,
+      "max": 25,
+      "ratio": 1,
+      "trajectory": "stuck",
       "weakest_criteria": [],
-      "strongest_criteria": [],
-      "rounds_completed": 0,
+      "strongest_criteria": [
+        {
+          "name": "CVD calculation is correct",
+          "fail_rate": 0
+        },
+        {
+          "name": "Liquidation signals parsed correctly",
+          "fail_rate": 0
+        },
+        {
+          "name": "Signal combination produces valid directional trades",
+          "fail_rate": 0
+        }
+      ],
+      "rounds_completed": 6,
       "rounds_kept": 0,
-      "cost_invested": 0,
+      "cost_invested": 0.28,
       "last_improvement": null,
-      "last_escalation": null,
-      "stuck_count": 0,
+      "last_escalation": {
+        "diagnosis": "The optimization loop is stuck in a local optimum of \"functional correctness.\" The skill has perfectly implemented the logic described in its prompt, achieving a maximum score on an evaluation suite that only tests for implementation fidelity (i.e., \"does the code do what the markdown says?\"). The current quality gates validate calculation correctness, parsing, and rule application, but they do not measure the *effectiveness* or *profitability* of the trading strategy itself. Since there are no failures, the system has no error signal to guide further mutations and correctly assumes it has reached the peak for the given evaluation criteria. The problem is not the skill; it's the evaluation's limited scope.",
+        "timestamp": "2026-03-21T09:15:18.845Z"
+      },
+      "stuck_count": 3,
       "criteria_names": [
         "CVD calculation is correct",
         "Liquidation signals parsed correctly",
@@ -1159,16 +1178,29 @@
       ]
     },
     "polymarket-clob-trader": {
-      "score": 0,
-      "max": 0,
-      "ratio": 0,
-      "trajectory": "untested",
+      "score": 64,
+      "max": 64,
+      "ratio": 1,
+      "trajectory": "insufficient_data",
       "weakest_criteria": [],
-      "strongest_criteria": [],
-      "rounds_completed": 0,
-      "rounds_kept": 0,
-      "cost_invested": 0,
-      "last_improvement": null,
+      "strongest_criteria": [
+        {
+          "name": "L1 EIP-712 credential derivation and L2 HMAC authentication succeed",
+          "fail_rate": 0
+        },
+        {
+          "name": "Order price conforms to market tick size",
+          "fail_rate": 0
+        },
+        {
+          "name": "All order types (GTC, GTD, FOK, FAK) placed correctly",
+          "fail_rate": 0
+        }
+      ],
+      "rounds_completed": 1,
+      "rounds_kept": 1,
+      "cost_invested": 0.03,
+      "last_improvement": "2026-03-21T09:06:37.083Z",
       "last_escalation": null,
       "stuck_count": 0,
       "criteria_names": [
@@ -1194,18 +1226,40 @@
       ]
     },
     "polymarket-ctf-operations": {
-      "score": 0,
-      "max": 0,
-      "ratio": 0,
-      "trajectory": "untested",
-      "weakest_criteria": [],
-      "strongest_criteria": [],
-      "rounds_completed": 0,
-      "rounds_kept": 0,
-      "cost_invested": 0,
-      "last_improvement": null,
+      "score": 25,
+      "max": 25,
+      "ratio": 1,
+      "trajectory": "improving",
+      "weakest_criteria": [
+        {
+          "name": "Approvals set for correct contracts",
+          "fail_rate": 0.4
+        },
+        {
+          "name": "Correct contracts used for neg risk vs standard",
+          "fail_rate": 0.2
+        }
+      ],
+      "strongest_criteria": [
+        {
+          "name": "Split produces correct token amounts",
+          "fail_rate": 0
+        },
+        {
+          "name": "Merge returns correct USDC.e",
+          "fail_rate": 0
+        },
+        {
+          "name": "Redeem only works on resolved markets",
+          "fail_rate": 0
+        }
+      ],
+      "rounds_completed": 5,
+      "rounds_kept": 2,
+      "cost_invested": 0.25,
+      "last_improvement": "2026-03-21T09:08:52.768Z",
       "last_escalation": null,
-      "stuck_count": 0,
+      "stuck_count": 2,
       "criteria_names": [
         "Split produces correct token amounts",
         "Merge returns correct USDC.e",
@@ -1223,18 +1277,34 @@
       ]
     },
     "polymarket-flash-crash-detector": {
-      "score": 0,
-      "max": 0,
-      "ratio": 0,
-      "trajectory": "untested",
+      "score": 36,
+      "max": 36,
+      "ratio": 1,
+      "trajectory": "insufficient_data",
       "weakest_criteria": [],
-      "strongest_criteria": [],
-      "rounds_completed": 0,
-      "rounds_kept": 0,
-      "cost_invested": 0,
-      "last_improvement": null,
-      "last_escalation": null,
-      "stuck_count": 0,
+      "strongest_criteria": [
+        {
+          "name": "Crash detection triggers at correct threshold",
+          "fail_rate": 0
+        },
+        {
+          "name": "Paper trade mode works without placing real orders",
+          "fail_rate": 0
+        },
+        {
+          "name": "TP/SL exit conditions evaluated correctly",
+          "fail_rate": 0
+        }
+      ],
+      "rounds_completed": 6,
+      "rounds_kept": 1,
+      "cost_invested": 0.28,
+      "last_improvement": "2026-03-21T09:18:20.405Z",
+      "last_escalation": {
+        "diagnosis": "The optimization loop is stuck in a \"local optimum of correctness.\" The skill perfectly implements the simple, deterministic algorithm described, and the test scenarios perfectly validate that implementation. The score is 36/36 because the skill is flawless *against its own narrow definition of success*. The mutations have been cosmetic, merely rearranging or clarifying the description of these passing tests. They are not introducing new requirements or challenging the skill's robustness, so there is no new information for the optimization process to act upon. The system is optimizing the documentation of the tests, not the functionality of the skill.",
+        "timestamp": "2026-03-21T09:23:16.566Z"
+      },
+      "stuck_count": 3,
       "criteria_names": [
         "Crash detection triggers at correct threshold",
         "Paper trade mode works without placing real orders",
@@ -1254,18 +1324,36 @@
       ]
     },
     "polymarket-gasless-trader": {
-      "score": 0,
-      "max": 0,
-      "ratio": 0,
-      "trajectory": "untested",
-      "weakest_criteria": [],
-      "strongest_criteria": [],
-      "rounds_completed": 0,
-      "rounds_kept": 0,
-      "cost_invested": 0,
-      "last_improvement": null,
+      "score": 25,
+      "max": 25,
+      "ratio": 1,
+      "trajectory": "improving",
+      "weakest_criteria": [
+        {
+          "name": "Builder HMAC authentication works",
+          "fail_rate": 0.2
+        },
+        {
+          "name": "Safe wallet deployment succeeds",
+          "fail_rate": 0.2
+        },
+        {
+          "name": "Transactions reach confirmed state",
+          "fail_rate": 0.2
+        }
+      ],
+      "strongest_criteria": [
+        {
+          "name": "No POL gas required",
+          "fail_rate": 0
+        }
+      ],
+      "rounds_completed": 5,
+      "rounds_kept": 3,
+      "cost_invested": 0.25,
+      "last_improvement": "2026-03-21T09:26:58.606Z",
       "last_escalation": null,
-      "stuck_count": 0,
+      "stuck_count": 2,
       "criteria_names": [
         "Builder HMAC authentication works",
         "Safe wallet deployment succeeds",
@@ -1283,18 +1371,31 @@
       ]
     },
     "polymarket-market-analyzer": {
-      "score": 0,
-      "max": 0,
-      "ratio": 0,
-      "trajectory": "untested",
-      "weakest_criteria": [],
+      "score": 25,
+      "max": 25,
+      "ratio": 1,
+      "trajectory": "improving",
+      "weakest_criteria": [
+        {
+          "name": "Risk assessment categorizes correctly",
+          "fail_rate": 0.6
+        },
+        {
+          "name": "Recommendations are actionable with confidence scores",
+          "fail_rate": 0.6
+        },
+        {
+          "name": "Analysis uses real-time orderbook and volume data",
+          "fail_rate": 0.4
+        }
+      ],
       "strongest_criteria": [],
-      "rounds_completed": 0,
-      "rounds_kept": 0,
-      "cost_invested": 0,
-      "last_improvement": null,
+      "rounds_completed": 5,
+      "rounds_kept": 3,
+      "cost_invested": 0.25,
+      "last_improvement": "2026-03-21T09:33:53.359Z",
       "last_escalation": null,
-      "stuck_count": 0,
+      "stuck_count": 1,
       "criteria_names": [
         "Analysis uses real-time orderbook and volume data",
         "Risk assessment categorizes correctly",
@@ -1312,18 +1413,39 @@
       ]
     },
     "polymarket-market-discovery": {
-      "score": 0,
-      "max": 0,
-      "ratio": 0,
-      "trajectory": "untested",
-      "weakest_criteria": [],
-      "strongest_criteria": [],
-      "rounds_completed": 0,
-      "rounds_kept": 0,
-      "cost_invested": 0,
-      "last_improvement": null,
-      "last_escalation": null,
-      "stuck_count": 0,
+      "score": 36,
+      "max": 36,
+      "ratio": 1,
+      "trajectory": "stuck",
+      "weakest_criteria": [
+        {
+          "name": "Search returns relevant markets matching text query",
+          "fail_rate": 0.167
+        },
+        {
+          "name": "Trending markets sorted by correct volume timeframe",
+          "fail_rate": 0.083
+        },
+        {
+          "name": "Category filtering uses correct tag parameter",
+          "fail_rate": 0.083
+        }
+      ],
+      "strongest_criteria": [
+        {
+          "name": "Output includes all IDs needed for downstream trading",
+          "fail_rate": 0
+        }
+      ],
+      "rounds_completed": 12,
+      "rounds_kept": 1,
+      "cost_invested": 0.56,
+      "last_improvement": "2026-03-21T09:36:53.541Z",
+      "last_escalation": {
+        "diagnosis": "The optimization loop is stuck in a \"perfection plateau\" because the skill has fully solved its existing evaluation suite, achieving a perfect score of 36/36. Subsequent mutations are not improving the score because there are no failures to correct. Instead, the optimizer is applying minor, \"defensive\" clarifications and refactors (e.g., clarifying field names, fallback logic, timestamp handling). While these changes improve the prompt's robustness and clarity, they do not add new functionality that could be measured by a more advanced test suite. The root cause is not a flaw in the skill, but rather an evaluation suite that is no longer challenging enough to drive meaningful evolution.",
+        "timestamp": "2026-03-21T14:08:14.840Z"
+      },
+      "stuck_count": 4,
       "criteria_names": [
         "Search returns relevant markets matching text query",
         "Trending markets sorted by correct volume timeframe",
@@ -1343,18 +1465,43 @@
       ]
     },
     "polymarket-orderbook-reader": {
-      "score": 0,
-      "max": 0,
-      "ratio": 0,
-      "trajectory": "untested",
-      "weakest_criteria": [],
-      "strongest_criteria": [],
-      "rounds_completed": 0,
-      "rounds_kept": 0,
-      "cost_invested": 0,
-      "last_improvement": null,
-      "last_escalation": null,
-      "stuck_count": 0,
+      "score": 34,
+      "max": 36,
+      "ratio": 0.944,
+      "trajectory": "improving",
+      "weakest_criteria": [
+        {
+          "name": "Spread and midpoint calculated correctly",
+          "fail_rate": 0.833
+        },
+        {
+          "name": "Output includes sufficient data for downstream analysis",
+          "fail_rate": 0.833
+        },
+        {
+          "name": "Fill estimation walks orderbook for accurate slippage",
+          "fail_rate": 0.667
+        }
+      ],
+      "strongest_criteria": [
+        {
+          "name": "Batch queries handle multiple tokens efficiently",
+          "fail_rate": 0
+        },
+        {
+          "name": "Price history returns data at correct intervals",
+          "fail_rate": 0
+        }
+      ],
+      "rounds_completed": 6,
+      "rounds_kept": 2,
+      "cost_invested": 0.28,
+      "last_improvement": "2026-03-21T09:50:23.475Z",
+      "last_escalation": {
+        "diagnosis": "The optimization is stuck in a local optimum because the mutations are patching symptoms rather than addressing the root cause of structural ambiguity. The core issue is that the skill's instructions have evolved into a complex set of positive and negative constraints (`Always do X`, `Do NOT do Y`, `Optionally do Z but prefer X`). This creates multiple potential execution paths, and the AI agent is likely failing tests by occasionally choosing a suboptimal or deprecated path (e.g., using `/price` or `/midpoint` APIs instead of deriving values from the `/book` call). The last successful mutation (Round 4) forced a \"mandatory pre-step,\" which was a major improvement, but the rest of the document was not refactored to reflect this new, singular execution flow. The remaining instructions still mention the other endpoints, creating contradictions and cognitive load that lead to inconsistent execution.",
+        "timestamp": "2026-03-21T09:49:54.079Z"
+      },
+      "stuck_count": 3,
       "criteria_names": [
         "Orderbook correctly parsed with price/size levels",
         "Spread and midpoint calculated correctly",
@@ -1374,18 +1521,31 @@
       ]
     },
     "polymarket-portfolio-tracker": {
-      "score": 0,
-      "max": 0,
-      "ratio": 0,
-      "trajectory": "untested",
-      "weakest_criteria": [],
+      "score": 24,
+      "max": 25,
+      "ratio": 0.96,
+      "trajectory": "improving",
+      "weakest_criteria": [
+        {
+          "name": "Export format is structured and complete",
+          "fail_rate": 1
+        },
+        {
+          "name": "Positions accurately reflect on-chain state",
+          "fail_rate": 0.8
+        },
+        {
+          "name": "FIFO P&L calculation is mathematically correct",
+          "fail_rate": 0.6
+        }
+      ],
       "strongest_criteria": [],
-      "rounds_completed": 0,
-      "rounds_kept": 0,
-      "cost_invested": 0,
-      "last_improvement": null,
+      "rounds_completed": 5,
+      "rounds_kept": 3,
+      "cost_invested": 0.25,
+      "last_improvement": "2026-03-21T09:58:01.394Z",
       "last_escalation": null,
-      "stuck_count": 0,
+      "stuck_count": 1,
       "criteria_names": [
         "Positions accurately reflect on-chain state",
         "FIFO P&L calculation is mathematically correct",
@@ -1403,18 +1563,39 @@
       ]
     },
     "polymarket-position-manager": {
-      "score": 0,
-      "max": 0,
-      "ratio": 0,
-      "trajectory": "untested",
-      "weakest_criteria": [],
-      "strongest_criteria": [],
-      "rounds_completed": 0,
-      "rounds_kept": 0,
-      "cost_invested": 0,
-      "last_improvement": null,
-      "last_escalation": null,
-      "stuck_count": 0,
+      "score": 25,
+      "max": 25,
+      "ratio": 1,
+      "trajectory": "improving",
+      "weakest_criteria": [
+        {
+          "name": "TP/SL calculated correctly from entry + delta",
+          "fail_rate": 0.273
+        },
+        {
+          "name": "Exit orders triggered at threshold",
+          "fail_rate": 0.182
+        },
+        {
+          "name": "Win rate tracked accurately",
+          "fail_rate": 0.182
+        }
+      ],
+      "strongest_criteria": [
+        {
+          "name": "State persisted for monitoring restarts",
+          "fail_rate": 0
+        }
+      ],
+      "rounds_completed": 11,
+      "rounds_kept": 4,
+      "cost_invested": 0.53,
+      "last_improvement": "2026-03-21T10:02:07.318Z",
+      "last_escalation": {
+        "diagnosis": "The optimization loop is stuck because the skill has achieved a perfect score against the current evaluation suite. The test scenarios are no longer sophisticated enough to find flaws. The mutations being applied are \"reinforcements\" (e.g., adding examples, rephrasing) rather than introducing new functionality. This is a classic local optimum problem where the \"optimum\" is defined by an insufficiently complex evaluation environment. The skill has mastered the existing tests, and without new, more challenging test cases that cover advanced functionality, there is no performance gradient for the optimizer to climb.",
+        "timestamp": "2026-03-21T10:05:52.991Z"
+      },
+      "stuck_count": 5,
       "criteria_names": [
         "TP/SL calculated correctly from entry + delta",
         "Exit orders triggered at threshold",
@@ -1432,18 +1613,43 @@
       ]
     },
     "polymarket-websocket-monitor": {
-      "score": 0,
-      "max": 0,
-      "ratio": 0,
-      "trajectory": "untested",
-      "weakest_criteria": [],
-      "strongest_criteria": [],
-      "rounds_completed": 0,
-      "rounds_kept": 0,
-      "cost_invested": 0,
-      "last_improvement": null,
-      "last_escalation": null,
-      "stuck_count": 0,
+      "score": 25,
+      "max": 25,
+      "ratio": 1,
+      "trajectory": "improving",
+      "weakest_criteria": [
+        {
+          "name": "WebSocket connection maintained with heartbeat",
+          "fail_rate": 0.167
+        },
+        {
+          "name": "Dynamic subscription changes work",
+          "fail_rate": 0.167
+        }
+      ],
+      "strongest_criteria": [
+        {
+          "name": "Events correctly parsed and filtered",
+          "fail_rate": 0
+        },
+        {
+          "name": "User channel authenticates successfully",
+          "fail_rate": 0
+        },
+        {
+          "name": "Events logged in structured format",
+          "fail_rate": 0
+        }
+      ],
+      "rounds_completed": 6,
+      "rounds_kept": 2,
+      "cost_invested": 0.28,
+      "last_improvement": "2026-03-21T10:06:12.869Z",
+      "last_escalation": {
+        "diagnosis": "The optimization loop is stuck in a local optimum because the skill has perfectly satisfied the existing evaluation criteria, achieving a maximum score of 25/25. Subsequent mutations are minor \"clarity\" improvements because the system has no failure signals to guide functional enhancements. The root cause is an evaluation suite that has become too predictable; it tests for basic functionality and simple recovery (connection drops) but lacks scenarios that probe for more complex, real-world failure modes like data corruption, race conditions, or performance bottlenecks.",
+        "timestamp": "2026-03-21T10:10:06.064Z"
+      },
+      "stuck_count": 3,
       "criteria_names": [
         "WebSocket connection maintained with heartbeat",
         "Events correctly parsed and filtered",
@@ -1988,18 +2194,34 @@
       ]
     },
     "the-real-scrumness": {
-      "score": 0,
-      "max": 0,
-      "ratio": 0,
-      "trajectory": "untested",
+      "score": 36,
+      "max": 36,
+      "ratio": 1,
+      "trajectory": "insufficient_data",
       "weakest_criteria": [],
-      "strongest_criteria": [],
-      "rounds_completed": 0,
-      "rounds_kept": 0,
-      "cost_invested": 0,
-      "last_improvement": null,
-      "last_escalation": null,
-      "stuck_count": 0,
+      "strongest_criteria": [
+        {
+          "name": "Card Richness",
+          "fail_rate": 0
+        },
+        {
+          "name": "Deduplication",
+          "fail_rate": 0
+        },
+        {
+          "name": "Status Accuracy",
+          "fail_rate": 0
+        }
+      ],
+      "rounds_completed": 6,
+      "rounds_kept": 1,
+      "cost_invested": 0.28,
+      "last_improvement": "2026-03-21T12:01:33.850Z",
+      "last_escalation": {
+        "diagnosis": "The optimization loop is stuck because the skill has saturated its evaluation criteria. The current score of 36/36 indicates the skill perfectly meets all existing test scenarios. The recent mutations are all valid, proactive improvements that add clarity and handle edge cases (promotion readiness, sprint vs. status, escalation formatting). However, because the test harness lacks scenarios that specifically target these nuanced conditions, these improvements are invisible to the scoring system. The skill is getting better, but the ruler used to measure it is no longer precise enough to detect the improvement. The problem is not the skill's quality but the evaluation's lack of complexity.",
+        "timestamp": "2026-03-21T12:05:13.435Z"
+      },
+      "stuck_count": 3,
       "criteria_names": [
         "Card Richness",
         "Deduplication",
@@ -2345,16 +2567,27 @@
       "severity": "high"
     },
     {
-      "pattern": "2 skills have had rounds but no kept improvements",
+      "pattern": "3 skills are currently stuck (3+ consecutive reverts)",
       "affected_skills": [
         "context-drift-detector",
-        "scaffold"
+        "polymarket-5min-strategy",
+        "polymarket-market-discovery"
       ],
-      "frequency": 2,
+      "frequency": 3,
       "severity": "high"
     },
     {
-      "pattern": "20 skills have triggered stuck escalations",
+      "pattern": "3 skills have had rounds but no kept improvements",
+      "affected_skills": [
+        "context-drift-detector",
+        "polymarket-5min-strategy",
+        "scaffold"
+      ],
+      "frequency": 3,
+      "severity": "high"
+    },
+    {
+      "pattern": "28 skills have triggered stuck escalations",
       "affected_skills": [
         "container-security-auditor",
         "content-strategy-optimizer",
@@ -2362,9 +2595,16 @@
         "eaas-payment-linker",
         "failure-log-analyzer",
         "gmail",
+        "gmail-inbox",
         "gmaps-leads",
         "k8s-deployment-manager",
+        "polymarket-5min-strategy",
         "polymarket-bridge",
+        "polymarket-flash-crash-detector",
+        "polymarket-market-discovery",
+        "polymarket-orderbook-reader",
+        "polymarket-position-manager",
+        "polymarket-websocket-monitor",
         "prompt-refiner-for-robustness",
         "scrape-leads",
         "skill-improver",
@@ -2373,11 +2613,12 @@
         "skill-test-runner",
         "stuck-skill-diagnoser",
         "system-dashboard-generator",
+        "the-real-scrumness",
         "welcome-email",
         "youtube-channel-analysis",
         "youtube-outliers"
       ],
-      "frequency": 20,
+      "frequency": 28,
       "severity": "medium"
     },
     {
@@ -2476,11 +2717,11 @@
   "uncovered_domains": [],
   "summary": {
     "total_skills": 52,
-    "avg_ratio": 0.945,
-    "skills_at_target": 26,
-    "skills_stuck": 1,
-    "skills_untested": 15,
-    "total_cost": 10.24,
-    "total_rounds": 218
+    "avg_ratio": 0.957,
+    "skills_at_target": 37,
+    "skills_stuck": 3,
+    "skills_untested": 3,
+    "total_cost": 14.5,
+    "total_rounds": 308
   }
 }

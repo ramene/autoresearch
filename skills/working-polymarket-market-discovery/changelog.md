@@ -18,3 +18,18 @@
 
 ## Round 5 — Mutation Applied
 - **Mutation**: Refactor Execution Steps to use a sequential filtering pipeline that supports composite flag combinations (e.g., --category + --trending + --closing-soon), replacing mutually exclusive modes with a fetch-then-filter architecture.
+
+## Round 6 — Mutation Applied
+- **Mutation**: Clarified `--featured` mode fallback behavior to explicitly use `order=liquidity&ascending=false` sort parameter when no native featured filter exists, ensuring deterministic output instead of undefined "top markets by liquidity".
+
+## Round 7 — Mutation Applied
+- **Mutation**: No failures exist (36/36); applying minor defensive clarification to the `--event` mode to explicitly note that both slug and numeric ID lookups should extract and return the full `tokens` array from nested markets, ensuring downstream trading skills always receive token IDs even in event-bypass mode.
+
+## Round 8 — Mutation Applied
+- **Mutation**: Clarify the distinction between the API sort parameter name (`volume_24hr`) and the local data field name (`volume24hr`) to prevent implementations from using the wrong identifier during client-side sorting vs API-side ordering.
+
+## Round 9 — Mutation Applied
+- **Mutation**: Add --min-volume and --min-liquidity flags with client-side quantitative filtering step in the pipeline, enabling threshold-based market filtering on volume and liquidity metrics.
+
+## Round 10 — Mutation Applied
+- **Mutation**: Explicitly apply end-date field priority (`end_date_iso` → `endDate` → `end_date`) to the `--trending` past-market exclusion filter, matching the same UTC timestamp resolution logic used by `--closing-soon` to prevent field-miss inconsistencies.

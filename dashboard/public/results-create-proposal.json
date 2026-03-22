@@ -1,0 +1,347 @@
+{
+  "skill": "create-proposal",
+  "criteria": [
+    "Task Completion",
+    "Error Handling",
+    "Output Quality",
+    "Tool Usage",
+    "Instructions Clarity",
+    "Completeness"
+  ],
+  "totalCost": 0.25,
+  "models": {
+    "mutator": "sonnet",
+    "evaluator": "gemini-2.5-pro"
+  },
+  "rounds": [
+    {
+      "round": 0,
+      "score": 18,
+      "max": 36,
+      "status": "baseline",
+      "mutation": "Replace the ambiguous dual-method script execution in Step 3 with a single, unambiguous heredoc pattern that explicitly instructs the model to substitute real JSON content — eliminating the `[JSON_CONTENT]` placeholder confusion that causes cascading failures across all criteria.",
+      "cost": 0.05,
+      "criteria": [
+        3,
+        3,
+        3,
+        3,
+        3,
+        3
+      ],
+      "failures": [
+        {
+          "scenario": 3,
+          "criterion": "Task Completion"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Error Handling"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Output Quality"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Tool Usage"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Instructions Clarity"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Completeness"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Task Completion"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Error Handling"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Output Quality"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Tool Usage"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Instructions Clarity"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Completeness"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Task Completion"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Error Handling"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Output Quality"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Tool Usage"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Instructions Clarity"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Completeness"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Initial baseline evaluation",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-19T20:43:47.689Z",
+      "changelog": "**Mutation**: Replace the ambiguous dual-method script execution in Step 3 with a single, unambiguous heredoc pattern that explicitly instructs the model to substitute real JSON content — eliminating the `[JSON_CONTENT]` placeholder confusion that causes cascading failures across all criteria.\n**Failures**: S3: Task Completion, S3: Error Handling, S3: Output Quality, S3: Tool Usage, S3: Instructions Clarity, S3: Completeness, S4: Task Completion, S4: Error Handling, S4: Output Quality, S4: Tool Usage, S4: Instructions Clarity, S4: Completeness, S6: Task Completion, S6: Error Handling, S6: Output Quality, S6: Tool Usage, S6: Instructions Clarity, S6: Completeness\n**Per-criteria**: Task Completion: 3/6, Error Handling: 3/6, Output Quality: 3/6, Tool Usage: 3/6, Instructions Clarity: 3/6, Completeness: 3/6\n**Decision**: Initial baseline evaluation"
+    },
+    {
+      "round": 1,
+      "score": 16,
+      "max": 36,
+      "status": "reverted",
+      "mutation": "Add WebFetch to allowed-tools and explicitly identify gmail.send_email as an MCP tool call (not a Bash command) to resolve Tool Usage failures caused by ambiguous tool invocation patterns across scenarios.",
+      "cost": 0.05,
+      "criteria": [
+        0,
+        3,
+        5,
+        1,
+        4,
+        3
+      ],
+      "failures": [
+        {
+          "scenario": 1,
+          "criterion": "Task Completion"
+        },
+        {
+          "scenario": 1,
+          "criterion": "Tool Usage"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Task Completion"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Tool Usage"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Task Completion"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Error Handling"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Tool Usage"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Instructions Clarity"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Completeness"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Task Completion"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Error Handling"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Output Quality"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Instructions Clarity"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Completeness"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Task Completion"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Tool Usage"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Task Completion"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Error Handling"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Tool Usage"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Completeness"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 16 did not exceed best 18 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-19T20:46:42.960Z",
+      "changelog": "**Mutation**: Add WebFetch to allowed-tools and explicitly identify gmail.send_email as an MCP tool call (not a Bash command) to resolve Tool Usage failures caused by ambiguous tool invocation patterns across scenarios.\n**Failures**: S1: Task Completion, S1: Tool Usage, S2: Task Completion, S2: Tool Usage, S3: Task Completion, S3: Error Handling, S3: Tool Usage, S3: Instructions Clarity, S3: Completeness, S4: Task Completion, S4: Error Handling, S4: Output Quality, S4: Instructions Clarity, S4: Completeness, S5: Task Completion, S5: Tool Usage, S6: Task Completion, S6: Error Handling, S6: Tool Usage, S6: Completeness\n**Per-criteria**: Task Completion: 0/6, Error Handling: 3/6, Output Quality: 5/6, Tool Usage: 1/6, Instructions Clarity: 4/6, Completeness: 3/6\n**Decision**: Score 16 did not exceed best 18 — mutation produced worse or equal results"
+    },
+    {
+      "round": 2,
+      "score": 30,
+      "max": 36,
+      "status": "kept",
+      "mutation": "Replace the literal `{{USER_NAME}}` placeholder in the email signature with an instruction to resolve the sender name dynamically (via git config or by asking the user), preventing the placeholder from appearing verbatim in sent emails.",
+      "cost": 0.05,
+      "criteria": [
+        5,
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "failures": [
+        {
+          "scenario": 4,
+          "criterion": "Task Completion"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Error Handling"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Output Quality"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Tool Usage"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Instructions Clarity"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Completeness"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Improved from 18 to 30",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-19T20:48:24.041Z",
+      "changelog": "**Mutation**: Replace the literal `{{USER_NAME}}` placeholder in the email signature with an instruction to resolve the sender name dynamically (via git config or by asking the user), preventing the placeholder from appearing verbatim in sent emails.\n**Failures**: S4: Task Completion, S4: Error Handling, S4: Output Quality, S4: Tool Usage, S4: Instructions Clarity, S4: Completeness\n**Per-criteria**: Task Completion: 5/6, Error Handling: 5/6, Output Quality: 5/6, Tool Usage: 5/6, Instructions Clarity: 5/6, Completeness: 5/6\n**Decision**: Improved from 18 to 30"
+    },
+    {
+      "round": 3,
+      "score": 30,
+      "max": 36,
+      "status": "reverted",
+      "mutation": "Add explicit error handling for script execution failures in Step 4 — instructing the skill to capture non-zero exit codes, display the error to the user, skip the email step, and suggest remediation — fixing the undefined failure path that causes S4 to fail all criteria and S5 to fail Error Handling.",
+      "cost": 0.05,
+      "criteria": [
+        5,
+        4,
+        5,
+        6,
+        5,
+        5
+      ],
+      "failures": [
+        {
+          "scenario": 4,
+          "criterion": "Task Completion"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Error Handling"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Output Quality"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Instructions Clarity"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Completeness"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Error Handling"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 30 did not exceed best 30 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-19T20:49:56.209Z",
+      "changelog": "**Mutation**: Add explicit error handling for script execution failures in Step 4 — instructing the skill to capture non-zero exit codes, display the error to the user, skip the email step, and suggest remediation — fixing the undefined failure path that causes S4 to fail all criteria and S5 to fail Error Handling.\n**Failures**: S4: Task Completion, S4: Error Handling, S4: Output Quality, S4: Instructions Clarity, S4: Completeness, S5: Error Handling\n**Per-criteria**: Task Completion: 5/6, Error Handling: 4/6, Output Quality: 5/6, Tool Usage: 6/6, Instructions Clarity: 5/6, Completeness: 5/6\n**Decision**: Score 30 did not exceed best 30 — mutation produced worse or equal results"
+    },
+    {
+      "round": 4,
+      "score": 36,
+      "max": 36,
+      "status": "kept",
+      "mutation": "All criteria show 0 failures — the skill is passing perfectly. No mutation needed; return the skill unchanged.",
+      "cost": 0.05,
+      "criteria": [
+        6,
+        6,
+        6,
+        6,
+        6,
+        6
+      ],
+      "failures": [],
+      "geminiThoughts": null,
+      "decisionReason": "Improved from 30 to 36",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-19T20:51:49.113Z",
+      "changelog": "**Mutation**: All criteria show 0 failures — the skill is passing perfectly. No mutation needed; return the skill unchanged.\n**Failures**: none\n**Per-criteria**: Task Completion: 6/6, Error Handling: 6/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 6/6, Completeness: 6/6\n**Decision**: Improved from 30 to 36"
+    }
+  ]
+}

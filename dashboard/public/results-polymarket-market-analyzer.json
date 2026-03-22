@@ -1,0 +1,188 @@
+{
+  "skill": "polymarket-market-analyzer",
+  "criteria": [
+    "Analysis uses real-time orderbook and volume data",
+    "Risk assessment categorizes correctly",
+    "Recommendations are actionable with confidence scores",
+    "Market comparison ranks meaningfully",
+    "Safety limits inform risk assessment"
+  ],
+  "totalCost": 0.25,
+  "models": {
+    "mutator": "sonnet",
+    "evaluator": "gemini-2.5-pro"
+  },
+  "rounds": [
+    {
+      "round": 0,
+      "score": 20,
+      "max": 25,
+      "status": "baseline",
+      "mutation": "Add explicit Safety Limits section with defined thresholds that directly feed into Risk Assessment — the \"Safety limits inform risk assessment\" criterion was failing because limits were buried inline rather than being a named, referenceable constraint set.",
+      "cost": 0.05,
+      "criteria": [
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "failures": [
+        {
+          "scenario": 4,
+          "criterion": "Analysis uses real-time orderbook and volume data"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Risk assessment categorizes correctly"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Recommendations are actionable with confidence scores"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Market comparison ranks meaningfully"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Safety limits inform risk assessment"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Initial baseline evaluation",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-21T09:30:48.936Z",
+      "changelog": "**Mutation**: Add explicit Safety Limits section with defined thresholds that directly feed into Risk Assessment — the \"Safety limits inform risk assessment\" criterion was failing because limits were buried inline rather than being a named, referenceable constraint set.\n**Failures**: S4: Analysis uses real-time orderbook and volume data, S4: Risk assessment categorizes correctly, S4: Recommendations are actionable with confidence scores, S4: Market comparison ranks meaningfully, S4: Safety limits inform risk assessment\n**Per-criteria**: Analysis uses real-time orderbook and volume data: 4/5, Risk assessment categorizes correctly: 4/5, Recommendations are actionable with confidence scores: 4/5, Market comparison ranks meaningfully: 4/5, Safety limits inform risk assessment: 4/5\n**Decision**: Initial baseline evaluation"
+    },
+    {
+      "round": 1,
+      "score": 22,
+      "max": 25,
+      "status": "kept",
+      "mutation": "Add explicit \"MANDATORY: No cached data\" constraint to Step 1 with a preflight check that aborts if any data fetch fails — all three S4 failures trace to the same root: the skill allows silent fallback to stale/missing data, which then corrupts the risk tier and recommendation.",
+      "cost": 0.05,
+      "criteria": [
+        4,
+        4,
+        4,
+        5,
+        5
+      ],
+      "failures": [
+        {
+          "scenario": 4,
+          "criterion": "Analysis uses real-time orderbook and volume data"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Risk assessment categorizes correctly"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Recommendations are actionable with confidence scores"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Improved from 20 to 22",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-21T09:31:52.947Z",
+      "changelog": "**Mutation**: Add explicit \"MANDATORY: No cached data\" constraint to Step 1 with a preflight check that aborts if any data fetch fails — all three S4 failures trace to the same root: the skill allows silent fallback to stale/missing data, which then corrupts the risk tier and recommendation.\n**Failures**: S4: Analysis uses real-time orderbook and volume data, S4: Risk assessment categorizes correctly, S4: Recommendations are actionable with confidence scores\n**Per-criteria**: Analysis uses real-time orderbook and volume data: 4/5, Risk assessment categorizes correctly: 4/5, Recommendations are actionable with confidence scores: 4/5, Market comparison ranks meaningfully: 5/5, Safety limits inform risk assessment: 5/5\n**Decision**: Improved from 20 to 22"
+    },
+    {
+      "round": 2,
+      "score": 21,
+      "max": 25,
+      "status": "reverted",
+      "mutation": "Replace the vague \"unless strong trend signal\" clause in recommendation generation with an explicit quantitative threshold (price_trend > ±10% over 7d AND volume_24h > 2× MIN_VOLUME_24H) so the MEDIUM risk → HOLD vs BUY/SELL decision is deterministic.",
+      "cost": 0.05,
+      "criteria": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "failures": [
+        {
+          "scenario": 4,
+          "criterion": "Risk assessment categorizes correctly"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Recommendations are actionable with confidence scores"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Market comparison ranks meaningfully"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Safety limits inform risk assessment"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 21 did not exceed best 22 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-21T09:32:55.938Z",
+      "changelog": "**Mutation**: Replace the vague \"unless strong trend signal\" clause in recommendation generation with an explicit quantitative threshold (price_trend > ±10% over 7d AND volume_24h > 2× MIN_VOLUME_24H) so the MEDIUM risk → HOLD vs BUY/SELL decision is deterministic.\n**Failures**: S4: Risk assessment categorizes correctly, S4: Recommendations are actionable with confidence scores, S4: Market comparison ranks meaningfully, S4: Safety limits inform risk assessment\n**Per-criteria**: Analysis uses real-time orderbook and volume data: 5/5, Risk assessment categorizes correctly: 4/5, Recommendations are actionable with confidence scores: 4/5, Market comparison ranks meaningfully: 4/5, Safety limits inform risk assessment: 4/5\n**Decision**: Score 21 did not exceed best 22 — mutation produced worse or equal results"
+    },
+    {
+      "round": 3,
+      "score": 25,
+      "max": 25,
+      "status": "kept",
+      "mutation": "Add a concrete confidence score formula for each risk tier so the score within a range is deterministic rather than arbitrary — fixes \"Recommendations are actionable with confidence scores\" by eliminating evaluator ambiguity about how 72 vs 85 is reached.",
+      "cost": 0.05,
+      "criteria": [
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "failures": [],
+      "geminiThoughts": null,
+      "decisionReason": "Improved from 22 to 25",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-21T09:33:53.359Z",
+      "changelog": "**Mutation**: Add a concrete confidence score formula for each risk tier so the score within a range is deterministic rather than arbitrary — fixes \"Recommendations are actionable with confidence scores\" by eliminating evaluator ambiguity about how 72 vs 85 is reached.\n**Failures**: none\n**Per-criteria**: Analysis uses real-time orderbook and volume data: 5/5, Risk assessment categorizes correctly: 5/5, Recommendations are actionable with confidence scores: 5/5, Market comparison ranks meaningfully: 5/5, Safety limits inform risk assessment: 5/5\n**Decision**: Improved from 22 to 25"
+    },
+    {
+      "round": 4,
+      "score": 25,
+      "max": 25,
+      "status": "reverted",
+      "mutation": "Add explicit `analysis.json` schema skeleton to the Output Format section so the file structure is deterministic and cannot drift across runs, guarding against future regression on the \"Recommendations are actionable\" criterion.",
+      "cost": 0.05,
+      "criteria": [
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "failures": [],
+      "geminiThoughts": null,
+      "decisionReason": "Score 25 did not exceed best 25 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-21T09:35:24.868Z",
+      "changelog": "**Mutation**: Add explicit `analysis.json` schema skeleton to the Output Format section so the file structure is deterministic and cannot drift across runs, guarding against future regression on the \"Recommendations are actionable\" criterion.\n**Failures**: none\n**Per-criteria**: Analysis uses real-time orderbook and volume data: 5/5, Risk assessment categorizes correctly: 5/5, Recommendations are actionable with confidence scores: 5/5, Market comparison ranks meaningfully: 5/5, Safety limits inform risk assessment: 5/5\n**Decision**: Score 25 did not exceed best 25 — mutation produced worse or equal results"
+    }
+  ]
+}

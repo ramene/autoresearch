@@ -294,5 +294,208 @@
     },
     "timestamp": "2026-03-20T12:05:15.050Z",
     "changelog": "**Mutation**: No failures remain (36/36); preserve current state with no changes.\n**Failures**: S1: Tool Usage, S1: Instructions Clarity, S1: Completeness, S2: Tool Usage, S2: Instructions Clarity, S2: Completeness, S3: Tool Usage, S3: Instructions Clarity, S3: Completeness, S4: Tool Usage, S4: Instructions Clarity, S4: Completeness, S5: Tool Usage, S5: Instructions Clarity, S5: Completeness, S6: Tool Usage, S6: Instructions Clarity, S6: Completeness\n**Per-criteria**: Task Completion: 6/6, Error Handling: 6/6, Output Quality: 6/6, Tool Usage: 0/6, Instructions Clarity: 0/6, Completeness: 0/6\n**Decision**: Score 18 did not exceed best 36 — mutation produced worse or equal results"
+  },
+  {
+    "round": 5,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "No failures remain (36/36); preserve current state with no changes.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-21T18:01:55.981Z",
+    "changelog": "**Mutation**: No failures remain (36/36); preserve current state with no changes.\n**Failures**: none\n**Per-criteria**: Task Completion: 6/6, Error Handling: 6/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 6/6, Completeness: 6/6\n**Decision**: Score 36 did not exceed best 36 — mutation produced worse or equal results"
+  },
+  {
+    "round": 6,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "No failures remain (36/36); preserve current state with no changes.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-21T18:03:22.264Z",
+    "changelog": "**Mutation**: No failures remain (36/36); preserve current state with no changes.\n**Failures**: none\n**Per-criteria**: Task Completion: 6/6, Error Handling: 6/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 6/6, Completeness: 6/6\n**Decision**: Score 36 did not exceed best 36 — mutation produced worse or equal results"
+  },
+  {
+    "round": 7,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "No failures remain (36/36); preserve current state with no changes.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-21T18:04:24.892Z",
+    "changelog": "**Mutation**: No failures remain (36/36); preserve current state with no changes.\n**Failures**: none\n**Per-criteria**: Task Completion: 6/6, Error Handling: 6/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 6/6, Completeness: 6/6\n**Decision**: Score 36 did not exceed best 36 — mutation produced worse or equal results"
+  },
+  {
+    "round": 7,
+    "score": 36,
+    "max": 36,
+    "status": "escalation",
+    "mutation": "Stuck escalation: The optimization is stuck in a local optimum because the skill has been perfected against the existing test suite. The score of 36/36 indicates that the current workflow successfully handles all scena",
+    "cost": 0.03,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "decisionReason": "Stuck escalation triggered after 3+ rounds with no improvement",
+    "escalation": {
+      "diagnosis": "The optimization is stuck in a local optimum because the skill has been perfected against the existing test suite. The score of 36/36 indicates that the current workflow successfully handles all scenarios thrown at it, including basic email fetching, actions (label, archive), and authentication error recovery. The mutations from Round 3 onwards are minor or null-operations because there are no failure signals to guide the optimizer toward meaningful changes. The problem is not with the skill's quality but with the evaluation's limited scope; it isn't testing the full range of capabilities hinted at by the available scripts (e.g., `gmail_create_filters.py`).",
+      "evalRedesignNeeded": true,
+      "strategy": "Break the local optimum by expanding the skill's capabilities to cover more of its declared tools. The current workflow is excellent for the `gmail_unified.py` script but completely ignores others like `gmail_create_filters.py`. The new strategy is to add a new, conditional workflow that explicitly guides the agent on how to use these other tools when a relevant user request is made. This expands the skill's functional surface area, which will require a corresponding expansion of the test suite to properly evaluate, thus creating a new gradient for the optimizer to climb.",
+      "suggestedMutation": "Add a new section after the main \"Workflow\" that handles advanced, less common tasks. This explicitly teaches the agent how to use the other scripts listed in the skill, starting with filter creation.\n\n```markdown\n# Add this new section after the \"Workflow\" section.\n\n## Advanced Actions\n\nThe main workflow covers checking and managing existing emails. For other tasks, use the following procedures.\n\n### Creating Filters\n\nIf the user asks to create a new filter to automatically manage incoming mail:\n\n1.  **Identify Criteria:** Determine the filter criteria from the user's request (e.g., from a specific sender, with a certain subject, etc.).\n2.  **Identify Action:** Determine the action the filter should take (e.g., apply a label, archive, mark as read).\n3.  **Construct Command:** Use the `gmail_create_filters.py` script. The command requires the account and a JSON string defining the filter.\n    ```bash\n    # Example: Create a filter to label emails from \"newsletter@example.com\" as \"Newsletters\"\n    python3 ./scripts/gmail_create_filters.py --account youruser --filter '{\"criteria\": {\"from\": \"newsletter@example.com\"}, \"action\": {\"addLabelIds\": [\"LABEL_ID_NEWSLETTERS\"]}}'\n    ```\n    *Note: You may need to first list labels to find the correct ID if the user provides a label name.*\n4.  **Confirm Creation:** Report back to the user that the filter has been successfully created.\n```"
+    },
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-21T18:05:44.872Z"
+  },
+  {
+    "round": 8,
+    "score": 24,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Add an \"Advanced Actions\" section covering filter creation workflow using `gmail_create_filters.py`, as directed by the meta-analysis strategy to expand functional coverage and break the local optimum.",
+    "cost": 0.05,
+    "criteria": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "failures": [
+      {
+        "scenario": 3,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Tool Usage"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Completeness"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Tool Usage"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Completeness"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 24 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-21T18:06:24.078Z",
+    "changelog": "**Mutation**: Add an \"Advanced Actions\" section covering filter creation workflow using `gmail_create_filters.py`, as directed by the meta-analysis strategy to expand functional coverage and break the local optimum.\n**Failures**: S3: Task Completion, S3: Error Handling, S3: Output Quality, S3: Tool Usage, S3: Instructions Clarity, S3: Completeness, S6: Task Completion, S6: Error Handling, S6: Output Quality, S6: Tool Usage, S6: Instructions Clarity, S6: Completeness\n**Per-criteria**: Task Completion: 4/6, Error Handling: 4/6, Output Quality: 4/6, Tool Usage: 4/6, Instructions Clarity: 4/6, Completeness: 4/6\n**Decision**: Score 24 did not exceed best 36 — mutation produced worse or equal results"
+  },
+  {
+    "round": 9,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "No failures remain (36/36); preserve current state with no changes.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-21T18:07:50.886Z",
+    "changelog": "**Mutation**: No failures remain (36/36); preserve current state with no changes.\n**Failures**: none\n**Per-criteria**: Task Completion: 6/6, Error Handling: 6/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 6/6, Completeness: 6/6\n**Decision**: Score 36 did not exceed best 36 — mutation produced worse or equal results"
   }
 ]

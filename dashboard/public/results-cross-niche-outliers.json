@@ -1,0 +1,259 @@
+{
+  "skill": "cross-niche-outliers",
+  "criteria": [
+    "Task Completion",
+    "Error Handling",
+    "Output Quality",
+    "Tool Usage",
+    "Instructions Clarity",
+    "Completeness"
+  ],
+  "totalCost": 0.25,
+  "models": {
+    "mutator": "sonnet",
+    "evaluator": "gemini-2.5-pro"
+  },
+  "rounds": [
+    {
+      "round": 0,
+      "score": 23,
+      "max": 36,
+      "status": "baseline",
+      "mutation": "Added a Troubleshooting section with explicit error handling steps for the most common failure modes (missing API keys, rate limiting, script errors), fixing the Instructions Clarity and Error Handling failures in scenarios 3, 5, 6.",
+      "cost": 0.05,
+      "criteria": [
+        3,
+        3,
+        4,
+        6,
+        3,
+        4
+      ],
+      "failures": [
+        {
+          "scenario": 3,
+          "criterion": "Task Completion"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Error Handling"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Output Quality"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Instructions Clarity"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Completeness"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Task Completion"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Instructions Clarity"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Task Completion"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Error Handling"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Output Quality"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Instructions Clarity"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Completeness"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Error Handling"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Initial baseline evaluation",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-20T01:48:32.564Z",
+      "changelog": "**Mutation**: Added a Troubleshooting section with explicit error handling steps for the most common failure modes (missing API keys, rate limiting, script errors), fixing the Instructions Clarity and Error Handling failures in scenarios 3, 5, 6.\n**Failures**: S3: Task Completion, S3: Error Handling, S3: Output Quality, S3: Instructions Clarity, S3: Completeness, S4: Task Completion, S4: Instructions Clarity, S5: Task Completion, S5: Error Handling, S5: Output Quality, S5: Instructions Clarity, S5: Completeness, S6: Error Handling\n**Per-criteria**: Task Completion: 3/6, Error Handling: 3/6, Output Quality: 4/6, Tool Usage: 6/6, Instructions Clarity: 3/6, Completeness: 4/6\n**Decision**: Initial baseline evaluation"
+    },
+    {
+      "round": 1,
+      "score": 31,
+      "max": 36,
+      "status": "kept",
+      "mutation": "Added a \"Quick Start\" section at the top with a numbered end-to-end walkthrough (env check → run → review → act), giving first-time users a complete path without hunting through scattered sections.",
+      "cost": 0.05,
+      "criteria": [
+        5,
+        5,
+        5,
+        6,
+        5,
+        5
+      ],
+      "failures": [
+        {
+          "scenario": 2,
+          "criterion": "Task Completion"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Error Handling"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Output Quality"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Instructions Clarity"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Completeness"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Improved from 23 to 31",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-20T01:49:41.936Z",
+      "changelog": "**Mutation**: Added a \"Quick Start\" section at the top with a numbered end-to-end walkthrough (env check → run → review → act), giving first-time users a complete path without hunting through scattered sections.\n**Failures**: S2: Task Completion, S2: Error Handling, S2: Output Quality, S2: Instructions Clarity, S2: Completeness\n**Per-criteria**: Task Completion: 5/6, Error Handling: 5/6, Output Quality: 5/6, Tool Usage: 6/6, Instructions Clarity: 5/6, Completeness: 5/6\n**Decision**: Improved from 23 to 31"
+    },
+    {
+      "round": 2,
+      "score": 35,
+      "max": 36,
+      "status": "kept",
+      "mutation": "Added explicit `export` commands to the Environment section so users know exactly how to set missing API keys, fixing the vague \"see Environment section\" reference in Quick Start step 1.",
+      "cost": 0.05,
+      "criteria": [
+        6,
+        6,
+        6,
+        6,
+        5,
+        6
+      ],
+      "failures": [
+        {
+          "scenario": 2,
+          "criterion": "Instructions Clarity"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Improved from 31 to 35",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-20T01:51:28.380Z",
+      "changelog": "**Mutation**: Added explicit `export` commands to the Environment section so users know exactly how to set missing API keys, fixing the vague \"see Environment section\" reference in Quick Start step 1.\n**Failures**: S2: Instructions Clarity\n**Per-criteria**: Task Completion: 6/6, Error Handling: 6/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 5/6, Completeness: 6/6\n**Decision**: Improved from 31 to 35"
+    },
+    {
+      "round": 3,
+      "score": 36,
+      "max": 36,
+      "status": "kept",
+      "mutation": "Inline the Cross-Niche Score interpretation table directly into Quick Start Step 4, so users reviewing the Google Sheet don't need to cross-reference the Process section to understand what scores mean.",
+      "cost": 0.05,
+      "criteria": [
+        6,
+        6,
+        6,
+        6,
+        6,
+        6
+      ],
+      "failures": [],
+      "geminiThoughts": null,
+      "decisionReason": "Improved from 35 to 36",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-20T01:52:41.673Z",
+      "changelog": "**Mutation**: Inline the Cross-Niche Score interpretation table directly into Quick Start Step 4, so users reviewing the Google Sheet don't need to cross-reference the Process section to understand what scores mean.\n**Failures**: none\n**Per-criteria**: Task Completion: 6/6, Error Handling: 6/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 6/6, Completeness: 6/6\n**Decision**: Improved from 35 to 36"
+    },
+    {
+      "round": 4,
+      "score": 27,
+      "max": 36,
+      "status": "reverted",
+      "mutation": "Expand the manual fallback (step 3 in Fallback Priority Order) with concrete step-by-step instructions for manually finding and scoring outliers when all automated methods fail, filling the gap that \"search YouTube manually\" references but never explains.",
+      "cost": 0.05,
+      "criteria": [
+        4,
+        4,
+        5,
+        6,
+        4,
+        4
+      ],
+      "failures": [
+        {
+          "scenario": 2,
+          "criterion": "Task Completion"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Error Handling"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Output Quality"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Instructions Clarity"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Completeness"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Error Handling"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Instructions Clarity"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Completeness"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Task Completion"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 27 did not exceed best 36 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-20T01:54:14.910Z",
+      "changelog": "**Mutation**: Expand the manual fallback (step 3 in Fallback Priority Order) with concrete step-by-step instructions for manually finding and scoring outliers when all automated methods fail, filling the gap that \"search YouTube manually\" references but never explains.\n**Failures**: S2: Task Completion, S2: Error Handling, S2: Output Quality, S2: Instructions Clarity, S2: Completeness, S3: Error Handling, S3: Instructions Clarity, S3: Completeness, S4: Task Completion\n**Per-criteria**: Task Completion: 4/6, Error Handling: 4/6, Output Quality: 5/6, Tool Usage: 6/6, Instructions Clarity: 4/6, Completeness: 4/6\n**Decision**: Score 27 did not exceed best 36 — mutation produced worse or equal results"
+    }
+  ]
+}

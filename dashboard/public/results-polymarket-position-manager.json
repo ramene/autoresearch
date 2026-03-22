@@ -1,0 +1,352 @@
+{
+  "skill": "polymarket-position-manager",
+  "criteria": [
+    "TP/SL calculated correctly from entry + delta",
+    "Exit orders triggered at threshold",
+    "Win rate tracked accurately",
+    "Position limits enforced",
+    "State persisted for monitoring restarts"
+  ],
+  "totalCost": 0.49999999999999994,
+  "models": {
+    "mutator": "sonnet",
+    "evaluator": "gemini-2.5-pro"
+  },
+  "rounds": [
+    {
+      "round": 0,
+      "score": 23,
+      "max": 25,
+      "status": "baseline",
+      "mutation": "Added explicit pre-registration limit check with rejection logic to Step 1, making it clear that the limit must be enforced BEFORE accepting a new position.",
+      "cost": 0.05,
+      "criteria": [
+        4,
+        5,
+        5,
+        4,
+        5
+      ],
+      "failures": [
+        {
+          "scenario": 4,
+          "criterion": "Position limits enforced"
+        },
+        {
+          "scenario": 5,
+          "criterion": "TP/SL calculated correctly from entry + delta"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Initial baseline evaluation",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-21T09:59:33.762Z",
+      "changelog": "**Mutation**: Added explicit pre-registration limit check with rejection logic to Step 1, making it clear that the limit must be enforced BEFORE accepting a new position.\n**Failures**: S4: Position limits enforced, S5: TP/SL calculated correctly from entry + delta\n**Per-criteria**: TP/SL calculated correctly from entry + delta: 4/5, Exit orders triggered at threshold: 5/5, Win rate tracked accurately: 5/5, Position limits enforced: 4/5, State persisted for monitoring restarts: 5/5\n**Decision**: Initial baseline evaluation"
+    },
+    {
+      "round": 0,
+      "score": 10,
+      "max": 25,
+      "status": "baseline",
+      "mutation": "Added side-aware TP/SL calculation and P&L logic for both \"up\" (long) and \"down\" (short) positions, since the current formula only works for long positions and causes all three criteria to fail for any \"down\" position test case.",
+      "cost": 0.05,
+      "criteria": [
+        0,
+        0,
+        0,
+        5,
+        5
+      ],
+      "failures": [
+        {
+          "scenario": 1,
+          "criterion": "TP/SL calculated correctly from entry + delta"
+        },
+        {
+          "scenario": 1,
+          "criterion": "Exit orders triggered at threshold"
+        },
+        {
+          "scenario": 1,
+          "criterion": "Win rate tracked accurately"
+        },
+        {
+          "scenario": 2,
+          "criterion": "TP/SL calculated correctly from entry + delta"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Exit orders triggered at threshold"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Win rate tracked accurately"
+        },
+        {
+          "scenario": 3,
+          "criterion": "TP/SL calculated correctly from entry + delta"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Exit orders triggered at threshold"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Win rate tracked accurately"
+        },
+        {
+          "scenario": 4,
+          "criterion": "TP/SL calculated correctly from entry + delta"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Exit orders triggered at threshold"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Win rate tracked accurately"
+        },
+        {
+          "scenario": 5,
+          "criterion": "TP/SL calculated correctly from entry + delta"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Exit orders triggered at threshold"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Win rate tracked accurately"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Initial baseline evaluation",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-21T10:00:47.296Z",
+      "changelog": "**Mutation**: Added side-aware TP/SL calculation and P&L logic for both \"up\" (long) and \"down\" (short) positions, since the current formula only works for long positions and causes all three criteria to fail for any \"down\" position test case.\n**Failures**: S1: TP/SL calculated correctly from entry + delta, S1: Exit orders triggered at threshold, S1: Win rate tracked accurately, S2: TP/SL calculated correctly from entry + delta, S2: Exit orders triggered at threshold, S2: Win rate tracked accurately, S3: TP/SL calculated correctly from entry + delta, S3: Exit orders triggered at threshold, S3: Win rate tracked accurately, S4: TP/SL calculated correctly from entry + delta, S4: Exit orders triggered at threshold, S4: Win rate tracked accurately, S5: TP/SL calculated correctly from entry + delta, S5: Exit orders triggered at threshold, S5: Win rate tracked accurately\n**Per-criteria**: TP/SL calculated correctly from entry + delta: 0/5, Exit orders triggered at threshold: 0/5, Win rate tracked accurately: 0/5, Position limits enforced: 5/5, State persisted for monitoring restarts: 5/5\n**Decision**: Initial baseline evaluation"
+    },
+    {
+      "round": 1,
+      "score": 19,
+      "max": 25,
+      "status": "reverted",
+      "mutation": "Add side-aware (long vs short) TP/SL price calculation and exit trigger logic — \"down\" positions have inverted TP/SL thresholds and conditions compared to \"up\" positions.",
+      "cost": 0.05,
+      "criteria": [
+        3,
+        3,
+        3,
+        5,
+        5
+      ],
+      "failures": [
+        {
+          "scenario": 3,
+          "criterion": "TP/SL calculated correctly from entry + delta"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Exit orders triggered at threshold"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Win rate tracked accurately"
+        },
+        {
+          "scenario": 5,
+          "criterion": "TP/SL calculated correctly from entry + delta"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Exit orders triggered at threshold"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Win rate tracked accurately"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 19 did not exceed best 23 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-21T10:01:00.209Z",
+      "changelog": "**Mutation**: Add side-aware (long vs short) TP/SL price calculation and exit trigger logic — \"down\" positions have inverted TP/SL thresholds and conditions compared to \"up\" positions.\n**Failures**: S3: TP/SL calculated correctly from entry + delta, S3: Exit orders triggered at threshold, S3: Win rate tracked accurately, S5: TP/SL calculated correctly from entry + delta, S5: Exit orders triggered at threshold, S5: Win rate tracked accurately\n**Per-criteria**: TP/SL calculated correctly from entry + delta: 3/5, Exit orders triggered at threshold: 3/5, Win rate tracked accurately: 3/5, Position limits enforced: 5/5, State persisted for monitoring restarts: 5/5\n**Decision**: Score 19 did not exceed best 23 — mutation produced worse or equal results"
+    },
+    {
+      "round": 1,
+      "score": 25,
+      "max": 25,
+      "status": "kept",
+      "mutation": "Added explicit pre-registration guard in Step 1 that hard-rejects new positions when at capacity, making limit enforcement a prerequisite gate rather than a side note in Step 5.",
+      "cost": 0.05,
+      "criteria": [
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "failures": [],
+      "geminiThoughts": null,
+      "decisionReason": "Improved from 10 to 25",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-21T10:01:50.032Z",
+      "changelog": "**Mutation**: Added explicit pre-registration guard in Step 1 that hard-rejects new positions when at capacity, making limit enforcement a prerequisite gate rather than a side note in Step 5.\n**Failures**: none\n**Per-criteria**: TP/SL calculated correctly from entry + delta: 5/5, Exit orders triggered at threshold: 5/5, Win rate tracked accurately: 5/5, Position limits enforced: 5/5, State persisted for monitoring restarts: 5/5\n**Decision**: Improved from 10 to 25"
+    },
+    {
+      "round": 2,
+      "score": 25,
+      "max": 25,
+      "status": "kept",
+      "mutation": "No failures detected in current evaluation — all criteria pass 5/5. Reinforce the side-aware TP/SL and exit logic with a concrete numeric example to prevent regression in edge cases.",
+      "cost": 0.05,
+      "criteria": [
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "failures": [],
+      "geminiThoughts": null,
+      "decisionReason": "Improved from 23 to 25",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-21T10:02:07.318Z",
+      "changelog": "**Mutation**: No failures detected in current evaluation — all criteria pass 5/5. Reinforce the side-aware TP/SL and exit logic with a concrete numeric example to prevent regression in edge cases.\n**Failures**: none\n**Per-criteria**: TP/SL calculated correctly from entry + delta: 5/5, Exit orders triggered at threshold: 5/5, Win rate tracked accurately: 5/5, Position limits enforced: 5/5, State persisted for monitoring restarts: 5/5\n**Decision**: Improved from 23 to 25"
+    },
+    {
+      "round": 2,
+      "score": 25,
+      "max": 25,
+      "status": "reverted",
+      "mutation": "All criteria are passing at 25/25 with no failures — no mutation needed, returning skill unchanged.",
+      "cost": 0.05,
+      "criteria": [
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "failures": [],
+      "geminiThoughts": null,
+      "decisionReason": "Score 25 did not exceed best 25 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-21T10:02:55.326Z",
+      "changelog": "**Mutation**: All criteria are passing at 25/25 with no failures — no mutation needed, returning skill unchanged.\n**Failures**: none\n**Per-criteria**: TP/SL calculated correctly from entry + delta: 5/5, Exit orders triggered at threshold: 5/5, Win rate tracked accurately: 5/5, Position limits enforced: 5/5, State persisted for monitoring restarts: 5/5\n**Decision**: Score 25 did not exceed best 25 — mutation produced worse or equal results"
+    },
+    {
+      "round": 3,
+      "score": 25,
+      "max": 25,
+      "status": "reverted",
+      "mutation": "All criteria pass 5/5 with no failures — add a concrete numeric example for the \"down\" side P&L calculation to reinforce correctness and prevent regression.",
+      "cost": 0.05,
+      "criteria": [
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "failures": [],
+      "geminiThoughts": null,
+      "decisionReason": "Score 25 did not exceed best 25 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-21T10:03:25.215Z",
+      "changelog": "**Mutation**: All criteria pass 5/5 with no failures — add a concrete numeric example for the \"down\" side P&L calculation to reinforce correctness and prevent regression.\n**Failures**: none\n**Per-criteria**: TP/SL calculated correctly from entry + delta: 5/5, Exit orders triggered at threshold: 5/5, Win rate tracked accurately: 5/5, Position limits enforced: 5/5, State persisted for monitoring restarts: 5/5\n**Decision**: Score 25 did not exceed best 25 — mutation produced worse or equal results"
+    },
+    {
+      "round": 3,
+      "score": 25,
+      "max": 25,
+      "status": "reverted",
+      "mutation": "All criteria pass 25/25 with no failures — returning skill unchanged to avoid regression.",
+      "cost": 0.05,
+      "criteria": [
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "failures": [],
+      "geminiThoughts": null,
+      "decisionReason": "Score 25 did not exceed best 25 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-21T10:03:58.980Z",
+      "changelog": "**Mutation**: All criteria pass 25/25 with no failures — returning skill unchanged to avoid regression.\n**Failures**: none\n**Per-criteria**: TP/SL calculated correctly from entry + delta: 5/5, Exit orders triggered at threshold: 5/5, Win rate tracked accurately: 5/5, Position limits enforced: 5/5, State persisted for monitoring restarts: 5/5\n**Decision**: Score 25 did not exceed best 25 — mutation produced worse or equal results"
+    },
+    {
+      "round": 4,
+      "score": 25,
+      "max": 25,
+      "status": "reverted",
+      "mutation": "All criteria pass 5/5 with no failures — reinforce side uniqueness check documentation with explicit example to prevent potential regression on concurrent position edge cases.",
+      "cost": 0.05,
+      "criteria": [
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "failures": [],
+      "geminiThoughts": null,
+      "decisionReason": "Score 25 did not exceed best 25 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-21T10:04:16.668Z",
+      "changelog": "**Mutation**: All criteria pass 5/5 with no failures — reinforce side uniqueness check documentation with explicit example to prevent potential regression on concurrent position edge cases.\n**Failures**: none\n**Per-criteria**: TP/SL calculated correctly from entry + delta: 5/5, Exit orders triggered at threshold: 5/5, Win rate tracked accurately: 5/5, Position limits enforced: 5/5, State persisted for monitoring restarts: 5/5\n**Decision**: Score 25 did not exceed best 25 — mutation produced worse or equal results"
+    },
+    {
+      "round": 4,
+      "score": 25,
+      "max": 25,
+      "status": "reverted",
+      "mutation": "All criteria pass 25/25 with no failures — returning skill unchanged to avoid regression.",
+      "cost": 0.05,
+      "criteria": [
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "failures": [],
+      "geminiThoughts": null,
+      "decisionReason": "Score 25 did not exceed best 25 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-21T10:04:49.509Z",
+      "changelog": "**Mutation**: All criteria pass 25/25 with no failures — returning skill unchanged to avoid regression.\n**Failures**: none\n**Per-criteria**: TP/SL calculated correctly from entry + delta: 5/5, Exit orders triggered at threshold: 5/5, Win rate tracked accurately: 5/5, Position limits enforced: 5/5, State persisted for monitoring restarts: 5/5\n**Decision**: Score 25 did not exceed best 25 — mutation produced worse or equal results"
+    }
+  ]
+}

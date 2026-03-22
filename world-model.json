@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-03-21T09:00:19.784Z",
+  "timestamp": "2026-03-21T22:43:50.736Z",
   "version": "1.1",
   "research_demands": [
     {
@@ -95,7 +95,7 @@
       "current_capability": "classify-leads"
     },
     {
-      "signal": "Skill \"content-strategy-optimizer\" last improved: 17 → 18/48",
+      "signal": "Skill \"content-strategy-optimizer\" last improved: 18 → 19/48",
       "source": "skills/working-content-strategy-optimizer/events.jsonl",
       "current_capability": "content-strategy-optimizer"
     },
@@ -170,6 +170,41 @@
       "current_capability": "polymarket-bridge"
     },
     {
+      "signal": "Skill \"polymarket-ctf-operations\" last improved: 22 → 25/25",
+      "source": "skills/working-polymarket-ctf-operations/events.jsonl",
+      "current_capability": "polymarket-ctf-operations"
+    },
+    {
+      "signal": "Skill \"polymarket-gasless-trader\" last improved: 24 → 25/25",
+      "source": "skills/working-polymarket-gasless-trader/events.jsonl",
+      "current_capability": "polymarket-gasless-trader"
+    },
+    {
+      "signal": "Skill \"polymarket-market-analyzer\" last improved: 22 → 25/25",
+      "source": "skills/working-polymarket-market-analyzer/events.jsonl",
+      "current_capability": "polymarket-market-analyzer"
+    },
+    {
+      "signal": "Skill \"polymarket-orderbook-reader\" last improved: 33 → 34/36",
+      "source": "skills/working-polymarket-orderbook-reader/events.jsonl",
+      "current_capability": "polymarket-orderbook-reader"
+    },
+    {
+      "signal": "Skill \"polymarket-portfolio-tracker\" last improved: 23 → 24/25",
+      "source": "skills/working-polymarket-portfolio-tracker/events.jsonl",
+      "current_capability": "polymarket-portfolio-tracker"
+    },
+    {
+      "signal": "Skill \"polymarket-position-manager\" last improved: 23 → 25/25",
+      "source": "skills/working-polymarket-position-manager/events.jsonl",
+      "current_capability": "polymarket-position-manager"
+    },
+    {
+      "signal": "Skill \"polymarket-websocket-monitor\" last improved: 23 → 25/25",
+      "source": "skills/working-polymarket-websocket-monitor/events.jsonl",
+      "current_capability": "polymarket-websocket-monitor"
+    },
+    {
       "signal": "Skill \"skill-test-generator\" last improved: 30 → 36/36",
       "source": "skills/working-skill-test-generator/events.jsonl",
       "current_capability": "skill-test-generator"
@@ -220,11 +255,6 @@
       "current_capability": "container-security-auditor"
     },
     {
-      "signal": "Skill \"content-strategy-optimizer\" has 30 unresolved failure(s) in round 12",
-      "source": "skills/working-content-strategy-optimizer/rounds.json",
-      "current_capability": "content-strategy-optimizer"
-    },
-    {
       "signal": "Skill \"context-drift-detector\" score plateaued at 50 for 3 rounds",
       "source": "skills/working-context-drift-detector/rounds.json",
       "current_capability": "context-drift-detector"
@@ -253,11 +283,6 @@
       "signal": "Skill \"failure-log-analyzer\" has 6 unresolved failure(s) in round 4",
       "source": "skills/working-failure-log-analyzer/rounds.json",
       "current_capability": "failure-log-analyzer"
-    },
-    {
-      "signal": "Skill \"gmail-inbox\" has 18 unresolved failure(s) in round 4",
-      "source": "skills/working-gmail-inbox/rounds.json",
-      "current_capability": "gmail-inbox"
     },
     {
       "signal": "Skill \"gmail-label\" has 2 unresolved failure(s) in round 4",
@@ -293,6 +318,51 @@
       "signal": "Skill \"onboarding-kickoff\" has 2 unresolved failure(s) in round 4",
       "source": "skills/working-onboarding-kickoff/rounds.json",
       "current_capability": "onboarding-kickoff"
+    },
+    {
+      "signal": "Skill \"polymarket-5min-strategy\" score plateaued at 25 for 3 rounds",
+      "source": "skills/working-polymarket-5min-strategy/rounds.json",
+      "current_capability": "polymarket-5min-strategy"
+    },
+    {
+      "signal": "Skill \"polymarket-ctf-operations\" score plateaued at 25 for 3 rounds",
+      "source": "skills/working-polymarket-ctf-operations/rounds.json",
+      "current_capability": "polymarket-ctf-operations"
+    },
+    {
+      "signal": "Skill \"polymarket-flash-crash-detector\" score plateaued at 36 for 3 rounds",
+      "source": "skills/working-polymarket-flash-crash-detector/rounds.json",
+      "current_capability": "polymarket-flash-crash-detector"
+    },
+    {
+      "signal": "Skill \"polymarket-gasless-trader\" score plateaued at 25 for 3 rounds",
+      "source": "skills/working-polymarket-gasless-trader/rounds.json",
+      "current_capability": "polymarket-gasless-trader"
+    },
+    {
+      "signal": "Skill \"polymarket-market-discovery\" score plateaued at 36 for 3 rounds",
+      "source": "skills/working-polymarket-market-discovery/rounds.json",
+      "current_capability": "polymarket-market-discovery"
+    },
+    {
+      "signal": "Skill \"polymarket-orderbook-reader\" has 2 unresolved failure(s) in round 4",
+      "source": "skills/working-polymarket-orderbook-reader/rounds.json",
+      "current_capability": "polymarket-orderbook-reader"
+    },
+    {
+      "signal": "Skill \"polymarket-portfolio-tracker\" has 1 unresolved failure(s) in round 4",
+      "source": "skills/working-polymarket-portfolio-tracker/rounds.json",
+      "current_capability": "polymarket-portfolio-tracker"
+    },
+    {
+      "signal": "Skill \"polymarket-position-manager\" score plateaued at 25 for 3 rounds",
+      "source": "skills/working-polymarket-position-manager/rounds.json",
+      "current_capability": "polymarket-position-manager"
+    },
+    {
+      "signal": "Skill \"polymarket-websocket-monitor\" score plateaued at 25 for 3 rounds",
+      "source": "skills/working-polymarket-websocket-monitor/rounds.json",
+      "current_capability": "polymarket-websocket-monitor"
     },
     {
       "signal": "Skill \"prompt-refiner-for-robustness\" score plateaued at 36 for 3 rounds",
@@ -345,6 +415,11 @@
       "current_capability": "system-status-reporter"
     },
     {
+      "signal": "Skill \"the-real-scrumness\" score plateaued at 36 for 3 rounds",
+      "source": "skills/working-the-real-scrumness/rounds.json",
+      "current_capability": "the-real-scrumness"
+    },
+    {
       "signal": "Skill \"title-variants\" has 6 unresolved failure(s) in round 4",
       "source": "skills/working-title-variants/rounds.json",
       "current_capability": "title-variants"
@@ -368,50 +443,50 @@
   "user_intent_signals": [
     {
       "signal": "User intent pattern: \"research pipeline\" detected across tmux transcripts",
-      "source": "tmux-logs transcripts (19 files scanned)",
-      "frequency": 146,
+      "source": "tmux-logs transcripts (27 files scanned)",
+      "frequency": 161,
       "current_capability": null
     },
     {
       "signal": "User intent pattern: \"skill improvement\" detected across tmux transcripts",
-      "source": "tmux-logs transcripts (19 files scanned)",
-      "frequency": 1363,
+      "source": "tmux-logs transcripts (27 files scanned)",
+      "frequency": 1737,
       "current_capability": null
     },
     {
       "signal": "User intent pattern: \"error debugging\" detected across tmux transcripts",
-      "source": "tmux-logs transcripts (19 files scanned)",
-      "frequency": 626,
+      "source": "tmux-logs transcripts (27 files scanned)",
+      "frequency": 785,
       "current_capability": null
     },
     {
       "signal": "User intent pattern: \"security audit\" detected across tmux transcripts",
-      "source": "tmux-logs transcripts (19 files scanned)",
-      "frequency": 23,
+      "source": "tmux-logs transcripts (27 files scanned)",
+      "frequency": 25,
       "current_capability": null
     },
     {
       "signal": "User intent pattern: \"deployment\" detected across tmux transcripts",
-      "source": "tmux-logs transcripts (19 files scanned)",
-      "frequency": 459,
+      "source": "tmux-logs transcripts (27 files scanned)",
+      "frequency": 479,
       "current_capability": null
     },
     {
       "signal": "User intent pattern: \"testing\" detected across tmux transcripts",
-      "source": "tmux-logs transcripts (19 files scanned)",
-      "frequency": 246,
+      "source": "tmux-logs transcripts (27 files scanned)",
+      "frequency": 280,
       "current_capability": null
     },
     {
       "signal": "User intent pattern: \"dashboard\" detected across tmux transcripts",
-      "source": "tmux-logs transcripts (19 files scanned)",
-      "frequency": 625,
+      "source": "tmux-logs transcripts (27 files scanned)",
+      "frequency": 770,
       "current_capability": null
     },
     {
       "signal": "User intent pattern: \"documentation\" detected across tmux transcripts",
-      "source": "tmux-logs transcripts (19 files scanned)",
-      "frequency": 33,
+      "source": "tmux-logs transcripts (27 files scanned)",
+      "frequency": 44,
       "current_capability": null
     }
   ],
@@ -435,11 +510,7 @@
           "exists": true
         }
       ],
-      "existing_skills": [
-        "literature-research (seed-base)",
-        "nate-synthesis-and-debate (seed-base)",
-        "nate-synthesis-and-debate (builds-karve-ai)"
-      ],
+      "existing_skills": [],
       "existing_autoresearch_skills": [
         "autoresearch-runner.mjs",
         "autoresearch-runner.py"
@@ -509,6 +580,56 @@
       "gap": "Active MCP with no matching skills — domain entirely uncovered"
     },
     {
+      "mcp_server": "polymarket",
+      "domain": "prediction_markets",
+      "subdomains": [
+        "market_discovery",
+        "orderbook_trading",
+        "portfolio_tracking",
+        "flash_crash_detection"
+      ],
+      "tool_count": null,
+      "tool_namespace": "mcp__polymarket__",
+      "scope": "global",
+      "data_available": true,
+      "data_sources": [
+        {
+          "type": "dashboard_results",
+          "files": [
+            "results-polymarket-5min-strategy.json",
+            "results-polymarket-bridge.json",
+            "results-polymarket-clob-trader.json",
+            "results-polymarket-ctf-operations.json",
+            "results-polymarket-flash-crash-detector.json",
+            "results-polymarket-gasless-trader.json",
+            "results-polymarket-market-analyzer.json",
+            "results-polymarket-market-discovery.json",
+            "results-polymarket-orderbook-reader.json",
+            "results-polymarket-portfolio-tracker.json",
+            "results-polymarket-position-manager.json",
+            "results-polymarket-websocket-monitor.json"
+          ],
+          "exists": true
+        }
+      ],
+      "existing_skills": [],
+      "existing_autoresearch_skills": [
+        "working-polymarket-5min-strategy",
+        "working-polymarket-bridge",
+        "working-polymarket-clob-trader",
+        "working-polymarket-ctf-operations",
+        "working-polymarket-flash-crash-detector",
+        "working-polymarket-gasless-trader",
+        "working-polymarket-market-analyzer",
+        "working-polymarket-market-discovery",
+        "working-polymarket-orderbook-reader",
+        "working-polymarket-portfolio-tracker",
+        "working-polymarket-position-manager",
+        "working-polymarket-websocket-monitor"
+      ],
+      "gap": "Autoresearch skills exist for this domain"
+    },
+    {
       "mcp_server": "substack",
       "domain": "content_creation",
       "subdomains": [
@@ -534,11 +655,7 @@
           "exists": true
         }
       ],
-      "existing_skills": [
-        "mattgiaro-substack-agent (builds-karve-ai)",
-        "mattgiaro-substack-growth (builds-karve-ai)",
-        "mattgiaro-substack-guide (builds-karve-ai)"
-      ],
+      "existing_skills": [],
       "existing_autoresearch_skills": [
         "working-content-strategy-optimizer"
       ],
@@ -566,15 +683,7 @@
           "exists": true
         }
       ],
-      "existing_skills": [
-        "eaas-domain-expansion-agent-team-v1 (seed-base)",
-        "eaas-expansion-brainstorm-to-blueprint-v1 (seed-base)",
-        "eaas-platform-build-self-discovery-v1 (seed-base)",
-        "eaas-domain-expansion-agent-team-v1 (builds-karve-ai)",
-        "eaas-expansion-brainstorm-to-blueprint-v1 (builds-karve-ai)",
-        "eaas-platform-build-self-discovery-v1 (builds-karve-ai)",
-        "platform (builds-karve-ai)"
-      ],
+      "existing_skills": [],
       "existing_autoresearch_skills": [
         "working-eaas-payment-linker"
       ],
@@ -582,12 +691,12 @@
     }
   ],
   "summary": {
-    "total_demands": 72,
+    "total_demands": 87,
     "unmet_demands": 9,
-    "partially_met": 63,
+    "partially_met": 78,
     "research_gap_count": 1,
     "system_gap_count": 0,
-    "mcp_domain_count": 6,
+    "mcp_domain_count": 7,
     "mcp_uncovered_domains": 2,
     "mcp_partial_domains": 0
   }

@@ -1,0 +1,183 @@
+{
+  "skill": "polymarket-bridge",
+  "criteria": [
+    "Deposit addresses generated for correct chain",
+    "Supported assets verified before operations",
+    "Status polling tracks to terminal state",
+    "Minimum deposits enforced",
+    "Withdrawal quotes include accurate fees"
+  ],
+  "totalCost": 0.25,
+  "models": {
+    "mutator": "sonnet",
+    "evaluator": "gemini-2.5-pro"
+  },
+  "rounds": [
+    {
+      "round": 0,
+      "score": 19,
+      "max": 25,
+      "status": "baseline",
+      "mutation": "Restructure Execution Steps to make checking /supported-assets and enforcing minimum deposit amounts explicit mandatory preconditions for the deposit flow (not just withdrawal), fixing scenarios 1 and 4 which fail both criteria simultaneously.",
+      "cost": 0.05,
+      "criteria": [
+        5,
+        3,
+        5,
+        3,
+        3
+      ],
+      "failures": [
+        {
+          "scenario": 1,
+          "criterion": "Supported assets verified before operations"
+        },
+        {
+          "scenario": 1,
+          "criterion": "Minimum deposits enforced"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Withdrawal quotes include accurate fees"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Supported assets verified before operations"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Minimum deposits enforced"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Withdrawal quotes include accurate fees"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Initial baseline evaluation",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-21T08:54:11.318Z",
+      "changelog": "**Mutation**: Restructure Execution Steps to make checking /supported-assets and enforcing minimum deposit amounts explicit mandatory preconditions for the deposit flow (not just withdrawal), fixing scenarios 1 and 4 which fail both criteria simultaneously.\n**Failures**: S1: Supported assets verified before operations, S1: Minimum deposits enforced, S2: Withdrawal quotes include accurate fees, S4: Supported assets verified before operations, S4: Minimum deposits enforced, S5: Withdrawal quotes include accurate fees\n**Per-criteria**: Deposit addresses generated for correct chain: 5/5, Supported assets verified before operations: 3/5, Status polling tracks to terminal state: 5/5, Minimum deposits enforced: 3/5, Withdrawal quotes include accurate fees: 3/5\n**Decision**: Initial baseline evaluation"
+    },
+    {
+      "round": 1,
+      "score": 25,
+      "max": 25,
+      "status": "kept",
+      "mutation": "Make the withdrawal quote step explicitly require displaying specific fee fields (estimated output, fee amount, fee breakdown) to prevent vague \"show fees\" interpretations that caused S2/S5 failures.",
+      "cost": 0.05,
+      "criteria": [
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "failures": [],
+      "geminiThoughts": null,
+      "decisionReason": "Improved from 19 to 25",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-21T08:55:48.526Z",
+      "changelog": "**Mutation**: Make the withdrawal quote step explicitly require displaying specific fee fields (estimated output, fee amount, fee breakdown) to prevent vague \"show fees\" interpretations that caused S2/S5 failures.\n**Failures**: none\n**Per-criteria**: Deposit addresses generated for correct chain: 5/5, Supported assets verified before operations: 5/5, Status polling tracks to terminal state: 5/5, Minimum deposits enforced: 5/5, Withdrawal quotes include accurate fees: 5/5\n**Decision**: Improved from 19 to 25"
+    },
+    {
+      "round": 2,
+      "score": 25,
+      "max": 25,
+      "status": "reverted",
+      "mutation": "No failures exist — all criteria pass 25/25. Apply a minor clarification to the withdrawal quote step to reinforce that user confirmation must be received before any withdrawal API call is made, preventing any edge case where the skill might proceed without explicit acknowledgment.",
+      "cost": 0.05,
+      "criteria": [
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "failures": [],
+      "geminiThoughts": null,
+      "decisionReason": "Score 25 did not exceed best 25 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-21T08:57:13.382Z",
+      "changelog": "**Mutation**: No failures exist — all criteria pass 25/25. Apply a minor clarification to the withdrawal quote step to reinforce that user confirmation must be received before any withdrawal API call is made, preventing any edge case where the skill might proceed without explicit acknowledgment.\n**Failures**: none\n**Per-criteria**: Deposit addresses generated for correct chain: 5/5, Supported assets verified before operations: 5/5, Status polling tracks to terminal state: 5/5, Minimum deposits enforced: 5/5, Withdrawal quotes include accurate fees: 5/5\n**Decision**: Score 25 did not exceed best 25 — mutation produced worse or equal results"
+    },
+    {
+      "round": 3,
+      "score": 20,
+      "max": 25,
+      "status": "reverted",
+      "mutation": "Remove the misleading \"Withdrawals are instant and free\" caveat that contradicts the mandatory quote step, replacing it with a note that quotes are still mandatory to display estimated output even when Polymarket subsidizes fees.",
+      "cost": 0.05,
+      "criteria": [
+        5,
+        5,
+        5,
+        5,
+        0
+      ],
+      "failures": [
+        {
+          "scenario": 1,
+          "criterion": "Withdrawal quotes include accurate fees"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Withdrawal quotes include accurate fees"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Withdrawal quotes include accurate fees"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Withdrawal quotes include accurate fees"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Withdrawal quotes include accurate fees"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 20 did not exceed best 25 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-21T08:58:22.609Z",
+      "changelog": "**Mutation**: Remove the misleading \"Withdrawals are instant and free\" caveat that contradicts the mandatory quote step, replacing it with a note that quotes are still mandatory to display estimated output even when Polymarket subsidizes fees.\n**Failures**: S1: Withdrawal quotes include accurate fees, S2: Withdrawal quotes include accurate fees, S3: Withdrawal quotes include accurate fees, S4: Withdrawal quotes include accurate fees, S5: Withdrawal quotes include accurate fees\n**Per-criteria**: Deposit addresses generated for correct chain: 5/5, Supported assets verified before operations: 5/5, Status polling tracks to terminal state: 5/5, Minimum deposits enforced: 5/5, Withdrawal quotes include accurate fees: 0/5\n**Decision**: Score 20 did not exceed best 25 — mutation produced worse or equal results"
+    },
+    {
+      "round": 4,
+      "score": 25,
+      "max": 25,
+      "status": "reverted",
+      "mutation": "Add a polling timeout guidance note to the Status Check section to handle the edge case where a transaction never reaches a terminal state, preventing infinite polling loops.",
+      "cost": 0.05,
+      "criteria": [
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "failures": [],
+      "geminiThoughts": null,
+      "decisionReason": "Score 25 did not exceed best 25 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-21T08:59:21.076Z",
+      "changelog": "**Mutation**: Add a polling timeout guidance note to the Status Check section to handle the edge case where a transaction never reaches a terminal state, preventing infinite polling loops.\n**Failures**: none\n**Per-criteria**: Deposit addresses generated for correct chain: 5/5, Supported assets verified before operations: 5/5, Status polling tracks to terminal state: 5/5, Minimum deposits enforced: 5/5, Withdrawal quotes include accurate fees: 5/5\n**Decision**: Score 25 did not exceed best 25 — mutation produced worse or equal results"
+    }
+  ]
+}

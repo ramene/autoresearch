@@ -1,0 +1,246 @@
+{
+  "skill": "eaas-payment-linker",
+  "criteria": [
+    "Authenticate with the 'eaas' API",
+    "Generate a valid, clickable payment URL",
+    "Is the generated link associated with the correct service ID",
+    "Is the generated link for the correct currency and amount",
+    "Handle API errors gracefully (e.g., invalid service ID)",
+    "Log the generated link and associated metadata for tracking"
+  ],
+  "totalCost": 0.25,
+  "models": {
+    "mutator": "sonnet",
+    "evaluator": "gemini-2.5-pro"
+  },
+  "rounds": [
+    {
+      "round": 0,
+      "score": 27,
+      "max": 36,
+      "status": "baseline",
+      "mutation": "Add `--api-key \"$EaaS_API_KEY\"` to the eaas create-link command in Execution Step 4, so the authenticated credential is actually passed to the API call (currently only checked via printenv but never used).",
+      "cost": 0.05,
+      "criteria": [
+        5,
+        4,
+        4,
+        4,
+        6,
+        4
+      ],
+      "failures": [
+        {
+          "scenario": 3,
+          "criterion": "Generate a valid, clickable payment URL"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Is the generated link associated with the correct service ID"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Is the generated link for the correct currency and amount"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Log the generated link and associated metadata for tracking"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Authenticate with the 'eaas' API"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Generate a valid, clickable payment URL"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Is the generated link associated with the correct service ID"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Is the generated link for the correct currency and amount"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Log the generated link and associated metadata for tracking"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Initial baseline evaluation",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-20T18:00:50.495Z",
+      "changelog": "**Mutation**: Add `--api-key \"$EaaS_API_KEY\"` to the eaas create-link command in Execution Step 4, so the authenticated credential is actually passed to the API call (currently only checked via printenv but never used).\n**Failures**: S3: Generate a valid, clickable payment URL, S3: Is the generated link associated with the correct service ID, S3: Is the generated link for the correct currency and amount, S3: Log the generated link and associated metadata for tracking, S4: Authenticate with the 'eaas' API, S4: Generate a valid, clickable payment URL, S4: Is the generated link associated with the correct service ID, S4: Is the generated link for the correct currency and amount, S4: Log the generated link and associated metadata for tracking\n**Per-criteria**: Authenticate with the 'eaas' API: 5/6, Generate a valid, clickable payment URL: 4/6, Is the generated link associated with the correct service ID: 4/6, Is the generated link for the correct currency and amount: 4/6, Handle API errors gracefully (e.g., invalid service ID): 6/6, Log the generated link and associated metadata for tracking: 4/6\n**Decision**: Initial baseline evaluation"
+    },
+    {
+      "round": 1,
+      "score": 36,
+      "max": 36,
+      "status": "kept",
+      "mutation": "Replace Edit tool with Bash `>>` append in Step 6 (Log Transaction) to handle the case where payment_links.jsonl doesn't exist yet, preventing silent log failures on first run.",
+      "cost": 0.05,
+      "criteria": [
+        6,
+        6,
+        6,
+        6,
+        6,
+        6
+      ],
+      "failures": [],
+      "geminiThoughts": null,
+      "decisionReason": "Improved from 27 to 36",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-20T18:02:12.291Z",
+      "changelog": "**Mutation**: Replace Edit tool with Bash `>>` append in Step 6 (Log Transaction) to handle the case where payment_links.jsonl doesn't exist yet, preventing silent log failures on first run.\n**Failures**: none\n**Per-criteria**: Authenticate with the 'eaas' API: 6/6, Generate a valid, clickable payment URL: 6/6, Is the generated link associated with the correct service ID: 6/6, Is the generated link for the correct currency and amount: 6/6, Handle API errors gracefully (e.g., invalid service ID): 6/6, Log the generated link and associated metadata for tracking: 6/6\n**Decision**: Improved from 27 to 36"
+    },
+    {
+      "round": 2,
+      "score": 29,
+      "max": 36,
+      "status": "reverted",
+      "mutation": "Add explicit `jq` commands in Step 5 to extract payment_url, link_id, service_id, amount, and currency from response.json into shell variables, replacing the vague \"parse the JSON\" instruction that causes agents to fail silently on field extraction.",
+      "cost": 0.05,
+      "criteria": [
+        5,
+        4,
+        4,
+        4,
+        6,
+        6
+      ],
+      "failures": [
+        {
+          "scenario": 3,
+          "criterion": "Generate a valid, clickable payment URL"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Is the generated link associated with the correct service ID"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Is the generated link for the correct currency and amount"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Authenticate with the 'eaas' API"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Generate a valid, clickable payment URL"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Is the generated link associated with the correct service ID"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Is the generated link for the correct currency and amount"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 29 did not exceed best 36 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-20T18:03:49.322Z",
+      "changelog": "**Mutation**: Add explicit `jq` commands in Step 5 to extract payment_url, link_id, service_id, amount, and currency from response.json into shell variables, replacing the vague \"parse the JSON\" instruction that causes agents to fail silently on field extraction.\n**Failures**: S3: Generate a valid, clickable payment URL, S3: Is the generated link associated with the correct service ID, S3: Is the generated link for the correct currency and amount, S4: Authenticate with the 'eaas' API, S4: Generate a valid, clickable payment URL, S4: Is the generated link associated with the correct service ID, S4: Is the generated link for the correct currency and amount\n**Per-criteria**: Authenticate with the 'eaas' API: 5/6, Generate a valid, clickable payment URL: 4/6, Is the generated link associated with the correct service ID: 4/6, Is the generated link for the correct currency and amount: 4/6, Handle API errors gracefully (e.g., invalid service ID): 6/6, Log the generated link and associated metadata for tracking: 6/6\n**Decision**: Score 29 did not exceed best 36 — mutation produced worse or equal results"
+    },
+    {
+      "round": 3,
+      "score": 27,
+      "max": 36,
+      "status": "reverted",
+      "mutation": "In Step 1, replace `mkdir -p` with `rm -rf ... && mkdir -p ...` to purge stale response.json/error.log from any previous failed run before each execution begins.",
+      "cost": 0.05,
+      "criteria": [
+        5,
+        4,
+        4,
+        4,
+        6,
+        4
+      ],
+      "failures": [
+        {
+          "scenario": 3,
+          "criterion": "Generate a valid, clickable payment URL"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Is the generated link associated with the correct service ID"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Is the generated link for the correct currency and amount"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Log the generated link and associated metadata for tracking"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Authenticate with the 'eaas' API"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Generate a valid, clickable payment URL"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Is the generated link associated with the correct service ID"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Is the generated link for the correct currency and amount"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Log the generated link and associated metadata for tracking"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 27 did not exceed best 36 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-20T18:06:32.165Z",
+      "changelog": "**Mutation**: In Step 1, replace `mkdir -p` with `rm -rf ... && mkdir -p ...` to purge stale response.json/error.log from any previous failed run before each execution begins.\n**Failures**: S3: Generate a valid, clickable payment URL, S3: Is the generated link associated with the correct service ID, S3: Is the generated link for the correct currency and amount, S3: Log the generated link and associated metadata for tracking, S4: Authenticate with the 'eaas' API, S4: Generate a valid, clickable payment URL, S4: Is the generated link associated with the correct service ID, S4: Is the generated link for the correct currency and amount, S4: Log the generated link and associated metadata for tracking\n**Per-criteria**: Authenticate with the 'eaas' API: 5/6, Generate a valid, clickable payment URL: 4/6, Is the generated link associated with the correct service ID: 4/6, Is the generated link for the correct currency and amount: 4/6, Handle API errors gracefully (e.g., invalid service ID): 6/6, Log the generated link and associated metadata for tracking: 4/6\n**Decision**: Score 27 did not exceed best 36 — mutation produced worse or equal results"
+    },
+    {
+      "round": 4,
+      "score": 36,
+      "max": 36,
+      "status": "reverted",
+      "mutation": "No failures exist (36/36 score) — apply a minor defensive improvement: add explicit null-check step after jq extraction to prevent silent pass-through when response.json fields are missing or null.",
+      "cost": 0.05,
+      "criteria": [
+        6,
+        6,
+        6,
+        6,
+        6,
+        6
+      ],
+      "failures": [],
+      "geminiThoughts": null,
+      "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-20T18:08:52.526Z",
+      "changelog": "**Mutation**: No failures exist (36/36 score) — apply a minor defensive improvement: add explicit null-check step after jq extraction to prevent silent pass-through when response.json fields are missing or null.\n**Failures**: none\n**Per-criteria**: Authenticate with the 'eaas' API: 6/6, Generate a valid, clickable payment URL: 6/6, Is the generated link associated with the correct service ID: 6/6, Is the generated link for the correct currency and amount: 6/6, Handle API errors gracefully (e.g., invalid service ID): 6/6, Log the generated link and associated metadata for tracking: 6/6\n**Decision**: Score 36 did not exceed best 36 — mutation produced worse or equal results"
+    }
+  ]
+}

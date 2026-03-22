@@ -1,0 +1,277 @@
+{
+  "skill": "container-security-auditor",
+  "criteria": [
+    "Scan the target container image",
+    "Does the output list identified vulnerabilities with severity levels",
+    "Check for common misconfigurations (e.g., running as root)",
+    "Is the final report structured in a machine-readable format (e.g., JSON)",
+    "Provide actionable remediation advice for high-severity findings",
+    "Complete the scan without crashing or timing out"
+  ],
+  "totalCost": 0.28,
+  "models": {
+    "mutator": "sonnet",
+    "evaluator": "gemini-2.5-pro"
+  },
+  "rounds": [
+    {
+      "round": 0,
+      "score": 37,
+      "max": 42,
+      "status": "baseline",
+      "mutation": "Replace the placeholder trivy installation comment with concrete, cross-platform installation commands so the skill doesn't silently exit when trivy is missing.",
+      "cost": 0.05,
+      "criteria": [
+        6,
+        6,
+        6,
+        6,
+        6,
+        7
+      ],
+      "failures": [
+        {
+          "scenario": 5,
+          "criterion": "Scan the target container image"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Does the output list identified vulnerabilities with severity levels"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Check for common misconfigurations (e.g., running as root)"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Is the final report structured in a machine-readable format (e.g., JSON)"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Provide actionable remediation advice for high-severity findings"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Initial baseline evaluation",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-20T20:35:59.486Z",
+      "changelog": "**Mutation**: Replace the placeholder trivy installation comment with concrete, cross-platform installation commands so the skill doesn't silently exit when trivy is missing.\n**Failures**: S5: Scan the target container image, S5: Does the output list identified vulnerabilities with severity levels, S5: Check for common misconfigurations (e.g., running as root), S5: Is the final report structured in a machine-readable format (e.g., JSON), S5: Provide actionable remediation advice for high-severity findings\n**Per-criteria**: Scan the target container image: 6/7, Does the output list identified vulnerabilities with severity levels: 6/7, Check for common misconfigurations (e.g., running as root): 6/7, Is the final report structured in a machine-readable format (e.g., JSON): 6/7, Provide actionable remediation advice for high-severity findings: 6/7, Complete the scan without crashing or timing out: 7/7\n**Decision**: Initial baseline evaluation"
+    },
+    {
+      "round": 1,
+      "score": 37,
+      "max": 42,
+      "status": "reverted",
+      "mutation": "Add `--exit-code 0` to trivy scan commands and fix Quality Gate #1 to accept exit code 0 or 1 (vulnerabilities found), preventing the scan from aborting before producing output when vulnerabilities are discovered.",
+      "cost": 0.05,
+      "criteria": [
+        6,
+        6,
+        6,
+        6,
+        6,
+        7
+      ],
+      "failures": [
+        {
+          "scenario": 5,
+          "criterion": "Scan the target container image"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Does the output list identified vulnerabilities with severity levels"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Check for common misconfigurations (e.g., running as root)"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Is the final report structured in a machine-readable format (e.g., JSON)"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Provide actionable remediation advice for high-severity findings"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 37 did not exceed best 37 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-20T20:38:03.022Z",
+      "changelog": "**Mutation**: Add `--exit-code 0` to trivy scan commands and fix Quality Gate #1 to accept exit code 0 or 1 (vulnerabilities found), preventing the scan from aborting before producing output when vulnerabilities are discovered.\n**Failures**: S5: Scan the target container image, S5: Does the output list identified vulnerabilities with severity levels, S5: Check for common misconfigurations (e.g., running as root), S5: Is the final report structured in a machine-readable format (e.g., JSON), S5: Provide actionable remediation advice for high-severity findings\n**Per-criteria**: Scan the target container image: 6/7, Does the output list identified vulnerabilities with severity levels: 6/7, Check for common misconfigurations (e.g., running as root): 6/7, Is the final report structured in a machine-readable format (e.g., JSON): 6/7, Provide actionable remediation advice for high-severity findings: 6/7, Complete the scan without crashing or timing out: 7/7\n**Decision**: Score 37 did not exceed best 37 — mutation produced worse or equal results"
+    },
+    {
+      "round": 2,
+      "score": 37,
+      "max": 42,
+      "status": "reverted",
+      "mutation": "Add post-scan file existence check with fallback retry using `--scanners vuln` only, ensuring the JSON report is always produced even when the config scanner fails in S5.",
+      "cost": 0.05,
+      "criteria": [
+        6,
+        6,
+        6,
+        6,
+        6,
+        7
+      ],
+      "failures": [
+        {
+          "scenario": 5,
+          "criterion": "Scan the target container image"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Does the output list identified vulnerabilities with severity levels"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Check for common misconfigurations (e.g., running as root)"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Is the final report structured in a machine-readable format (e.g., JSON)"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Provide actionable remediation advice for high-severity findings"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 37 did not exceed best 37 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-20T20:40:37.701Z",
+      "changelog": "**Mutation**: Add post-scan file existence check with fallback retry using `--scanners vuln` only, ensuring the JSON report is always produced even when the config scanner fails in S5.\n**Failures**: S5: Scan the target container image, S5: Does the output list identified vulnerabilities with severity levels, S5: Check for common misconfigurations (e.g., running as root), S5: Is the final report structured in a machine-readable format (e.g., JSON), S5: Provide actionable remediation advice for high-severity findings\n**Per-criteria**: Scan the target container image: 6/7, Does the output list identified vulnerabilities with severity levels: 6/7, Check for common misconfigurations (e.g., running as root): 6/7, Is the final report structured in a machine-readable format (e.g., JSON): 6/7, Provide actionable remediation advice for high-severity findings: 6/7, Complete the scan without crashing or timing out: 7/7\n**Decision**: Score 37 did not exceed best 37 — mutation produced worse or equal results"
+    },
+    {
+      "round": 3,
+      "score": 37,
+      "max": 42,
+      "status": "reverted",
+      "mutation": "Replace the dynamically-generated `$JSON_OUTPUT_FILE` bash variable with a fixed, deterministic output filename `trivy-report.json` so Claude can reliably reference the file in subsequent Read/Grep/Write steps without bash variable persistence.",
+      "cost": 0.05,
+      "criteria": [
+        6,
+        6,
+        6,
+        6,
+        6,
+        7
+      ],
+      "failures": [
+        {
+          "scenario": 5,
+          "criterion": "Scan the target container image"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Does the output list identified vulnerabilities with severity levels"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Check for common misconfigurations (e.g., running as root)"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Is the final report structured in a machine-readable format (e.g., JSON)"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Provide actionable remediation advice for high-severity findings"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 37 did not exceed best 37 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-20T20:43:48.929Z",
+      "changelog": "**Mutation**: Replace the dynamically-generated `$JSON_OUTPUT_FILE` bash variable with a fixed, deterministic output filename `trivy-report.json` so Claude can reliably reference the file in subsequent Read/Grep/Write steps without bash variable persistence.\n**Failures**: S5: Scan the target container image, S5: Does the output list identified vulnerabilities with severity levels, S5: Check for common misconfigurations (e.g., running as root), S5: Is the final report structured in a machine-readable format (e.g., JSON), S5: Provide actionable remediation advice for high-severity findings\n**Per-criteria**: Scan the target container image: 6/7, Does the output list identified vulnerabilities with severity levels: 6/7, Check for common misconfigurations (e.g., running as root): 6/7, Is the final report structured in a machine-readable format (e.g., JSON): 6/7, Provide actionable remediation advice for high-severity findings: 6/7, Complete the scan without crashing or timing out: 7/7\n**Decision**: Score 37 did not exceed best 37 — mutation produced worse or equal results"
+    },
+    {
+      "round": 3,
+      "score": 37,
+      "max": 42,
+      "status": "escalation",
+      "mutation": "Stuck escalation: The optimization loop is stuck in a local optimum because all recent mutations have focused on improving the robustness of the *scan execution* step (Step 3), while the persistent failure likely origi",
+      "cost": 0.03,
+      "criteria": [
+        6,
+        6,
+        6,
+        6,
+        6,
+        7
+      ],
+      "failures": [],
+      "decisionReason": "Stuck escalation triggered after 3+ rounds with no improvement",
+      "escalation": {
+        "diagnosis": "The optimization loop is stuck in a local optimum because all recent mutations have focused on improving the robustness of the *scan execution* step (Step 3), while the persistent failure likely originates in the *target resolution* step (Step 2). The current skill provides a hardcoded, non-executable example for resolving an image from a Kubernetes pod (`kubectl get pod my-pod...`). The failing test scenario (S5) likely involves a Kubernetes target, and the AI is failing to generalize from this static example to the specific pod and namespace in the test. This causes the target resolution to fail, the `TARGET_IMAGE` variable to be empty, and the skill to exit prematurely, leading to a cascade of downstream failures (no JSON report, no vulnerability list, no remediation advice) that are incorrectly attributed to the scan step itself. The mutations have been hardening a part of the skill that is never even reached in the failing scenario.",
+        "evalRedesignNeeded": false,
+        "strategy": "Shift the mutation focus from post-scan error handling to pre-scan input processing and target resolution. The immediate goal is to replace the static, hardcoded `kubectl` example with a robust, parameterized shell script block that can parse a Kubernetes target string (e.g., `pod/name -n namespace`) into variables and execute the command dynamically. This makes the skill's logic explicit and less reliant on the AI's ability to generalize from a non-executable example, directly addressing the root cause of the failure.",
+        "suggestedMutation": "In the `Execution Steps` section, replace the current \"Target Resolution\" (Step 2) block with a more robust, parameterized script that can handle different input types. This involves introducing a variable for the initial target and then conditionally processing it.\n\n**Modify `Execution Steps` -> Step 2 (`[Bash] Target Resolution`) to be:**\n\n```markdown\n2.  **[Bash] Target Resolution:**\n    *   Define a variable `INPUT_TARGET` which holds the full target string provided by the user (e.g., `nginx:latest`, `pod/prod-api-server -n production`). This variable will be populated by the system from the trigger arguments.\n    *   Check if the target is a Kubernetes pod reference. If so, parse the pod name and namespace, then use `kubectl` to find the image name. Otherwise, assume the target is an image name/ID.\n    ```bash\n    # The system will populate INPUT_TARGET from the user's command.\n    # For example: INPUT_TARGET=\"pod/prod-api-server-5f4... -n production\"\n    \n    TARGET_IMAGE=\"\"\n    \n    if [[ \"$INPUT_TARGET\" == pod/* ]]; then\n        # Handle Kubernetes pod target\n        # Expected format: \"pod/<pod-name> [-n <namespace>]\"\n        POD_NAME=$(echo \"$INPUT_TARGET\" | sed -n 's;pod/\\([^ ]*\\).*;\\1;p')\n        NAMESPACE=$(echo \"$INPUT_TARGET\" | sed -n 's/.*-n \\([^ ]*\\).*/\\1/p')\n        \n        if [ -z \"$NAMESPACE\" ]; then\n            NAMESPACE=\"default\"\n        fi\n    \n        echo \"Attempting to resolve image from Kubernetes pod '$POD_NAME' in namespace '$NAMESPACE'...\"\n        TARGET_IMAGE=$(kubectl get pod \"$POD_NAME\" -n \"$NAMESPACE\" -o jsonpath='{.spec.containers[0].image}' 2>/dev/null)\n        \n        if [ -z \"$TARGET_IMAGE\" ]; then\n            echo \"Error: Could not resolve image for pod '$POD_NAME' in namespace '$NAMESPACE'. Check pod name, namespace, and kubectl permissions.\"\n            exit 1\n        fi\n        echo \"Resolved image from pod: $TARGET_IMAGE\"\n    else\n        # Handle direct image name or ID\n        TARGET_IMAGE=\"$INPUT_TARGET\"\n        echo \"Target is a direct image reference: $TARGET_IMAGE\"\n    fi\n    ```\n```"
+      },
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-20T20:46:20.041Z"
+    },
+    {
+      "round": 4,
+      "score": 37,
+      "max": 42,
+      "status": "reverted",
+      "mutation": "Replace Step 2 Target Resolution with a parameterized script that parses `INPUT_TARGET` into variables, handling both Kubernetes pod references and direct image names explicitly, removing reliance on AI generalization from a static non-executable example.",
+      "cost": 0.05,
+      "criteria": [
+        6,
+        6,
+        6,
+        6,
+        6,
+        7
+      ],
+      "failures": [
+        {
+          "scenario": 5,
+          "criterion": "Scan the target container image"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Does the output list identified vulnerabilities with severity levels"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Check for common misconfigurations (e.g., running as root)"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Is the final report structured in a machine-readable format (e.g., JSON)"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Provide actionable remediation advice for high-severity findings"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 37 did not exceed best 37 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-20T20:46:57.452Z",
+      "changelog": "**Mutation**: Replace Step 2 Target Resolution with a parameterized script that parses `INPUT_TARGET` into variables, handling both Kubernetes pod references and direct image names explicitly, removing reliance on AI generalization from a static non-executable example.\n**Failures**: S5: Scan the target container image, S5: Does the output list identified vulnerabilities with severity levels, S5: Check for common misconfigurations (e.g., running as root), S5: Is the final report structured in a machine-readable format (e.g., JSON), S5: Provide actionable remediation advice for high-severity findings\n**Per-criteria**: Scan the target container image: 6/7, Does the output list identified vulnerabilities with severity levels: 6/7, Check for common misconfigurations (e.g., running as root): 6/7, Is the final report structured in a machine-readable format (e.g., JSON): 6/7, Provide actionable remediation advice for high-severity findings: 6/7, Complete the scan without crashing or timing out: 7/7\n**Decision**: Score 37 did not exceed best 37 — mutation produced worse or equal results"
+    }
+  ]
+}
