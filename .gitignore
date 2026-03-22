@@ -16,6 +16,11 @@ queue/
 CLAUDE.md
 AGENTS.md
 
+# Large media files — stored in GCS gs://autoresearch-media/
+*.mp3
+*.wav
+*.mp4
+
 # Experimental code/artifacts
 dev/
 
