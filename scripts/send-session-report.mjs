@@ -94,7 +94,7 @@ try {
 
 // ─── Build HTML report ───────────────────────────────────────────────────────
 
-const ts = new Date().toLocaleString('en-US', { timeZone: 'America/Chicago', dateStyle: 'medium', timeStyle: 'short' })
+const ts = new Date().toLocaleString('en-US', { timeZone: 'America/Merida', dateStyle: 'medium', timeStyle: 'short' })
 const stateColor = planState === 'running' ? '#22c55e' : planState === 'completed' ? '#3b82f6' : '#9ca3af'
 const stateLabel = planState === 'running' ? 'ACTIVE' : planState === 'completed' ? 'COMPLETE' : planState.toUpperCase()
 

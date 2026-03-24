@@ -81,7 +81,7 @@ const duration = durMatch?.[1] || '?'
 
 // Build HTML report
 const icon = errorCount > 0 ? '⚠' : '✓'
-const time = new Date().toLocaleString('en-US', { timeZone: 'America/Chicago', dateStyle: 'medium', timeStyle: 'short' })
+const time = new Date().toLocaleString('en-US', { timeZone: 'America/Merida', dateStyle: 'medium', timeStyle: 'short' })
 const statusColor = errorCount > 0 ? '#ef4444' : '#22c55e'
 const statusLabel = errorCount > 0 ? 'ERRORS' : 'HEALTHY'
 

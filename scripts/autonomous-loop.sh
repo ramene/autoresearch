@@ -31,6 +31,9 @@ exec > >(tee -a "$LOG_FILE") 2>&1
 # ─── EXIT TRAP: Rich report fires NO MATTER WHAT ─────────────────────────────
 send_final_report() {
     local duration=$(( $(date +%s) - START_EPOCH ))
+    # Write Loop Complete BEFORE sending report so duration regex can match
+    echo ""
+    echo "═══ Loop Complete — $(date) | ${duration}s | ${ERRORS_FOUND} errors | ${FIXES_APPLIED} fixes ═══"
     echo ""
     echo "═══ Sending report ═══"
     "$NODE" "$AUTORESEARCH_DIR/scripts/send-report.mjs" "$LOG_FILE" 2>&1 || \
@@ -50,7 +53,6 @@ send_final_report() {
     fi
 
     osascript -e "display notification \"${duration}s | ${ERRORS_FOUND} errors | ${FIXES_APPLIED} fixes\" with title \"Autoresearch $([ $ERRORS_FOUND -gt 0 ] && echo '⚠' || echo '✓')\" sound name \"$([ $ERRORS_FOUND -gt 0 ] && echo 'Basso' || echo 'Glass')\"" 2>/dev/null || true
-    echo "═══ Loop Complete — $(date) | ${duration}s | ${ERRORS_FOUND} errors | ${FIXES_APPLIED} fixes ═══"
 }
 trap send_final_report EXIT SIGTERM SIGINT SIGHUP
 

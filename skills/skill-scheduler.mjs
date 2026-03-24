@@ -45,6 +45,8 @@ const DRY_RUN = hasFlag('--dry-run')
 const FORCE_SKILL = getFlag('--skill', null)
 const RUN_ALL = hasFlag('--all')
 const COOLDOWN_MS = 60 * 60 * 1000 // 1 hour
+const PLATEAU_RUNS = 2 // Skip skill if no improvement in this many consecutive scheduler runs
+const PLATEAU_COOLDOWN_RUNS = 6 // Re-attempt after this many total runs of OTHER skills
 
 const RUNNER_PATH = resolve(__dirname, 'autoresearch-runner.mjs')
 const STATE_PATH = resolve(__dirname, 'scheduler-state.json')
@@ -117,6 +119,29 @@ function discoverSkills() {
 
 // ─── Skill Selection ─────────────────────────────────────────────────────────
 
+function isPlateaued(skillName, state) {
+  const stat = state.skillStats[skillName]
+  if (!stat || stat.runsCompleted < PLATEAU_RUNS) return false
+
+  // Read rounds.json to check for consecutive non-improvements
+  const roundsPath = resolve(__dirname, `working-${skillName}`, 'rounds.json')
+  if (!existsSync(roundsPath)) return false
+
+  try {
+    const rounds = JSON.parse(readFileSync(roundsPath, 'utf8'))
+    // Get the last PLATEAU_RUNS scheduler invocations worth of rounds
+    // Each scheduler run does up to ROUNDS_PER_SKILL rounds
+    const recentRounds = rounds.slice(-(PLATEAU_RUNS * ROUNDS_PER_SKILL))
+    const hasImprovement = recentRounds.some(r => r.status === 'kept' || r.status === 'improved')
+    if (!hasImprovement && stat.runsCompleted >= PLATEAU_RUNS) {
+      console.log(`  ⏸ ${skillName}: plateaued (${stat.runsCompleted} runs, no improvement in last ${recentRounds.length} rounds) — skipping`)
+      return true
+    }
+  } catch { /* can't read rounds, assume not plateaued */ }
+
+  return false
+}
+
 function selectSkill(skills, state) {
   const now = Date.now()
 
@@ -130,10 +155,17 @@ function selectSkill(skills, state) {
 
   if (eligible.length === 0) return null
 
-  // Sort by ratio ascending (weakest first)
-  eligible.sort((a, b) => a.ratio - b.ratio)
+  // Filter out plateaued skills (no improvement in PLATEAU_RUNS consecutive scheduler runs)
+  const nonPlateaued = eligible.filter(s => !isPlateaued(s.name, state))
 
-  return eligible[0]
+  // If ALL eligible skills are plateaued, pick the one with the most runs
+  // since last improvement (it's been cooling off the longest)
+  const candidates = nonPlateaued.length > 0 ? nonPlateaued : eligible
+
+  // Sort by ratio ascending (weakest first)
+  candidates.sort((a, b) => a.ratio - b.ratio)
+
+  return candidates[0]
 }
 
 // ─── Runner Execution ────────────────────────────────────────────────────────
