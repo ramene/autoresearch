@@ -1,0 +1,76 @@
+{
+  "scenarios": [
+    {
+      "id": 1,
+      "type": "happy",
+      "title": "Analyze the current state of the S&P 500",
+      "event": "Analyze the current state of the S&P 500.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 2,
+      "type": "happy",
+      "title": "Fetch the latest price for AAPL and GOOG",
+      "event": "Fetch the latest price for AAPL and GOOG.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 3,
+      "type": "happy",
+      "title": "Are there any arbitrage opportunities for BTC between Coinbase and Kraken",
+      "event": "Are there any arbitrage opportunities for BTC between Coinbase and Kraken?",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 4,
+      "type": "happy",
+      "title": "Summarize the latest CPI and unemployment data for the United States",
+      "event": "Summarize the latest CPI and unemployment data for the United States.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 5,
+      "type": "diagnostic",
+      "title": "Provide a market outlook based on current price feeds and macro signals",
+      "event": "Provide a market outlook based on current price feeds and macro signals.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 6,
+      "type": "diagnostic",
+      "title": "Calculate the 50-day moving average for TSLA",
+      "event": "Calculate the 50-day moving average for TSLA.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 7,
+      "type": "edge",
+      "title": "Compare the performance of gold vs. the US dollar over the last quarter",
+      "event": "Compare the performance of gold vs. the US dollar over the last quarter.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 8,
+      "type": "edge",
+      "title": "Identify the top 5 performing stocks in the NASDAQ today",
+      "event": "Identify the top 5 performing stocks in the NASDAQ today.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    }
+  ],
+  "criteria": [
+    "Fetch price data for a given ticker using the appropriate tool: Does the skill correctly fetch price data for a given ticker using the appropriate tool?",
+    "Can the skill identify potential arbitrage opportunities between two specified exchanges: Can the skill identify potential arbitrage opportunities between two specified exchanges?",
+    "Does the report summarize relevant macroeconomic indicators for a given country: Does the report summarize relevant macroeconomic indicators for a given country?",
+    "Does the output correctly aggregate signals from multiple sources into a coherent summary: Does the output correctly aggregate signals from multiple sources into a coherent summary?",
+    "Can the skill perform a basic technical analysis (e.g., moving average) on a price feed: Can the skill perform a basic technical analysis (e.g., moving average) on a price feed?",
+    "Is the final analysis presented in a structured format (e.g., JSON or markdown table): Is the final analysis presented in a structured format (e.g., JSON or markdown table)?"
+  ]
+}

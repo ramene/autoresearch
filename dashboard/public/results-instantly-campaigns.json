@@ -8,7 +8,7 @@
     "Instructions Clarity",
     "Completeness"
   ],
-  "totalCost": 0.25,
+  "totalCost": 0.49999999999999994,
   "models": {
     "mutator": "sonnet",
     "evaluator": "gemini-2.5-pro"
@@ -379,6 +379,280 @@
       },
       "timestamp": "2026-03-20T21:06:28.909Z",
       "changelog": "**Mutation**: Merged Steps 3 and 4 into a single \"Run & Capture Output\" step that executes the script exactly once with stderr captured, eliminating the duplicate execution that caused confusion about which run's output to inspect.\n**Failures**: S4: Task Completion, S6: Task Completion, S6: Error Handling, S6: Output Quality, S6: Tool Usage, S6: Instructions Clarity, S6: Completeness\n**Per-criteria**: Task Completion: 4/6, Error Handling: 5/6, Output Quality: 5/6, Tool Usage: 5/6, Instructions Clarity: 5/6, Completeness: 5/6\n**Decision**: Score 29 did not exceed best 29 — mutation produced worse or equal results"
+    },
+    {
+      "round": 5,
+      "score": 26,
+      "max": 36,
+      "status": "reverted",
+      "mutation": "Added a pre-flight working directory check as Step 0 that verifies the scripts directory exists before proceeding, so relative path failures are caught immediately with a clear error message instead of cascading silently.",
+      "cost": 0.05,
+      "criteria": [
+        4,
+        4,
+        5,
+        5,
+        5,
+        3
+      ],
+      "failures": [
+        {
+          "scenario": 2,
+          "criterion": "Task Completion"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Error Handling"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Output Quality"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Tool Usage"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Instructions Clarity"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Completeness"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Error Handling"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Completeness"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Task Completion"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Completeness"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 26 did not exceed best 29 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-25T22:00:40.566Z",
+      "changelog": "**Mutation**: Added a pre-flight working directory check as Step 0 that verifies the scripts directory exists before proceeding, so relative path failures are caught immediately with a clear error message instead of cascading silently.\n**Failures**: S2: Task Completion, S2: Error Handling, S2: Output Quality, S2: Tool Usage, S2: Instructions Clarity, S2: Completeness, S3: Error Handling, S3: Completeness, S4: Task Completion, S6: Completeness\n**Per-criteria**: Task Completion: 4/6, Error Handling: 4/6, Output Quality: 5/6, Tool Usage: 5/6, Instructions Clarity: 5/6, Completeness: 3/6\n**Decision**: Score 26 did not exceed best 29 — mutation produced worse or equal results"
+    },
+    {
+      "round": 6,
+      "score": 34,
+      "max": 36,
+      "status": "kept",
+      "mutation": "Added explicit total failure (0/3 campaigns) reporting template to Error Recovery Protocol Step 4, mirroring the partial success template so the agent has a clear output format for complete script failures instead of producing incomplete/inconsistent output.",
+      "cost": 0.05,
+      "criteria": [
+        6,
+        5,
+        6,
+        6,
+        6,
+        5
+      ],
+      "failures": [
+        {
+          "scenario": 3,
+          "criterion": "Error Handling"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Completeness"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Improved from 29 to 34",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-25T22:02:06.139Z",
+      "changelog": "**Mutation**: Added explicit total failure (0/3 campaigns) reporting template to Error Recovery Protocol Step 4, mirroring the partial success template so the agent has a clear output format for complete script failures instead of producing incomplete/inconsistent output.\n**Failures**: S3: Error Handling, S3: Completeness\n**Per-criteria**: Task Completion: 6/6, Error Handling: 5/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 6/6, Completeness: 5/6\n**Decision**: Improved from 29 to 34"
+    },
+    {
+      "round": 7,
+      "score": 34,
+      "max": 36,
+      "status": "reverted",
+      "mutation": "Made Step 3's script command explicitly reference the offers prepared in Step 2 by replacing the generic placeholder with a note that the EXACT offer text from Step 2 must be substituted — preventing the agent from passing literal \"Offer 1|Offer 2|Offer 3\" strings to the script.",
+      "cost": 0.05,
+      "criteria": [
+        4,
+        6,
+        6,
+        6,
+        6,
+        6
+      ],
+      "failures": [
+        {
+          "scenario": 3,
+          "criterion": "Task Completion"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Task Completion"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 34 did not exceed best 34 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-25T22:03:37.681Z",
+      "changelog": "**Mutation**: Made Step 3's script command explicitly reference the offers prepared in Step 2 by replacing the generic placeholder with a note that the EXACT offer text from Step 2 must be substituted — preventing the agent from passing literal \"Offer 1|Offer 2|Offer 3\" strings to the script.\n**Failures**: S3: Task Completion, S4: Task Completion\n**Per-criteria**: Task Completion: 4/6, Error Handling: 6/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 6/6, Completeness: 6/6\n**Decision**: Score 34 did not exceed best 34 — mutation produced worse or equal results"
+    },
+    {
+      "round": 8,
+      "score": 32,
+      "max": 36,
+      "status": "reverted",
+      "mutation": "Fixed Error Recovery Step 3 to explicitly use the actual offer text from Step 2 (not placeholder strings), mirroring the same fix applied to the main Step 3 in Round 8.",
+      "cost": 0.05,
+      "criteria": [
+        5,
+        5,
+        6,
+        6,
+        5,
+        5
+      ],
+      "failures": [
+        {
+          "scenario": 3,
+          "criterion": "Task Completion"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Error Handling"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Instructions Clarity"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Completeness"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 32 did not exceed best 34 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-25T22:05:27.887Z",
+      "changelog": "**Mutation**: Fixed Error Recovery Step 3 to explicitly use the actual offer text from Step 2 (not placeholder strings), mirroring the same fix applied to the main Step 3 in Round 8.\n**Failures**: S3: Task Completion, S3: Error Handling, S3: Instructions Clarity, S3: Completeness\n**Per-criteria**: Task Completion: 5/6, Error Handling: 5/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 5/6, Completeness: 5/6\n**Decision**: Score 32 did not exceed best 34 — mutation produced worse or equal results"
+    },
+    {
+      "round": 9,
+      "score": 18,
+      "max": 36,
+      "status": "reverted",
+      "mutation": "Rename Error Recovery Protocol numbered steps to lettered stages (A, B, C, D) to eliminate namespace collision with the main Process's Step 0–4 numbering, preventing agents from conflating \"Step 2\" in error recovery with \"Step 2\" in the main flow.",
+      "cost": 0.05,
+      "criteria": [
+        3,
+        3,
+        3,
+        3,
+        3,
+        3
+      ],
+      "failures": [
+        {
+          "scenario": 2,
+          "criterion": "Task Completion"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Error Handling"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Output Quality"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Tool Usage"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Instructions Clarity"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Completeness"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Task Completion"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Error Handling"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Output Quality"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Tool Usage"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Instructions Clarity"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Completeness"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Task Completion"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Error Handling"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Output Quality"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Tool Usage"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Instructions Clarity"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Completeness"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 18 did not exceed best 34 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-25T22:07:00.372Z",
+      "changelog": "**Mutation**: Rename Error Recovery Protocol numbered steps to lettered stages (A, B, C, D) to eliminate namespace collision with the main Process's Step 0–4 numbering, preventing agents from conflating \"Step 2\" in error recovery with \"Step 2\" in the main flow.\n**Failures**: S2: Task Completion, S2: Error Handling, S2: Output Quality, S2: Tool Usage, S2: Instructions Clarity, S2: Completeness, S3: Task Completion, S3: Error Handling, S3: Output Quality, S3: Tool Usage, S3: Instructions Clarity, S3: Completeness, S6: Task Completion, S6: Error Handling, S6: Output Quality, S6: Tool Usage, S6: Instructions Clarity, S6: Completeness\n**Per-criteria**: Task Completion: 3/6, Error Handling: 3/6, Output Quality: 3/6, Tool Usage: 3/6, Instructions Clarity: 3/6, Completeness: 3/6\n**Decision**: Score 18 did not exceed best 34 — mutation produced worse or equal results"
     }
   ]
 }

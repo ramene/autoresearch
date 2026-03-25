@@ -1,6 +1,6 @@
 {
-  "lastRunTimestamp": "2026-03-25T14:08:54.169Z",
-  "lastSkill": "cross-niche-outliers",
+  "lastRunTimestamp": "2026-03-25T22:09:00.440Z",
+  "lastSkill": "instantly-campaigns",
   "skillStats": {
     "skill-improver": {
       "lastRun": "2026-03-16T18:21:08.320Z",
@@ -101,11 +101,11 @@
       "runsCompleted": 1
     },
     "instantly-campaigns": {
-      "lastRun": "2026-03-20T21:07:32.455Z",
-      "lastScore": 29,
+      "lastRun": "2026-03-25T22:09:00.435Z",
+      "lastScore": 18,
       "maxScore": 36,
-      "totalCost": 0.25,
-      "runsCompleted": 1
+      "totalCost": 0.53,
+      "runsCompleted": 2
     },
     "k8s-deployment-manager": {
       "lastRun": "2026-03-20T21:14:49.306Z",
@@ -304,6 +304,6 @@
       "runsCompleted": 1
     }
   },
-  "cumulativeCost": 15.09999999999999,
-  "totalRuns": 71
+  "cumulativeCost": 15.37999999999999,
+  "totalRuns": 72
 }

@@ -1,0 +1,76 @@
+{
+  "scenarios": [
+    {
+      "id": 1,
+      "type": "happy",
+      "title": "User says 'let's fix the content-strategy-optimizer skill'",
+      "event": "User says 'let's fix the content-strategy-optimizer skill'.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 2,
+      "type": "happy",
+      "title": "User provides a failure log and asks 'what went wrong here and how do we fix it",
+      "event": "User provides a failure log and asks 'what went wrong here and how do we fix it?'.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 3,
+      "type": "happy",
+      "title": "User wants to add a new evaluation criterion to an existing skill",
+      "event": "User wants to add a new evaluation criterion to an existing skill.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 4,
+      "type": "happy",
+      "title": "User wants to improve the prompt for the `classify-leads` skill",
+      "event": "User wants to improve the prompt for the `classify-leads` skill.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 5,
+      "type": "diagnostic",
+      "title": "User is guided through the full loop: diagnose, propose fix, generate test, appl",
+      "event": "User is guided through the full loop: diagnose, propose fix, generate test, apply, and re-evaluate.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 6,
+      "type": "diagnostic",
+      "title": "User rejects a proposed modification, and the skill offers an alternative",
+      "event": "User rejects a proposed modification, and the skill offers an alternative.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 7,
+      "type": "edge",
+      "title": "User wants to see the test cases for the `gmail-inbox` skill",
+      "event": "User wants to see the test cases for the `gmail-inbox` skill.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 8,
+      "type": "edge",
+      "title": "User asks 'which skill should I improve next?' and is pointed to the lowest-scor",
+      "event": "User asks 'which skill should I improve next?' and is pointed to the lowest-scoring one.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    }
+  ],
+  "criteria": [
+    "Identify the target skill from user input: Does the skill correctly identify the target skill from user input?",
+    "Invoke `stuck-skill-diagnoser` or `failure-log-analyzer` to find root causes: Does the skill successfully invoke `stuck-skill-diagnoser` or `failure-log-analyzer` to find root causes?",
+    "Propose a specific, actionable modification based on the diagnosis: Does the skill propose a specific, actionable modification based on the diagnosis?",
+    "Generate new, relevant tests using `skill-test-generator` to verify the fix: Does the skill generate new, relevant tests using `skill-test-generator` to verify the fix?",
+    "Apply the user-approved modification to the skill's definition: Does the skill correctly apply the user-approved modification to the skill's definition?",
+    "Run the new tests using `skill-test-runner` and report the before/after scores: Does the skill run the new tests using `skill-test-runner` and report the before/after scores?"
+  ]
+}

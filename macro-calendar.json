@@ -1,0 +1,27 @@
+{
+  "source": "Federal Reserve, BLS, BEA — verified March 25 2026",
+  "events": [
+    {"date": "2026-04-03", "event": "NFP Jobs Report", "type": "employment", "impact": "high", "time": "08:30 ET"},
+    {"date": "2026-04-10", "event": "CPI Release (March data)", "type": "inflation", "impact": "high", "time": "08:30 ET"},
+    {"date": "2026-04-28", "event": "FOMC Meeting Day 1", "type": "fed", "impact": "critical", "time": "all day"},
+    {"date": "2026-04-29", "event": "FOMC Rate Decision + Press Conference", "type": "fed", "impact": "critical", "time": "14:00 ET"},
+    {"date": "2026-05-01", "event": "NFP Jobs Report (April data)", "type": "employment", "impact": "high", "time": "08:30 ET"},
+    {"date": "2026-05-13", "event": "CPI Release (April data)", "type": "inflation", "impact": "high", "time": "08:30 ET"},
+    {"date": "2026-06-05", "event": "NFP Jobs Report (May data)", "type": "employment", "impact": "high", "time": "08:30 ET"},
+    {"date": "2026-06-10", "event": "CPI Release (May data)", "type": "inflation", "impact": "high", "time": "08:30 ET"},
+    {"date": "2026-06-16", "event": "FOMC Meeting Day 1", "type": "fed", "impact": "critical", "time": "all day"},
+    {"date": "2026-06-17", "event": "FOMC Rate Decision + Dot Plot + Press Conference", "type": "fed", "impact": "critical", "time": "14:00 ET"},
+    {"date": "2026-07-02", "event": "NFP Jobs Report (June data)", "type": "employment", "impact": "high", "time": "08:30 ET"},
+    {"date": "2026-07-15", "event": "CPI Release (June data)", "type": "inflation", "impact": "high", "time": "08:30 ET"},
+    {"date": "2026-07-28", "event": "FOMC Meeting Day 1", "type": "fed", "impact": "critical", "time": "all day"},
+    {"date": "2026-07-29", "event": "FOMC Rate Decision + Press Conference", "type": "fed", "impact": "critical", "time": "14:00 ET"},
+    {"date": "2026-09-15", "event": "FOMC Meeting Day 1", "type": "fed", "impact": "critical", "time": "all day"},
+    {"date": "2026-09-16", "event": "FOMC Rate Decision + Dot Plot + Press Conference", "type": "fed", "impact": "critical", "time": "14:00 ET"},
+    {"date": "2026-10-27", "event": "FOMC Meeting Day 1", "type": "fed", "impact": "critical", "time": "all day"},
+    {"date": "2026-10-28", "event": "FOMC Rate Decision + Press Conference", "type": "fed", "impact": "critical", "time": "14:00 ET"},
+    {"date": "2026-12-08", "event": "FOMC Meeting Day 1", "type": "fed", "impact": "critical", "time": "all day"},
+    {"date": "2026-12-09", "event": "FOMC Rate Decision + Dot Plot + Press Conference", "type": "fed", "impact": "critical", "time": "14:00 ET"}
+  ],
+  "next_critical": "2026-04-03 NFP Jobs Report (9 days away)",
+  "next_fomc": "2026-04-28 (34 days away)"
+}

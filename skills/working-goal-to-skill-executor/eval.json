@@ -1,0 +1,76 @@
+{
+  "scenarios": [
+    {
+      "id": 1,
+      "type": "happy",
+      "title": "Given the goal 'security-posture', the skill invokes `container-security-auditor",
+      "event": "Given the goal 'security-posture', the skill invokes `container-security-auditor` on a known container.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 2,
+      "type": "happy",
+      "title": "Given the goal 'system-improvement', the skill invokes `stuck-skill-diagnoser` o",
+      "event": "Given the goal 'system-improvement', the skill invokes `stuck-skill-diagnoser` on a known stuck skill.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 3,
+      "type": "happy",
+      "title": "Given the goal 'research-advancement', the skill invokes a research skill to fin",
+      "event": "Given the goal 'research-advancement', the skill invokes a research skill to find new papers.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 4,
+      "type": "happy",
+      "title": "Given a goal to 'launch a new marketing campaign', the skill sequences `content-",
+      "event": "Given a goal to 'launch a new marketing campaign', the skill sequences `content-strategy-optimizer`, `create-proposal`, and `instantly-campaigns`.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 5,
+      "type": "diagnostic",
+      "title": "Given a goal with no matching skills like 'organize a team offsite', the skill r",
+      "event": "Given a goal with no matching skills like 'organize a team offsite', the skill reports it cannot be fulfilled.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 6,
+      "type": "diagnostic",
+      "title": "Given a complex goal, the skill produces a multi-step plan for user review befor",
+      "event": "Given a complex goal, the skill produces a multi-step plan for user review before execution.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 7,
+      "type": "edge",
+      "title": "The goal is to 'monitor for CVEs'; the skill sets up a recurring task instead of",
+      "event": "The goal is to 'monitor for CVEs'; the skill sets up a recurring task instead of a one-off execution.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 8,
+      "type": "edge",
+      "title": "The goal is 'improve skill-improver'; the skill correctly identifies this is a m",
+      "event": "The goal is 'improve skill-improver'; the skill correctly identifies this is a meta-goal and invokes the skill improvement loop on the target.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    }
+  ],
+  "criteria": [
+    "Identify one or more relevant skills to achieve the given goal: Does the skill correctly identify one or more relevant skills to achieve the given goal?",
+    "Generate a valid, ordered sequence of skill calls: Does the skill generate a valid, ordered sequence of skill calls?",
+    "Can the skill extract or infer the necessary parameters for each skill call from the goal description: Can the skill extract or infer the necessary parameters for each skill call from the goal description?",
+    "Trigger the execution of the generated plan: Does the skill correctly trigger the execution of the generated plan?",
+    "Can the skill handle goals that require no immediate action (e.g., monitoring goals): Can the skill handle goals that require no immediate action (e.g., monitoring goals)?",
+    "Recognize when no existing skill can satisfy the goal and flag it as a capability gap: Does the skill recognize when no existing skill can satisfy the goal and flag it as a capability gap?"
+  ]
+}

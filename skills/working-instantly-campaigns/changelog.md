@@ -24,3 +24,23 @@
 
 ## Round 5 — Mutation Applied
 - **Mutation**: Merged Steps 3 and 4 into a single "Run & Capture Output" step that executes the script exactly once with stderr captured, eliminating the duplicate execution that caused confusion about which run's output to inspect.
+
+## Round 6 — Mutation Applied
+- **Mutation**: Added a pre-flight working directory check as Step 0 that verifies the scripts directory exists before proceeding, so relative path failures are caught immediately with a clear error message instead of cascading silently.
+
+## Round 6
+- **Score**: 34/36 (kept)
+- **Failures**: S3: Error Handling, S3: Completeness
+- **Per-criteria**: Task Completion: 6/6, Error Handling: 5/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 6/6, Completeness: 5/6
+
+## Round 7 — Mutation Applied
+- **Mutation**: Added explicit total failure (0/3 campaigns) reporting template to Error Recovery Protocol Step 4, mirroring the partial success template so the agent has a clear output format for complete script failures instead of producing incomplete/inconsistent output.
+
+## Round 8 — Mutation Applied
+- **Mutation**: Made Step 3's script command explicitly reference the offers prepared in Step 2 by replacing the generic placeholder with a note that the EXACT offer text from Step 2 must be substituted — preventing the agent from passing literal "Offer 1|Offer 2|Offer 3" strings to the script.
+
+## Round 9 — Mutation Applied
+- **Mutation**: Fixed Error Recovery Step 3 to explicitly use the actual offer text from Step 2 (not placeholder strings), mirroring the same fix applied to the main Step 3 in Round 8.
+
+## Round 10 — Mutation Applied
+- **Mutation**: Rename Error Recovery Protocol numbered steps to lettered stages (A, B, C, D) to eliminate namespace collision with the main Process's Step 0–4 numbering, preventing agents from conflating "Step 2" in error recovery with "Step 2" in the main flow.

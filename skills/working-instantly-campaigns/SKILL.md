@@ -21,6 +21,21 @@ Create three email campaigns in Instantly based on a client description and offe
 
 ## Process
 
+### 0. Verify Working Directory (REQUIRED FIRST STEP)
+Before doing anything else, confirm you are in the correct directory by running:
+
+```bash
+ls ./scripts/instantly_create_campaigns.py 2>&1 && grep -E "INSTANTLY_API_KEY|ANTHROPIC_API_KEY" .env 2>&1
+```
+
+**Expected output**: The script file path is listed AND both API keys appear (not as placeholders).
+
+**If the script is not found**: Report to the user — "Cannot find ./scripts/instantly_create_campaigns.py. Please run this skill from the directory that contains the `scripts/` folder." Then STOP.
+
+**If API keys are missing or show placeholders**: Report the missing key to the user and STOP. Do not proceed without valid API keys.
+
+Only continue to Step 1 if both the script exists AND valid API keys are present.
+
 ### 1. Load Examples
 Read `.tmp/instantly_campaign_examples/campaigns.md` for inspiration on personalization + social proof + offer structure. If this file does not exist, skip this step and proceed with default best practices.
 
@@ -41,13 +56,19 @@ Offers to be used:
 **Do not proceed to Step 3 until you have exactly 3 offers ready.**
 
 ### 3. Run Script & Capture Output
-Run the script **exactly once**, capturing both stdout and stderr together:
+Run the script **exactly once**, substituting the **actual offer text from Step 2** into the `--offers` argument (pipe-separated, no brackets). Do NOT pass placeholder text like "Offer 1" — use the real offer sentences you wrote above.
 
+For example, if Step 2 produced:
+- Offer 1: Cut onboarding time by 50% in 30 days
+- Offer 2: Reduce support costs by $10k/month
+- Offer 3: Free pilot with guaranteed results or money back
+
+Then the command would be:
 ```bash
 python3 ./scripts/instantly_create_campaigns.py \
   --client_name "ClientName" \
   --client_description "Description of the client..." \
-  --offers "Offer 1|Offer 2|Offer 3" \
+  --offers "Cut onboarding time by 50% in 30 days|Reduce support costs by $10k/month|Free pilot with guaranteed results or money back" \
   --target_audience "Who we're emailing" \
   --social_proof "Credentials/results to mention" \
   2>&1
@@ -94,35 +115,39 @@ Each campaign includes:
 
 ## Error Recovery Protocol
 
-When the script fails or produces incomplete results, follow these steps in order:
+When the script fails or produces incomplete results, follow these lettered stages in order:
 
-### Step 1 — Diagnose the failure
+### Stage A — Diagnose the failure
 ```bash
 # Check if .env exists and has required keys
 grep -E "INSTANTLY_API_KEY|ANTHROPIC_API_KEY" .env
 ```
 If either key is missing or shows a placeholder, report the missing key to the user and stop. Do not proceed without valid API keys.
 
-### Step 2 — Check the script exists and is executable
+### Stage B — Check the script exists and is executable
 ```bash
 ls -la ./scripts/instantly_create_campaigns.py
 ```
 If missing, report: "Script not found at ./scripts/instantly_create_campaigns.py — please verify the scripts directory."
 
-### Step 3 — Re-run with verbose output if the error was transient
+### Stage C — Re-run with verbose output if the error was transient
+Use the **exact same offer text from the main process Step 2** (do NOT substitute placeholder strings like "Offer 1"). The re-run command must use the real offer sentences written out in Step 2:
+
 ```bash
 python3 ./scripts/instantly_create_campaigns.py \
   --client_name "ClientName" \
   --client_description "Description..." \
-  --offers "Offer 1|Offer 2|Offer 3" \
+  --offers "real offer 1 text|real offer 2 text|real offer 3 text" \
   --target_audience "Target audience" \
   --social_proof "Social proof" \
   2>&1
 ```
+
 Capture full stderr output. If the error mentions rate limits or network issues, wait 10 seconds and retry once.
 
-### Step 4 — Report partial success honestly
-If only 1 or 2 campaigns were created (partial success), report exactly which campaigns succeeded and which failed:
+### Stage D — Report outcome honestly (partial or total failure)
+
+**If 1 or 2 campaigns were created (partial success)**, report exactly which campaigns succeeded and which failed:
 ```
 ⚠️ Partial completion: Created 2/3 campaigns
 - Campaign 1: [name] (ID: ...) ✅
@@ -131,7 +156,23 @@ If only 1 or 2 campaigns were created (partial success), report exactly which ca
 
 Action required: [specific fix needed]
 ```
-Do NOT report success if fewer than 3 campaigns were created.
+
+**If 0 campaigns were created (total failure)**, report the complete failure clearly:
+```
+❌ Campaign creation failed: Created 0/3 campaigns
+
+Error encountered:
+[paste the full error message or stack trace from the script output here]
+
+Diagnosis:
+- API key status: [valid / missing / placeholder]
+- Script found: [yes / no]
+- Error type: [rate limit / auth / network / script error / other]
+
+Action required: [specific fix needed — e.g. "Check INSTANTLY_API_KEY in .env", "Verify network connectivity", "Contact support with error above"]
+```
+
+Do NOT report success if fewer than 3 campaigns were created. Always include the actual error message in your report so the user can act on it.
 
 ## Campaign Structure
 

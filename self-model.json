@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-03-25T14:08:54.953Z",
+  "timestamp": "2026-03-25T22:50:06.413Z",
   "version": "1.0",
   "skills": {
     "backup": {
@@ -898,31 +898,34 @@
       ]
     },
     "instantly-campaigns": {
-      "score": 29,
+      "score": 34,
       "max": 36,
-      "ratio": 0.806,
+      "ratio": 0.944,
       "trajectory": "improving",
       "weakest_criteria": [
         {
           "name": "Task Completion",
-          "fail_rate": 1
+          "fail_rate": 0.818
         },
         {
           "name": "Error Handling",
-          "fail_rate": 1
+          "fail_rate": 0.818
         },
         {
-          "name": "Output Quality",
-          "fail_rate": 1
+          "name": "Completeness",
+          "fail_rate": 0.818
         }
       ],
       "strongest_criteria": [],
-      "rounds_completed": 5,
-      "rounds_kept": 2,
-      "cost_invested": 0.25,
-      "last_improvement": "2026-03-20T21:04:45.997Z",
-      "last_escalation": null,
-      "stuck_count": 2,
+      "rounds_completed": 11,
+      "rounds_kept": 3,
+      "cost_invested": 0.53,
+      "last_improvement": "2026-03-25T22:02:06.139Z",
+      "last_escalation": {
+        "diagnosis": "The optimization process is stuck in a local optimum of \"instructional over-engineering.\" Initial mutations were beneficial, adding explicit checks and error handling which improved the score to a peak of 34/36. However, subsequent mutations continued to add more granular rules, warnings, and formatting changes (e.g., renaming steps to stages). This has resulted in instruction creep, making the prompt excessively long and complex. The agent is now likely suffering from cognitive overload, failing to parse the convoluted flow control between the main `Process` and the separate `Error Recovery Protocol`. The catastrophic score drop to 18/36 after a seemingly innocuous change (renaming steps) indicates the skill's structure has become brittle; any modification, even a helpful one, now risks breaking the agent's fragile understanding of the overall task.",
+        "timestamp": "2026-03-25T22:09:00.385Z"
+      },
+      "stuck_count": 3,
       "criteria_names": [
         "Task Completion",
         "Error Handling",
@@ -2498,20 +2501,21 @@
       "severity": "high"
     },
     {
-      "pattern": "Criterion \"Completeness\" fails across 10 skills",
+      "pattern": "Criterion \"Completeness\" fails across 11 skills",
       "affected_skills": [
         "classify-leads",
         "cross-niche-outliers",
         "gmail",
         "gmail-inbox",
         "gmail-label",
+        "instantly-campaigns",
         "linkedin-response",
         "title-variants",
         "video-to-action",
         "youtube-channel-analysis",
         "youtube-outliers"
       ],
-      "frequency": 10,
+      "frequency": 11,
       "severity": "high"
     },
     {
@@ -2527,23 +2531,6 @@
         "onboarding-kickoff",
         "scrape-leads",
         "video-to-action"
-      ],
-      "frequency": 10,
-      "severity": "high"
-    },
-    {
-      "pattern": "Criterion \"Output Quality\" fails across 10 skills",
-      "affected_skills": [
-        "create-proposal",
-        "cross-niche-outliers",
-        "gmail-inbox",
-        "gmaps-leads",
-        "inbox-cleaner",
-        "instantly-autoreply",
-        "instantly-campaigns",
-        "onboarding-kickoff",
-        "title-variants",
-        "welcome-email"
       ],
       "frequency": 10,
       "severity": "high"
@@ -2583,7 +2570,7 @@
       "severity": "high"
     },
     {
-      "pattern": "30 skills have triggered stuck escalations",
+      "pattern": "31 skills have triggered stuck escalations",
       "affected_skills": [
         "container-security-auditor",
         "content-strategy-optimizer",
@@ -2594,6 +2581,7 @@
         "gmail",
         "gmail-inbox",
         "gmaps-leads",
+        "instantly-campaigns",
         "k8s-deployment-manager",
         "polymarket-5min-strategy",
         "polymarket-bridge",
@@ -2616,7 +2604,23 @@
         "youtube-channel-analysis",
         "youtube-outliers"
       ],
-      "frequency": 30,
+      "frequency": 31,
+      "severity": "medium"
+    },
+    {
+      "pattern": "Criterion \"Output Quality\" fails across 9 skills",
+      "affected_skills": [
+        "create-proposal",
+        "cross-niche-outliers",
+        "gmail-inbox",
+        "gmaps-leads",
+        "inbox-cleaner",
+        "instantly-autoreply",
+        "onboarding-kickoff",
+        "title-variants",
+        "welcome-email"
+      ],
+      "frequency": 9,
       "severity": "medium"
     },
     {
@@ -2715,11 +2719,11 @@
   "uncovered_domains": [],
   "summary": {
     "total_skills": 52,
-    "avg_ratio": 0.962,
+    "avg_ratio": 0.965,
     "skills_at_target": 37,
     "skills_stuck": 3,
     "skills_untested": 3,
-    "total_cost": 16.53,
-    "total_rounds": 353
+    "total_cost": 16.81,
+    "total_rounds": 359
   }
 }
