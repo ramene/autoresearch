@@ -6,25 +6,8 @@
     <string>com.autoresearch.pre-cron-reminder</string>
     <key>ProgramArguments</key>
     <array>
-        <string>/Users/ramene/.nvm/versions/node/v23.11.1/bin/node</string>
-        <string>-e</string>
-        <string>
-const fs = require('fs');
-const key = fs.readFileSync('/usr/local/etc/autoresearch-credentials/resend-api-key.txt', 'utf8').trim();
-const next = new Date();
-next.setMinutes(next.getMinutes() + 30);
-const timeStr = next.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', timeZone: 'America/Chicago' });
-fetch('https://api.resend.com/emails', {
-  method: 'POST',
-  headers: { 'Authorization': 'Bearer ' + key, 'Content-Type': 'application/json' },
-  body: JSON.stringify({
-    from: 'Autoresearch <alerts@micropaymnts.ai>',
-    to: 'ramene.anthony@gmail.com',
-    subject: '🔔 Cron fires in 30 min (' + timeStr + ')',
-    text: 'Autoresearch autonomous loop fires in 30 minutes at ' + timeStr + '.\n\nYou will receive the full report after it completes (~10 min run time).\n\nFleet: 52 skills | 35 perfect | 8-hour cycle'
-  })
-}).then(r => r.json()).then(d => console.log('Reminder: ' + (d.id || JSON.stringify(d))));
-        </string>
+        <string>/bin/bash</string>
+        <string>/Users/ramene/.remote/@autoresearch/scripts/pre-cron-reminder.sh</string>
     </array>
     <!-- Fire at 23:30, 07:30, 15:30 — exactly 30 min before 00:00, 08:00, 16:00 -->
     <key>StartCalendarInterval</key>
@@ -38,5 +21,9 @@ fetch('https://api.resend.com/emails', {
         <key>HOME</key>
         <string>/Users/ramene</string>
     </dict>
+    <key>StandardOutPath</key>
+    <string>/Users/ramene/.local/share/tmux-logs/autoresearch/reminder-stdout.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/ramene/.local/share/tmux-logs/autoresearch/reminder-stderr.log</string>
 </dict>
 </plist>
