@@ -10,7 +10,7 @@ This skill addresses `want-018`. The core hypothesis is that users need a high-l
 - **Automatic Detection:** This skill should be activated when a user provides a failure log from a skill run or expresses frustration with a specific skill's performance.
 
 ## Prerequisites
-1.  The autoresearch environment must be available at `~/.remote/@autoresearch/`.
+1.  The autoresearch environment must be available at `$HOME/.remote/@autoresearch/`.
 2.  The `skills/` directory must contain at least one skill in a `working-{name}/` subdirectory.
 3.  The following skills must be available and executable:
     - `stuck-skill-diagnoser`: To analyze a skill's artifacts and find potential issues.
@@ -29,26 +29,29 @@ The skill operates as a conversational state machine. Follow these steps in orde
     c. To help the user, provide suggestions:
         i.  **(Bash)** Invoke `skill-lister` to show a list of available skills.
         ii. **(Bash)** Invoke `skill-eval-reporter --lowest 3` to suggest the three lowest-scoring skills as candidates for improvement.
-    d. Once the user provides a name (e.g., "my-skill"), confirm it and construct the path: `TARGET_SKILL_DIR="~/.remote/@autoresearch/skills/working-my-skill/"`.
+    d. Once the user provides a name (e.g., "my-skill"), confirm it and construct the path: `TARGET_SKILL_DIR="$HOME/.remote/@autoresearch/skills/working-my-skill/"`.
     e. **(Bash)** Verify the directory exists. If not, inform the user and go back to step 1b.
 
 2.  **Diagnose the Problem:**
-    a. Ask the user for context: "What is the problem you're trying to solve? For example, is the skill failing, producing poor results, or do you want to add a new feature? If you have a failure log, please provide it."
-    b. **If the user provides a log:**
+    a. **Check if context was already provided in the initial trigger.** If the user's initial message already contains a failure log, error traceback, or a description of the problem (including feature requests), skip asking for context and proceed directly to the appropriate sub-step (2b, 2c, or 2d) based on what was provided. Only ask for context if none was given.
+    b. If no context was provided yet, ask the user: "What is the problem you're trying to solve? For example, is the skill failing, producing poor results, or do you want to add a new feature? If you have a failure log, please provide it."
+    c. **If the user provides a log (or the initial message contained a log):**
         i.  **(Bash)** Invoke `failure-log-analyzer` with the provided log as input.
         ii. Store the structured output (root cause, suggested fix) as `DIAGNOSIS_RESULT`.
-    c. **If the user describes a general problem (e.g., "it's not working well"):**
+    d. **If the user describes a general problem (e.g., "it's not working well") or no specific log or feature request is given:**
         i.  **(Bash)** Invoke `stuck-skill-diagnoser --skill-dir "$TARGET_SKILL_DIR"`.
         ii. Store the output as `DIAGNOSIS_RESULT`.
-    d. **If the user wants to add a feature or make a specific change (e.g., "add a new eval criterion"):**
-        i.  Set `DIAGNOSIS_RESULT` to a summary of the user's request, e.g., `{ "summary": "User wants to add a new evaluation criterion to eval.json to check for JSON output." }`.
-    e. Present a summary of the diagnosis to the user: "Based on my analysis, the issue seems to be [summary from DIAGNOSIS_RESULT]. I will now propose a solution."
+    e. **If the user wants to add a feature or make a specific change (e.g., "add a new eval criterion"):**
+        i.  **(Bash)** Always invoke `stuck-skill-diagnoser --skill-dir "$TARGET_SKILL_DIR"` first to understand the skill's current state and identify any pre-existing issues before introducing changes.
+        ii. Store the diagnoser output as `DIAGNOSIS_RESULT`, then augment it with the user's feature request: `DIAGNOSIS_RESULT["user_request"] = "User wants to [summary of requested change]."`.
+        iii. Inform the user: "I've analyzed the current state of the skill. Here is what I found: [DIAGNOSIS_RESULT summary]. Now I'll factor in your requested change."
+    f. Present a summary of the diagnosis to the user: "Based on my analysis, the issue seems to be [summary from DIAGNOSIS_RESULT]. I will now propose a solution."
 
 3.  **Propose a Modification:**
     a. Based on `DIAGNOSIS_RESULT`, formulate a specific change to a file (usually `SKILL.md` or `eval.json`).
     b. **(Read)** Read the content of the target file (e.g., `$TARGET_SKILL_DIR/SKILL.md`).
     c. Generate the proposed new content.
-    d. **(Bash)** Use `diff` to show the user the exact changes: `diff -u <(cat $TARGET_SKILL_DIR/SKILL.md) <(echo "$PROPOSED_CONTENT")`.
+    d. **(Bash)** Use `diff` to show the user the exact changes: `diff -u <(cat "$TARGET_SKILL_DIR/SKILL.md") <(echo "$PROPOSED_CONTENT")`.
     e. Present the diff to the user and ask for confirmation: "I propose the following change. Does this look correct and should I proceed?"
 
 4.  **Handle User Feedback on Proposal:**
@@ -56,12 +59,12 @@ The skill operates as a conversational state machine. Follow these steps in orde
     b. If the user rejects or suggests changes ("no", "change X to Y"), ask for clarification: "Understood. What would you like to change in this proposal?"
     c. Incorporate the user's feedback and loop back to step 3 to generate and present a new proposal. If this loop repeats more than twice, ask: "It seems we're not getting it right. Would you like to try a different approach or specify the exact change you want me to make?"
 
-5.  **Generate New Tests (Conditional):**
-    a. Analyze the approved modification. If the change fixes a bug or adds a new capability, a new test is required to prevent regressions and validate the change.
+5.  **Generate New Tests (Always Required):**
+    a. For every approved modification — whether it fixes a bug, adds a capability, or makes any other change — a new test case must be generated. This is mandatory and cannot be skipped.
     b. Inform the user: "To ensure this change works as expected and doesn't break in the future, I will now generate a new test case."
     c. **(Bash)** Invoke `skill-test-generator` with the context of the change: `skill-test-generator --skill-dir "$TARGET_SKILL_DIR" --context "The skill was modified to [summary of change]. The test should verify this."`
     d. Present the newly generated JSON test case to the user for approval.
-    e. **(Write)** If approved, create a temporary test file `/tmp/eval_with_new_test.json` by appending the new test case to the existing `$TARGET_SKILL_DIR/eval.json`. If no new test was generated, copy the original `eval.json` to the temporary file.
+    e. **(Write)** If approved, create a temporary test file `/tmp/eval_with_new_test.json` by appending the new test case to the existing `$TARGET_SKILL_DIR/eval.json`. If the user rejects the generated test, use the original `eval.json` as the temporary file.
 
 6.  **Run Pre-Modification Tests (Baseline):**
     a. Inform the user: "First, I'll run the tests against the *current* version of the skill to establish a baseline."
@@ -87,13 +90,13 @@ The skill operates as a conversational state machine. Follow these steps in orde
 
 ## Output Format
 - **Console:** Interactive, conversational text guiding the user through the refinement process.
-- **File System:** Modified files within the target skill's directory (`~/.remote/@autoresearch/skills/working-{name}/`). This typically includes `SKILL.md`, `eval.json`, and `changelog.md`.
+- **File System:** Modified files within the target skill's directory (`$HOME/.remote/@autoresearch/skills/working-{name}/`). This typically includes `SKILL.md`, `eval.json`, and `changelog.md`.
 
 ## Quality Gates
 - The target skill is correctly identified and confirmed with the user before any action is taken.
-- A diagnosis is successfully generated by invoking `stuck-skill-diagnoser` or `failure-log-analyzer`.
+- A diagnosis is successfully generated by invoking `stuck-skill-diagnoser` or `failure-log-analyzer` in **all** cases — including feature addition requests. No path through Step 2 may bypass both diagnostic tools.
 - A specific, actionable modification is proposed to the user in `diff` format.
-- `skill-test-generator` is invoked to create a new, relevant test case for the modification.
+- `skill-test-generator` is **always** invoked to create a new, relevant test case for every modification, without exception.
 - The user-approved modification is correctly written to the target file system.
 - `skill-test-runner` is executed both before and after the modification, and the score comparison is reported to the user.
 
@@ -111,7 +114,7 @@ The skill operates as a conversational state machine. Follow these steps in orde
 ## Examples
 ### Example 1: Full Refinement Loop
 - **User:** "Let's fix the `content-strategy-optimizer` skill. It's not handling long articles correctly."
-- **Agent:** "Understood. I'll work on `content-strategy-optimizer`. I'll start by diagnosing the issue."
+- **Agent:** "Understood. I'll work on `content-strategy-optimizer`. The initial message already describes the problem, so I'll proceed directly to diagnosis."
 - **Agent:** *(Invokes `stuck-skill-diagnoser`)* "The diagnosis suggests the prompt in `SKILL.md` doesn't specify how to chunk large inputs. I propose adding a step to break down documents over 4000 words."
 - **Agent:** *(Shows a `diff` of the proposed `SKILL.md` change)* "Does this look correct?"
 - **User:** "Yes, proceed."
@@ -123,7 +126,7 @@ The skill operates as a conversational state machine. Follow these steps in orde
 
 ### Example 2: Log-Based Debugging
 - **User:** *(Pastes a JSONDecodeError traceback from a skill run)* "What went wrong here and how do we fix it?"
-- **Agent:** "I've received a failure log. I will analyze it to find the root cause."
+- **Agent:** "I've received a failure log in your initial message. I will analyze it immediately to find the root cause."
 - **Agent:** *(Invokes `failure-log-analyzer`)* "The analysis indicates the `api-client` skill failed because it received an unexpected `null` value from the API and didn't handle it. I propose modifying its `SKILL.md` to add a step that checks for null values before parsing the JSON response."
 - **Agent:** *(Shows `diff` for the change)* "Shall I apply this fix?"
 - **User:** "Yes."
@@ -136,3 +139,11 @@ The skill operates as a conversational state machine. Follow these steps in orde
 - **Agent:** "Understood. I will revise the proposal to include formatting the output as a numbered list."
 - **Agent:** *(Generates a new `diff` incorporating the user's feedback.)* "How about this version?"
 - **User:** "That's it. Go ahead."
+
+### Example 4: Feature Addition Request
+- **User:** "Add a new eval criterion to the `classify-leads` skill to check that output is in JSON format."
+- **Agent:** "Understood. The initial message contains a feature request, so I'll proceed directly to diagnosis before proposing any change."
+- **Agent:** *(Invokes `stuck-skill-diagnoser --skill-dir "$HOME/.remote/@autoresearch/skills/working-classify-leads/"`)* "The diagnosis shows the skill is generally healthy but the eval.json has no format-validation criteria. Combined with your request, I propose adding a JSON output test case."
+- **Agent:** *(Shows `diff` for the `eval.json` change)* "Does this look correct?"
+- **User:** "Yes, proceed."
+- **Agent:** *(Invokes `skill-test-generator` to generate a verification test, then proceeds with baseline run, application, and post-modification verification steps.)*

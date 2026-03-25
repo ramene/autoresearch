@@ -60,7 +60,12 @@ This skill addresses a critical gap in the core reasoning loop, as identified in
         c. If a parameter cannot be inferred, mark it as requiring user input.
 
 7.  **Request Plan Approval (Conditional):**
-    -   **Action:** For any multi-step plan or any plan that modifies critical system state, present the generated plan (including skill names and inferred parameters) to the user for confirmation before proceeding. Halt execution until approval is received.
+    -   **Action:** Present the generated plan (including skill names and inferred parameters) to the user for confirmation before proceeding in any of the following cases:
+        -   The plan contains **two or more steps** (multi-skill plan).
+        -   The plan contains **one step** but the target skill's `SKILL.md` indicates it modifies critical system state (e.g., deploys, deletes, writes to production systems, or sends external communications).
+        -   Any required parameter was marked as requiring user input in Step 6.
+    -   Halt execution until the user explicitly approves the plan. If the user rejects it, update the goal status to `blocked` with a `reason` of "Plan rejected by user."
+    -   Single-step plans that are purely read-only or diagnostic (e.g., audits, scans, reports) may proceed without approval.
 
 8.  **Execute the Plan:**
     -   **Tool:** `Bash`
