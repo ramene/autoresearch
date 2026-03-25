@@ -5,7 +5,7 @@ const fs = require('fs');
 const key = fs.readFileSync('/usr/local/etc/autoresearch-credentials/resend-api-key.txt', 'utf8').trim();
 const d = new Date();
 d.setMinutes(d.getMinutes() + 30);
-const t = d.toLocaleTimeString('en-US', {hour:'2-digit',minute:'2-digit',timeZone:'America/Chicago'});
+const t = d.toLocaleTimeString('en-US', {hour:'2-digit',minute:'2-digit',timeZone:'America/Merida'});
 fetch('https://api.resend.com/emails', {
   method: 'POST',
   headers: {'Authorization':'Bearer '+key, 'Content-Type':'application/json'},
