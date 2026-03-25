@@ -34,3 +34,18 @@
 
 ## Round 5 — Mutation Applied
 - **Mutation**: Expand the manual fallback (step 3 in Fallback Priority Order) with concrete step-by-step instructions for manually finding and scoring outliers when all automated methods fail, filling the gap that "search YouTube manually" references but never explains.
+
+## Round 6 — Mutation Applied
+- **Mutation**: Add an "Agent Execution Guide" section immediately after the Goal that tells Claude exactly what to do when invoked as an agent — check for scripts, run them, handle failures with specific fallbacks, and summarize results — converting the user manual into actionable AI instructions.
+
+## Round 7 — Mutation Applied
+- **Mutation**: Add explicit tool-call annotations to each Agent Execution Guide step so Claude knows exactly which allowed tools (Bash, Read, Write, etc.) to invoke at each decision point, fixing the ambiguity that causes Instructions Clarity, Tool Usage, and Completeness failures.
+
+## Round 8 — Mutation Applied
+- **Mutation**: Add a user-context gathering step (Step 0) to the Agent Execution Guide so Claude asks for the user's niche/search terms before running scripts, rather than silently defaulting to "entrepreneur" which may not match the user's actual business context.
+
+## Round 9 — Mutation Applied
+- **Mutation**: Restructure the skill into two distinct parts — a clean agent execution prompt at the top (Goal + Agent Execution Guide) and a comprehensive Reference Manual section below — so the AI gets uncluttered instructions while human documentation remains complete.
+
+## Round 10 — Mutation Applied
+- **Mutation**: Make Step 2 explicitly show how to incorporate user-provided niche/terms from Step 0 into the script command via the --terms flag, closing the disconnect between context-gathering and script execution.

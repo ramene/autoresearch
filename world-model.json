@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-03-21T22:43:50.736Z",
+  "timestamp": "2026-03-25T14:08:55.223Z",
   "version": "1.1",
   "research_demands": [
     {
@@ -95,7 +95,7 @@
       "current_capability": "classify-leads"
     },
     {
-      "signal": "Skill \"content-strategy-optimizer\" last improved: 18 → 19/48",
+      "signal": "Skill \"content-strategy-optimizer\" last improved: 23 → 24/48",
       "source": "skills/working-content-strategy-optimizer/events.jsonl",
       "current_capability": "content-strategy-optimizer"
     },
@@ -215,7 +215,7 @@
       "current_capability": "system-dashboard-generator"
     },
     {
-      "signal": "Skill \"system-status-reporter\" last improved: 26 → 28/36",
+      "signal": "Skill \"system-status-reporter\" last improved: 28 → 33/36",
       "source": "skills/working-system-status-reporter/events.jsonl",
       "current_capability": "system-status-reporter"
     },
@@ -255,6 +255,11 @@
       "current_capability": "container-security-auditor"
     },
     {
+      "signal": "Skill \"content-strategy-optimizer\" has 48 unresolved failure(s) in round 42",
+      "source": "skills/working-content-strategy-optimizer/rounds.json",
+      "current_capability": "content-strategy-optimizer"
+    },
+    {
       "signal": "Skill \"context-drift-detector\" score plateaued at 50 for 3 rounds",
       "source": "skills/working-context-drift-detector/rounds.json",
       "current_capability": "context-drift-detector"
@@ -263,11 +268,6 @@
       "signal": "Skill \"context-drift-detector\" has 10 unresolved failure(s) in round 7",
       "source": "skills/working-context-drift-detector/rounds.json",
       "current_capability": "context-drift-detector"
-    },
-    {
-      "signal": "Skill \"cross-niche-outliers\" has 9 unresolved failure(s) in round 4",
-      "source": "skills/working-cross-niche-outliers/rounds.json",
-      "current_capability": "cross-niche-outliers"
     },
     {
       "signal": "Skill \"defi-arbitrage-executor\" score plateaued at 36 for 3 rounds",
@@ -410,7 +410,7 @@
       "current_capability": "system-dashboard-generator"
     },
     {
-      "signal": "Skill \"system-status-reporter\" has 14 unresolved failure(s) in round 4",
+      "signal": "Skill \"system-status-reporter\" has 3 unresolved failure(s) in round 12",
       "source": "skills/working-system-status-reporter/rounds.json",
       "current_capability": "system-status-reporter"
     },
@@ -443,50 +443,50 @@
   "user_intent_signals": [
     {
       "signal": "User intent pattern: \"research pipeline\" detected across tmux transcripts",
-      "source": "tmux-logs transcripts (27 files scanned)",
-      "frequency": 161,
+      "source": "tmux-logs transcripts (20 files scanned)",
+      "frequency": 22,
       "current_capability": null
     },
     {
       "signal": "User intent pattern: \"skill improvement\" detected across tmux transcripts",
-      "source": "tmux-logs transcripts (27 files scanned)",
-      "frequency": 1737,
+      "source": "tmux-logs transcripts (20 files scanned)",
+      "frequency": 2075,
       "current_capability": null
     },
     {
       "signal": "User intent pattern: \"error debugging\" detected across tmux transcripts",
-      "source": "tmux-logs transcripts (27 files scanned)",
-      "frequency": 785,
+      "source": "tmux-logs transcripts (20 files scanned)",
+      "frequency": 584,
       "current_capability": null
     },
     {
       "signal": "User intent pattern: \"security audit\" detected across tmux transcripts",
-      "source": "tmux-logs transcripts (27 files scanned)",
-      "frequency": 25,
-      "current_capability": null
-    },
-    {
-      "signal": "User intent pattern: \"deployment\" detected across tmux transcripts",
-      "source": "tmux-logs transcripts (27 files scanned)",
-      "frequency": 479,
-      "current_capability": null
-    },
-    {
-      "signal": "User intent pattern: \"testing\" detected across tmux transcripts",
-      "source": "tmux-logs transcripts (27 files scanned)",
-      "frequency": 280,
-      "current_capability": null
-    },
-    {
-      "signal": "User intent pattern: \"dashboard\" detected across tmux transcripts",
-      "source": "tmux-logs transcripts (27 files scanned)",
-      "frequency": 770,
+      "source": "tmux-logs transcripts (20 files scanned)",
+      "frequency": 16,
       "current_capability": null
     },
     {
       "signal": "User intent pattern: \"documentation\" detected across tmux transcripts",
-      "source": "tmux-logs transcripts (27 files scanned)",
-      "frequency": 44,
+      "source": "tmux-logs transcripts (20 files scanned)",
+      "frequency": 147,
+      "current_capability": null
+    },
+    {
+      "signal": "User intent pattern: \"deployment\" detected across tmux transcripts",
+      "source": "tmux-logs transcripts (20 files scanned)",
+      "frequency": 57,
+      "current_capability": null
+    },
+    {
+      "signal": "User intent pattern: \"dashboard\" detected across tmux transcripts",
+      "source": "tmux-logs transcripts (20 files scanned)",
+      "frequency": 189,
+      "current_capability": null
+    },
+    {
+      "signal": "User intent pattern: \"testing\" detected across tmux transcripts",
+      "source": "tmux-logs transcripts (20 files scanned)",
+      "frequency": 144,
       "current_capability": null
     }
   ],
@@ -510,7 +510,11 @@
           "exists": true
         }
       ],
-      "existing_skills": [],
+      "existing_skills": [
+        "literature-research (seed-base)",
+        "nate-synthesis-and-debate (seed-base)",
+        "nate-synthesis-and-debate (builds-karve-ai)"
+      ],
       "existing_autoresearch_skills": [
         "autoresearch-runner.mjs",
         "autoresearch-runner.py"
@@ -655,7 +659,11 @@
           "exists": true
         }
       ],
-      "existing_skills": [],
+      "existing_skills": [
+        "mattgiaro-substack-agent (builds-karve-ai)",
+        "mattgiaro-substack-growth (builds-karve-ai)",
+        "mattgiaro-substack-guide (builds-karve-ai)"
+      ],
       "existing_autoresearch_skills": [
         "working-content-strategy-optimizer"
       ],
@@ -683,7 +691,15 @@
           "exists": true
         }
       ],
-      "existing_skills": [],
+      "existing_skills": [
+        "eaas-domain-expansion-agent-team-v1 (seed-base)",
+        "eaas-expansion-brainstorm-to-blueprint-v1 (seed-base)",
+        "eaas-platform-build-self-discovery-v1 (seed-base)",
+        "eaas-domain-expansion-agent-team-v1 (builds-karve-ai)",
+        "eaas-expansion-brainstorm-to-blueprint-v1 (builds-karve-ai)",
+        "eaas-platform-build-self-discovery-v1 (builds-karve-ai)",
+        "platform (builds-karve-ai)"
+      ],
       "existing_autoresearch_skills": [
         "working-eaas-payment-linker"
       ],

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-03-21T22:43:48.081Z",
+  "timestamp": "2026-03-25T14:08:54.953Z",
   "version": "1.0",
   "skills": {
     "backup": {
@@ -130,34 +130,34 @@
       ]
     },
     "content-strategy-optimizer": {
-      "score": 19,
+      "score": 24,
       "max": 48,
-      "ratio": 0.396,
+      "ratio": 0.5,
       "trajectory": "improving",
       "weakest_criteria": [
         {
           "name": "Data Grounding",
-          "fail_rate": 0.875
-        },
-        {
-          "name": "Actionability",
-          "fail_rate": 0.875
+          "fail_rate": 0.896
         },
         {
           "name": "Audience Awareness",
-          "fail_rate": 0.875
+          "fail_rate": 0.896
+        },
+        {
+          "name": "Tool Utilization",
+          "fail_rate": 0.896
         }
       ],
       "strongest_criteria": [],
-      "rounds_completed": 24,
-      "rounds_kept": 6,
-      "cost_invested": 1.14,
-      "last_improvement": "2026-03-21T17:53:12.139Z",
+      "rounds_completed": 48,
+      "rounds_kept": 8,
+      "cost_invested": 2.28,
+      "last_improvement": "2026-03-23T22:00:43.616Z",
       "last_escalation": {
-        "diagnosis": "The optimization is stuck in a local optimum because all recent mutations (Rounds 17-21) are attempting to solve a behavioral problem (the model prefers to summarize or simulate rather than execute) with instructional force (e.g., `EXECUTION CONTRACT`, `EXECUTE NOW`). This is a fundamental misunderstanding of the root cause. The problem is not that the instructions are unclear; it's that the skill's architecture—a long, brittle chain of interdependent tool calls that pass state via the filesystem—is antithetical to how the LLM operates. The model sees the entire prompt, understands the final goal is a markdown report, and attempts to generate it in one step, short-circuiting the intermediate tool calls. The repeated `Tool Utilization: 0/8` failure is the primary symptom of this architectural mismatch. Adding more aggressive instructional text is failing because it's trying to coerce the model into a procedural execution flow it is not designed for.",
-        "timestamp": "2026-03-21T22:12:36.108Z"
+        "diagnosis": "The mutations are failing because they are stuck in a local optimum, exclusively targeting the *instructional preamble* of the skill. The root cause of the 0/8 Tool Utilization score is not the wording of the command, but the cognitive load and inherent safety/analysis triggers presented by a ~300-line inline bash script. The model sees a large, complex piece of code and its core training to analyze, explain, or summarize code overrides the simple instruction to \"execute blindly.\" All 10 rounds of mutations have been attempts to find magic words to bypass this fundamental behavior, which has proven ineffective. The problem is structural, not instructional.",
+        "timestamp": "2026-03-24T06:10:59.829Z"
       },
-      "stuck_count": 4,
+      "stuck_count": 7,
       "criteria_names": [
         "Data Grounding",
         "Actionability",
@@ -399,29 +399,27 @@
       "weakest_criteria": [
         {
           "name": "Instructions Clarity",
-          "fail_rate": 0.8
+          "fail_rate": 0.588
         },
         {
-          "name": "Task Completion",
-          "fail_rate": 0.6
+          "name": "Output Quality",
+          "fail_rate": 0.529
         },
         {
-          "name": "Error Handling",
-          "fail_rate": 0.6
+          "name": "Completeness",
+          "fail_rate": 0.529
         }
       ],
-      "strongest_criteria": [
-        {
-          "name": "Tool Usage",
-          "fail_rate": 0
-        }
-      ],
-      "rounds_completed": 5,
+      "strongest_criteria": [],
+      "rounds_completed": 17,
       "rounds_kept": 4,
-      "cost_invested": 0.25,
+      "cost_invested": 0.71,
       "last_improvement": "2026-03-20T01:52:41.673Z",
-      "last_escalation": null,
-      "stuck_count": 1,
+      "last_escalation": {
+        "diagnosis": "The skill is stuck in a local optimum of \"procedural perfection.\" Past mutations have successfully built an extremely clear, linear, and robust step-by-step guide for an AI agent. The skill now perfectly handles prerequisites, execution, and multiple layers of fallbacks, which is why it consistently scores 36/36 on the existing test suite. The optimization loop is now making micro-refinements to a process that already works flawlessly according to the tests. The root cause of the stagnation is that the skill has become a bloated, monolithic document trying to serve as both a concise agent-facing prompt and an exhaustive human-facing user manual. This dual identity prevents further meaningful improvement; any change to improve one aspect risks confusing the other, and the tests aren't sophisticated enough to reward the next level of improvement: agentic efficiency and conciseness.",
+        "timestamp": "2026-03-25T14:06:53.308Z"
+      },
+      "stuck_count": 5,
       "criteria_names": [
         "Task Completion",
         "Error Handling",
@@ -2145,36 +2143,34 @@
       ]
     },
     "system-status-reporter": {
-      "score": 28,
+      "score": 33,
       "max": 36,
-      "ratio": 0.778,
+      "ratio": 0.917,
       "trajectory": "improving",
       "weakest_criteria": [
         {
           "name": "Does the report correctly state the total number of skills, and their status (at target, stuck, untested)",
-          "fail_rate": 1
+          "fail_rate": 0.929
         },
         {
           "name": "Does the report list the top 3 skills with the most unresolved failures",
-          "fail_rate": 1
+          "fail_rate": 0.929
         },
         {
           "name": "Does the report highlight any skills that have recently become 'stuck' or 'plateauing'",
-          "fail_rate": 1
+          "fail_rate": 0.929
         }
       ],
-      "strongest_criteria": [
-        {
-          "name": "Complete its report generation in under 10 seconds",
-          "fail_rate": 0
-        }
-      ],
-      "rounds_completed": 5,
-      "rounds_kept": 2,
-      "cost_invested": 0.25,
-      "last_improvement": "2026-03-20T22:30:47.752Z",
-      "last_escalation": null,
-      "stuck_count": 2,
+      "strongest_criteria": [],
+      "rounds_completed": 14,
+      "rounds_kept": 3,
+      "cost_invested": 0.68,
+      "last_improvement": "2026-03-24T22:07:34.266Z",
+      "last_escalation": {
+        "diagnosis": "The optimization loop is stuck in a local optimum focused on output formatting and high-level error handling. Recent mutations have added critical output rules, clarified tool usage, and added fallbacks for empty results. While these are useful refinements, they fail to address the core source of failures: the extreme complexity and fragility of the monolithic bash script in Step 2. This script combines directory traversal, file existence checks, and multiple inline Python calls for JSON parsing. It is too complex for the agent to execute reliably across different test scenarios, leading to incorrect data collection (wrong scores, failure counts, and skill statuses) which then causes downstream failures in the final report's accuracy, regardless of how well the output is formatted. The system is trying to perfect the \"frame\" (the output rules) while the \"picture\" (the data itself) is often corrupted at the source.",
+        "timestamp": "2026-03-24T14:08:57.151Z"
+      },
+      "stuck_count": 4,
       "criteria_names": [
         "Does the report correctly state the total number of skills, and their status (at target, stuck, untested)",
         "Does the report list the top 3 skills with the most unresolved failures",
@@ -2502,10 +2498,26 @@
       "severity": "high"
     },
     {
-      "pattern": "Criterion \"Task Completion\" fails across 11 skills",
+      "pattern": "Criterion \"Completeness\" fails across 10 skills",
+      "affected_skills": [
+        "classify-leads",
+        "cross-niche-outliers",
+        "gmail",
+        "gmail-inbox",
+        "gmail-label",
+        "linkedin-response",
+        "title-variants",
+        "video-to-action",
+        "youtube-channel-analysis",
+        "youtube-outliers"
+      ],
+      "frequency": 10,
+      "severity": "high"
+    },
+    {
+      "pattern": "Criterion \"Task Completion\" fails across 10 skills",
       "affected_skills": [
         "create-proposal",
-        "cross-niche-outliers",
         "gmail-label",
         "gmaps-leads",
         "inbox-cleaner",
@@ -2516,29 +2528,14 @@
         "scrape-leads",
         "video-to-action"
       ],
-      "frequency": 11,
+      "frequency": 10,
       "severity": "high"
     },
     {
-      "pattern": "Criterion \"Completeness\" fails across 9 skills",
-      "affected_skills": [
-        "classify-leads",
-        "gmail",
-        "gmail-inbox",
-        "gmail-label",
-        "linkedin-response",
-        "title-variants",
-        "video-to-action",
-        "youtube-channel-analysis",
-        "youtube-outliers"
-      ],
-      "frequency": 9,
-      "severity": "high"
-    },
-    {
-      "pattern": "Criterion \"Output Quality\" fails across 9 skills",
+      "pattern": "Criterion \"Output Quality\" fails across 10 skills",
       "affected_skills": [
         "create-proposal",
+        "cross-niche-outliers",
         "gmail-inbox",
         "gmaps-leads",
         "inbox-cleaner",
@@ -2548,22 +2545,21 @@
         "title-variants",
         "welcome-email"
       ],
-      "frequency": 9,
+      "frequency": 10,
       "severity": "high"
     },
     {
-      "pattern": "Criterion \"Error Handling\" fails across 8 skills",
+      "pattern": "Criterion \"Error Handling\" fails across 7 skills",
       "affected_skills": [
         "classify-leads",
         "create-proposal",
-        "cross-niche-outliers",
         "inbox-cleaner",
         "instantly-autoreply",
         "instantly-campaigns",
         "welcome-email",
         "youtube-channel-analysis"
       ],
-      "frequency": 8,
+      "frequency": 7,
       "severity": "high"
     },
     {
@@ -2587,10 +2583,11 @@
       "severity": "high"
     },
     {
-      "pattern": "28 skills have triggered stuck escalations",
+      "pattern": "30 skills have triggered stuck escalations",
       "affected_skills": [
         "container-security-auditor",
         "content-strategy-optimizer",
+        "cross-niche-outliers",
         "defi-arbitrage-executor",
         "eaas-payment-linker",
         "failure-log-analyzer",
@@ -2613,12 +2610,13 @@
         "skill-test-runner",
         "stuck-skill-diagnoser",
         "system-dashboard-generator",
+        "system-status-reporter",
         "the-real-scrumness",
         "welcome-email",
         "youtube-channel-analysis",
         "youtube-outliers"
       ],
-      "frequency": 28,
+      "frequency": 30,
       "severity": "medium"
     },
     {
@@ -2717,11 +2715,11 @@
   "uncovered_domains": [],
   "summary": {
     "total_skills": 52,
-    "avg_ratio": 0.957,
+    "avg_ratio": 0.962,
     "skills_at_target": 37,
     "skills_stuck": 3,
     "skills_untested": 3,
-    "total_cost": 14.5,
-    "total_rounds": 308
+    "total_cost": 16.53,
+    "total_rounds": 353
   }
 }

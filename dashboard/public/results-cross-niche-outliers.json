@@ -8,7 +8,7 @@
     "Instructions Clarity",
     "Completeness"
   ],
-  "totalCost": 0.25,
+  "totalCost": 0.7100000000000001,
   "models": {
     "mutator": "sonnet",
     "evaluator": "gemini-2.5-pro"
@@ -254,6 +254,632 @@
       },
       "timestamp": "2026-03-20T01:54:14.910Z",
       "changelog": "**Mutation**: Expand the manual fallback (step 3 in Fallback Priority Order) with concrete step-by-step instructions for manually finding and scoring outliers when all automated methods fail, filling the gap that \"search YouTube manually\" references but never explains.\n**Failures**: S2: Task Completion, S2: Error Handling, S2: Output Quality, S2: Instructions Clarity, S2: Completeness, S3: Error Handling, S3: Instructions Clarity, S3: Completeness, S4: Task Completion\n**Per-criteria**: Task Completion: 4/6, Error Handling: 4/6, Output Quality: 5/6, Tool Usage: 6/6, Instructions Clarity: 4/6, Completeness: 4/6\n**Decision**: Score 27 did not exceed best 36 — mutation produced worse or equal results"
+    },
+    {
+      "round": 5,
+      "score": 32,
+      "max": 36,
+      "status": "reverted",
+      "mutation": "Add an \"Agent Execution Guide\" section immediately after the Goal that tells Claude exactly what to do when invoked as an agent — check for scripts, run them, handle failures with specific fallbacks, and summarize results — converting the user manual into actionable AI instructions.",
+      "cost": 0.05,
+      "criteria": [
+        6,
+        5,
+        5,
+        6,
+        5,
+        5
+      ],
+      "failures": [
+        {
+          "scenario": 2,
+          "criterion": "Error Handling"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Output Quality"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Instructions Clarity"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Completeness"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 32 did not exceed best 36 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-25T06:00:35.089Z",
+      "changelog": "**Mutation**: Add an \"Agent Execution Guide\" section immediately after the Goal that tells Claude exactly what to do when invoked as an agent — check for scripts, run them, handle failures with specific fallbacks, and summarize results — converting the user manual into actionable AI instructions.\n**Failures**: S2: Error Handling, S2: Output Quality, S2: Instructions Clarity, S2: Completeness\n**Per-criteria**: Task Completion: 6/6, Error Handling: 5/6, Output Quality: 5/6, Tool Usage: 6/6, Instructions Clarity: 5/6, Completeness: 5/6\n**Decision**: Score 32 did not exceed best 36 — mutation produced worse or equal results"
+    },
+    {
+      "round": 6,
+      "score": 27,
+      "max": 36,
+      "status": "reverted",
+      "mutation": "Add explicit tool-call annotations to each Agent Execution Guide step so Claude knows exactly which allowed tools (Bash, Read, Write, etc.) to invoke at each decision point, fixing the ambiguity that causes Instructions Clarity, Tool Usage, and Completeness failures.",
+      "cost": 0.05,
+      "criteria": [
+        5,
+        6,
+        5,
+        4,
+        3,
+        4
+      ],
+      "failures": [
+        {
+          "scenario": 3,
+          "criterion": "Task Completion"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Tool Usage"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Instructions Clarity"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Completeness"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Tool Usage"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Instructions Clarity"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Output Quality"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Instructions Clarity"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Completeness"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 27 did not exceed best 36 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-25T06:02:54.500Z",
+      "changelog": "**Mutation**: Add explicit tool-call annotations to each Agent Execution Guide step so Claude knows exactly which allowed tools (Bash, Read, Write, etc.) to invoke at each decision point, fixing the ambiguity that causes Instructions Clarity, Tool Usage, and Completeness failures.\n**Failures**: S3: Task Completion, S3: Tool Usage, S3: Instructions Clarity, S3: Completeness, S4: Tool Usage, S4: Instructions Clarity, S5: Output Quality, S5: Instructions Clarity, S5: Completeness\n**Per-criteria**: Task Completion: 5/6, Error Handling: 6/6, Output Quality: 5/6, Tool Usage: 4/6, Instructions Clarity: 3/6, Completeness: 4/6\n**Decision**: Score 27 did not exceed best 36 — mutation produced worse or equal results"
+    },
+    {
+      "round": 7,
+      "score": 36,
+      "max": 36,
+      "status": "reverted",
+      "mutation": "Add a user-context gathering step (Step 0) to the Agent Execution Guide so Claude asks for the user's niche/search terms before running scripts, rather than silently defaulting to \"entrepreneur\" which may not match the user's actual business context.",
+      "cost": 0.05,
+      "criteria": [
+        6,
+        6,
+        6,
+        6,
+        6,
+        6
+      ],
+      "failures": [],
+      "geminiThoughts": null,
+      "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-25T06:04:51.773Z",
+      "changelog": "**Mutation**: Add a user-context gathering step (Step 0) to the Agent Execution Guide so Claude asks for the user's niche/search terms before running scripts, rather than silently defaulting to \"entrepreneur\" which may not match the user's actual business context.\n**Failures**: none\n**Per-criteria**: Task Completion: 6/6, Error Handling: 6/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 6/6, Completeness: 6/6\n**Decision**: Score 36 did not exceed best 36 — mutation produced worse or equal results"
+    },
+    {
+      "round": 7,
+      "score": 36,
+      "max": 36,
+      "status": "escalation",
+      "mutation": "Stuck escalation: The skill has reached a local optimum because it is attempting to serve two conflicting purposes within a single, monolithic document: it is both a step-by-step procedural guide for an AI agent and a ",
+      "cost": 0.03,
+      "criteria": [
+        6,
+        6,
+        6,
+        6,
+        6,
+        6
+      ],
+      "failures": [],
+      "decisionReason": "Stuck escalation triggered after 3+ rounds with no improvement",
+      "escalation": {
+        "diagnosis": "The skill has reached a local optimum because it is attempting to serve two conflicting purposes within a single, monolithic document: it is both a step-by-step procedural guide for an AI agent and a comprehensive user manual for a human. Initial mutations improved its quality as a user manual, achieving a perfect score. Subsequent mutations attempted to bolt on an agent-specific execution guide. While this also achieved a perfect score, the skill is now bloated. Any further mutation that improves human readability (e.g., adding more explanatory context) likely degrades agent performance by adding noise, and any change that optimizes for the agent (e.g., removing context) degrades human usability. The system is stuck because it cannot improve one aspect without harming the other, and the current evaluation suite is not sensitive enough to reward a separation of these concerns.",
+        "evalRedesignNeeded": true,
+        "strategy": "The current single-document structure is the root cause of the stalemate. The new strategy is to **separate concerns** by restructuring the skill into two distinct parts: 1) a concise, agent-first execution prompt, and 2) a comprehensive, human-first reference manual. The agent will be given a clean, direct set of instructions at the top, while all the detailed explanations, tutorials, and background information will be moved into a collapsible or lower-priority reference section. This resolves the conflict by allowing each part to be optimized for its intended audience without compromising the other. The agent's prompt becomes shorter and more direct, reducing the chance of confusion, while the human manual remains complete.",
+        "suggestedMutation": "Restructure the skill by creating a new top-level `## Reference Manual` section. Move all human-centric documentation sections (`Quick Start`, `Two Approaches`, `Troubleshooting`, `Process`, `TubeLab Options`, `Keyword Tiers`, `Environment`, etc.) under this new heading. The `Goal` and `Agent Execution Guide` will remain at the top, forming the primary, uncluttered prompt for the AI. Modify the `Manual Fallback` step in the `Agent Execution Guide` to explicitly refer to the new reference section for detailed criteria instead of duplicating the information."
+      },
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-25T06:06:48.560Z"
+    },
+    {
+      "round": 8,
+      "score": 23,
+      "max": 36,
+      "status": "reverted",
+      "mutation": "Restructure the skill into two distinct parts — a clean agent execution prompt at the top (Goal + Agent Execution Guide) and a comprehensive Reference Manual section below — so the AI gets uncluttered instructions while human documentation remains complete.",
+      "cost": 0.05,
+      "criteria": [
+        4,
+        5,
+        4,
+        4,
+        3,
+        3
+      ],
+      "failures": [
+        {
+          "scenario": 1,
+          "criterion": "Instructions Clarity"
+        },
+        {
+          "scenario": 1,
+          "criterion": "Completeness"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Task Completion"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Output Quality"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Tool Usage"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Instructions Clarity"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Completeness"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Task Completion"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Error Handling"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Output Quality"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Tool Usage"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Instructions Clarity"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Completeness"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 23 did not exceed best 36 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-25T06:07:26.922Z",
+      "changelog": "**Mutation**: Restructure the skill into two distinct parts — a clean agent execution prompt at the top (Goal + Agent Execution Guide) and a comprehensive Reference Manual section below — so the AI gets uncluttered instructions while human documentation remains complete.\n**Failures**: S1: Instructions Clarity, S1: Completeness, S3: Task Completion, S3: Output Quality, S3: Tool Usage, S3: Instructions Clarity, S3: Completeness, S5: Task Completion, S5: Error Handling, S5: Output Quality, S5: Tool Usage, S5: Instructions Clarity, S5: Completeness\n**Per-criteria**: Task Completion: 4/6, Error Handling: 5/6, Output Quality: 4/6, Tool Usage: 4/6, Instructions Clarity: 3/6, Completeness: 3/6\n**Decision**: Score 23 did not exceed best 36 — mutation produced worse or equal results"
+    },
+    {
+      "round": 9,
+      "score": 25,
+      "max": 36,
+      "status": "reverted",
+      "mutation": "Make Step 2 explicitly show how to incorporate user-provided niche/terms from Step 0 into the script command via the --terms flag, closing the disconnect between context-gathering and script execution.",
+      "cost": 0.05,
+      "criteria": [
+        4,
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "failures": [
+        {
+          "scenario": 3,
+          "criterion": "Task Completion"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Error Handling"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Output Quality"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Tool Usage"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Instructions Clarity"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Completeness"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Task Completion"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Output Quality"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Tool Usage"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Instructions Clarity"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Completeness"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 25 did not exceed best 36 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-25T06:09:24.454Z",
+      "changelog": "**Mutation**: Make Step 2 explicitly show how to incorporate user-provided niche/terms from Step 0 into the script command via the --terms flag, closing the disconnect between context-gathering and script execution.\n**Failures**: S3: Task Completion, S3: Error Handling, S3: Output Quality, S3: Tool Usage, S3: Instructions Clarity, S3: Completeness, S5: Task Completion, S5: Output Quality, S5: Tool Usage, S5: Instructions Clarity, S5: Completeness\n**Per-criteria**: Task Completion: 4/6, Error Handling: 5/6, Output Quality: 4/6, Tool Usage: 4/6, Instructions Clarity: 4/6, Completeness: 4/6\n**Decision**: Score 25 did not exceed best 36 — mutation produced worse or equal results"
+    },
+    {
+      "round": 10,
+      "score": 31,
+      "max": 36,
+      "status": "reverted",
+      "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-cross-niche-outliers/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet",
+      "cost": 0.03,
+      "criteria": [
+        5,
+        6,
+        5,
+        6,
+        4,
+        5
+      ],
+      "failures": [
+        {
+          "scenario": 3,
+          "criterion": "Instructions Clarity"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Task Completion"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Output Quality"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Instructions Clarity"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Completeness"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 31 did not exceed best 36 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-25T14:03:22.835Z",
+      "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-cross-niche-outliers/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n**Failures**: S3: Instructions Clarity, S4: Task Completion, S4: Output Quality, S4: Instructions Clarity, S4: Completeness"
+    },
+    {
+      "round": 11,
+      "score": 36,
+      "max": 36,
+      "status": "reverted",
+      "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-cross-niche-outliers/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet",
+      "cost": 0.03,
+      "criteria": [
+        6,
+        6,
+        6,
+        6,
+        6,
+        6
+      ],
+      "failures": [],
+      "geminiThoughts": null,
+      "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-25T14:04:57.099Z",
+      "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-cross-niche-outliers/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n**Failures**: none"
+    },
+    {
+      "round": 12,
+      "score": 36,
+      "max": 36,
+      "status": "reverted",
+      "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-cross-niche-outliers/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet",
+      "cost": 0.03,
+      "criteria": [
+        6,
+        6,
+        6,
+        6,
+        6,
+        6
+      ],
+      "failures": [],
+      "geminiThoughts": null,
+      "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-25T14:05:43.265Z",
+      "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-cross-niche-outliers/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n**Failures**: none"
+    },
+    {
+      "round": 12,
+      "score": 36,
+      "max": 36,
+      "status": "escalation",
+      "mutation": "Stuck escalation: The skill is stuck in a local optimum of \"procedural perfection.\" Past mutations have successfully built an extremely clear, linear, and robust step-by-step guide for an AI agent. The skill now perfec",
+      "cost": 0.03,
+      "criteria": [
+        6,
+        6,
+        6,
+        6,
+        6,
+        6
+      ],
+      "failures": [],
+      "decisionReason": "Stuck escalation triggered after 3+ rounds with no improvement",
+      "escalation": {
+        "diagnosis": "The skill is stuck in a local optimum of \"procedural perfection.\" Past mutations have successfully built an extremely clear, linear, and robust step-by-step guide for an AI agent. The skill now perfectly handles prerequisites, execution, and multiple layers of fallbacks, which is why it consistently scores 36/36 on the existing test suite. The optimization loop is now making micro-refinements to a process that already works flawlessly according to the tests. The root cause of the stagnation is that the skill has become a bloated, monolithic document trying to serve as both a concise agent-facing prompt and an exhaustive human-facing user manual. This dual identity prevents further meaningful improvement; any change to improve one aspect risks confusing the other, and the tests aren't sophisticated enough to reward the next level of improvement: agentic efficiency and conciseness.",
+        "evalRedesignNeeded": true,
+        "strategy": "The current strategy of incrementally refining the monolithic document has hit its ceiling. The new strategy is **Decomposition and Abstraction**. We will break the single, oversized skill into two distinct, purpose-built artifacts:\n1.  A lean, agent-only **Execution Skill** containing nothing but the direct, uncluttered instructions needed for the task.\n2.  A separate **Reference Manual** file that acts as a knowledge base, which the agent can be instructed to consult *only when necessary*.\nThis reduces the cognitive load on the agent during execution, as its primary prompt is no longer cluttered with reference material it doesn't need for the happy path. It also allows the reference manual to be expanded independently without affecting the agent's core logic. This moves the skill from a \"detailed recipe\" to a \"chef's instruction with an encyclopedia on the shelf.\"",
+        "suggestedMutation": "Refactor the skill into two separate files: a primary skill file and a reference knowledge file.\n\n1.  **Create a new file named `cross-niche-outliers.ref.md`**.\n2.  **Move the entire `Reference Manual` section** (from the `---` separator below the `Agent Execution Guide` to the end of the file) into this new `cross-niche-outliers.ref.md` file.\n3.  **Modify the original `cross-niche-outliers.md` skill file:**\n    *   Delete the entire `Reference Manual` section, leaving only the YAML header, the `Goal`, and the `Agent Execution Guide`.\n    *   Add a single sentence to the end of the `Goal` section: \"For detailed scoring criteria, troubleshooting, or manual analysis steps, consult the `cross-niche-outliers.ref.md` file.\"\n\nThis change will result in a much shorter, cleaner primary skill prompt focused exclusively on execution, while preserving all the detailed documentation in a separate, contextually-linked file."
+      },
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-25T14:06:53.308Z"
+    },
+    {
+      "round": 13,
+      "score": 0,
+      "max": 36,
+      "status": "reverted",
+      "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-cross-niche-outliers/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet",
+      "cost": 0.03,
+      "criteria": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "failures": [
+        {
+          "scenario": 1,
+          "criterion": "Task Completion"
+        },
+        {
+          "scenario": 1,
+          "criterion": "Error Handling"
+        },
+        {
+          "scenario": 1,
+          "criterion": "Output Quality"
+        },
+        {
+          "scenario": 1,
+          "criterion": "Tool Usage"
+        },
+        {
+          "scenario": 1,
+          "criterion": "Instructions Clarity"
+        },
+        {
+          "scenario": 1,
+          "criterion": "Completeness"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Task Completion"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Error Handling"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Output Quality"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Tool Usage"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Instructions Clarity"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Completeness"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Task Completion"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Error Handling"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Output Quality"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Tool Usage"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Instructions Clarity"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Completeness"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Task Completion"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Error Handling"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Output Quality"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Tool Usage"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Instructions Clarity"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Completeness"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Task Completion"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Error Handling"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Output Quality"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Tool Usage"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Instructions Clarity"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Completeness"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Task Completion"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Error Handling"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Output Quality"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Tool Usage"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Instructions Clarity"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Completeness"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 0 did not exceed best 36 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-25T14:07:09.610Z",
+      "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-cross-niche-outliers/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n**Failures**: S1: Task Completion, S1: Error Handling, S1: Output Quality, S1: Tool Usage, S1: Instructions Clarity, S1: Completeness, S2: Task Completion, S2: Error Handling, S2: Output Quality, S2: Tool Usage, S2: Instructions Clarity, S2: Completeness, S3: Task Completion, S3: Error Handling, S3: Output Quality, S3: Tool Usage, S3: Instructions Clarity, S3: Completeness, S4: Task Completion, S4: Error Handling, S4: Output Quality, S4: Tool Usage, S4: Instructions Clarity, S4: Completeness, S5: Task Completion, S5: Error Handling, S5: Output Quality, S5: Tool Usage, S5: Instructions Clarity, S5: Completeness, S6: Task Completion, S6: Error Handling, S6: Output Quality, S6: Tool Usage, S6: Instructions Clarity, S6: Completeness"
+    },
+    {
+      "round": 14,
+      "score": 36,
+      "max": 36,
+      "status": "reverted",
+      "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-cross-niche-outliers/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet",
+      "cost": 0.03,
+      "criteria": [
+        6,
+        6,
+        6,
+        6,
+        6,
+        6
+      ],
+      "failures": [],
+      "geminiThoughts": null,
+      "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-25T14:07:49.734Z",
+      "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-cross-niche-outliers/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n**Failures**: none"
     }
   ]
 }

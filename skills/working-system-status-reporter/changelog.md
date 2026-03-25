@@ -31,3 +31,32 @@
 
 ## Round 5 — Mutation Applied
 - **Mutation**: Add a top-level "NO EARLY OUTPUT" rule to Execution Steps and rewrite Step 1 to explicitly forbid any console output until Step 7 — fixing the root cause of markdown formatting failures where acknowledgment text or debug output precedes or contaminates the report.
+
+## Round 6 — Mutation Applied
+- **Mutation**: Remove the bash variable-capture instruction from Step 2 — let the script print normally so the agent can read its output from the tool result; add a clarifying note that bash tool output is only visible to the agent, not the user.
+
+## Round 7 — Mutation Applied
+- **Mutation**: Move the "no code fences" prohibition into the top-level CRITICAL OUTPUT RULE block (alongside the "no early output" rule) so it is encountered before execution begins, rather than buried in Step 6's formatting notes.
+
+## Round 8 — Mutation Applied
+- **Mutation**: Add explicit zero-result fallback in Step 3 — if the bash script returns no SKILL lines (empty glob, script error, etc.), the agent must still generate the report with zeroed counts rather than aborting or outputting error prose.
+
+## Round 9 — Mutation Applied
+- **Mutation**: Replace the monolithic bash script in Steps 2–3 with a decomposed multi-step loop (list directories, then read/parse each skill's files individually using native tools) to reduce fragility and cognitive load, directly addressing the root cause of data collection failures.
+
+## Round 10 — Mutation Applied
+- **Mutation**: Replace the decomposed per-skill native-tool loop (Round 9) with a single fast bash script that collects all skill names, scores, and failure counts in one pass — fixing timeout failures in scenarios 3 and 6 and the cascading data collection failures in scenarios 2, 3, 6.
+
+## Round 11 — Mutation Applied
+- **Mutation**: Move stuck detection into the bash script (compare last 3 scores numerically, output a 0/1 flag) instead of embedding a JSON history array in the pipe-delimited output — eliminates fragile JSON-within-pipe parsing that causes status classification failures in scenarios 2, 3, 6.
+
+## Round 12 — Mutation Applied
+- **Mutation**: Merge wants.json parsing into the Step 2 bash script (outputting a WANTS|count line), eliminating the separate Read tool call in Step 4 — reducing tool calls from 2 to 1, cutting latency, and giving the agent all data in one atomic result to synthesize in Step 5.
+
+## Round 12
+- **Score**: 33/36 (kept)
+- **Failures**: S2: Does the report correctly state the total number of skills, and their status (at target, stuck, untested), S2: Does the report list the top 3 skills with the most unresolved failures, S2: Does the report highlight any skills that have recently become 'stuck' or 'plateauing'
+- **Per-criteria**: Does the report correctly state the total number of skills, and their status (at target, stuck, untested): 5/6, Does the report list the top 3 skills with the most unresolved failures: 5/6, Does the report include the number of open unmet demands: 6/6, Does the report highlight any skills that have recently become 'stuck' or 'plateauing': 5/6, Is the output formatted in clean, human-readable Markdown: 6/6, Complete its report generation in under 10 seconds: 6/6
+
+## Round 13 — Mutation Applied
+- **Mutation**: Swap status classification order in Step 3 so `stuck == 1` is checked before `score >= 0.9`, ensuring skills plateaued at a high score are correctly classified as "Stuck" rather than "At Target".

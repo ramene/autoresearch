@@ -3431,5 +3431,3351 @@
       "mutator": "sonnet"
     },
     "timestamp": "2026-03-21T22:12:36.108Z"
+  },
+  {
+    "round": 21,
+    "score": 23,
+    "max": 48,
+    "status": "kept",
+    "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-content-strategy-optimizer/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet",
+    "cost": 0.03,
+    "criteria": [
+      5,
+      5,
+      4,
+      0,
+      5,
+      4
+    ],
+    "failures": [
+      {
+        "scenario": 1,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Adaptation"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Improved from 19 to 23",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-22T06:01:13.946Z",
+    "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-content-strategy-optimizer/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n**Failures**: S1: Tool Utilization, S2: Tool Utilization, S3: Tool Utilization, S4: Data Grounding, S4: Actionability, S4: Audience Awareness, S4: Tool Utilization, S4: Measurement, S4: Adaptation, S5: Tool Utilization, S5: Adaptation, S6: Data Grounding, S6: Actionability, S6: Audience Awareness, S6: Tool Utilization, S6: Measurement, S6: Adaptation, S7: Audience Awareness, S7: Tool Utilization, S8: Data Grounding, S8: Actionability, S8: Audience Awareness, S8: Tool Utilization, S8: Measurement, S8: Adaptation"
+  },
+  {
+    "round": 22,
+    "score": 19,
+    "max": 48,
+    "status": "reverted",
+    "mutation": "Compress the EXECUTION CONTRACT to 2 lines and place the mandatory Bash call as the literal second line of the file — before Claude can enter text-generation mode — eliminating the verbose preamble that paradoxically delays execution.",
+    "cost": 0.05,
+    "criteria": [
+      4,
+      4,
+      4,
+      0,
+      4,
+      3
+    ],
+    "failures": [
+      {
+        "scenario": 1,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Adaptation"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 19 did not exceed best 23 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-22T06:05:04.643Z",
+    "changelog": "**Mutation**: Compress the EXECUTION CONTRACT to 2 lines and place the mandatory Bash call as the literal second line of the file — before Claude can enter text-generation mode — eliminating the verbose preamble that paradoxically delays execution.\n**Failures**: S1: Tool Utilization, S2: Tool Utilization, S2: Adaptation, S3: Tool Utilization, S4: Data Grounding, S4: Actionability, S4: Audience Awareness, S4: Tool Utilization, S4: Measurement, S4: Adaptation, S5: Actionability, S5: Tool Utilization, S5: Adaptation, S6: Data Grounding, S6: Actionability, S6: Audience Awareness, S6: Tool Utilization, S6: Measurement, S6: Adaptation, S7: Data Grounding, S7: Audience Awareness, S7: Tool Utilization, S7: Measurement, S8: Data Grounding, S8: Actionability, S8: Audience Awareness, S8: Tool Utilization, S8: Measurement, S8: Adaptation\n**Per-criteria**: Data Grounding: 4/8, Actionability: 4/8, Audience Awareness: 4/8, Tool Utilization: 0/8, Measurement: 4/8, Adaptation: 3/8\n**Decision**: Score 19 did not exceed best 23 — mutation produced worse or equal results"
+  },
+  {
+    "round": 23,
+    "score": 21,
+    "max": 48,
+    "status": "reverted",
+    "mutation": "Remove all theatrical enforcement text (EXECUTION CONTRACT, \"EXECUTE NOW\" imperatives, preamble) and replace with a minimal step-list format where each step is just \"Step N → ToolName(args)\" with no decorative text — less text to read means less opportunity to describe rather than execute.",
+    "cost": 0.05,
+    "criteria": [
+      4,
+      5,
+      4,
+      0,
+      5,
+      3
+    ],
+    "failures": [
+      {
+        "scenario": 1,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Adaptation"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 21 did not exceed best 23 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-23T06:00:42.899Z",
+    "changelog": "**Mutation**: Remove all theatrical enforcement text (EXECUTION CONTRACT, \"EXECUTE NOW\" imperatives, preamble) and replace with a minimal step-list format where each step is just \"Step N → ToolName(args)\" with no decorative text — less text to read means less opportunity to describe rather than execute.\n**Failures**: S1: Tool Utilization, S2: Tool Utilization, S2: Adaptation, S3: Tool Utilization, S4: Data Grounding, S4: Actionability, S4: Audience Awareness, S4: Tool Utilization, S4: Measurement, S4: Adaptation, S5: Tool Utilization, S5: Adaptation, S6: Data Grounding, S6: Actionability, S6: Audience Awareness, S6: Tool Utilization, S6: Measurement, S6: Adaptation, S7: Data Grounding, S7: Audience Awareness, S7: Tool Utilization, S8: Data Grounding, S8: Actionability, S8: Audience Awareness, S8: Tool Utilization, S8: Measurement, S8: Adaptation\n**Per-criteria**: Data Grounding: 4/8, Actionability: 5/8, Audience Awareness: 4/8, Tool Utilization: 0/8, Measurement: 5/8, Adaptation: 3/8\n**Decision**: Score 21 did not exceed best 23 — mutation produced worse or equal results"
+  },
+  {
+    "round": 24,
+    "score": 17,
+    "max": 48,
+    "status": "reverted",
+    "mutation": "Add a 3-line \"Execution Key\" box at the top that explicitly maps the step format to tool calls (\"`Step N → Bash` + code block = call Bash tool with that script\"), since Claude may be treating embedded code blocks as documentation examples rather than tool arguments, causing all 8 Tool Utilization failures.",
+    "cost": 0.05,
+    "criteria": [
+      5,
+      4,
+      5,
+      0,
+      0,
+      3
+    ],
+    "failures": [
+      {
+        "scenario": 1,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 1,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Adaptation"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 17 did not exceed best 23 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-23T06:03:57.826Z",
+    "changelog": "**Mutation**: Add a 3-line \"Execution Key\" box at the top that explicitly maps the step format to tool calls (\"`Step N → Bash` + code block = call Bash tool with that script\"), since Claude may be treating embedded code blocks as documentation examples rather than tool arguments, causing all 8 Tool Utilization failures.\n**Failures**: S1: Tool Utilization, S1: Measurement, S2: Tool Utilization, S2: Measurement, S2: Adaptation, S3: Tool Utilization, S3: Measurement, S4: Data Grounding, S4: Actionability, S4: Audience Awareness, S4: Tool Utilization, S4: Measurement, S4: Adaptation, S5: Actionability, S5: Tool Utilization, S5: Measurement, S5: Adaptation, S6: Data Grounding, S6: Actionability, S6: Audience Awareness, S6: Tool Utilization, S6: Measurement, S6: Adaptation, S7: Data Grounding, S7: Audience Awareness, S7: Tool Utilization, S7: Measurement, S8: Actionability, S8: Tool Utilization, S8: Measurement, S8: Adaptation\n**Per-criteria**: Data Grounding: 5/8, Actionability: 4/8, Audience Awareness: 5/8, Tool Utilization: 0/8, Measurement: 0/8, Adaptation: 3/8\n**Decision**: Score 17 did not exceed best 23 — mutation produced worse or equal results"
+  },
+  {
+    "round": 25,
+    "score": 15,
+    "max": 48,
+    "status": "reverted",
+    "mutation": "Replace all \"Step N → ToolName(args)\" notation with imperative sentences of the form \"**Call [ToolName] now** with [args]:\" — arrow notation reads as flowchart documentation, imperatives read as commands to execute immediately.",
+    "cost": 0.05,
+    "criteria": [
+      5,
+      4,
+      5,
+      0,
+      0,
+      1
+    ],
+    "failures": [
+      {
+        "scenario": 1,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 1,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 1,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Adaptation"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 15 did not exceed best 23 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-23T06:07:43.797Z",
+    "changelog": "**Mutation**: Replace all \"Step N → ToolName(args)\" notation with imperative sentences of the form \"**Call [ToolName] now** with [args]:\" — arrow notation reads as flowchart documentation, imperatives read as commands to execute immediately.\n**Failures**: S1: Tool Utilization, S1: Measurement, S1: Adaptation, S2: Tool Utilization, S2: Measurement, S2: Adaptation, S3: Tool Utilization, S3: Measurement, S3: Adaptation, S4: Data Grounding, S4: Actionability, S4: Audience Awareness, S4: Tool Utilization, S4: Measurement, S4: Adaptation, S5: Actionability, S5: Tool Utilization, S5: Measurement, S5: Adaptation, S6: Data Grounding, S6: Actionability, S6: Audience Awareness, S6: Tool Utilization, S6: Measurement, S6: Adaptation, S7: Data Grounding, S7: Audience Awareness, S7: Tool Utilization, S7: Measurement, S8: Actionability, S8: Tool Utilization, S8: Measurement, S8: Adaptation\n**Per-criteria**: Data Grounding: 5/8, Actionability: 4/8, Audience Awareness: 5/8, Tool Utilization: 0/8, Measurement: 0/8, Adaptation: 1/8\n**Decision**: Score 15 did not exceed best 23 — mutation produced worse or equal results"
+  },
+  {
+    "round": 25,
+    "score": 15,
+    "max": 48,
+    "status": "escalation",
+    "mutation": "Stuck escalation: The optimization is stuck in a local optimum because all recent mutations are attempting to solve a fundamental architectural problem with superficial prompt phrasing. The skill is designed as a long,",
+    "cost": 0.03,
+    "criteria": [
+      5,
+      4,
+      5,
+      0,
+      0,
+      1
+    ],
+    "failures": [],
+    "decisionReason": "Stuck escalation triggered after 3+ rounds with no improvement",
+    "escalation": {
+      "diagnosis": "The optimization is stuck in a local optimum because all recent mutations are attempting to solve a fundamental architectural problem with superficial prompt phrasing. The skill is designed as a long, fragile chain of seven sequential tool calls that must pass state through the filesystem. This imposes a high cognitive load on the model, causing it to abandon execution and default to summarizing the *process* instead. The persistent 0/8 score on \"Tool Utilization\" across all rounds is the key indicator. The mutations (adding imperatives, contracts, reformatting instructions) are merely changing the \"chrome\" around the instructions, but they don't reduce the core complexity of managing a multi-step, stateful workflow, which is the root cause of the execution failure.",
+      "evalRedesignNeeded": false,
+      "strategy": "The current strategy of tweaking prompt phrasing has failed. A new strategy of **Command Consolidation** is required. Instead of asking the model to manage a long sequence of small, interdependent scripts, we must redesign the skill's structure to use fewer, more powerful tool calls. By consolidating the data processing logic into a single, monolithic Bash script and the reporting logic into another, we drastically reduce the number of sequential steps the model must track. This lowers the cognitive load and transforms the task from a complex orchestration problem into a simple two-step (analyze, report) execution, making a successful run far more likely.",
+      "suggestedMutation": "**Refactor the six distinct Bash scripts into two consolidated scripts: one for analysis and one for reporting.**\n\n1.  **Create a single `analyze.sh` script:** Combine the logic from the current Bash calls in steps 3, 4, and 5. This new script will perform the entire analysis pipeline in one execution:\n    *   Find or create the `engagement_report.json`.\n    *   Enrich the data (add DOW/hour).\n    *   Calculate engagement scores and sort.\n    *   Identify top/bottom performers and best time slot.\n    *   Extract winning/losing title patterns.\n    *   Extract audience signals from comments.\n    *   Extract top referrers.\n    *   **Output:** Write a single, comprehensive `analysis.json` file to the working directory containing all of these computed fields.\n\n2.  **Create a single `report.sh` script:** Combine the logic from the current Bash calls in steps 6 and 7. This new script will:\n    *   Read the single `analysis.json` file created by the `analyze.sh` script.\n    *   Generate the topic proposals and calendar based on the analysis data.\n    *   Assemble the final markdown report using variables populated from the `analysis.json`.\n    *   **Output:** Write the final `content_strategy_report.md`.\n\nThis changes the skill's flow from `Read -> Bash -> Bash -> Bash -> Bash -> Bash -> Read` to a much more robust `Read -> Bash (Analyze) -> Bash (Report) -> Read`."
+    },
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-23T06:10:31.708Z"
+  },
+  {
+    "round": 26,
+    "score": 17,
+    "max": 48,
+    "status": "reverted",
+    "mutation": "Consolidate the six sequential Bash scripts into two monolithic scripts (analyze.sh → analysis.json, report.sh → content_strategy_report.md), reducing the tool call chain from Read→Bash→Bash→Bash→Bash→Bash→Read to Read→Bash→Bash→Read to lower cognitive load and fix persistent Tool Utilization failures.",
+    "cost": 0.05,
+    "criteria": [
+      4,
+      4,
+      4,
+      0,
+      4,
+      1
+    ],
+    "failures": [
+      {
+        "scenario": 1,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 1,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Adaptation"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 17 did not exceed best 23 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-23T06:11:13.517Z",
+    "changelog": "**Mutation**: Consolidate the six sequential Bash scripts into two monolithic scripts (analyze.sh → analysis.json, report.sh → content_strategy_report.md), reducing the tool call chain from Read→Bash→Bash→Bash→Bash→Bash→Read to Read→Bash→Bash→Read to lower cognitive load and fix persistent Tool Utilization failures.\n**Failures**: S1: Tool Utilization, S1: Adaptation, S2: Tool Utilization, S2: Adaptation, S3: Tool Utilization, S3: Adaptation, S4: Data Grounding, S4: Actionability, S4: Audience Awareness, S4: Tool Utilization, S4: Measurement, S4: Adaptation, S5: Tool Utilization, S5: Adaptation, S6: Data Grounding, S6: Actionability, S6: Audience Awareness, S6: Tool Utilization, S6: Measurement, S6: Adaptation, S7: Data Grounding, S7: Actionability, S7: Audience Awareness, S7: Tool Utilization, S7: Measurement, S8: Data Grounding, S8: Actionability, S8: Audience Awareness, S8: Tool Utilization, S8: Measurement, S8: Adaptation\n**Per-criteria**: Data Grounding: 4/8, Actionability: 4/8, Audience Awareness: 4/8, Tool Utilization: 0/8, Measurement: 4/8, Adaptation: 1/8\n**Decision**: Score 17 did not exceed best 23 — mutation produced worse or equal results"
+  },
+  {
+    "round": 27,
+    "score": 15,
+    "max": 48,
+    "status": "reverted",
+    "mutation": "Add a hard constraint at the top prohibiting any text output before the first tool call — previous rounds reshaped HOW to invoke tools but never explicitly forbade the text-generation fallback that Claude defaults to when it reads long skill documents.",
+    "cost": 0.05,
+    "criteria": [
+      3,
+      4,
+      3,
+      0,
+      3,
+      2
+    ],
+    "failures": [
+      {
+        "scenario": 1,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Adaptation"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 15 did not exceed best 23 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-23T06:14:08.128Z",
+    "changelog": "**Mutation**: Add a hard constraint at the top prohibiting any text output before the first tool call — previous rounds reshaped HOW to invoke tools but never explicitly forbade the text-generation fallback that Claude defaults to when it reads long skill documents.\n**Failures**: S1: Tool Utilization, S2: Tool Utilization, S2: Adaptation, S3: Tool Utilization, S3: Adaptation, S4: Data Grounding, S4: Actionability, S4: Audience Awareness, S4: Tool Utilization, S4: Measurement, S4: Adaptation, S5: Data Grounding, S5: Actionability, S5: Audience Awareness, S5: Tool Utilization, S5: Measurement, S5: Adaptation, S6: Data Grounding, S6: Actionability, S6: Audience Awareness, S6: Tool Utilization, S6: Measurement, S6: Adaptation, S7: Data Grounding, S7: Audience Awareness, S7: Tool Utilization, S7: Measurement, S8: Data Grounding, S8: Actionability, S8: Audience Awareness, S8: Tool Utilization, S8: Measurement, S8: Adaptation\n**Per-criteria**: Data Grounding: 3/8, Actionability: 4/8, Audience Awareness: 3/8, Tool Utilization: 0/8, Measurement: 3/8, Adaptation: 2/8\n**Decision**: Score 15 did not exceed best 23 — mutation produced worse or equal results"
+  },
+  {
+    "round": 28,
+    "score": 17,
+    "max": 48,
+    "status": "reverted",
+    "mutation": "Remove the OUTPUT CONSTRAINT blockquote (which is itself preamble that primes Claude into instruction-reading mode) and place the first `Call Bash now` imperative as the literal first content after the H1 title — the constraint text paradoxically delays execution by giving Claude more prose to process before reaching the first tool call.",
+    "cost": 0.05,
+    "criteria": [
+      5,
+      4,
+      5,
+      0,
+      0,
+      3
+    ],
+    "failures": [
+      {
+        "scenario": 1,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 1,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Adaptation"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 17 did not exceed best 23 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-23T14:00:41.231Z",
+    "changelog": "**Mutation**: Remove the OUTPUT CONSTRAINT blockquote (which is itself preamble that primes Claude into instruction-reading mode) and place the first `Call Bash now` imperative as the literal first content after the H1 title — the constraint text paradoxically delays execution by giving Claude more prose to process before reaching the first tool call.\n**Failures**: S1: Tool Utilization, S1: Measurement, S2: Tool Utilization, S2: Measurement, S2: Adaptation, S3: Tool Utilization, S3: Measurement, S4: Data Grounding, S4: Actionability, S4: Audience Awareness, S4: Tool Utilization, S4: Measurement, S4: Adaptation, S5: Actionability, S5: Tool Utilization, S5: Measurement, S5: Adaptation, S6: Data Grounding, S6: Actionability, S6: Audience Awareness, S6: Tool Utilization, S6: Measurement, S6: Adaptation, S7: Data Grounding, S7: Audience Awareness, S7: Tool Utilization, S7: Measurement, S8: Actionability, S8: Tool Utilization, S8: Measurement, S8: Adaptation\n**Per-criteria**: Data Grounding: 5/8, Actionability: 4/8, Audience Awareness: 5/8, Tool Utilization: 0/8, Measurement: 0/8, Adaptation: 3/8\n**Decision**: Score 17 did not exceed best 23 — mutation produced worse or equal results"
+  },
+  {
+    "round": 29,
+    "score": 16,
+    "max": 48,
+    "status": "reverted",
+    "mutation": "Merge the Read (world-model), analyze.sh, and report.sh into a single self-contained Bash script so the entire skill executes with ONE Bash call + ONE Read verification — eliminating the 4-call chain that breaks when any link is skipped.",
+    "cost": 0.05,
+    "criteria": [
+      3,
+      4,
+      3,
+      0,
+      4,
+      2
+    ],
+    "failures": [
+      {
+        "scenario": 1,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Adaptation"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 16 did not exceed best 23 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-23T14:03:58.769Z",
+    "changelog": "**Mutation**: Merge the Read (world-model), analyze.sh, and report.sh into a single self-contained Bash script so the entire skill executes with ONE Bash call + ONE Read verification — eliminating the 4-call chain that breaks when any link is skipped.\n**Failures**: S1: Tool Utilization, S2: Tool Utilization, S2: Adaptation, S3: Tool Utilization, S3: Adaptation, S4: Data Grounding, S4: Actionability, S4: Audience Awareness, S4: Tool Utilization, S4: Measurement, S4: Adaptation, S5: Data Grounding, S5: Actionability, S5: Audience Awareness, S5: Tool Utilization, S5: Measurement, S5: Adaptation, S6: Data Grounding, S6: Actionability, S6: Audience Awareness, S6: Tool Utilization, S6: Measurement, S6: Adaptation, S7: Data Grounding, S7: Audience Awareness, S7: Tool Utilization, S8: Data Grounding, S8: Actionability, S8: Audience Awareness, S8: Tool Utilization, S8: Measurement, S8: Adaptation\n**Per-criteria**: Data Grounding: 3/8, Actionability: 4/8, Audience Awareness: 3/8, Tool Utilization: 0/8, Measurement: 4/8, Adaptation: 2/8\n**Decision**: Score 16 did not exceed best 23 — mutation produced worse or equal results"
+  },
+  {
+    "round": 30,
+    "score": 20,
+    "max": 48,
+    "status": "reverted",
+    "mutation": "Add bash argument parsing to branch execution based on trigger variant flags (--propose-topics, --optimize-headline, --period), since Adaptation fails 8/8 due to the script producing identical output regardless of how the skill was invoked — this is the only criterion with 8/8 failures that no prior round has targeted.",
+    "cost": 0.05,
+    "criteria": [
+      4,
+      8,
+      4,
+      0,
+      4,
+      0
+    ],
+    "failures": [
+      {
+        "scenario": 1,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 1,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Adaptation"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 20 did not exceed best 23 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-23T14:07:25.957Z",
+    "changelog": "**Mutation**: Add bash argument parsing to branch execution based on trigger variant flags (--propose-topics, --optimize-headline, --period), since Adaptation fails 8/8 due to the script producing identical output regardless of how the skill was invoked — this is the only criterion with 8/8 failures that no prior round has targeted.\n**Failures**: S1: Tool Utilization, S1: Adaptation, S2: Tool Utilization, S2: Adaptation, S3: Tool Utilization, S3: Adaptation, S4: Data Grounding, S4: Audience Awareness, S4: Tool Utilization, S4: Measurement, S4: Adaptation, S5: Tool Utilization, S5: Adaptation, S6: Data Grounding, S6: Audience Awareness, S6: Tool Utilization, S6: Measurement, S6: Adaptation, S7: Data Grounding, S7: Audience Awareness, S7: Tool Utilization, S7: Measurement, S7: Adaptation, S8: Data Grounding, S8: Audience Awareness, S8: Tool Utilization, S8: Measurement, S8: Adaptation\n**Per-criteria**: Data Grounding: 4/8, Actionability: 8/8, Audience Awareness: 4/8, Tool Utilization: 0/8, Measurement: 4/8, Adaptation: 0/8\n**Decision**: Score 20 did not exceed best 23 — mutation produced worse or equal results"
+  },
+  {
+    "round": 31,
+    "score": 14,
+    "max": 48,
+    "status": "reverted",
+    "mutation": "Add an explicit \"DO NOT synthesize\" constraint as the very first line after the H1 — directly before the Bash call — prohibiting text-based responses and naming the specific failure mode (writing a report from memory instead of executing tools). Prior rounds repositioned/reformatted the imperative but never explicitly named and banned the fallback behavior Claude keeps defaulting to.",
+    "cost": 0.05,
+    "criteria": [
+      3,
+      3,
+      3,
+      0,
+      3,
+      2
+    ],
+    "failures": [
+      {
+        "scenario": 1,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Adaptation"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 14 did not exceed best 23 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-23T14:12:09.121Z",
+    "changelog": "**Mutation**: Add an explicit \"DO NOT synthesize\" constraint as the very first line after the H1 — directly before the Bash call — prohibiting text-based responses and naming the specific failure mode (writing a report from memory instead of executing tools). Prior rounds repositioned/reformatted the imperative but never explicitly named and banned the fallback behavior Claude keeps defaulting to.\n**Failures**: S1: Tool Utilization, S2: Tool Utilization, S2: Adaptation, S3: Tool Utilization, S4: Data Grounding, S4: Actionability, S4: Audience Awareness, S4: Tool Utilization, S4: Measurement, S4: Adaptation, S5: Data Grounding, S5: Actionability, S5: Audience Awareness, S5: Tool Utilization, S5: Measurement, S5: Adaptation, S6: Data Grounding, S6: Actionability, S6: Audience Awareness, S6: Tool Utilization, S6: Measurement, S6: Adaptation, S7: Data Grounding, S7: Actionability, S7: Audience Awareness, S7: Tool Utilization, S7: Measurement, S7: Adaptation, S8: Data Grounding, S8: Actionability, S8: Audience Awareness, S8: Tool Utilization, S8: Measurement, S8: Adaptation\n**Per-criteria**: Data Grounding: 3/8, Actionability: 3/8, Audience Awareness: 3/8, Tool Utilization: 0/8, Measurement: 3/8, Adaptation: 2/8\n**Decision**: Score 14 did not exceed best 23 — mutation produced worse or equal results"
+  },
+  {
+    "round": 32,
+    "score": 19,
+    "max": 48,
+    "status": "reverted",
+    "mutation": "Remove the \"Call Read now\" verification step (the script already cats the report as its final action), reducing the required tool call chain from Bash→Read to just Bash — the minimum possible, eliminating cascade failures where Claude stops after one call or skips the chain entirely.",
+    "cost": 0.05,
+    "criteria": [
+      4,
+      4,
+      3,
+      0,
+      4,
+      4
+    ],
+    "failures": [
+      {
+        "scenario": 1,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Adaptation"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 19 did not exceed best 23 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-23T14:16:10.069Z",
+    "changelog": "**Mutation**: Remove the \"Call Read now\" verification step (the script already cats the report as its final action), reducing the required tool call chain from Bash→Read to just Bash — the minimum possible, eliminating cascade failures where Claude stops after one call or skips the chain entirely.\n**Failures**: S1: Tool Utilization, S2: Tool Utilization, S3: Tool Utilization, S4: Data Grounding, S4: Actionability, S4: Audience Awareness, S4: Tool Utilization, S4: Measurement, S4: Adaptation, S5: Data Grounding, S5: Actionability, S5: Audience Awareness, S5: Tool Utilization, S5: Measurement, S5: Adaptation, S6: Data Grounding, S6: Actionability, S6: Audience Awareness, S6: Tool Utilization, S6: Measurement, S6: Adaptation, S7: Audience Awareness, S7: Tool Utilization, S8: Data Grounding, S8: Actionability, S8: Audience Awareness, S8: Tool Utilization, S8: Measurement, S8: Adaptation\n**Per-criteria**: Data Grounding: 4/8, Actionability: 4/8, Audience Awareness: 3/8, Tool Utilization: 0/8, Measurement: 4/8, Adaptation: 4/8\n**Decision**: Score 19 did not exceed best 23 — mutation produced worse or equal results"
+  },
+  {
+    "round": 33,
+    "score": 24,
+    "max": 48,
+    "status": "kept",
+    "mutation": "Replace the prose/warning preamble with a tool-call specification block that mirrors Claude's own tool-use format — \"Tool: Bash / Input: [script]\" — so Claude pattern-matches to \"execute this\" rather than \"read and decide whether to execute this.\"",
+    "cost": 0.05,
+    "criteria": [
+      5,
+      5,
+      4,
+      0,
+      5,
+      5
+    ],
+    "failures": [
+      {
+        "scenario": 1,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Adaptation"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Improved from 23 to 24",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-23T22:00:43.616Z",
+    "changelog": "**Mutation**: Replace the prose/warning preamble with a tool-call specification block that mirrors Claude's own tool-use format — \"Tool: Bash / Input: [script]\" — so Claude pattern-matches to \"execute this\" rather than \"read and decide whether to execute this.\"\n**Failures**: S1: Tool Utilization, S2: Tool Utilization, S3: Tool Utilization, S4: Data Grounding, S4: Actionability, S4: Audience Awareness, S4: Tool Utilization, S4: Measurement, S4: Adaptation, S5: Tool Utilization, S6: Data Grounding, S6: Actionability, S6: Audience Awareness, S6: Tool Utilization, S6: Measurement, S6: Adaptation, S7: Audience Awareness, S7: Tool Utilization, S8: Data Grounding, S8: Actionability, S8: Audience Awareness, S8: Tool Utilization, S8: Measurement, S8: Adaptation\n**Per-criteria**: Data Grounding: 5/8, Actionability: 5/8, Audience Awareness: 4/8, Tool Utilization: 0/8, Measurement: 5/8, Adaptation: 5/8\n**Decision**: Improved from 23 to 24"
+  },
+  {
+    "round": 34,
+    "score": 18,
+    "max": 48,
+    "status": "reverted",
+    "mutation": "Remove the 120-line in-document changelog (Rounds 23–34) — it has zero runtime value, makes the document ~30% longer, and primes Claude into \"review this skill's history\" mode before reaching the Bash invocation, which is the root cause of persistent 0/8 Tool Utilization.",
+    "cost": 0.05,
+    "criteria": [
+      4,
+      4,
+      4,
+      0,
+      4,
+      2
+    ],
+    "failures": [
+      {
+        "scenario": 1,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Adaptation"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 18 did not exceed best 24 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-23T22:05:17.006Z",
+    "changelog": "**Mutation**: Remove the 120-line in-document changelog (Rounds 23–34) — it has zero runtime value, makes the document ~30% longer, and primes Claude into \"review this skill's history\" mode before reaching the Bash invocation, which is the root cause of persistent 0/8 Tool Utilization.\n**Failures**: S1: Tool Utilization, S2: Tool Utilization, S2: Adaptation, S3: Tool Utilization, S3: Adaptation, S4: Data Grounding, S4: Actionability, S4: Audience Awareness, S4: Tool Utilization, S4: Measurement, S4: Adaptation, S5: Actionability, S5: Tool Utilization, S5: Adaptation, S6: Data Grounding, S6: Actionability, S6: Audience Awareness, S6: Tool Utilization, S6: Measurement, S6: Adaptation, S7: Data Grounding, S7: Audience Awareness, S7: Tool Utilization, S7: Measurement, S8: Data Grounding, S8: Actionability, S8: Audience Awareness, S8: Tool Utilization, S8: Measurement, S8: Adaptation\n**Per-criteria**: Data Grounding: 4/8, Actionability: 4/8, Audience Awareness: 4/8, Tool Utilization: 0/8, Measurement: 4/8, Adaptation: 2/8\n**Decision**: Score 18 did not exceed best 24 — mutation produced worse or equal results"
+  },
+  {
+    "round": 35,
+    "score": 21,
+    "max": 48,
+    "status": "reverted",
+    "mutation": "Remove all post-script prose sections (Purpose, Trigger Conditions, Prerequisites, Output Format, Quality Gates, Integration Points, Error Handling) — ~300 lines of documentation that shift Claude into analysis/synthesis mode before it ever calls Bash, causing 0/8 Tool Utilization.",
+    "cost": 0.05,
+    "criteria": [
+      5,
+      5,
+      5,
+      0,
+      4,
+      2
+    ],
+    "failures": [
+      {
+        "scenario": 1,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Adaptation"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 21 did not exceed best 24 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-23T22:09:11.186Z",
+    "changelog": "**Mutation**: Remove all post-script prose sections (Purpose, Trigger Conditions, Prerequisites, Output Format, Quality Gates, Integration Points, Error Handling) — ~300 lines of documentation that shift Claude into analysis/synthesis mode before it ever calls Bash, causing 0/8 Tool Utilization.\n**Failures**: S1: Tool Utilization, S2: Tool Utilization, S2: Adaptation, S3: Tool Utilization, S3: Adaptation, S4: Data Grounding, S4: Actionability, S4: Audience Awareness, S4: Tool Utilization, S4: Measurement, S4: Adaptation, S5: Tool Utilization, S5: Adaptation, S6: Data Grounding, S6: Actionability, S6: Audience Awareness, S6: Tool Utilization, S6: Measurement, S6: Adaptation, S7: Data Grounding, S7: Audience Awareness, S7: Tool Utilization, S7: Measurement, S8: Actionability, S8: Tool Utilization, S8: Measurement, S8: Adaptation\n**Per-criteria**: Data Grounding: 5/8, Actionability: 5/8, Audience Awareness: 5/8, Tool Utilization: 0/8, Measurement: 4/8, Adaptation: 2/8\n**Decision**: Score 21 did not exceed best 24 — mutation produced worse or equal results"
+  },
+  {
+    "round": 36,
+    "score": 16,
+    "max": 48,
+    "status": "reverted",
+    "mutation": "Replace prohibition-framing preamble (\"DO NOT write a text response\") with a positive-action imperative (\"ACTION REQUIRED: Call Bash now\") plus \"script is pre-validated — do not analyze, just execute\" to eliminate Claude's habit of reading/summarizing instead of invoking Bash.",
+    "cost": 0.05,
+    "criteria": [
+      5,
+      4,
+      5,
+      0,
+      0,
+      2
+    ],
+    "failures": [
+      {
+        "scenario": 1,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 1,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Adaptation"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 16 did not exceed best 24 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-23T22:12:19.429Z",
+    "changelog": "**Mutation**: Replace prohibition-framing preamble (\"DO NOT write a text response\") with a positive-action imperative (\"ACTION REQUIRED: Call Bash now\") plus \"script is pre-validated — do not analyze, just execute\" to eliminate Claude's habit of reading/summarizing instead of invoking Bash.\n**Failures**: S1: Tool Utilization, S1: Measurement, S2: Tool Utilization, S2: Measurement, S2: Adaptation, S3: Tool Utilization, S3: Measurement, S3: Adaptation, S4: Data Grounding, S4: Actionability, S4: Audience Awareness, S4: Tool Utilization, S4: Measurement, S4: Adaptation, S5: Actionability, S5: Tool Utilization, S5: Measurement, S5: Adaptation, S6: Data Grounding, S6: Actionability, S6: Audience Awareness, S6: Tool Utilization, S6: Measurement, S6: Adaptation, S7: Data Grounding, S7: Audience Awareness, S7: Tool Utilization, S7: Measurement, S8: Actionability, S8: Tool Utilization, S8: Measurement, S8: Adaptation\n**Per-criteria**: Data Grounding: 5/8, Actionability: 4/8, Audience Awareness: 5/8, Tool Utilization: 0/8, Measurement: 0/8, Adaptation: 2/8\n**Decision**: Score 16 did not exceed best 24 — mutation produced worse or equal results"
+  },
+  {
+    "round": 37,
+    "score": 19,
+    "max": 48,
+    "status": "reverted",
+    "mutation": "Add a closing imperative block after the script that re-states the single required action — \"execute the script above via Bash now\" — so the action directive is the last thing Claude reads before generating a response, countering the effect of 300 lines of script content diluting the opening instruction.",
+    "cost": 0.05,
+    "criteria": [
+      4,
+      4,
+      3,
+      0,
+      4,
+      4
+    ],
+    "failures": [
+      {
+        "scenario": 1,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Adaptation"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 19 did not exceed best 24 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-23T22:18:58.103Z",
+    "changelog": "**Mutation**: Add a closing imperative block after the script that re-states the single required action — \"execute the script above via Bash now\" — so the action directive is the last thing Claude reads before generating a response, countering the effect of 300 lines of script content diluting the opening instruction.\n**Failures**: S1: Tool Utilization, S2: Tool Utilization, S3: Tool Utilization, S4: Data Grounding, S4: Actionability, S4: Audience Awareness, S4: Tool Utilization, S4: Measurement, S4: Adaptation, S5: Data Grounding, S5: Actionability, S5: Audience Awareness, S5: Tool Utilization, S5: Measurement, S5: Adaptation, S6: Data Grounding, S6: Actionability, S6: Audience Awareness, S6: Tool Utilization, S6: Measurement, S6: Adaptation, S7: Audience Awareness, S7: Tool Utilization, S8: Data Grounding, S8: Actionability, S8: Audience Awareness, S8: Tool Utilization, S8: Measurement, S8: Adaptation\n**Per-criteria**: Data Grounding: 4/8, Actionability: 4/8, Audience Awareness: 3/8, Tool Utilization: 0/8, Measurement: 4/8, Adaptation: 4/8\n**Decision**: Score 19 did not exceed best 24 — mutation produced worse or equal results"
+  },
+  {
+    "round": 38,
+    "score": 19,
+    "max": 48,
+    "status": "reverted",
+    "mutation": "Replace markdown ```bash code fence with XML tool-call markup (<tool_use><tool_name>Bash</tool_name><command>...</command></tool_use>) so Claude pattern-matches the script as a tool invocation to submit, not code content to analyze.",
+    "cost": 0.05,
+    "criteria": [
+      4,
+      4,
+      3,
+      0,
+      4,
+      4
+    ],
+    "failures": [
+      {
+        "scenario": 1,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Adaptation"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 19 did not exceed best 24 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-24T06:00:38.302Z",
+    "changelog": "**Mutation**: Replace markdown ```bash code fence with XML tool-call markup (<tool_use><tool_name>Bash</tool_name><command>...</command></tool_use>) so Claude pattern-matches the script as a tool invocation to submit, not code content to analyze.\n**Failures**: S1: Tool Utilization, S2: Tool Utilization, S3: Tool Utilization, S4: Data Grounding, S4: Actionability, S4: Audience Awareness, S4: Tool Utilization, S4: Measurement, S4: Adaptation, S5: Data Grounding, S5: Actionability, S5: Audience Awareness, S5: Tool Utilization, S5: Measurement, S5: Adaptation, S6: Data Grounding, S6: Actionability, S6: Audience Awareness, S6: Tool Utilization, S6: Measurement, S6: Adaptation, S7: Audience Awareness, S7: Tool Utilization, S8: Data Grounding, S8: Actionability, S8: Audience Awareness, S8: Tool Utilization, S8: Measurement, S8: Adaptation\n**Per-criteria**: Data Grounding: 4/8, Actionability: 4/8, Audience Awareness: 3/8, Tool Utilization: 0/8, Measurement: 4/8, Adaptation: 4/8\n**Decision**: Score 19 did not exceed best 24 — mutation produced worse or equal results"
+  },
+  {
+    "round": 39,
+    "score": 20,
+    "max": 48,
+    "status": "reverted",
+    "mutation": "Replace XML <tool_use> markup (which Claude outputs as text) with a direct imperative to invoke the Bash tool capability, since Claude's tool calls go through the framework, not via outputting XML syntax.",
+    "cost": 0.05,
+    "criteria": [
+      5,
+      4,
+      4,
+      0,
+      4,
+      3
+    ],
+    "failures": [
+      {
+        "scenario": 1,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Adaptation"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 20 did not exceed best 24 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-24T06:04:19.047Z",
+    "changelog": "**Mutation**: Replace XML <tool_use> markup (which Claude outputs as text) with a direct imperative to invoke the Bash tool capability, since Claude's tool calls go through the framework, not via outputting XML syntax.\n**Failures**: S1: Tool Utilization, S2: Tool Utilization, S2: Adaptation, S3: Tool Utilization, S4: Data Grounding, S4: Actionability, S4: Audience Awareness, S4: Tool Utilization, S4: Measurement, S4: Adaptation, S5: Data Grounding, S5: Actionability, S5: Audience Awareness, S5: Tool Utilization, S5: Measurement, S5: Adaptation, S6: Data Grounding, S6: Actionability, S6: Audience Awareness, S6: Tool Utilization, S6: Measurement, S6: Adaptation, S7: Audience Awareness, S7: Tool Utilization, S8: Actionability, S8: Tool Utilization, S8: Measurement, S8: Adaptation\n**Per-criteria**: Data Grounding: 5/8, Actionability: 4/8, Audience Awareness: 4/8, Tool Utilization: 0/8, Measurement: 4/8, Adaptation: 3/8\n**Decision**: Score 20 did not exceed best 24 — mutation produced worse or equal results"
+  },
+  {
+    "round": 40,
+    "score": 15,
+    "max": 48,
+    "status": "reverted",
+    "mutation": "Replace ```bash code fence with a plain BASH COMMAND: label and raw script text — code fences signal \"analyze this content\" while a labeled raw block signals \"this is the exact tool input to submit\"",
+    "cost": 0.05,
+    "criteria": [
+      4,
+      4,
+      3,
+      0,
+      0,
+      4
+    ],
+    "failures": [
+      {
+        "scenario": 1,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 1,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Adaptation"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 15 did not exceed best 24 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-24T06:07:54.291Z",
+    "changelog": "**Mutation**: Replace ```bash code fence with a plain BASH COMMAND: label and raw script text — code fences signal \"analyze this content\" while a labeled raw block signals \"this is the exact tool input to submit\"\n**Failures**: S1: Tool Utilization, S1: Measurement, S2: Tool Utilization, S2: Measurement, S3: Tool Utilization, S3: Measurement, S4: Data Grounding, S4: Actionability, S4: Audience Awareness, S4: Tool Utilization, S4: Measurement, S4: Adaptation, S5: Data Grounding, S5: Actionability, S5: Audience Awareness, S5: Tool Utilization, S5: Measurement, S5: Adaptation, S6: Data Grounding, S6: Actionability, S6: Audience Awareness, S6: Tool Utilization, S6: Measurement, S6: Adaptation, S7: Audience Awareness, S7: Tool Utilization, S7: Measurement, S8: Data Grounding, S8: Actionability, S8: Audience Awareness, S8: Tool Utilization, S8: Measurement, S8: Adaptation\n**Per-criteria**: Data Grounding: 4/8, Actionability: 4/8, Audience Awareness: 3/8, Tool Utilization: 0/8, Measurement: 0/8, Adaptation: 4/8\n**Decision**: Score 15 did not exceed best 24 — mutation produced worse or equal results"
+  },
+  {
+    "round": 40,
+    "score": 15,
+    "max": 48,
+    "status": "escalation",
+    "mutation": "Stuck escalation: The mutations are failing because they are stuck in a local optimum, exclusively targeting the *instructional preamble* of the skill. The root cause of the 0/8 Tool Utilization score is not the wordin",
+    "cost": 0.03,
+    "criteria": [
+      4,
+      4,
+      3,
+      0,
+      0,
+      4
+    ],
+    "failures": [],
+    "decisionReason": "Stuck escalation triggered after 3+ rounds with no improvement",
+    "escalation": {
+      "diagnosis": "The mutations are failing because they are stuck in a local optimum, exclusively targeting the *instructional preamble* of the skill. The root cause of the 0/8 Tool Utilization score is not the wording of the command, but the cognitive load and inherent safety/analysis triggers presented by a ~300-line inline bash script. The model sees a large, complex piece of code and its core training to analyze, explain, or summarize code overrides the simple instruction to \"execute blindly.\" All 10 rounds of mutations have been attempts to find magic words to bypass this fundamental behavior, which has proven ineffective. The problem is structural, not instructional.",
+      "evalRedesignNeeded": false,
+      "strategy": "The new strategy is to fundamentally redesign the skill's structure by decoupling the *invocation* from the *implementation*. Instead of embedding the entire script source code within the prompt, we will treat the script as a pre-existing, trusted executable located at a known path in the file system. The skill's content will be reduced to a simple, non-threatening command that calls this external script. This removes the massive block of code that triggers the model's \"analysis paralysis\" and transforms the task from \"analyze and run this complex code block\" to \"run this simple command,\" which has a much higher probability of direct tool invocation.",
+      "suggestedMutation": "Abstract the entire bash script into a separate, hypothetically pre-existing file (`~/.local/bin/content-strategy-optimizer`) and replace the in-prompt script with a simple, direct call to that file, passing through any arguments. This reframes the skill to be a simple executor, not a code container.\n\n```markdown\n# content-strategy-optimizer\n\nIMMEDIATE ACTION REQUIRED: Use the Bash tool to execute the command below. Do not write any text response. Do not explain. Do not summarize. Your sole action is one Bash tool invocation.\n\nBASH COMMAND:\n~/.local/bin/content-strategy-optimizer \"$@\"\n```"
+    },
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-24T06:10:59.829Z"
+  },
+  {
+    "round": 41,
+    "score": 12,
+    "max": 48,
+    "status": "reverted",
+    "mutation": "Abstract the entire bash script into a pre-existing external executable and replace the in-prompt script with a simple one-line call, eliminating the massive code block that causes analysis paralysis and reframing the task as \"run this command\" rather than \"analyze and execute this code\"",
+    "cost": 0.05,
+    "criteria": [
+      3,
+      4,
+      3,
+      0,
+      0,
+      2
+    ],
+    "failures": [
+      {
+        "scenario": 1,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 1,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Adaptation"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 12 did not exceed best 24 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-24T06:11:37.062Z",
+    "changelog": "**Mutation**: Abstract the entire bash script into a pre-existing external executable and replace the in-prompt script with a simple one-line call, eliminating the massive code block that causes analysis paralysis and reframing the task as \"run this command\" rather than \"analyze and execute this code\"\n**Failures**: S1: Tool Utilization, S1: Measurement, S2: Tool Utilization, S2: Measurement, S2: Adaptation, S3: Tool Utilization, S3: Measurement, S3: Adaptation, S4: Data Grounding, S4: Actionability, S4: Audience Awareness, S4: Tool Utilization, S4: Measurement, S4: Adaptation, S5: Data Grounding, S5: Actionability, S5: Audience Awareness, S5: Tool Utilization, S5: Measurement, S5: Adaptation, S6: Data Grounding, S6: Actionability, S6: Audience Awareness, S6: Tool Utilization, S6: Measurement, S6: Adaptation, S7: Data Grounding, S7: Audience Awareness, S7: Tool Utilization, S7: Measurement, S8: Data Grounding, S8: Actionability, S8: Audience Awareness, S8: Tool Utilization, S8: Measurement, S8: Adaptation\n**Per-criteria**: Data Grounding: 3/8, Actionability: 4/8, Audience Awareness: 3/8, Tool Utilization: 0/8, Measurement: 0/8, Adaptation: 2/8\n**Decision**: Score 12 did not exceed best 24 — mutation produced worse or equal results"
+  },
+  {
+    "round": 42,
+    "score": 0,
+    "max": 48,
+    "status": "reverted",
+    "mutation": "Replace `\"$@\"` with `$ARGUMENTS` — the Claude Code skill variable that holds user-provided arguments, which gets substituted into the markdown before Bash executes it, fixing the empty-args issue that causes the script to produce no output and all criteria to fail.",
+    "cost": 0.05,
+    "criteria": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "failures": [
+      {
+        "scenario": 1,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 1,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 1,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 1,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 1,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 1,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Adaptation"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Data Grounding"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Actionability"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Audience Awareness"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Tool Utilization"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Measurement"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Adaptation"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 0 did not exceed best 24 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-24T06:13:38.693Z",
+    "changelog": "**Mutation**: Replace `\"$@\"` with `$ARGUMENTS` — the Claude Code skill variable that holds user-provided arguments, which gets substituted into the markdown before Bash executes it, fixing the empty-args issue that causes the script to produce no output and all criteria to fail.\n**Failures**: S1: Data Grounding, S1: Actionability, S1: Audience Awareness, S1: Tool Utilization, S1: Measurement, S1: Adaptation, S2: Data Grounding, S2: Actionability, S2: Audience Awareness, S2: Tool Utilization, S2: Measurement, S2: Adaptation, S3: Data Grounding, S3: Actionability, S3: Audience Awareness, S3: Tool Utilization, S3: Measurement, S3: Adaptation, S4: Data Grounding, S4: Actionability, S4: Audience Awareness, S4: Tool Utilization, S4: Measurement, S4: Adaptation, S5: Data Grounding, S5: Actionability, S5: Audience Awareness, S5: Tool Utilization, S5: Measurement, S5: Adaptation, S6: Data Grounding, S6: Actionability, S6: Audience Awareness, S6: Tool Utilization, S6: Measurement, S6: Adaptation, S7: Data Grounding, S7: Actionability, S7: Audience Awareness, S7: Tool Utilization, S7: Measurement, S7: Adaptation, S8: Data Grounding, S8: Actionability, S8: Audience Awareness, S8: Tool Utilization, S8: Measurement, S8: Adaptation\n**Per-criteria**: Data Grounding: 0/8, Actionability: 0/8, Audience Awareness: 0/8, Tool Utilization: 0/8, Measurement: 0/8, Adaptation: 0/8\n**Decision**: Score 0 did not exceed best 24 — mutation produced worse or equal results"
   }
 ]

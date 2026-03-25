@@ -1,38 +1,81 @@
 {
-  "timestamp": "2026-03-21T22:45:03.276Z",
+  "timestamp": "2026-03-25T14:09:52.679Z",
   "version": "1.0",
-  "self_model_timestamp": "2026-03-21T22:43:48.081Z",
-  "world_model_timestamp": "2026-03-21T22:43:50.736Z",
+  "self_model_timestamp": "2026-03-25T14:08:54.953Z",
+  "world_model_timestamp": "2026-03-25T14:08:55.223Z",
   "wants": [
     {
       "id": "want-017",
       "type": "cross_skill_pattern",
-      "hypothesis": "The agent has a systemic weakness in interpreting user instructions, leading to failures across numerous skills. A dedicated pre-processing skill is needed to clarify intent before execution.",
+      "hypothesis": "The agent systematically fails to adhere to core instructions related to clarity, completeness, and quality across numerous skills, suggesting a fundamental weakness in response generation and self-correction rather than isolated skill-specific issues.",
       "evidence": [
-        "Criterion \"Instructions Clarity\" fails across 14 skills",
-        "weakest=[Instructions Clarity(0.364)] for gmail-inbox",
-        "weakest=[Instructions Clarity(0.167)] for gmaps-leads"
+        "Criterion 'Instructions Clarity' fails across 14 skills",
+        "Criterion 'Completeness' fails across 10 skills",
+        "Criterion 'Task Completion' fails across 10 skills",
+        "Criterion 'Output Quality' fails across 10 skills"
       ],
       "severity": 0.9,
-      "frequency": 0.8,
-      "feasibility": 0.9,
+      "frequency": 1,
+      "feasibility": 0.7,
       "proposed_skill": {
-        "name": "instruction-clarifier",
-        "description": "Analyzes a user prompt against a target skill's capabilities to identify and resolve ambiguities by asking clarifying questions before execution.",
+        "name": "response-validator-and-refiner",
+        "description": "Takes a draft response and a set of explicit criteria (e.g., format, length, tone) and iteratively refines the response until all criteria are met.",
         "criteria": [
-          "Does the skill correctly identify ambiguous terms (e.g., 'latest', 'best', 'recent') in the prompt?",
-          "Does the skill generate relevant, concise clarifying questions?",
-          "Is the final, re-formulated prompt for the target skill unambiguous and executable?",
-          "Does the skill pass the prompt through without questions if it is already clear and specific?",
-          "Does the skill reference the target skill's parameters to formulate questions?"
+          "Does the final output strictly adhere to the specified formatting rules?",
+          "Does the skill correctly identify and list any criteria that could not be met?",
+          "Does the refined response successfully pass all original evaluation criteria that the draft failed?",
+          "Is the refinement process completed within a reasonable number of steps (e.g., less than 3)?",
+          "Does the skill handle cases where the initial draft is completely empty or irrelevant?",
+          "Does the skill's explanation for its changes directly reference the provided criteria?"
         ],
         "scenarios": [
-          "User prompt: 'Summarize the latest security report.' Target skill: 'file-reader'. The skill should ask to define 'latest' (e.g., by creation date, modification date, or version number).",
-          "User prompt: 'Get leads from Google Maps for bakeries.' Target skill: 'gmaps-leads'. The skill should ask for a location (e.g., 'In which city or zip code?').",
-          "User prompt: 'Analyze the outlier data.' Target skill: 'cross-niche-outliers'. The skill should ask for the data source and the definition of 'outlier'.",
-          "User prompt: 'Read the file /tmp/report-v3.txt and summarize it.' Target skill: 'file-reader'. The skill should not ask any questions.",
-          "User prompt: 'Send an email to the team.' Target skill: 'gmail'. The skill should ask 'Which team?' and 'What should be the subject and body of the email?'.",
-          "User prompt: 'Improve my welcome email skill.' Target skill: 'skill-improver'. The skill should ask 'What specific failure have you observed?' or 'Which evaluation criteria is it failing?'."
+          "Given a JSON draft missing a required key, refine it to include the key with a placeholder value.",
+          "Given a text block that exceeds a word count limit, shorten it while preserving the core meaning.",
+          "Given a response that fails a 'Completeness' check, identify the missing information and add it.",
+          "Given a response that fails an 'Instructions Clarity' check, rewrite it to be more direct and simple.",
+          "Given a perfectly valid response, the skill should approve it without making changes.",
+          "Given a set of contradictory criteria, the skill should identify the conflict and ask for clarification.",
+          "Given a draft in markdown, reformat it to valid JSON based on a schema criterion.",
+          "Given a response with an informal tone, rewrite it to adopt a professional tone as per the criteria."
+        ]
+      },
+      "proposed_goal": null,
+      "_preference_boost": 2,
+      "_preference_note": "Boosted by user preference (×2.0)",
+      "score": 1,
+      "status": "actionable"
+    },
+    {
+      "id": "want-018",
+      "type": "domain_coverage_gap",
+      "hypothesis": "The system has access to a rich data stream and 24 tools for traditional finance ('tradfi-tools') but possesses no skills to act on this information, representing a significant untapped capability.",
+      "evidence": [
+        "Connected MCP Domain: 'tradfi-tools: traditional_finance (24 tools, data=false, NO skills)'",
+        "Subdomains available: price_feeds, arbitrage_scanning, paper_trading, macro_analysis, signal_aggregation"
+      ],
+      "severity": 0.8,
+      "frequency": 1,
+      "feasibility": 0.8,
+      "proposed_skill": {
+        "name": "tradfi-market-analyzer",
+        "description": "Analyzes traditional finance markets by aggregating price feeds, scanning for arbitrage opportunities, and summarizing macroeconomic signals.",
+        "criteria": [
+          "Does the analysis correctly ingest and display real-time price feeds for a given asset?",
+          "Does the skill identify potential arbitrage opportunities between two or more provided sources?",
+          "Does the summary of macroeconomic signals accurately reflect the data from the tools?",
+          "Is the output structured into clear sections for prices, arbitrage, and macro signals?",
+          "Does the skill correctly use the paper_trading tool to simulate a trade based on its analysis?",
+          "Does the skill handle cases where a data feed for a specific asset is unavailable?"
+        ],
+        "scenarios": [
+          "Analyze the current state of the S&P 500 using available macro signals.",
+          "Find the price of AAPL and GOOG from all available price feed tools.",
+          "Scan for arbitrage opportunities for the EUR/USD pair across three different exchanges.",
+          "Execute a paper trade to buy 10 shares of TSLA.",
+          "Provide a summary of recent Federal Reserve announcements from the signal aggregation tools.",
+          "Request analysis for a non-existent ticker symbol and verify correct error handling.",
+          "Compare the volatility of a tech stock versus a utility stock over the last 24 hours.",
+          "Generate a report on all assets that have a price change of more than 5% in the last hour."
         ]
       },
       "proposed_goal": null,
@@ -43,128 +86,20 @@
     },
     {
       "id": "want-019",
-      "type": "cross_skill_pattern",
-      "hypothesis": "The agent's outputs are often technically correct but lack sufficient detail or professional formatting. A systemic post-processing step is needed to enhance output quality and completeness.",
-      "evidence": [
-        "Criterion \"Completeness\" fails across 9 skills",
-        "Criterion \"Output Quality\" fails across 9 skills",
-        "weakest=[Output Quality(0.167)] for gmaps-leads",
-        "weakest=[Completeness(0.364)] for gmail-inbox"
-      ],
-      "severity": 0.8,
-      "frequency": 0.8,
-      "feasibility": 0.9,
-      "proposed_skill": {
-        "name": "output-refiner",
-        "description": "Takes raw output from another skill and applies formatting, adds context, and checks for completeness based on the original user prompt.",
-        "criteria": [
-          "Does the refined output directly address all parts of the user's original request?",
-          "Is the output formatted clearly (e.g., using markdown for lists, tables, or code blocks)?",
-          "Does the skill add necessary context or explanations to raw data (e.g., defining acronyms)?",
-          "Does the skill remove verbose, irrelevant logs or debugging information from the final output?",
-          "Does the skill check for and add missing data points implied by the request (e.g., including a company's website when asked for contact info)?"
-        ],
-        "scenarios": [
-          "Input: A JSON blob of leads. Prompt: 'Get me leads for local plumbers'. Output should be a formatted markdown table with columns for Name, Phone, and Address.",
-          "Input: 'P&L: -5.43'. Prompt: 'What's my portfolio status?'. Output should be 'Your portfolio P&L is currently -$5.43.'",
-          "Input: A long, unstructured text summary. Prompt: 'Summarize this article'. Output should be a structured summary with a title, key bullet points, and a concluding sentence.",
-          "Input: 'CVE-2024-12345: High'. Prompt: 'Audit the container'. Output should explain what CVE-2024-12345 is and what component it affects.",
-          "Input: A list of file names. Prompt: 'Find all python files'. Output should be a code block containing the list of files.",
-          "Input: 'Task failed'. Prompt: 'Deploy the app'. Output should be 'The deployment task failed. Please check the logs for more details.'"
-        ]
-      },
-      "proposed_goal": null,
-      "_preference_boost": 2,
-      "_preference_note": "Boosted by user preference (×2.0)",
-      "score": 1,
-      "status": "actionable"
-    },
-    {
-      "id": "want-020",
-      "type": "user_intent",
-      "hypothesis": "Users frequently need to debug agent failures, but the system lacks a user-friendly tool for this purpose. The existing `failure-log-analyzer` is likely internal; a user-facing skill is needed.",
-      "evidence": [
-        "User intent pattern: \"error debugging\" detected across tmux transcripts (freq: 785)",
-        "failure-log-analyzer: score=30/36 (0.833), trajectory=insufficient_data"
-      ],
-      "severity": 0.8,
-      "frequency": 0.9,
-      "feasibility": 0.8,
-      "proposed_skill": {
-        "name": "failure-diagnoser",
-        "description": "Analyzes the execution logs of a failed task and explains the root cause in plain English, suggesting potential user actions to fix it.",
-        "criteria": [
-          "Does the diagnosis correctly identify the specific tool or step that failed?",
-          "Is the explanation of the error free of technical jargon?",
-          "Does the skill provide at least one actionable suggestion for the user?",
-          "Can the skill distinguish between transient errors (e.g., API timeout) and persistent errors (e.g., invalid credentials)?",
-          "Does the skill correctly identify if the failure was due to a misunderstanding of the user's prompt?"
-        ],
-        "scenarios": [
-          "Scenario: A `gmail` task failed due to an expired OAuth token. The skill should explain that the authentication failed and suggest re-authenticating.",
-          "Scenario: A `k8s-deployment-manager` task failed due to an invalid image name. The skill should identify the incorrect name and suggest checking it for typos.",
-          "Scenario: A `scrape-leads` task failed because the target website returned a 404 error. The skill should explain the website was not found and suggest verifying the URL.",
-          "Scenario: A `gmaps-leads` task failed because the user provided an ambiguous location. The skill should explain the location was unclear and suggest providing a more specific one.",
-          "Scenario: A tool call failed with a 503 Service Unavailable error. The skill should identify it as a likely temporary issue and suggest retrying the task later.",
-          "Scenario: A task failed due to a malformed prompt that the agent could not parse. The skill should explain that it did not understand the request and suggest rephrasing it."
-        ]
-      },
-      "proposed_goal": null,
-      "_preference_boost": 2,
-      "_preference_note": "Boosted by user preference (×2.0)",
-      "score": 1,
-      "status": "actionable"
-    },
-    {
-      "id": "want-022",
       "type": "gemini_insight",
-      "hypothesis": "Core, foundational agent capabilities (`deep-plan-v2`, `system-self-correction-v2`) are completely untested. This prevents the system from leveraging its most advanced cognitive functions and poses a significant operational risk.",
+      "hypothesis": "The system's self-improvement loop is ineffective. Despite having multiple diagnostic and repair skills (`skill-improver`, `stuck-skill-diagnoser`), many skills remain stuck or underperforming, and the primary orchestrator skill (`system-self-correction-v2`) is untested. The core gap is the lack of an automated, effective orchestration of these meta-skills.",
       "evidence": [
-        "deep-plan-v2: score=0/0 (0), trajectory=untested, stuck=0, weakest=[]",
-        "system-self-correction-v2: score=0/0 (0), trajectory=untested, stuck=0, weakest=[]",
-        "Capability map shows `deep-plan-v2` in 'planning' and `system-self-correction-v2` in 'self_correction'"
-      ],
-      "severity": 1,
-      "frequency": 1,
-      "feasibility": 0.7,
-      "proposed_skill": {
-        "name": "foundational-skill-test-harness-generator",
-        "description": "Generates a comprehensive suite of test scenarios and evaluation criteria for a complex, untested foundational skill to enable its safe activation.",
-        "criteria": [
-          "Does the generated test suite cover both expected success and failure modes of the target skill?",
-          "Are the generated evaluation criteria specific, binary, and unambiguous?",
-          "Does the skill generate scenarios that test the target skill's integration with other system components (e.g., tool executors, other skills)?",
-          "Does the skill generate at least one 'sanity check' scenario for a simple, obvious task?",
-          "Does the generated harness include instructions on how to run the tests and interpret the results?"
-        ],
-        "scenarios": [
-          "Target: `deep-plan-v2`. Prompt: 'Generate a test harness for the planning skill.' The output should include scenarios like 'plan a multi-step research task', 'plan a deployment with a rollback step', and 'handle a prompt with impossible constraints'.",
-          "Target: `system-self-correction-v2`. Prompt: 'Generate tests for the self-correction skill.' The output should include scenarios like 'given a failed task log with a clear API error, does it propose a valid fix to the skill's code?' and 'given a vague prompt failure, does it suggest a prompt refinement?'.",
-          "Target: `deep-plan-v2`. The generated harness should include a simple scenario like 'get the current time' to ensure the planner doesn't overcomplicate things.",
-          "Target: `system-self-correction-v2`. The generated harness should test if the skill can correctly identify when it *cannot* fix an issue."
-        ]
-      },
-      "proposed_goal": "Activate and validate all untested foundational skills, starting with `deep-plan-v2`, within the next development cycle to unlock the system's full planning and reasoning capabilities.",
-      "_preference_boost": 2,
-      "_preference_note": "Boosted by user preference (×2.0)",
-      "score": 1,
-      "status": "actionable"
-    },
-    {
-      "id": "want-023",
-      "type": "gemini_insight",
-      "hypothesis": "A large number of skills are 'stuck' or 'plateauing', indicating the system's automated skill improvement mechanisms are failing. This systemic issue is the single greatest blocker to improving overall system capability.",
-      "evidence": [
-        "Cross-skill patterns: \"28 skills have triggered stuck escalations\"",
-        "Cross-skill patterns: \"3 skills are currently stuck (3+ consecutive reverts)\"",
-        "Environmental signals: Numerous skills listed as 'score plateaued at X for 3 rounds'",
-        "skill-improver: score=30/36 (0.833), trajectory=insufficient_data"
+        "3 skills are currently stuck (context-drift-detector, polymarket-5min-strategy, polymarket-market-discovery)",
+        "30 skills have triggered stuck escalations",
+        "User intent pattern 'skill improvement' has a very high frequency (2075)",
+        "Skill 'system-self-correction-v2' is untested (score=0/0)",
+        "Skill 'skill-improver' is plateaued at 0.833"
       ],
       "severity": 1,
       "frequency": 1,
       "feasibility": 0.6,
       "proposed_skill": null,
-      "proposed_goal": "[meta-improvement] Evolve the system's self-improvement loop to overcome skill performance plateaus. This involves creating new skills to A/B test different prompt engineering techniques, automatically evolve evaluation criteria when a skill's score stagnates at 100%, and diagnose root causes of recurring failures. The objective is to reduce the number of 'stuck' and 'plateaued' skills by 50%.",
+      "proposed_goal": "Activate the end-to-end self-correction loop. Prioritize testing and deployment of the 'system-self-correction-v2' skill to orchestrate 'stuck-skill-diagnoser', 'skill-test-generator', 'skill-test-runner', and 'skill-improver' to automatically detect, diagnose, and repair failing skills.",
       "_preference_boost": 2,
       "_preference_note": "Boosted by user preference (×2.0)",
       "score": 1,
@@ -172,52 +107,75 @@
     },
     {
       "id": "want-021",
-      "type": "domain_coverage_gap",
-      "hypothesis": "The system has access to a rich set of traditional finance data and tools but has zero skills to act on them, representing a major untapped capability domain.",
+      "type": "user_intent",
+      "hypothesis": "The system's existing capabilities for failure analysis are insufficient for complex debugging. Despite having 'failure-log-analyzer', the high frequency of user intent for 'error debugging' (584) indicates a need for a more advanced skill that can perform root cause analysis beyond simple log parsing.",
       "evidence": [
-        "tradfi-tools: traditional_finance (24 tools, data=false, NO skills)",
-        "tradfi-tools subdomains: price_feeds, arbitrage_scanning, paper_trading, macro_analysis, signal_aggregation"
+        "User intent pattern: 'error debugging' detected across tmux transcripts (freq: 584)",
+        "Skill 'failure-log-analyzer' is underperforming (score=0.833, trajectory=insufficient_data, stuck=3)"
       ],
-      "severity": 0.9,
-      "frequency": 0.6,
-      "feasibility": 0.9,
+      "severity": 0.8,
+      "frequency": 0.9,
+      "feasibility": 0.7,
       "proposed_skill": {
-        "name": "tradfi-market-screener",
-        "description": "Scans traditional financial markets for assets that match a set of user-defined criteria, such as valuation metrics, technical indicators, or sector.",
+        "name": "root-cause-failure-analyzer",
+        "description": "Analyzes a collection of failure logs, stack traces, and context to hypothesize the most likely root cause of a systemic error.",
         "criteria": [
-          "Does the skill correctly parse multi-condition queries (e.g., 'P/E < 15 AND sector = tech')?",
-          "Does the output list assets that strictly match all specified criteria?",
-          "Is the data presented in a structured format (e.g., a table) with the requested metrics?",
-          "Does the skill handle requests for different asset classes (e.g., stocks, ETFs) correctly?",
-          "Does the skill report when no assets match the criteria instead of failing?",
-          "Does the skill use the available `price_feeds` and `signal_aggregation` tools?"
+          "Does the hypothesis distinguish between transient and systemic errors?",
+          "Does the analysis pinpoint a specific component (e.g., a skill, a tool, an external API) as the likely origin?",
+          "Does the proposed root cause logically connect the observed symptoms from the logs?",
+          "Does the output include a suggested action to validate the hypothesis?",
+          "Does the analysis correlate failures across multiple logs if provided?",
+          "Does the skill correctly parse both structured (JSON) and unstructured (stack trace) log formats?"
         ],
         "scenarios": [
-          "Prompt: 'Find me US tech stocks with a P/E ratio below 20 and a market cap over $100 billion.'",
-          "Prompt: 'List all ETFs that track the S&P 500 and have an expense ratio lower than 0.1%.'",
-          "Prompt: 'Are there any stocks in the energy sector that are currently above their 200-day moving average?'",
-          "Prompt: 'Screen for consumer discretionary stocks with a dividend yield greater than 3%.'",
-          "Prompt: 'Find stocks with a P/E ratio less than 5.' The skill should return an empty set with a message if none are found.",
-          "Prompt: 'What's the price of gold?' The skill should use a price feed tool to give a direct answer."
+          "Given a single Python stack trace, identify the failing function and line number.",
+          "Given multiple logs showing intermittent API 503 errors, hypothesize a transient network issue.",
+          "Given logs showing a consistent TypeError after a recent code change, identify the change as the likely root cause.",
+          "Given a log from 'skill-A' and a subsequent error in 'skill-B', hypothesize a data corruption issue between them.",
+          "Provide logs from a successful run and verify the skill reports no errors found.",
+          "Given an out-of-memory error log, suggest increasing resource allocation as a next step.",
+          "Analyze a log with a 'permission denied' error and hypothesize an authentication/authorization issue.",
+          "Given logs with a cryptic error code, the skill should suggest searching for the code's meaning as a next step."
         ]
       },
-      "proposed_goal": "Develop a suite of skills to cover the `tradfi-tools` domain, including portfolio tracking, paper trading, and macro analysis, to achieve parity with the existing `defi-tools` and `polymarket` capabilities.",
+      "proposed_goal": null,
       "_preference_boost": 2,
       "_preference_note": "Boosted by user preference (×2.0)",
-      "score": 0.972,
+      "score": 1,
+      "status": "actionable"
+    },
+    {
+      "id": "want-023",
+      "type": "stuck_skill",
+      "hypothesis": "There is a critical gap between the demand for system security and the agent's capability to deliver it. The 'container-security-auditor' skill is failing to meet its performance target, directly blocking a pending tactical goal and preventing the fulfillment of the strategic 'security-posture' goal.",
+      "evidence": [
+        "Strategic goal: 'security-posture'",
+        "Pending tactical goal: 'Run a security audit on the OpenClaw production container.'",
+        "Skill 'container-security-auditor' is underperforming (score=0.881)",
+        "Environmental signal: 'Skill \"container-security-auditor\" score plateaued at 37 for 3 rounds'",
+        "User intent pattern: 'security audit' (freq: 16)"
+      ],
+      "severity": 1,
+      "frequency": 0.7,
+      "feasibility": 0.8,
+      "proposed_skill": null,
+      "proposed_goal": "Immediately triage and repair the 'container-security-auditor' skill. Dedicate an improvement cycle using 'skill-improver' and manual review to address its weakest criteria ('Scan the target container image', 'list identified vulnerabilities', 'Check for common misconfigurations') until it can reliably pass its evaluations and fulfill the pending security audit goal.",
+      "_preference_boost": 2,
+      "_preference_note": "Boosted by user preference (×2.0)",
+      "score": 1,
       "status": "actionable"
     },
     {
       "id": "want-014",
       "type": "user_intent",
-      "hypothesis": "High-frequency user intent \"skill improvement\" (frequency: 1737) has no matching skill",
+      "hypothesis": "High-frequency user intent \"skill improvement\" (frequency: 2075) has no matching skill",
       "evidence": [
         "User intent pattern: \"skill improvement\" detected across tmux transcripts",
-        "Source: tmux-logs transcripts (27 files scanned)",
-        "Frequency: 1737"
+        "Source: tmux-logs transcripts (20 files scanned)",
+        "Frequency: 2075"
       ],
       "severity": 0.7,
-      "frequency": 1737,
+      "frequency": 2075,
       "feasibility": 0.65,
       "proposed_skill": null,
       "proposed_goal": "Create skill addressing user intent: skill improvement",
@@ -229,14 +187,14 @@
     {
       "id": "want-015",
       "type": "user_intent",
-      "hypothesis": "High-frequency user intent \"error debugging\" (frequency: 785) has no matching skill",
+      "hypothesis": "High-frequency user intent \"error debugging\" (frequency: 584) has no matching skill",
       "evidence": [
         "User intent pattern: \"error debugging\" detected across tmux transcripts",
-        "Source: tmux-logs transcripts (27 files scanned)",
-        "Frequency: 785"
+        "Source: tmux-logs transcripts (20 files scanned)",
+        "Frequency: 584"
       ],
       "severity": 0.7,
-      "frequency": 785,
+      "frequency": 584,
       "feasibility": 0.65,
       "proposed_skill": null,
       "proposed_goal": "Create skill addressing user intent: error debugging",
@@ -248,14 +206,14 @@
     {
       "id": "want-016",
       "type": "user_intent",
-      "hypothesis": "High-frequency user intent \"dashboard\" (frequency: 770) has no matching skill",
+      "hypothesis": "High-frequency user intent \"dashboard\" (frequency: 189) has no matching skill",
       "evidence": [
         "User intent pattern: \"dashboard\" detected across tmux transcripts",
-        "Source: tmux-logs transcripts (27 files scanned)",
-        "Frequency: 770"
+        "Source: tmux-logs transcripts (20 files scanned)",
+        "Frequency: 189"
       ],
       "severity": 0.7,
-      "frequency": 770,
+      "frequency": 189,
       "feasibility": 0.65,
       "proposed_skill": null,
       "proposed_goal": "Create skill addressing user intent: dashboard",
@@ -286,77 +244,58 @@
     {
       "id": "want-005",
       "type": "cross_skill_pattern",
-      "hypothesis": "Pattern: \"Criterion \"Task Completion\" fails across 11 skills\" affects 11 skills — need a dedicated skill or systemic fix",
+      "hypothesis": "Pattern: \"Criterion \"Completeness\" fails across 10 skills\" affects 10 skills — need a dedicated skill or systemic fix",
       "evidence": [
-        "Affected skills: create-proposal, cross-niche-outliers, gmail-label, gmaps-leads, inbox-cleaner, instantly-autoreply, instantly-campaigns, linkedin-response, onboarding-kickoff, scrape-leads, video-to-action",
-        "Frequency: 11",
+        "Affected skills: classify-leads, cross-niche-outliers, gmail, gmail-inbox, gmail-label, linkedin-response, title-variants, video-to-action, youtube-channel-analysis, youtube-outliers",
+        "Frequency: 10",
         "Severity: high"
       ],
       "severity": 0.9,
-      "frequency": 11,
+      "frequency": 10,
       "feasibility": 0.5,
       "proposed_skill": null,
-      "proposed_goal": "Address cross-skill pattern: Criterion \"Task Completion\" fails across 11 skills",
+      "proposed_goal": "Address cross-skill pattern: Criterion \"Completeness\" fails across 10 skills",
       "_preference_boost": 2,
       "_preference_note": "Boosted by user preference (×2.0)",
       "score": 0.9,
       "status": "actionable"
     },
     {
-      "id": "want-018",
-      "type": "cross_skill_pattern",
-      "hypothesis": "The agent frequently fails to complete all sub-parts of a given task, indicating a lack of internal state tracking or checklist-following. A meta-skill for task decomposition and tracking is required.",
-      "evidence": [
-        "Criterion \"Task Completion\" fails across 11 skills",
-        "weakest=[Task Completion(0.167)] for gmaps-leads",
-        "weakest=[Task Completion(0.4)] for linkedin-response"
-      ],
-      "severity": 0.9,
-      "frequency": 0.7,
-      "feasibility": 0.7,
-      "proposed_skill": null,
-      "proposed_goal": null,
-      "_preference_boost": 2,
-      "_preference_note": "Boosted by user preference (×2.0)",
-      "score": 0.882,
-      "status": "actionable"
-    },
-    {
       "id": "want-006",
       "type": "cross_skill_pattern",
-      "hypothesis": "Pattern: \"Criterion \"Completeness\" fails across 9 skills\" affects 9 skills — need a dedicated skill or systemic fix",
+      "hypothesis": "Pattern: \"Criterion \"Task Completion\" fails across 10 skills\" affects 10 skills — need a dedicated skill or systemic fix",
       "evidence": [
-        "Affected skills: classify-leads, gmail, gmail-inbox, gmail-label, linkedin-response, title-variants, video-to-action, youtube-channel-analysis, youtube-outliers",
-        "Frequency: 9",
+        "Affected skills: create-proposal, gmail-label, gmaps-leads, inbox-cleaner, instantly-autoreply, instantly-campaigns, linkedin-response, onboarding-kickoff, scrape-leads, video-to-action",
+        "Frequency: 10",
         "Severity: high"
       ],
       "severity": 0.9,
-      "frequency": 9,
+      "frequency": 10,
       "feasibility": 0.5,
       "proposed_skill": null,
-      "proposed_goal": "Address cross-skill pattern: Criterion \"Completeness\" fails across 9 skills",
+      "proposed_goal": "Address cross-skill pattern: Criterion \"Task Completion\" fails across 10 skills",
       "_preference_boost": 2,
       "_preference_note": "Boosted by user preference (×2.0)",
-      "score": 0.81,
+      "score": 0.9,
       "status": "actionable"
     },
     {
       "id": "want-007",
       "type": "cross_skill_pattern",
-      "hypothesis": "Pattern: \"Criterion \"Output Quality\" fails across 9 skills\" affects 9 skills — need a dedicated skill or systemic fix",
+      "hypothesis": "Pattern: \"Criterion \"Output Quality\" fails across 10 skills\" affects 10 skills — need a dedicated skill or systemic fix",
       "evidence": [
-        "Affected skills: create-proposal, gmail-inbox, gmaps-leads, inbox-cleaner, instantly-autoreply, instantly-campaigns, onboarding-kickoff, title-variants, welcome-email",
-        "Frequency: 9",
+        "Affected skills: create-proposal, cross-niche-outliers, gmail-inbox, gmaps-leads, inbox-cleaner, instantly-autoreply, instantly-campaigns, onboarding-kickoff, title-variants, welcome-email",
+        "Frequency: 10",
         "Severity: high"
       ],
       "severity": 0.9,
-      "frequency": 9,
+      "frequency": 10,
       "feasibility": 0.5,
       "proposed_skill": null,
-      "proposed_goal": "Address cross-skill pattern: Criterion \"Output Quality\" fails across 9 skills",
+      "proposed_goal": "Address cross-skill pattern: Criterion \"Output Quality\" fails across 10 skills",
       "_preference_boost": 2,
       "_preference_note": "Boosted by user preference (×2.0)",
-      "score": 0.81,
+      "score": 0.9,
       "status": "actionable"
     },
     {
@@ -379,38 +318,57 @@
       "status": "actionable"
     },
     {
-      "id": "want-008",
-      "type": "cross_skill_pattern",
-      "hypothesis": "Pattern: \"Criterion \"Error Handling\" fails across 8 skills\" affects 8 skills — need a dedicated skill or systemic fix",
+      "id": "want-022",
+      "type": "structural_gap",
+      "hypothesis": "The system is unable to reliably execute on strategic goals due to a critical, untested planning capability. The 'deep-plan-v2' skill, essential for breaking down complex tasks, is non-operational, forcing reliance on less robust, single-shot skill executions.",
       "evidence": [
-        "Affected skills: classify-leads, create-proposal, cross-niche-outliers, inbox-cleaner, instantly-autoreply, instantly-campaigns, welcome-email, youtube-channel-analysis",
-        "Frequency: 8",
-        "Severity: high"
+        "Skill 'deep-plan-v2' has score=0/0 and trajectory=untested",
+        "Multiple complex strategic goals exist: 'research-advancement', 'system-improvement', 'environmental-monitoring'",
+        "The system has 52 individual skills, but no proven way to chain them effectively."
       ],
       "severity": 0.9,
-      "frequency": 8,
+      "frequency": 0.8,
       "feasibility": 0.5,
       "proposed_skill": null,
-      "proposed_goal": "Address cross-skill pattern: Criterion \"Error Handling\" fails across 8 skills",
+      "proposed_goal": "Prioritize the development and testing of the 'deep-plan-v2' skill. Create a test suite to validate its ability to decompose strategic goals into actionable, multi-step plans that utilize existing skills.",
       "_preference_boost": 2,
       "_preference_note": "Boosted by user preference (×2.0)",
       "score": 0.72,
       "status": "actionable"
     },
     {
+      "id": "want-008",
+      "type": "cross_skill_pattern",
+      "hypothesis": "Pattern: \"Criterion \"Error Handling\" fails across 7 skills\" affects 7 skills — need a dedicated skill or systemic fix",
+      "evidence": [
+        "Affected skills: classify-leads, create-proposal, inbox-cleaner, instantly-autoreply, instantly-campaigns, welcome-email, youtube-channel-analysis",
+        "Frequency: 7",
+        "Severity: high"
+      ],
+      "severity": 0.9,
+      "frequency": 7,
+      "feasibility": 0.5,
+      "proposed_skill": null,
+      "proposed_goal": "Address cross-skill pattern: Criterion \"Error Handling\" fails across 7 skills",
+      "_preference_boost": 2,
+      "_preference_note": "Boosted by user preference (×2.0)",
+      "score": 0.63,
+      "status": "monitor"
+    },
+    {
       "id": "want-011",
       "type": "cross_skill_pattern",
-      "hypothesis": "Pattern: \"28 skills have triggered stuck escalations\" affects 28 skills — need a dedicated skill or systemic fix",
+      "hypothesis": "Pattern: \"30 skills have triggered stuck escalations\" affects 30 skills — need a dedicated skill or systemic fix",
       "evidence": [
-        "Affected skills: container-security-auditor, content-strategy-optimizer, defi-arbitrage-executor, eaas-payment-linker, failure-log-analyzer, gmail, gmail-inbox, gmaps-leads, k8s-deployment-manager, polymarket-5min-strategy, polymarket-bridge, polymarket-flash-crash-detector, polymarket-market-discovery, polymarket-orderbook-reader, polymarket-position-manager, polymarket-websocket-monitor, prompt-refiner-for-robustness, scrape-leads, skill-improver, skill-optimizer-v2, skill-test-generator, skill-test-runner, stuck-skill-diagnoser, system-dashboard-generator, the-real-scrumness, welcome-email, youtube-channel-analysis, youtube-outliers",
-        "Frequency: 28",
+        "Affected skills: container-security-auditor, content-strategy-optimizer, cross-niche-outliers, defi-arbitrage-executor, eaas-payment-linker, failure-log-analyzer, gmail, gmail-inbox, gmaps-leads, k8s-deployment-manager, polymarket-5min-strategy, polymarket-bridge, polymarket-flash-crash-detector, polymarket-market-discovery, polymarket-orderbook-reader, polymarket-position-manager, polymarket-websocket-monitor, prompt-refiner-for-robustness, scrape-leads, skill-improver, skill-optimizer-v2, skill-test-generator, skill-test-runner, stuck-skill-diagnoser, system-dashboard-generator, system-status-reporter, the-real-scrumness, welcome-email, youtube-channel-analysis, youtube-outliers",
+        "Frequency: 30",
         "Severity: medium"
       ],
       "severity": 0.6,
-      "frequency": 28,
+      "frequency": 30,
       "feasibility": 0.5,
       "proposed_skill": null,
-      "proposed_goal": "Address cross-skill pattern: 28 skills have triggered stuck escalations",
+      "proposed_goal": "Address cross-skill pattern: 30 skills have triggered stuck escalations",
       "_preference_boost": 1.8,
       "_preference_note": "Boosted by user preference (×1.8)",
       "score": 0.54,
@@ -508,6 +466,44 @@
       "status": "dismiss"
     },
     {
+      "id": "want-020",
+      "type": "unmet_demand",
+      "hypothesis": "The system lacks a generalized capability for content localization, as evidenced by a direct, unmet demand for French language generation. This prevents the system from operating in multilingual environments.",
+      "evidence": [
+        "Unmet demand: Requested language 'fr' not fully generated for baseline-march7 (freq: 1)"
+      ],
+      "severity": 0.6,
+      "frequency": 0.2,
+      "feasibility": 0.9,
+      "proposed_skill": {
+        "name": "content-localizer",
+        "description": "Translates and adapts a given text content into a specified target language and locale.",
+        "criteria": [
+          "Does the output text accurately convey the meaning of the source text?",
+          "Is the output text in the correct target language specified?",
+          "Is the translated text grammatically correct and fluent?",
+          "Does the skill correctly handle and translate text containing technical jargon or specific entities?",
+          "Does the skill refuse to translate to an unsupported language?",
+          "Are locale-specific formats (like dates or currency) correctly adapted?"
+        ],
+        "scenarios": [
+          "Translate a simple English sentence to French.",
+          "Translate a paragraph containing technical terms like 'Kubernetes' and 'API' to German.",
+          "Translate a marketing email from English to Spanish, ensuring an appropriate tone.",
+          "Attempt to translate a document to Klingon and verify it returns an 'unsupported language' error.",
+          "Translate 'The price is $1,000.50 on 12/25/2023' to German and verify currency/date formats are localized (e.g., '1.000,50 €', '25.12.2023').",
+          "Translate a multi-paragraph document to French.",
+          "Translate a JSON object with string values from English to Japanese.",
+          "Provide text in French and ask for it to be translated to French, verifying it returns the original text."
+        ]
+      },
+      "proposed_goal": null,
+      "_preference_boost": 2,
+      "_preference_note": "Boosted by user preference (×2.0)",
+      "score": 0.216,
+      "status": "dismiss"
+    },
+    {
       "id": "want-012",
       "type": "cross_skill_pattern",
       "hypothesis": "Pattern: \"Criterion \"Tool Usage\" fails across 3 skills\" affects 3 skills — need a dedicated skill or systemic fix",
@@ -529,9 +525,9 @@
   ],
   "summary": {
     "total_wants": 23,
-    "actionable": 16,
-    "monitor": 1,
-    "dismissed": 6,
-    "top_want": "The agent has a systemic weakness in interpreting user instructions, leading to failures across numerous skills. A dedicated pre-processing skill is needed to clarify intent before execution."
+    "actionable": 14,
+    "monitor": 2,
+    "dismissed": 7,
+    "top_want": "The agent systematically fails to adhere to core instructions related to clarity, completeness, and quality across numerous skills, suggesting a fundamental weakness in response generation and self-correction rather than isolated skill-specific issues."
   }
 }
