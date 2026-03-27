@@ -29,3 +29,23 @@
 
 ## Round 6 — Mutation Applied
 - **Mutation**: Expand the Reverse-Engineer Mode section with more detailed steps and guidelines for the replacement process, including specific examples and best practices for preserving business logic and transitioning away from vendor-specific components.
+
+## Round 6
+- **Score**: 56/60 (kept)
+- **Failures**: S5: Execution Completeness, S6: Parameter Gathering, S6: Execution Completeness, S9: Execution Completeness
+- **Per-criteria**: Mode Detection: 10/10, Parameter Gathering: 9/10, Execution Completeness: 7/10, Vendor Detection: 10/10, Dependency Ordering: 10/10, Integration Awareness: 10/10
+
+## Round 7 — Mutation Applied
+- **Mutation**: Add an explicit Step 0 "Parameter Gathering" phase to Reverse-Engineer Mode to fix the Parameter Gathering failure in scenario 6 and improve Execution Completeness by ensuring all required inputs are confirmed before work begins.
+
+## Round 8 — Mutation Applied
+- **Mutation**: Expand Step 6 Verification with an explicit completeness audit loop — scan for any remaining vendor imports/references, re-queue missed components, and block exit until all identified vendors are cleared.
+
+## Round 9 — Mutation Applied
+- **Mutation**: Add a mandatory pre-execution checklist and dependency graph to Step 4 that forces ALL replacement steps to be attempted in order and explicitly tracks cross-component dependencies, fixing Execution Completeness failures in scenarios where partial replacements are silently skipped.
+
+## Round 10 — Mutation Applied
+- **Mutation**: Add a mandatory global "STEP 0: Parameter Gathering Gate" at the top of the skill that runs BEFORE mode detection for ALL modes, with explicit "DO NOT PROCEED" language and per-mode question sets — fixing the 8 Parameter Gathering failures that occur even in Greenfield/Plan modes.
+
+## Round 11 — Mutation Applied
+- **Mutation**: Replace the monolithic 16-step Step 4 checklist with an iterative component-centric "Isolate -> Execute -> Verify" loop per the meta-analyst's strategy, reducing cognitive load and fixing Execution Completeness failures where partial replacements are silently skipped.

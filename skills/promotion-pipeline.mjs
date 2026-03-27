@@ -32,6 +32,18 @@ if (existsSync(dotenvPath)) {
 const PROMOTIONS_DIR = resolve(__dirname, 'promotions')
 const SEED_BASE = resolve(process.env.HOME, 'Journal/.seed/base/skills')
 const DECISIONS_PATH = resolve(__dirname, '..', 'CLAUDE-decisions.md')
+const PROMOTED_MANIFEST = resolve(__dirname, 'promoted.json')
+
+function loadPromotedManifest() {
+  if (existsSync(PROMOTED_MANIFEST)) {
+    try { return JSON.parse(readFileSync(PROMOTED_MANIFEST, 'utf8')) } catch {}
+  }
+  return {}
+}
+
+function savePromotedManifest(manifest) {
+  writeFileSync(PROMOTED_MANIFEST, JSON.stringify(manifest, null, 2) + '\n')
+}
 
 // ─── CLI Parsing ────────────────────────────────────────────────────────────
 const args = process.argv.slice(2)
@@ -244,6 +256,18 @@ function approveSkill(skillName) {
     writeFileSync(DECISIONS_PATH, `# CLAUDE Decisions\n${decisionEntry}`)
   }
   console.log(`  Logged promotion to: ${DECISIONS_PATH}`)
+
+  // Update promoted manifest
+  const manifest = loadPromotedManifest()
+  manifest[skillName] = {
+    score,
+    max,
+    baselineScore,
+    promotedAt: new Date().toISOString(),
+    seedPath,
+  }
+  savePromotedManifest(manifest)
+  console.log(`  Updated promoted.json manifest`)
 
   // Emit promoted event
   emitEvent(workDir, {

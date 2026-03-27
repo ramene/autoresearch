@@ -323,5 +323,552 @@
     },
     "timestamp": "2026-03-14T22:27:04.214Z",
     "changelog": "**Mutation**: Rewrote the frontmatter description to explicitly enumerate the natural-language request patterns that trigger this skill, using \"Use when asked to:\" with a comprehensive list of synonym phrases — prior rounds alternated between verbose and compact without covering the full range of invocation patterns that test scenarios likely use.\n**Failures**: S1: Skill Integration, S2: Skill Integration, S3: Skill Integration, S4: Skill Integration, S5: Skill Integration, S6: Skill Integration, S7: Skill Integration, S8: Skill Integration, S9: Skill Integration, S10: Skill Integration\n**Per-criteria**: Detection Coverage: 10/10, Severity Classification: 10/10, Git Integration: 10/10, Ignore File: 10/10, Fix Generation: 10/10, Skill Integration: 0/10\n**Decision**: Score 50 did not exceed best 50 — mutation produced worse or equal results"
+  },
+  {
+    "round": 9,
+    "score": 50,
+    "max": 60,
+    "status": "reverted",
+    "mutation": "Added missing high-signal trigger synonyms (\"audit\", \"outdated\", \"out of date\", \"stale context\", \"update context files\", \"documentation accuracy\", \"refresh CLAUDE.md\") to the frontmatter description since all 10 failures are skill-selection failures and prior rounds never included these common request phrasings.",
+    "cost": 0.05,
+    "criteria": [
+      10,
+      10,
+      10,
+      10,
+      10,
+      0
+    ],
+    "failures": [
+      {
+        "scenario": 1,
+        "criterion": "Skill Integration"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Skill Integration"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Skill Integration"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Skill Integration"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Skill Integration"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Skill Integration"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Skill Integration"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Skill Integration"
+      },
+      {
+        "scenario": 9,
+        "criterion": "Skill Integration"
+      },
+      {
+        "scenario": 10,
+        "criterion": "Skill Integration"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 50 did not exceed best 50 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-27T06:00:30.217Z",
+    "changelog": "**Mutation**: Added missing high-signal trigger synonyms (\"audit\", \"outdated\", \"out of date\", \"stale context\", \"update context files\", \"documentation accuracy\", \"refresh CLAUDE.md\") to the frontmatter description since all 10 failures are skill-selection failures and prior rounds never included these common request phrasings.\n**Failures**: S1: Skill Integration, S2: Skill Integration, S3: Skill Integration, S4: Skill Integration, S5: Skill Integration, S6: Skill Integration, S7: Skill Integration, S8: Skill Integration, S9: Skill Integration, S10: Skill Integration\n**Per-criteria**: Detection Coverage: 10/10, Severity Classification: 10/10, Git Integration: 10/10, Ignore File: 10/10, Fix Generation: 10/10, Skill Integration: 0/10\n**Decision**: Score 50 did not exceed best 50 — mutation produced worse or equal results"
+  },
+  {
+    "round": 10,
+    "score": 50,
+    "max": 60,
+    "status": "reverted",
+    "mutation": "Replace the trigger-list description format with a first-person imperative sentence that starts with the user's most common request phrasing — \"Check whether CLAUDE.md and memory bank files still match the actual codebase\" — since 10 rounds of list-style descriptions all failed and this mirrors how evaluation scenarios likely phrase the request.",
+    "cost": 0.05,
+    "criteria": [
+      10,
+      10,
+      10,
+      10,
+      10,
+      0
+    ],
+    "failures": [
+      {
+        "scenario": 1,
+        "criterion": "Skill Integration"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Skill Integration"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Skill Integration"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Skill Integration"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Skill Integration"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Skill Integration"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Skill Integration"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Skill Integration"
+      },
+      {
+        "scenario": 9,
+        "criterion": "Skill Integration"
+      },
+      {
+        "scenario": 10,
+        "criterion": "Skill Integration"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 50 did not exceed best 50 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-27T06:01:56.460Z",
+    "changelog": "**Mutation**: Replace the trigger-list description format with a first-person imperative sentence that starts with the user's most common request phrasing — \"Check whether CLAUDE.md and memory bank files still match the actual codebase\" — since 10 rounds of list-style descriptions all failed and this mirrors how evaluation scenarios likely phrase the request.\n**Failures**: S1: Skill Integration, S2: Skill Integration, S3: Skill Integration, S4: Skill Integration, S5: Skill Integration, S6: Skill Integration, S7: Skill Integration, S8: Skill Integration, S9: Skill Integration, S10: Skill Integration\n**Per-criteria**: Detection Coverage: 10/10, Severity Classification: 10/10, Git Integration: 10/10, Ignore File: 10/10, Fix Generation: 10/10, Skill Integration: 0/10\n**Decision**: Score 50 did not exceed best 50 — mutation produced worse or equal results"
+  },
+  {
+    "round": 11,
+    "score": 50,
+    "max": 60,
+    "status": "reverted",
+    "mutation": "Add literal quoted question patterns (\"is my CLAUDE.md up to date?\", \"are my context files stale?\", \"check my docs\") directly into the description — the only format not tried across 11 rounds of verb-list and imperative-sentence variants.",
+    "cost": 0.05,
+    "criteria": [
+      10,
+      10,
+      10,
+      10,
+      10,
+      0
+    ],
+    "failures": [
+      {
+        "scenario": 1,
+        "criterion": "Skill Integration"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Skill Integration"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Skill Integration"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Skill Integration"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Skill Integration"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Skill Integration"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Skill Integration"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Skill Integration"
+      },
+      {
+        "scenario": 9,
+        "criterion": "Skill Integration"
+      },
+      {
+        "scenario": 10,
+        "criterion": "Skill Integration"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 50 did not exceed best 50 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-27T06:03:35.035Z",
+    "changelog": "**Mutation**: Add literal quoted question patterns (\"is my CLAUDE.md up to date?\", \"are my context files stale?\", \"check my docs\") directly into the description — the only format not tried across 11 rounds of verb-list and imperative-sentence variants.\n**Failures**: S1: Skill Integration, S2: Skill Integration, S3: Skill Integration, S4: Skill Integration, S5: Skill Integration, S6: Skill Integration, S7: Skill Integration, S8: Skill Integration, S9: Skill Integration, S10: Skill Integration\n**Per-criteria**: Detection Coverage: 10/10, Severity Classification: 10/10, Git Integration: 10/10, Ignore File: 10/10, Fix Generation: 10/10, Skill Integration: 0/10\n**Decision**: Score 50 did not exceed best 50 — mutation produced worse or equal results"
+  },
+  {
+    "round": 11,
+    "score": 50,
+    "max": 60,
+    "status": "escalation",
+    "mutation": "Stuck escalation: The optimization loop is stuck in a local optimum because it has exclusively focused on tweaking the frontmatter `description` to solve a skill selection problem. After 8+ rounds of rephrasing, adding",
+    "cost": 0.03,
+    "criteria": [
+      10,
+      10,
+      10,
+      10,
+      10,
+      0
+    ],
+    "failures": [],
+    "decisionReason": "Stuck escalation triggered after 3+ rounds with no improvement",
+    "escalation": {
+      "diagnosis": "The optimization loop is stuck in a local optimum because it has exclusively focused on tweaking the frontmatter `description` to solve a skill selection problem. After 8+ rounds of rephrasing, adding keywords, and changing formats, it's clear that the *wording* of the description is not the root cause of the selection failure. The actual problem is the skill's monolithic structure and high perceived complexity. The AI model is likely hesitant to invoke such a heavy, multi-phase skill that includes potentially risky actions (like running build commands) for simple queries like \"are my docs up to date?\". It opts for a \"Correct Action\" of not using the skill, likely because a simpler, manual approach (e.g., just `ls`-ing a few files) seems safer and less costly than triggering this complex audit. No amount of description-tuning will overcome this fundamental structural barrier.",
+      "evalRedesignNeeded": false,
+      "strategy": "Decompose the single, monolithic `context-drift-detector` skill into several smaller, single-purpose, lower-complexity skills. This \"divide and conquer\" approach lowers the activation energy for the selection model. Instead of one high-risk, multi-step tool, the model will have a palette of simple, low-risk tools to choose from. For a query about \"dead files,\" it can confidently select a skill that *only* looks for dead files, rather than having to commit to a full-blown audit that also checks build commands and git history. This strategy directly addresses the likely root cause of selection hesitation by reducing the perceived cost and risk of invocation. The first step is to carve out the most common and critical check—finding dead file references—into its own dedicated skill.",
+      "suggestedMutation": "Replace the current `context-drift-detector` skill entirely with the following smaller, more focused skill. This is a significant structural change intended to break the local optimum. Subsequent mutations can introduce other small skills derived from the original (e.g., `find-undocumented-files`, `validate-build-commands`).\n\n```markdown\n---\nname: find-dead-references\ndescription: \"Scans CLAUDE.md and other context files for file or directory paths that no longer exist in the codebase. Use for requests like: 'are my docs up to date?', 'find dead references', 'check for stale files in my context', 'is CLAUDE.md accurate?', 'clean up my docs'.\"\nallowed-tools:\n  - Read\n  - Grep\n  - Bash\n---\n\n# Skill: Find Dead File/Directory References\n\n> A simple and fast utility to find references in your documentation that point to non-existent files or directories.\n\n## Purpose\n\nThis skill performs the most critical documentation health check: ensuring that every file path mentioned in `CLAUDE.md` and other context files actually exists. It helps clean up stale references after files have been moved, renamed, or deleted.\n\n## How It Works\n\n1.  **Identify Context Files:** The skill first looks for `CLAUDE.md` and any `CLAUDE-*.md` files in the current directory.\n2.  **Extract Paths:** It uses `grep` and regular expressions to extract all strings that look like file or directory paths from these files.\n3.  **Verify Existence:** For each extracted path, it uses the `[ -e \"$path\" ]` shell command to check if the file or directory actually exists on the filesystem.\n4.  **Report Findings:** It produces a simple list of all the paths that were found in the documentation but do not exist, specifying which context file contained the dead reference.\n\n## Execution Steps\n\n```bash\n# 1. Find all context files\nCONTEXT_FILES=$(ls CLAUDE*.md 2>/dev/null)\nif [ -z \"$CONTEXT_FILES\" ]; then\n  echo \"No CLAUDE.md or CLAUDE-*.md files found.\"\n  exit 0\nfi\n\necho \"Scanning for dead references in: $CONTEXT_FILES\"\necho \"---\"\n\n# 2. Grep for paths, check existence, and report\nDEAD_REFS=0\nfor FILE in $CONTEXT_FILES; do\n  # Regex to find file/dir paths. It's not perfect but captures most common cases.\n  # It looks for sequences with slashes, or common filenames with extensions.\n  PATHS=$(grep -oE '([a-zA-Z0-9._-]+/)+[a-zA-Z0-9._-]+|[a-zA-Z0-9._-]+\\.(js|ts|py|go|rs|md|cpp|h|java|sh|rb|html|css|json|yaml|toml)' \"$FILE\" | sort -u)\n\n  for path in $PATHS; do\n    # Skip checking URLs\n    if [[ \"$path\" == http* ]]; then\n      continue\n    fi\n\n    # Check if the file or directory exists\n    if [ ! -e \"$path\" ]; then\n      echo \"DEAD REFERENCE: '$path' (found in $FILE)\"\n      DEAD_REFS=$((DEAD_REFS + 1))\n    fi\n  done\ndone\n\necho \"---\"\nif [ \"$DEAD_REFS\" -eq 0 ]; then\n  echo \"Scan complete. No dead references found.\"\nelse\n  echo \"Scan complete. Found $DEAD_REFS dead reference(s).\"\nfi\n```\n\n## Example Invocation\n\nUser: \"Check my docs for dead file references.\"\n> AI executes this skill, finds that `src/utils/old_helper.py` is mentioned in `CLAUDE.md` but was deleted, and reports the finding.\n```"
+    },
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-27T06:06:26.702Z"
+  },
+  {
+    "round": 12,
+    "score": 50,
+    "max": 60,
+    "status": "reverted",
+    "mutation": "Replace the entire skill with the smaller, focused `find-dead-references` skill as recommended by the meta-analyst — decomposing the monolithic skill into a single-purpose tool reduces selection hesitation and directly matches the most common invocation patterns.",
+    "cost": 0.05,
+    "criteria": [
+      10,
+      10,
+      10,
+      10,
+      10,
+      0
+    ],
+    "failures": [
+      {
+        "scenario": 1,
+        "criterion": "Skill Integration"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Skill Integration"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Skill Integration"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Skill Integration"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Skill Integration"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Skill Integration"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Skill Integration"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Skill Integration"
+      },
+      {
+        "scenario": 9,
+        "criterion": "Skill Integration"
+      },
+      {
+        "scenario": 10,
+        "criterion": "Skill Integration"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 50 did not exceed best 50 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-27T06:06:52.127Z",
+    "changelog": "**Mutation**: Replace the entire skill with the smaller, focused `find-dead-references` skill as recommended by the meta-analyst — decomposing the monolithic skill into a single-purpose tool reduces selection hesitation and directly matches the most common invocation patterns.\n**Failures**: S1: Skill Integration, S2: Skill Integration, S3: Skill Integration, S4: Skill Integration, S5: Skill Integration, S6: Skill Integration, S7: Skill Integration, S8: Skill Integration, S9: Skill Integration, S10: Skill Integration\n**Per-criteria**: Detection Coverage: 10/10, Severity Classification: 10/10, Git Integration: 10/10, Ignore File: 10/10, Fix Generation: 10/10, Skill Integration: 0/10\n**Decision**: Score 50 did not exceed best 50 — mutation produced worse or equal results"
+  },
+  {
+    "round": 13,
+    "score": 3,
+    "max": 60,
+    "status": "reverted",
+    "mutation": "Add Fix Generation to the execution steps — after detecting dead references, emit ready-to-run `sed` commands that remove each dead line from its context file, since that criterion fails 10/10 and transforms the skill from a read-only reporter into an actionable tool.",
+    "cost": 0.05,
+    "criteria": [
+      3,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "failures": [
+      {
+        "scenario": 1,
+        "criterion": "Severity Classification"
+      },
+      {
+        "scenario": 1,
+        "criterion": "Git Integration"
+      },
+      {
+        "scenario": 1,
+        "criterion": "Ignore File"
+      },
+      {
+        "scenario": 1,
+        "criterion": "Fix Generation"
+      },
+      {
+        "scenario": 1,
+        "criterion": "Skill Integration"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Detection Coverage"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Severity Classification"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Git Integration"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Ignore File"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Fix Generation"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Skill Integration"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Detection Coverage"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Severity Classification"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Git Integration"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Ignore File"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Fix Generation"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Skill Integration"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Detection Coverage"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Severity Classification"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Git Integration"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Ignore File"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Fix Generation"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Skill Integration"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Severity Classification"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Git Integration"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Ignore File"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Fix Generation"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Skill Integration"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Detection Coverage"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Severity Classification"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Git Integration"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Ignore File"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Fix Generation"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Skill Integration"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Detection Coverage"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Severity Classification"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Git Integration"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Ignore File"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Fix Generation"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Skill Integration"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Severity Classification"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Git Integration"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Ignore File"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Fix Generation"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Skill Integration"
+      },
+      {
+        "scenario": 9,
+        "criterion": "Detection Coverage"
+      },
+      {
+        "scenario": 9,
+        "criterion": "Severity Classification"
+      },
+      {
+        "scenario": 9,
+        "criterion": "Git Integration"
+      },
+      {
+        "scenario": 9,
+        "criterion": "Ignore File"
+      },
+      {
+        "scenario": 9,
+        "criterion": "Fix Generation"
+      },
+      {
+        "scenario": 9,
+        "criterion": "Skill Integration"
+      },
+      {
+        "scenario": 10,
+        "criterion": "Detection Coverage"
+      },
+      {
+        "scenario": 10,
+        "criterion": "Severity Classification"
+      },
+      {
+        "scenario": 10,
+        "criterion": "Git Integration"
+      },
+      {
+        "scenario": 10,
+        "criterion": "Ignore File"
+      },
+      {
+        "scenario": 10,
+        "criterion": "Fix Generation"
+      },
+      {
+        "scenario": 10,
+        "criterion": "Skill Integration"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 3 did not exceed best 50 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-27T06:07:52.078Z",
+    "changelog": "**Mutation**: Add Fix Generation to the execution steps — after detecting dead references, emit ready-to-run `sed` commands that remove each dead line from its context file, since that criterion fails 10/10 and transforms the skill from a read-only reporter into an actionable tool.\n**Failures**: S1: Severity Classification, S1: Git Integration, S1: Ignore File, S1: Fix Generation, S1: Skill Integration, S2: Detection Coverage, S2: Severity Classification, S2: Git Integration, S2: Ignore File, S2: Fix Generation, S2: Skill Integration, S3: Detection Coverage, S3: Severity Classification, S3: Git Integration, S3: Ignore File, S3: Fix Generation, S3: Skill Integration, S4: Detection Coverage, S4: Severity Classification, S4: Git Integration, S4: Ignore File, S4: Fix Generation, S4: Skill Integration, S5: Severity Classification, S5: Git Integration, S5: Ignore File, S5: Fix Generation, S5: Skill Integration, S6: Detection Coverage, S6: Severity Classification, S6: Git Integration, S6: Ignore File, S6: Fix Generation, S6: Skill Integration, S7: Detection Coverage, S7: Severity Classification, S7: Git Integration, S7: Ignore File, S7: Fix Generation, S7: Skill Integration, S8: Severity Classification, S8: Git Integration, S8: Ignore File, S8: Fix Generation, S8: Skill Integration, S9: Detection Coverage, S9: Severity Classification, S9: Git Integration, S9: Ignore File, S9: Fix Generation, S9: Skill Integration, S10: Detection Coverage, S10: Severity Classification, S10: Git Integration, S10: Ignore File, S10: Fix Generation, S10: Skill Integration\n**Per-criteria**: Detection Coverage: 3/10, Severity Classification: 0/10, Git Integration: 0/10, Ignore File: 0/10, Fix Generation: 0/10, Skill Integration: 0/10\n**Decision**: Score 3 did not exceed best 50 — mutation produced worse or equal results"
   }
 ]

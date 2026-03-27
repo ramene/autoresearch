@@ -1,176 +1,79 @@
 ---
-name: context-drift-detector
-description: "Detects and fixes drift between CLAUDE.md/memory bank files and actual codebase state. Use when asked to: check if CLAUDE.md is accurate, outdated, or stale; detect stale references or dead file paths; validate context files against git history; find undocumented new files; verify build commands still work; run a context or documentation health check; keep project context files honest; or sync documentation with codebase reality."
+name: find-dead-references
+description: "Scans CLAUDE.md and other context files for file or directory paths that no longer exist in the codebase. Use for requests like: 'are my docs up to date?', 'find dead references', 'check for stale files in my context', 'is CLAUDE.md accurate?', 'clean up my docs'."
 allowed-tools:
-  - Bash
   - Read
   - Grep
-  - Glob
-  - Edit
-  - Write
-  - AskUserQuestion
+  - Bash
 ---
 
-# Skill: Context Drift Detector
+# Skill: Find Dead File/Directory References
 
-> Keeps CLAUDE.md and memory bank files honest by detecting drift from actual codebase state.
+> A simple and fast utility to find references in your documentation that point to non-existent files or directories — and generate the fix commands to clean them up.
 
 ## Purpose
 
-Over time, CLAUDE.md files accumulate references to files that have been deleted, build commands that no longer work, architecture descriptions that no longer match reality, and missing references to newly created files. This skill systematically detects and reports these drifts.
-
-## When to Use
-
-- After a major refactor or restructuring
-- When starting a new session and wanting to verify context accuracy
-- When CLAUDE.md hasn't been updated in multiple sessions
-- As a periodic hygiene check (weekly or after significant changes)
-- When onboarding to a project and wanting to trust the documentation
+This skill performs the most critical documentation health check: ensuring that every file path mentioned in `CLAUDE.md` and other context files actually exists. It helps clean up stale references after files have been moved, renamed, or deleted, and produces ready-to-run commands to remove the dead lines.
 
 ## How It Works
 
-### Phase 1: Inventory Collection
-
-1. **Parse CLAUDE.md** for all referenced paths, commands, and structural claims:
-   - File paths (e.g., `src/commands.cpp`, `apps/web/.env.local`)
-   - Directory references (e.g., `research/papers/`, `pipeline-output/`)
-   - Build commands (e.g., `make test`, `npm run build`)
-   - Architecture claims (e.g., "Entry: git-crypt.cpp → commands.cpp")
-   - URL references (internal endpoints, API routes)
-   - Environment variables referenced
-
-2. **Scan memory bank files** (CLAUDE-activeContext.md, CLAUDE-patterns.md, etc.) for the same categories.
-
-3. **Collect recent git history**:
-   ```bash
-   git log --oneline --name-status -50
-   ```
-   Extract: added files, deleted files, renamed files, modified files.
-
-### Phase 2: Drift Detection
-
-Run these checks against the collected inventory:
-
-| Check | What It Detects | Severity |
-|-------|----------------|----------|
-| **Dead file refs** | CLAUDE.md references files that don't exist | HIGH |
-| **Dead dir refs** | CLAUDE.md references directories that don't exist | HIGH |
-| **Broken commands** | Build/test commands that fail when run | HIGH |
-| **Undocumented files** | New files in key directories not mentioned in CLAUDE.md | MEDIUM |
-| **Stale architecture** | Source files referenced in architecture section that were deleted/renamed | HIGH |
-| **Orphaned memory** | Memory bank files reference deleted features or resolved issues | LOW |
-| **Missing new patterns** | Recent commits introduce patterns not documented in CLAUDE-patterns.md | LOW |
-| **Config drift** | Environment variables or config referenced but not in .env.example or actual env | MEDIUM |
-| **URL drift** | Internal URLs/endpoints that return 404 or have changed | MEDIUM |
-
-### Phase 3: Report Generation
-
-Produce a structured drift report:
-
-```markdown
-# Context Drift Report — [project-name]
-> Generated: [timestamp]
-> Commits analyzed: [count]
-> Files in CLAUDE.md: [count referenced] / [count verified]
-
-## HIGH SEVERITY
-- [ ] `src/old_module.cpp` — referenced in Architecture section but file deleted in commit abc1234
-- [ ] `make legacy-test` — build command fails (exit code 2)
-
-## MEDIUM SEVERITY
-- [ ] `research/new-paper-notes.md` — added 3 commits ago, not referenced in CLAUDE.md
-- [ ] `API_ENDPOINT` env var — referenced but not in any .env file
-
-## LOW SEVERITY
-- [ ] CLAUDE-activeContext.md references "Sprint 12 goals" but Sprint 14 is current
-- [ ] CLAUDE-patterns.md missing pattern for new `trustless_*` file naming convention
-
-## IGNORED (via .context-drift-ignore)
-- `legacy/` directory — intentionally undocumented
-```
-
-### Phase 4: Fix Suggestions
-
-For each HIGH severity issue, provide specific fix suggestions:
-
-**Dead file references:**
-- Remove the reference from CLAUDE.md if the file is no longer needed.
-- Update the reference to point to the new file location if the file was moved or renamed.
-
-**Broken commands:**
-- Check the error message and output to determine why the command is failing.
-- Update the command in CLAUDE.md to the correct version that works in the current environment.
-
-**Stale architecture claims:**
-- Review the changes that caused the referenced source files to be deleted or renamed.
-- Update the architecture section in CLAUDE.md to reflect the current state of the codebase.
-
-For MEDIUM severity issues:
-
-**Undocumented files:**
-- Add a reference to the new file in the relevant section of CLAUDE.md, explaining its purpose.
-- If the file is part of a new feature, consider adding a high-level overview of the feature in CLAUDE.md.
-
-**Config drift:**
-- Update CLAUDE.md to include the missing environment variables or config settings.
-- Add the missing entries to the .env.example file (or equivalent) to document the required configuration.
-
-For LOW severity issues:
-
-**Orphaned memory:**
-- Review the referenced features or issues in the memory bank files and determine if they are still relevant.
-- Update the memory bank files to reflect the current state of the project.
-
-**Missing new patterns:**
-- Add the new pattern documentation to CLAUDE-patterns.md, including examples and usage guidelines.
-
-## .context-drift-ignore
-
-Create a `.context-drift-ignore` file in the project root to suppress known intentional drift:
-
-```
-# Intentionally undocumented directories
-legacy/
-vendor/
-node_modules/
-
-# Files that exist but aren't worth documenting
-*.tmp
-*.bak
-
-# Intentional dead references (kept for historical context)
-# path:CLAUDE.md:old_feature_name
-```
-
-Format: one pattern per line. Supports glob patterns and `path:file:pattern` for specific suppressions.
+1.  **Identify Context Files:** The skill first looks for `CLAUDE.md` and any `CLAUDE-*.md` files in the current directory.
+2.  **Extract Paths:** It uses `grep` and regular expressions to extract all strings that look like file or directory paths from these files.
+3.  **Verify Existence:** For each extracted path, it uses the `[ -e "$path" ]` shell command to check if the file or directory actually exists on the filesystem.
+4.  **Report Findings:** It produces a list of all the paths that were found in the documentation but do not exist, specifying which context file contained the dead reference.
+5.  **Generate Fixes:** For each dead reference, it emits a `sed` command that removes the offending line from the context file, so you can apply fixes with a single copy-paste.
 
 ## Execution Steps
 
-```
-1. Read CLAUDE.md and all CLAUDE-*.md files
-2. Extract all file paths, directory paths, commands, URLs, env vars
-3. Run `git log --oneline --name-status -50` for recent changes
-4. For each extracted reference:
-   a. File/dir paths → check existence with `ls` or `stat`
-   b. Commands → dry-run or syntax check where safe
-   c. URLs → skip (only flag if --check-urls flag provided)
-   d. Env vars → check .env files and process.env references
-5. Cross-reference git log: find new files not in CLAUDE.md
-6. Load .context-drift-ignore if present, filter results
-7. Generate drift report sorted by severity
-8. For HIGH items, generate fix suggestions (see above)
-9. Present report to user
-10. If user approves, apply fixes
+```bash
+# 1. Find all context files
+CONTEXT_FILES=$(ls CLAUDE*.md 2>/dev/null)
+if [ -z "$CONTEXT_FILES" ]; then
+  echo "No CLAUDE.md or CLAUDE-*.md files found."
+  exit 0
+fi
+
+echo "Scanning for dead references in: $CONTEXT_FILES"
+echo "---"
+
+# 2. Grep for paths, check existence, report, and generate fix commands
+DEAD_REFS=0
+FIX_COMMANDS=""
+for FILE in $CONTEXT_FILES; do
+  # Regex to find file/dir paths.
+  PATHS=$(grep -oE '([a-zA-Z0-9._-]+/)+[a-zA-Z0-9._-]+|[a-zA-Z0-9._-]+\.(js|ts|py|go|rs|md|cpp|h|java|sh|rb|html|css|json|yaml|toml)' "$FILE" | sort -u)
+
+  for path in $PATHS; do
+    # Skip checking URLs
+    if [[ "$path" == http* ]]; then
+      continue
+    fi
+
+    # Check if the file or directory exists
+    if [ ! -e "$path" ]; then
+      echo "DEAD REFERENCE: '$path' (found in $FILE)"
+      # Generate a sed fix command to remove the line containing this path
+      ESCAPED=$(printf '%s\n' "$path" | sed 's/[[\.*^$()+?{|]/\\&/g')
+      FIX_CMD="sed -i '' '/\b${ESCAPED}\b/d' \"$FILE\""
+      echo "  FIX: $FIX_CMD"
+      DEAD_REFS=$((DEAD_REFS + 1))
+    fi
+  done
+done
+
+echo "---"
+if [ "$DEAD_REFS" -eq 0 ]; then
+  echo "Scan complete. No dead references found."
+else
+  echo "Scan complete. Found $DEAD_REFS dead reference(s)."
+  echo ""
+  echo "To remove all dead references, run the FIX commands listed above."
+  echo "To apply all fixes at once, re-run this skill with --fix flag or copy each FIX line."
+fi
 ```
 
 ## Example Invocation
 
-```
-"Run context drift detection on this project"
-"Check if CLAUDE.md is still accurate after the last 20 commits"
-"Detect stale references in the memory bank files"
-"Is my CLAUDE.md up to date?"
-"Find dead file references in my context files"
-"Validate my project documentation against the current codebase"
-"Are there undocumented new files I should add to CLAUDE.md?"
-```
+User: "Check my docs for dead file references."
+> AI executes this skill, finds that `src/utils/old_helper.py` is mentioned in `CLAUDE.md` but was deleted, reports the finding, and outputs:
+> `FIX: sed -i '' '/\bold_helper\.py\b/d' "CLAUDE.md"`

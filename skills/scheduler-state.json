@@ -1,6 +1,6 @@
 {
-  "lastRunTimestamp": "2026-03-25T22:09:00.440Z",
-  "lastSkill": "instantly-campaigns",
+  "lastRunTimestamp": "2026-03-27T06:08:37.055Z",
+  "lastSkill": "context-drift-detector",
   "skillStats": {
     "skill-improver": {
       "lastRun": "2026-03-16T18:21:08.320Z",
@@ -101,11 +101,11 @@
       "runsCompleted": 1
     },
     "instantly-campaigns": {
-      "lastRun": "2026-03-25T22:09:00.435Z",
-      "lastScore": 18,
+      "lastRun": "2026-03-26T06:09:55.373Z",
+      "lastScore": 36,
       "maxScore": 36,
-      "totalCost": 0.53,
-      "runsCompleted": 2
+      "totalCost": 0.81,
+      "runsCompleted": 3
     },
     "k8s-deployment-manager": {
       "lastRun": "2026-03-20T21:14:49.306Z",
@@ -302,8 +302,22 @@
       "maxScore": 36,
       "totalCost": 0.28,
       "runsCompleted": 1
+    },
+    "scaffold": {
+      "lastRun": "2026-03-26T14:12:00.684Z",
+      "lastScore": 56,
+      "maxScore": 60,
+      "totalCost": 0.28,
+      "runsCompleted": 1
+    },
+    "context-drift-detector": {
+      "lastRun": "2026-03-27T06:08:37.054Z",
+      "lastScore": 3,
+      "maxScore": 60,
+      "totalCost": 0.28,
+      "runsCompleted": 1
     }
   },
-  "cumulativeCost": 15.37999999999999,
-  "totalRuns": 72
+  "cumulativeCost": 16.219999999999988,
+  "totalRuns": 75
 }

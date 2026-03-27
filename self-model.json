@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-03-25T22:50:06.413Z",
+  "timestamp": "2026-03-27T06:08:38.101Z",
   "version": "1.0",
   "skills": {
     "backup": {
@@ -184,29 +184,27 @@
       "weakest_criteria": [
         {
           "name": "Skill Integration",
-          "fail_rate": 1
-        }
-      ],
-      "strongest_criteria": [
+          "fail_rate": 0.909
+        },
         {
           "name": "Detection Coverage",
-          "fail_rate": 0
+          "fail_rate": 0.091
         },
         {
           "name": "Severity Classification",
-          "fail_rate": 0
-        },
-        {
-          "name": "Git Integration",
-          "fail_rate": 0
+          "fail_rate": 0.091
         }
       ],
-      "rounds_completed": 5,
+      "strongest_criteria": [],
+      "rounds_completed": 11,
       "rounds_kept": 0,
-      "cost_invested": 0.23,
+      "cost_invested": 0.51,
       "last_improvement": null,
-      "last_escalation": null,
-      "stuck_count": 5,
+      "last_escalation": {
+        "diagnosis": "The optimization loop is stuck in a local optimum because it has exclusively focused on tweaking the frontmatter `description` to solve a skill selection problem. After 8+ rounds of rephrasing, adding keywords, and changing formats, it's clear that the *wording* of the description is not the root cause of the selection failure. The actual problem is the skill's monolithic structure and high perceived complexity. The AI model is likely hesitant to invoke such a heavy, multi-phase skill that includes potentially risky actions (like running build commands) for simple queries like \"are my docs up to date?\". It opts for a \"Correct Action\" of not using the skill, likely because a simpler, manual approach (e.g., just `ls`-ing a few files) seems safer and less costly than triggering this complex audit. No amount of description-tuning will overcome this fundamental structural barrier.",
+        "timestamp": "2026-03-27T06:06:26.702Z"
+      },
+      "stuck_count": 8,
       "criteria_names": [
         "Detection Coverage",
         "Severity Classification",
@@ -809,6 +807,50 @@
         "Completeness"
       ]
     },
+    "goal-to-skill-executor": {
+      "score": 48,
+      "max": 48,
+      "ratio": 1,
+      "trajectory": "insufficient_data",
+      "weakest_criteria": [],
+      "strongest_criteria": [
+        {
+          "name": "Identify one or more relevant skills to achieve the given goal",
+          "fail_rate": 0
+        },
+        {
+          "name": "Generate a valid, ordered sequence of skill calls",
+          "fail_rate": 0
+        },
+        {
+          "name": "Can the skill extract or infer the necessary parameters for each skill call from the goal description",
+          "fail_rate": 0
+        }
+      ],
+      "rounds_completed": 1,
+      "rounds_kept": 1,
+      "cost_invested": 0.05,
+      "last_improvement": "2026-03-25T23:04:30.355Z",
+      "last_escalation": null,
+      "stuck_count": 0,
+      "criteria_names": [
+        "Identify one or more relevant skills to achieve the given goal",
+        "Generate a valid, ordered sequence of skill calls",
+        "Can the skill extract or infer the necessary parameters for each skill call from the goal description",
+        "Trigger the execution of the generated plan",
+        "Can the skill handle goals that require no immediate action (e.g., monitoring goals)",
+        "Recognize when no existing skill can satisfy the goal and flag it as a capability gap"
+      ],
+      "scenario_count": 8,
+      "eval_coverage": [
+        "Identify one or more relevant skills to achieve the given goal",
+        "Generate a valid, ordered sequence of skill calls",
+        "Can the skill extract or infer the necessary parameters for each skill call from the goal description",
+        "Trigger the execution of the generated plan",
+        "Can the skill handle goals that require no immediate action (e.g., monitoring goals)",
+        "Recognize when no existing skill can satisfy the goal and flag it as a capability gap"
+      ]
+    },
     "inbox-cleaner": {
       "score": 36,
       "max": 36,
@@ -898,32 +940,32 @@
       ]
     },
     "instantly-campaigns": {
-      "score": 34,
+      "score": 36,
       "max": 36,
-      "ratio": 0.944,
+      "ratio": 1,
       "trajectory": "improving",
       "weakest_criteria": [
         {
           "name": "Task Completion",
-          "fail_rate": 0.818
+          "fail_rate": 0.588
         },
         {
           "name": "Error Handling",
-          "fail_rate": 0.818
+          "fail_rate": 0.588
         },
         {
           "name": "Completeness",
-          "fail_rate": 0.818
+          "fail_rate": 0.588
         }
       ],
       "strongest_criteria": [],
-      "rounds_completed": 11,
-      "rounds_kept": 3,
-      "cost_invested": 0.53,
-      "last_improvement": "2026-03-25T22:02:06.139Z",
+      "rounds_completed": 17,
+      "rounds_kept": 4,
+      "cost_invested": 0.81,
+      "last_improvement": "2026-03-26T06:03:28.926Z",
       "last_escalation": {
-        "diagnosis": "The optimization process is stuck in a local optimum of \"instructional over-engineering.\" Initial mutations were beneficial, adding explicit checks and error handling which improved the score to a peak of 34/36. However, subsequent mutations continued to add more granular rules, warnings, and formatting changes (e.g., renaming steps to stages). This has resulted in instruction creep, making the prompt excessively long and complex. The agent is now likely suffering from cognitive overload, failing to parse the convoluted flow control between the main `Process` and the separate `Error Recovery Protocol`. The catastrophic score drop to 18/36 after a seemingly innocuous change (renaming steps) indicates the skill's structure has become brittle; any modification, even a helpful one, now risks breaking the agent's fragile understanding of the overall task.",
-        "timestamp": "2026-03-25T22:09:00.385Z"
+        "diagnosis": "The optimization loop is stuck because the skill has achieved a perfect score (36/36) against the current evaluation suite. The problem is not a local optimum in skill quality, but a global maximum relative to the existing tests. The system's imperative to \"always improve\" is causing it to apply minor, superfluous mutations (e.g., adding extra clarifying sentences) to a skill that is already performing flawlessly on all measured criteria. This process of adding redundant instructions leads to \"instructional bloat\" without providing any performance benefit, as there are no failed test cases left to solve. The core issue is the evaluation suite's inability to challenge the skill further, not a deficiency in the skill itself.",
+        "timestamp": "2026-03-26T06:09:55.355Z"
       },
       "stuck_count": 3,
       "criteria_names": [
@@ -942,6 +984,94 @@
         "Tool Usage",
         "Instructions Clarity",
         "Completeness"
+      ]
+    },
+    "intent-clarifier": {
+      "score": 48,
+      "max": 48,
+      "ratio": 1,
+      "trajectory": "insufficient_data",
+      "weakest_criteria": [],
+      "strongest_criteria": [
+        {
+          "name": "Identify implicit assumptions in the user's request",
+          "fail_rate": 0
+        },
+        {
+          "name": "Generate specific, non-leading questions to resolve ambiguities",
+          "fail_rate": 0
+        },
+        {
+          "name": "Does the output provide a structured, confirmed plan of action",
+          "fail_rate": 0
+        }
+      ],
+      "rounds_completed": 1,
+      "rounds_kept": 1,
+      "cost_invested": 0.05,
+      "last_improvement": "2026-03-25T23:11:38.080Z",
+      "last_escalation": null,
+      "stuck_count": 0,
+      "criteria_names": [
+        "Identify implicit assumptions in the user's request",
+        "Generate specific, non-leading questions to resolve ambiguities",
+        "Does the output provide a structured, confirmed plan of action",
+        "Halt execution of a downstream skill if the user denies the clarified plan",
+        "Can the skill re-phrase the user's goal into a set of explicit, verifiable requirements",
+        "Parse and incorporate answers to its own questions into the final plan"
+      ],
+      "scenario_count": 8,
+      "eval_coverage": [
+        "Identify implicit assumptions in the user's request",
+        "Generate specific, non-leading questions to resolve ambiguities",
+        "Does the output provide a structured, confirmed plan of action",
+        "Halt execution of a downstream skill if the user denies the clarified plan",
+        "Can the skill re-phrase the user's goal into a set of explicit, verifiable requirements",
+        "Parse and incorporate answers to its own questions into the final plan"
+      ]
+    },
+    "interactive-skill-refiner": {
+      "score": 44,
+      "max": 48,
+      "ratio": 0.917,
+      "trajectory": "improving",
+      "weakest_criteria": [
+        {
+          "name": "Propose a specific, actionable modification based on the diagnosis",
+          "fail_rate": 1
+        },
+        {
+          "name": "Generate new, relevant tests using `skill-test-generator` to verify the fix",
+          "fail_rate": 1
+        },
+        {
+          "name": "Apply the user-approved modification to the skill's definition",
+          "fail_rate": 1
+        }
+      ],
+      "strongest_criteria": [],
+      "rounds_completed": 4,
+      "rounds_kept": 2,
+      "cost_invested": 0.2,
+      "last_improvement": "2026-03-25T23:15:06.963Z",
+      "last_escalation": null,
+      "stuck_count": 2,
+      "criteria_names": [
+        "Identify the target skill from user input",
+        "Invoke `stuck-skill-diagnoser` or `failure-log-analyzer` to find root causes",
+        "Propose a specific, actionable modification based on the diagnosis",
+        "Generate new, relevant tests using `skill-test-generator` to verify the fix",
+        "Apply the user-approved modification to the skill's definition",
+        "Run the new tests using `skill-test-runner` and report the before/after scores"
+      ],
+      "scenario_count": 8,
+      "eval_coverage": [
+        "Identify the target skill from user input",
+        "Invoke `stuck-skill-diagnoser` or `failure-log-analyzer` to find root causes",
+        "Propose a specific, actionable modification based on the diagnosis",
+        "Generate new, relevant tests using `skill-test-generator` to verify the fix",
+        "Apply the user-approved modification to the skill's definition",
+        "Run the new tests using `skill-test-runner` and report the before/after scores"
       ]
     },
     "k8s-deployment-manager": {
@@ -1715,44 +1845,34 @@
       ]
     },
     "scaffold": {
-      "score": 49,
+      "score": 56,
       "max": 60,
-      "ratio": 0.817,
+      "ratio": 0.933,
       "trajectory": "insufficient_data",
       "weakest_criteria": [
         {
           "name": "Parameter Gathering",
-          "fail_rate": 1
+          "fail_rate": 0.857
         },
         {
           "name": "Execution Completeness",
-          "fail_rate": 1
+          "fail_rate": 0.857
         },
         {
           "name": "Integration Awareness",
-          "fail_rate": 1
+          "fail_rate": 0.571
         }
       ],
-      "strongest_criteria": [
-        {
-          "name": "Mode Detection",
-          "fail_rate": 0
-        },
-        {
-          "name": "Vendor Detection",
-          "fail_rate": 0
-        },
-        {
-          "name": "Dependency Ordering",
-          "fail_rate": 0
-        }
-      ],
-      "rounds_completed": 1,
-      "rounds_kept": 0,
-      "cost_invested": 0.05,
-      "last_improvement": null,
-      "last_escalation": null,
-      "stuck_count": 1,
+      "strongest_criteria": [],
+      "rounds_completed": 7,
+      "rounds_kept": 1,
+      "cost_invested": 0.33,
+      "last_improvement": "2026-03-26T14:00:39.746Z",
+      "last_escalation": {
+        "diagnosis": "The skill is stuck in a local optimum due to a complexity death spiral. Each mutation has attempted to patch specific failures by adding more prescriptive rules, mandatory checklists, and rigid procedures (e.g., the global Step 0 gate, the 16-step mandatory execution table). This over-specification increases the cognitive load on the language model, forcing it to act like a simple script-follower—a task it is not well-suited for. This brittleness causes new, more severe failures when the model inevitably deviates from the complex, hard-to-follow instructions, leading to a sharp decline in performance. The core issue is that the skill's design fights the model's strengths (reasoning, goal-orientation) instead of leveraging them.",
+        "timestamp": "2026-03-26T14:09:45.397Z"
+      },
+      "stuck_count": 3,
       "criteria_names": [
         "Mode Detection",
         "Parameter Gathering",
@@ -2283,6 +2403,55 @@
         "Completeness"
       ]
     },
+    "tradfi-market-analyzer": {
+      "score": 48,
+      "max": 48,
+      "ratio": 1,
+      "trajectory": "stuck",
+      "weakest_criteria": [
+        {
+          "name": "Fetch price data for a given ticker using the appropriate tool",
+          "fail_rate": 0.4
+        },
+        {
+          "name": "Can the skill identify potential arbitrage opportunities between two specified exchanges",
+          "fail_rate": 0.4
+        },
+        {
+          "name": "Does the report summarize relevant macroeconomic indicators for a given country",
+          "fail_rate": 0.4
+        }
+      ],
+      "strongest_criteria": [
+        {
+          "name": "Is the final analysis presented in a structured format (e.g., JSON or markdown table)",
+          "fail_rate": 0
+        }
+      ],
+      "rounds_completed": 5,
+      "rounds_kept": 2,
+      "cost_invested": 0.25,
+      "last_improvement": "2026-03-25T23:06:24.245Z",
+      "last_escalation": null,
+      "stuck_count": 3,
+      "criteria_names": [
+        "Fetch price data for a given ticker using the appropriate tool",
+        "Can the skill identify potential arbitrage opportunities between two specified exchanges",
+        "Does the report summarize relevant macroeconomic indicators for a given country",
+        "Does the output correctly aggregate signals from multiple sources into a coherent summary",
+        "Can the skill perform a basic technical analysis (e.g., moving average) on a price feed",
+        "Is the final analysis presented in a structured format (e.g., JSON or markdown table)"
+      ],
+      "scenario_count": 8,
+      "eval_coverage": [
+        "Fetch price data for a given ticker using the appropriate tool",
+        "Can the skill identify potential arbitrage opportunities between two specified exchanges",
+        "Does the report summarize relevant macroeconomic indicators for a given country",
+        "Does the output correctly aggregate signals from multiple sources into a coherent summary",
+        "Can the skill perform a basic technical analysis (e.g., moving average) on a price feed",
+        "Is the final analysis presented in a structured format (e.g., JSON or markdown table)"
+      ]
+    },
     "video-to-action": {
       "score": 36,
       "max": 36,
@@ -2550,30 +2719,31 @@
       "severity": "high"
     },
     {
-      "pattern": "3 skills are currently stuck (3+ consecutive reverts)",
+      "pattern": "4 skills are currently stuck (3+ consecutive reverts)",
       "affected_skills": [
         "context-drift-detector",
         "polymarket-5min-strategy",
-        "polymarket-market-discovery"
+        "polymarket-market-discovery",
+        "tradfi-market-analyzer"
       ],
-      "frequency": 3,
+      "frequency": 4,
       "severity": "high"
     },
     {
-      "pattern": "3 skills have had rounds but no kept improvements",
+      "pattern": "2 skills have had rounds but no kept improvements",
       "affected_skills": [
         "context-drift-detector",
-        "polymarket-5min-strategy",
-        "scaffold"
+        "polymarket-5min-strategy"
       ],
-      "frequency": 3,
+      "frequency": 2,
       "severity": "high"
     },
     {
-      "pattern": "31 skills have triggered stuck escalations",
+      "pattern": "33 skills have triggered stuck escalations",
       "affected_skills": [
         "container-security-auditor",
         "content-strategy-optimizer",
+        "context-drift-detector",
         "cross-niche-outliers",
         "defi-arbitrage-executor",
         "eaas-payment-linker",
@@ -2591,6 +2761,7 @@
         "polymarket-position-manager",
         "polymarket-websocket-monitor",
         "prompt-refiner-for-robustness",
+        "scaffold",
         "scrape-leads",
         "skill-improver",
         "skill-optimizer-v2",
@@ -2604,7 +2775,7 @@
         "youtube-channel-analysis",
         "youtube-outliers"
       ],
-      "frequency": 31,
+      "frequency": 33,
       "severity": "medium"
     },
     {
@@ -2647,9 +2818,12 @@
       "gmail-inbox",
       "gmail-label",
       "gmaps-leads",
+      "goal-to-skill-executor",
       "inbox-cleaner",
       "instantly-autoreply",
       "instantly-campaigns",
+      "intent-clarifier",
+      "interactive-skill-refiner",
       "linkedin-response",
       "onboarding-kickoff",
       "polymarket-5min-strategy",
@@ -2682,7 +2856,8 @@
       "cross-model-intelligence-pipeline",
       "failure-log-analyzer",
       "polymarket-flash-crash-detector",
-      "polymarket-market-analyzer"
+      "polymarket-market-analyzer",
+      "tradfi-market-analyzer"
     ],
     "context_management": [
       "context-drift-detector",
@@ -2718,12 +2893,12 @@
   },
   "uncovered_domains": [],
   "summary": {
-    "total_skills": 52,
-    "avg_ratio": 0.965,
-    "skills_at_target": 37,
-    "skills_stuck": 3,
+    "total_skills": 56,
+    "avg_ratio": 0.969,
+    "skills_at_target": 41,
+    "skills_stuck": 4,
     "skills_untested": 3,
-    "total_cost": 16.81,
-    "total_rounds": 359
+    "total_cost": 18.2,
+    "total_rounds": 388
   }
 }

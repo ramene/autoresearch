@@ -21,8 +21,25 @@ Create three email campaigns in Instantly based on a client description and offe
 
 ## Process
 
-### 0. Verify Working Directory (REQUIRED FIRST STEP)
-Before doing anything else, confirm you are in the correct directory by running:
+> **Pre-flight steps (-1 and 0) must both pass before entering the main workflow (Steps 1–4).** They validate inputs and environment. Only after both succeed should you proceed to Step 1.
+
+### -1. Validate Inputs (REQUIRED FIRST STEP — no API calls or script execution here)
+Before doing anything else, validate the user's input. This step is pure input validation — do not run any scripts or make any API calls here.
+
+**Check required fields:**
+- `client_description` — Must be present and non-empty. If missing or blank, **STOP and ask the user**: "Please provide a client description (company name, industry, target audience, and value proposition) before I can create campaigns."
+- `client_name` — If not provided, derive a short name from the client description (e.g. the company name). Do not leave blank.
+
+**Normalize large inputs:**
+- If `client_description` exceeds 800 characters, truncate it to 800 characters at the nearest sentence boundary.
+- If any single offer text exceeds 200 characters, truncate it to 200 characters.
+- If `target_audience` exceeds 300 characters, truncate it to 300 characters.
+- If `social_proof` exceeds 300 characters, truncate it to 300 characters.
+
+**Do not proceed to Step 0 if client_description is missing or blank.**
+
+### 0. Verify Working Directory (REQUIRED BEFORE RUNNING SCRIPT)
+Confirm you are in the correct directory by running:
 
 ```bash
 ls ./scripts/instantly_create_campaigns.py 2>&1 && grep -E "INSTANTLY_API_KEY|ANTHROPIC_API_KEY" .env 2>&1
@@ -56,7 +73,14 @@ Offers to be used:
 **Do not proceed to Step 3 until you have exactly 3 offers ready.**
 
 ### 3. Run Script & Capture Output
-Run the script **exactly once**, substituting the **actual offer text from Step 2** into the `--offers` argument (pipe-separated, no brackets). Do NOT pass placeholder text like "Offer 1" — use the real offer sentences you wrote above.
+Before running the script, determine values for ALL arguments:
+- `--client_name`: Use the name derived in Step -1.
+- `--client_description`: Use the (possibly truncated) description from Step -1.
+- `--offers`: Use the **exact offer text from Step 2** (pipe-separated). Do NOT pass placeholder text like "Offer 1".
+- `--target_audience`: Use the value provided by the user. If not explicitly provided, derive a concise description (≤300 chars) from the client description (e.g. "SaaS companies looking to reduce churn"). Do NOT leave blank.
+- `--social_proof`: Use the value provided by the user. If not explicitly provided, derive a short credibility statement (≤300 chars) from the client description (e.g. "Helped 50+ B2B companies double their reply rates"). Do NOT leave blank.
+
+Run the script **exactly once** with the resolved argument values.
 
 For example, if Step 2 produced:
 - Offer 1: Cut onboarding time by 50% in 30 days

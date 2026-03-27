@@ -44,3 +44,23 @@
 
 ## Round 10 — Mutation Applied
 - **Mutation**: Rename Error Recovery Protocol numbered steps to lettered stages (A, B, C, D) to eliminate namespace collision with the main Process's Step 0–4 numbering, preventing agents from conflating "Step 2" in error recovery with "Step 2" in the main flow.
+
+## Round 11 — Mutation Applied
+- **Mutation**: Add an input validation step before Step 0 that stops and asks for the required client description if missing (fixes edge-empty) and truncates oversized description/offers to safe lengths (fixes edge-large), preventing the script from being called with empty or malformed arguments.
+
+## Round 11
+- **Score**: 36/36 (kept)
+- **Failures**: none
+- **Per-criteria**: Task Completion: 6/6, Error Handling: 6/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 6/6, Completeness: 6/6
+
+## Round 12 — Mutation Applied
+- **Mutation**: Added a brief clarifying note to the Process section header distinguishing the two pre-flight steps (-1 and 0) from the main 3-step workflow, reducing any potential confusion about the unusual negative step numbering.
+
+## Round 13 — Mutation Applied
+- **Mutation**: Added explicit note to Step -1 header clarifying it involves no API calls or script execution — pure input validation only — to eliminate any ambiguity about what operations are permitted before environment checks pass.
+
+## Round 14 — Mutation Applied
+- **Mutation**: Added explicit guidance in Step 3 to derive --target_audience and --social_proof from the client description when the user hasn't provided them, preventing blank/empty arguments from reaching the script.
+
+## Round 15 — Mutation Applied
+- **Mutation**: All criteria scored 36/36 with zero failures — no mutation needed. Returning the skill unchanged to preserve its perfect score.

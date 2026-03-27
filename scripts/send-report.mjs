@@ -55,9 +55,16 @@ for (const m of log.matchAll(/^\s+([✓✗⊘])\s+(.+?)\s+—\s+(.+)$/gm)) {
 const mutations = []
 for (const m of log.matchAll(/\[Mutation\]\s+(.{1,80})/g)) mutations.push(m[1])
 
-// Promotions
-const promos = []
-for (const m of log.matchAll(/^\s+(\S+):\s+(\d+\/\d+)\s+\(baseline/gm)) promos.push(`${m[1]}: ${m[2]}`)
+// Promotions — deduplicate and exclude already-promoted skills
+const promotedManifest = (() => {
+  const p = resolve(process.env.HOME, '.remote/@autoresearch/skills/promoted.json')
+  try { return JSON.parse(readFileSync(p, 'utf8')) } catch { return {} }
+})()
+const promoSet = new Set()
+for (const m of log.matchAll(/^\s+(\S+):\s+(\d+\/\d+)\s+\(baseline/gm)) {
+  if (!promotedManifest[m[1]]) promoSet.add(`${m[1]}: ${m[2]}`)
+}
+const promos = [...promoSet]
 
 // Fleet from self-model
 let fleet = {}

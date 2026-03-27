@@ -8,7 +8,7 @@
     "Instructions Clarity",
     "Completeness"
   ],
-  "totalCost": 0.49999999999999994,
+  "totalCost": 0.7800000000000001,
   "models": {
     "mutator": "sonnet",
     "evaluator": "gemini-2.5-pro"
@@ -653,6 +653,201 @@
       },
       "timestamp": "2026-03-25T22:07:00.372Z",
       "changelog": "**Mutation**: Rename Error Recovery Protocol numbered steps to lettered stages (A, B, C, D) to eliminate namespace collision with the main Process's Step 0–4 numbering, preventing agents from conflating \"Step 2\" in error recovery with \"Step 2\" in the main flow.\n**Failures**: S2: Task Completion, S2: Error Handling, S2: Output Quality, S2: Tool Usage, S2: Instructions Clarity, S2: Completeness, S3: Task Completion, S3: Error Handling, S3: Output Quality, S3: Tool Usage, S3: Instructions Clarity, S3: Completeness, S6: Task Completion, S6: Error Handling, S6: Output Quality, S6: Tool Usage, S6: Instructions Clarity, S6: Completeness\n**Per-criteria**: Task Completion: 3/6, Error Handling: 3/6, Output Quality: 3/6, Tool Usage: 3/6, Instructions Clarity: 3/6, Completeness: 3/6\n**Decision**: Score 18 did not exceed best 34 — mutation produced worse or equal results"
+    },
+    {
+      "round": 9,
+      "score": 18,
+      "max": 36,
+      "status": "escalation",
+      "mutation": "Stuck escalation: The optimization process is stuck in a local optimum of \"instructional over-engineering.\" Initial mutations were beneficial, adding explicit checks and error handling which improved the score to a pea",
+      "cost": 0.03,
+      "criteria": [
+        3,
+        3,
+        3,
+        3,
+        3,
+        3
+      ],
+      "failures": [],
+      "decisionReason": "Stuck escalation triggered after 3+ rounds with no improvement",
+      "escalation": {
+        "diagnosis": "The optimization process is stuck in a local optimum of \"instructional over-engineering.\" Initial mutations were beneficial, adding explicit checks and error handling which improved the score to a peak of 34/36. However, subsequent mutations continued to add more granular rules, warnings, and formatting changes (e.g., renaming steps to stages). This has resulted in instruction creep, making the prompt excessively long and complex. The agent is now likely suffering from cognitive overload, failing to parse the convoluted flow control between the main `Process` and the separate `Error Recovery Protocol`. The catastrophic score drop to 18/36 after a seemingly innocuous change (renaming steps) indicates the skill's structure has become brittle; any modification, even a helpful one, now risks breaking the agent's fragile understanding of the overall task.",
+        "evalRedesignNeeded": false,
+        "strategy": "Shift from adding more specific instructions to **simplifying and consolidating the control flow**. The current model of a linear process that \"jumps\" to a separate, multi-stage error protocol is proving fragile and confusing for the agent. The new strategy is to refactor the skill by **integrating error handling directly within the primary process steps**. Each step that can fail should contain its own `if-success/then-proceed` and `if-failure/then-diagnose-and-report` logic. This eliminates the need for a separate protocol, creates a more linear and predictable execution path, and reduces the cognitive load on the agent.",
+        "suggestedMutation": "**Action**: Remove the `Error Recovery Protocol` section entirely and merge its logic directly into Step 3. This refactors the most critical part of the skill into a self-contained, conditional block.\n\n**Replace the current \"Step 3. Run Script & Capture Output\" and the entire \"Error Recovery Protocol\" with this new, consolidated Step 3:**\n\n```markdown\n### 3. Run Script, Verify, and Report\nThis is the final action step. Run the script and handle the outcome based on its output.\n\n**A. Execute the Script**\nRun the script **exactly once**, substituting the **actual offer text from Step 2** into the `--offers` argument (pipe-separated).\n\n```bash\npython3 ./scripts/instantly_create_campaigns.py \\\n  --client_name \"ClientName\" \\\n  --client_description \"Description of the client...\" \\\n  --offers \"Offer text 1|Offer text 2|Offer text 3\" \\\n  --target_audience \"Who we're emailing\" \\\n  --social_proof \"Credentials/results to mention\" \\\n  2>&1\n```\n\n**B. Analyze the Output**\nImmediately after the script finishes, check its output.\n\n*   **If the output contains `\"status\": \"success\"` and `\"campaigns_created\": 3`:** The script succeeded. Proceed to Step 4 to format the final report.\n\n*   **If the output shows an error, `\"status\": \"failure\"`, or fewer than 3 campaigns were created:** The script failed. Do NOT proceed to Step 4. Instead, perform the following diagnosis and report the failure.\n    1.  **Diagnose Root Cause:** Check for missing API keys.\n        ```bash\n        grep -E \"INSTANTLY_API_KEY|ANTHROPIC_API_KEY\" .env\n        ```\n    2.  **Report the Failure Clearly:** Use the script's error message and your diagnosis to inform the user.\n        *   **For a total failure (0 campaigns):**\n            ```\n            ❌ Campaign creation failed: Created 0/3 campaigns\n\n            Error from script:\n            [Paste the full error message or stack trace from the script output here]\n\n            Diagnosis:\n            - API key status: [valid / missing / placeholder]\n            - Action required: [e.g. \"Check INSTANTLY_API_KEY in .env\", \"Verify network connectivity\"]\n            ```\n        *   **For a partial failure (1 or 2 campaigns):**\n            ```\n            ⚠️ Partial completion: Created [1 or 2]/3 campaigns.\n\n            Error from script:\n            [Paste the full error message or stack trace from the script output here]\n\n            Diagnosis:\n            - The script failed after creating some campaigns. This could be a rate limit or intermittent API issue.\n            - Action required: Review the created campaigns in Instantly and re-run for the failed offer.\n            ```\n    3.  **STOP.** Do not continue after reporting a failure.\n\n### 4. Confirm Completion (Success Path Only)\nIf and only if Step 3 was a full success, report the results to the user in this format:\n```\n✅ Created 3 campaigns successfully:\n- Campaign 1: [name] (ID: ...)\n- Campaign 2: [name] (ID: ...)\n- Campaign 3: [name] (ID: ...)\n\nOffers used:\n- Offer 1: [text]\n- Offer 2: [text]\n- Offer 3: [text]\n\nEach campaign includes:\n- Email 1 with 2 A/B variants\n- Email 2 follow-up\n- Email 3 breakup\n```\n```"
+      },
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-25T22:09:00.385Z"
+    },
+    {
+      "round": 10,
+      "score": 26,
+      "max": 36,
+      "status": "reverted",
+      "mutation": "Add an input validation step before Step 0 that stops and asks for the required client description if missing (fixes edge-empty) and truncates oversized description/offers to safe lengths (fixes edge-large), preventing the script from being called with empty or malformed arguments.",
+      "cost": 0.05,
+      "criteria": [
+        4,
+        4,
+        6,
+        4,
+        4,
+        4
+      ],
+      "failures": [
+        {
+          "scenario": 2,
+          "criterion": "Task Completion"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Error Handling"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Tool Usage"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Instructions Clarity"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Completeness"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Task Completion"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Error Handling"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Tool Usage"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Instructions Clarity"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Completeness"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 26 did not exceed best 34 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-26T06:00:35.792Z",
+      "changelog": "**Mutation**: Add an input validation step before Step 0 that stops and asks for the required client description if missing (fixes edge-empty) and truncates oversized description/offers to safe lengths (fixes edge-large), preventing the script from being called with empty or malformed arguments.\n**Failures**: S2: Task Completion, S2: Error Handling, S2: Tool Usage, S2: Instructions Clarity, S2: Completeness, S3: Task Completion, S3: Error Handling, S3: Tool Usage, S3: Instructions Clarity, S3: Completeness\n**Per-criteria**: Task Completion: 4/6, Error Handling: 4/6, Output Quality: 6/6, Tool Usage: 4/6, Instructions Clarity: 4/6, Completeness: 4/6\n**Decision**: Score 26 did not exceed best 34 — mutation produced worse or equal results"
+    },
+    {
+      "round": 11,
+      "score": 36,
+      "max": 36,
+      "status": "kept",
+      "mutation": "Added a brief clarifying note to the Process section header distinguishing the two pre-flight steps (-1 and 0) from the main 3-step workflow, reducing any potential confusion about the unusual negative step numbering.",
+      "cost": 0.05,
+      "criteria": [
+        6,
+        6,
+        6,
+        6,
+        6,
+        6
+      ],
+      "failures": [],
+      "geminiThoughts": null,
+      "decisionReason": "Improved from 34 to 36",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-26T06:03:28.926Z",
+      "changelog": "**Mutation**: Added a brief clarifying note to the Process section header distinguishing the two pre-flight steps (-1 and 0) from the main 3-step workflow, reducing any potential confusion about the unusual negative step numbering.\n**Failures**: none\n**Per-criteria**: Task Completion: 6/6, Error Handling: 6/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 6/6, Completeness: 6/6\n**Decision**: Improved from 34 to 36"
+    },
+    {
+      "round": 12,
+      "score": 36,
+      "max": 36,
+      "status": "reverted",
+      "mutation": "Added explicit note to Step -1 header clarifying it involves no API calls or script execution — pure input validation only — to eliminate any ambiguity about what operations are permitted before environment checks pass.",
+      "cost": 0.05,
+      "criteria": [
+        6,
+        6,
+        6,
+        6,
+        6,
+        6
+      ],
+      "failures": [],
+      "geminiThoughts": null,
+      "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-26T06:05:15.274Z",
+      "changelog": "**Mutation**: Added explicit note to Step -1 header clarifying it involves no API calls or script execution — pure input validation only — to eliminate any ambiguity about what operations are permitted before environment checks pass.\n**Failures**: none\n**Per-criteria**: Task Completion: 6/6, Error Handling: 6/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 6/6, Completeness: 6/6\n**Decision**: Score 36 did not exceed best 36 — mutation produced worse or equal results"
+    },
+    {
+      "round": 13,
+      "score": 36,
+      "max": 36,
+      "status": "reverted",
+      "mutation": "Added explicit guidance in Step 3 to derive --target_audience and --social_proof from the client description when the user hasn't provided them, preventing blank/empty arguments from reaching the script.",
+      "cost": 0.05,
+      "criteria": [
+        6,
+        6,
+        6,
+        6,
+        6,
+        6
+      ],
+      "failures": [],
+      "geminiThoughts": null,
+      "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-26T06:06:59.120Z",
+      "changelog": "**Mutation**: Added explicit guidance in Step 3 to derive --target_audience and --social_proof from the client description when the user hasn't provided them, preventing blank/empty arguments from reaching the script.\n**Failures**: none\n**Per-criteria**: Task Completion: 6/6, Error Handling: 6/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 6/6, Completeness: 6/6\n**Decision**: Score 36 did not exceed best 36 — mutation produced worse or equal results"
+    },
+    {
+      "round": 14,
+      "score": 36,
+      "max": 36,
+      "status": "reverted",
+      "mutation": "All criteria scored 36/36 with zero failures — no mutation needed. Returning the skill unchanged to preserve its perfect score.",
+      "cost": 0.05,
+      "criteria": [
+        6,
+        6,
+        6,
+        6,
+        6,
+        6
+      ],
+      "failures": [],
+      "geminiThoughts": null,
+      "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-26T06:08:33.878Z",
+      "changelog": "**Mutation**: All criteria scored 36/36 with zero failures — no mutation needed. Returning the skill unchanged to preserve its perfect score.\n**Failures**: none\n**Per-criteria**: Task Completion: 6/6, Error Handling: 6/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 6/6, Completeness: 6/6\n**Decision**: Score 36 did not exceed best 36 — mutation produced worse or equal results"
     }
   ]
 }
