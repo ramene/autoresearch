@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-03-27T06:08:38.101Z",
+  "timestamp": "2026-03-29T07:07:56.947Z",
   "version": "1.0",
   "skills": {
     "backup": {
@@ -184,25 +184,25 @@
       "weakest_criteria": [
         {
           "name": "Skill Integration",
-          "fail_rate": 0.909
+          "fail_rate": 0.882
         },
         {
           "name": "Detection Coverage",
-          "fail_rate": 0.091
+          "fail_rate": 0.353
         },
         {
           "name": "Severity Classification",
-          "fail_rate": 0.091
+          "fail_rate": 0.353
         }
       ],
       "strongest_criteria": [],
-      "rounds_completed": 11,
+      "rounds_completed": 17,
       "rounds_kept": 0,
-      "cost_invested": 0.51,
+      "cost_invested": 0.79,
       "last_improvement": null,
       "last_escalation": {
-        "diagnosis": "The optimization loop is stuck in a local optimum because it has exclusively focused on tweaking the frontmatter `description` to solve a skill selection problem. After 8+ rounds of rephrasing, adding keywords, and changing formats, it's clear that the *wording* of the description is not the root cause of the selection failure. The actual problem is the skill's monolithic structure and high perceived complexity. The AI model is likely hesitant to invoke such a heavy, multi-phase skill that includes potentially risky actions (like running build commands) for simple queries like \"are my docs up to date?\". It opts for a \"Correct Action\" of not using the skill, likely because a simpler, manual approach (e.g., just `ls`-ing a few files) seems safer and less costly than triggering this complex audit. No amount of description-tuning will overcome this fundamental structural barrier.",
-        "timestamp": "2026-03-27T06:06:26.702Z"
+        "diagnosis": "The optimization loop is stuck in a local optimum because it has been adding sophisticated secondary features (severity classification, git integration, fix generation) on top of a fundamentally flawed core logic. The mutations from rounds 14-16 successfully restored functionality that was lost in a major refactor (Round 13), but the score is now capped at 33/60. The root cause of the remaining failures is the initial path detection step. The `grep` regex is too specific and brittle; it fails to find many valid path formats, such as paths without file extensions (e.g., `Makefile`, `Dockerfile`), directory-only paths (`src/utils`), or files with extensions not in its hardcoded list. Since no paths are found, the downstream features (severity, git, etc.) never execute, causing cascading failures across multiple evaluation criteria.",
+        "timestamp": "2026-03-27T14:05:54.283Z"
       },
       "stuck_count": 8,
       "criteria_names": [
@@ -570,25 +570,25 @@
       "score": 30,
       "max": 36,
       "ratio": 0.833,
-      "trajectory": "insufficient_data",
+      "trajectory": "stuck",
       "weakest_criteria": [
         {
           "name": "Parse the structured log data",
-          "fail_rate": 0.833
+          "fail_rate": 0.857
         },
         {
           "name": "Identify the specific tool call or code line that produced the error",
-          "fail_rate": 0.833
+          "fail_rate": 0.857
         },
         {
           "name": "Does the hypothesis distinguish between transient (e.g., API timeout) and systemic (e.g., bad prompt) errors",
-          "fail_rate": 0.833
+          "fail_rate": 0.857
         }
       ],
       "strongest_criteria": [],
-      "rounds_completed": 6,
+      "rounds_completed": 7,
       "rounds_kept": 1,
-      "cost_invested": 0.28,
+      "cost_invested": 0.31,
       "last_improvement": "2026-03-20T20:00:39.597Z",
       "last_escalation": {
         "diagnosis": "The optimization process is stuck in a \"robustness plateau.\" All recent mutations have focused on improving the skill's resilience to edge cases in the input data: malformed log lines, non-standard round number fields, varied error event formats, and missing optional files. While these are valuable improvements, they only affect the initial data ingestion and failure identification steps (Steps 1-3). The consistent 30/36 score, with all failures occurring in the same scenario (S6), indicates that the core analytical and reasoning logic (Step 4: \"Analyze Failure Context and Hypothesize Cause\") is the actual weak point. The skill is successfully *finding* the failure event but is failing to correctly *interpret its cause* in a specific, complex scenario that the robustness tweaks do not address.",
@@ -903,24 +903,27 @@
       "weakest_criteria": [
         {
           "name": "Task Completion",
-          "fail_rate": 0.6
+          "fail_rate": 0.364
         },
         {
           "name": "Error Handling",
-          "fail_rate": 0.6
+          "fail_rate": 0.364
         },
         {
           "name": "Output Quality",
-          "fail_rate": 0.6
+          "fail_rate": 0.364
         }
       ],
       "strongest_criteria": [],
-      "rounds_completed": 5,
+      "rounds_completed": 11,
       "rounds_kept": 3,
-      "cost_invested": 0.23,
+      "cost_invested": 0.51,
       "last_improvement": "2026-03-20T20:32:54.633Z",
-      "last_escalation": null,
-      "stuck_count": 2,
+      "last_escalation": {
+        "diagnosis": "The optimization loop is stuck in a local optimum because the skill has achieved a perfect score against the existing evaluation suite. The mutations being applied (e.g., adding user-facing explanations for missing IDs, clarifying error messages for missing scripts) are valid, defensive improvements that address edge cases. However, since there are no test scenarios that cover these specific edge cases, the improvements do not result in a score change. The system correctly identifies \"no improvement\" and reverts or keeps the change without a positive signal. The root cause is not a flaw in the skill or the mutation strategy, but rather an exhausted test suite that is no longer challenging enough to measure the value of these incremental, robustness-focused enhancements.",
+        "timestamp": "2026-03-28T06:03:34.698Z"
+      },
+      "stuck_count": 5,
       "criteria_names": [
         "Task Completion",
         "Error Handling",
@@ -2367,24 +2370,27 @@
       "weakest_criteria": [
         {
           "name": "Instructions Clarity",
-          "fail_rate": 1
+          "fail_rate": 0.765
         },
         {
           "name": "Completeness",
-          "fail_rate": 0.6
+          "fail_rate": 0.765
         },
         {
           "name": "Output Quality",
-          "fail_rate": 0.4
+          "fail_rate": 0.588
         }
       ],
       "strongest_criteria": [],
-      "rounds_completed": 5,
+      "rounds_completed": 17,
       "rounds_kept": 2,
-      "cost_invested": 0.25,
+      "cost_invested": 0.81,
       "last_improvement": "2026-03-20T22:37:20.614Z",
-      "last_escalation": null,
-      "stuck_count": 1,
+      "last_escalation": {
+        "diagnosis": "The optimization is stuck in a local optimum because all recent mutations have focused on perfecting the *procedural integrity* of the skill, specifically the logic for detecting Plan A failures and transitioning to Plan B. While these changes have made the skill more robust at identifying when to use the fallback, they have completely ignored the quality and reliability of the fallback (Plan B) itself. The remaining 5 failures are almost certainly occurring in test scenarios that successfully trigger Plan B, but where the AI then fails to execute the abstract, creative instructions in Step B2 correctly. The system is perfecting the error-handling scaffolding while the core fallback logic remains the weak point.",
+        "timestamp": "2026-03-29T07:05:42.504Z"
+      },
+      "stuck_count": 5,
       "criteria_names": [
         "Task Completion",
         "Error Handling",
@@ -2719,14 +2725,15 @@
       "severity": "high"
     },
     {
-      "pattern": "4 skills are currently stuck (3+ consecutive reverts)",
+      "pattern": "5 skills are currently stuck (3+ consecutive reverts)",
       "affected_skills": [
         "context-drift-detector",
+        "failure-log-analyzer",
         "polymarket-5min-strategy",
         "polymarket-market-discovery",
         "tradfi-market-analyzer"
       ],
-      "frequency": 4,
+      "frequency": 5,
       "severity": "high"
     },
     {
@@ -2739,7 +2746,7 @@
       "severity": "high"
     },
     {
-      "pattern": "33 skills have triggered stuck escalations",
+      "pattern": "35 skills have triggered stuck escalations",
       "affected_skills": [
         "container-security-auditor",
         "content-strategy-optimizer",
@@ -2751,6 +2758,7 @@
         "gmail",
         "gmail-inbox",
         "gmaps-leads",
+        "instantly-autoreply",
         "instantly-campaigns",
         "k8s-deployment-manager",
         "polymarket-5min-strategy",
@@ -2771,11 +2779,12 @@
         "system-dashboard-generator",
         "system-status-reporter",
         "the-real-scrumness",
+        "title-variants",
         "welcome-email",
         "youtube-channel-analysis",
         "youtube-outliers"
       ],
-      "frequency": 33,
+      "frequency": 35,
       "severity": "medium"
     },
     {
@@ -2896,9 +2905,9 @@
     "total_skills": 56,
     "avg_ratio": 0.969,
     "skills_at_target": 41,
-    "skills_stuck": 4,
+    "skills_stuck": 5,
     "skills_untested": 3,
-    "total_cost": 18.2,
-    "total_rounds": 388
+    "total_cost": 19.35,
+    "total_rounds": 413
   }
 }

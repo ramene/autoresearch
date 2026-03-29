@@ -39,3 +39,18 @@
 
 ## Round 14 — Mutation Applied
 - **Mutation**: Add Fix Generation to the execution steps — after detecting dead references, emit ready-to-run `sed` commands that remove each dead line from its context file, since that criterion fails 10/10 and transforms the skill from a read-only reporter into an actionable tool.
+
+## Round 15 — Mutation Applied
+- **Mutation**: Add severity classification to dead reference output — since Severity Classification fails 10/10 scenarios, categorizing dead references as CRITICAL/HIGH/MEDIUM/LOW based on path type (scripts/configs vs docs vs examples) directly addresses the most pervasive failing criterion.
+
+## Round 16 — Mutation Applied
+- **Mutation**: Add Git Integration — use `git ls-files` to distinguish "never existed" from "deleted from git" paths, and surface recently-deleted files with their last commit, since Git Integration fails all 10 scenarios and is entirely absent from the current skill.
+
+## Round 17 — Mutation Applied
+- **Mutation**: Add an explicit "EXECUTE IMMEDIATELY using the Bash tool" directive at the top of the skill body, since Detection Coverage and Skill Integration both fail 10/10 scenarios — indicating the AI reads the bash code block as documentation instead of running it.
+
+## Round 18 — Mutation Applied
+- **Mutation**: Replace the brittle path-extraction regex with a two-stage pipeline (broad capture → filter to slash/dot patterns → strip trailing punctuation) to fix Detection Coverage failures by maximizing recall of path-like strings.
+
+## Round 19 — Mutation Applied
+- **Mutation**: Replace string-based IGNORE_LIST with a bash array (IGNORE_PATTERNS) for reliable multi-line pattern storage and matching — fixes the 10/10 Ignore File failures caused by heredoc `<<< "$IGNORE_LIST"` dropping lines with special chars or empty trailing content.

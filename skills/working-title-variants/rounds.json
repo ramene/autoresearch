@@ -324,5 +324,603 @@
     },
     "timestamp": "2026-03-20T22:38:28.911Z",
     "changelog": "**Mutation**: Add explicit \"then proceed to Step 3\" instruction after Step 2c and clarify the terminal summary table format — scenarios 2 and 3 share Instructions Clarity and Completeness failures, likely because the direct generation path in 2c doesn't state it must still write the JSON file and print the table.\n**Failures**: S2: Tool Usage, S2: Instructions Clarity, S2: Completeness, S3: Output Quality, S3: Instructions Clarity, S3: Completeness\n**Per-criteria**: Task Completion: 6/6, Error Handling: 6/6, Output Quality: 5/6, Tool Usage: 5/6, Instructions Clarity: 4/6, Completeness: 4/6\n**Decision**: Score 30 did not exceed best 35 — mutation produced worse or equal results"
+  },
+  {
+    "round": 5,
+    "score": 20,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Replace the hardcoded `.tmp/outliers.json` path in Step 2b Mode B with an explicit reference to \"the input file found in Step 1\" to eliminate the path mismatch ambiguity.",
+    "cost": 0.05,
+    "criteria": [
+      3,
+      5,
+      3,
+      3,
+      3,
+      3
+    ],
+    "failures": [
+      {
+        "scenario": 1,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 1,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 1,
+        "criterion": "Tool Usage"
+      },
+      {
+        "scenario": 1,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 1,
+        "criterion": "Completeness"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Tool Usage"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Completeness"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Tool Usage"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Completeness"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 20 did not exceed best 35 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-28T22:00:56.733Z",
+    "changelog": "**Mutation**: Replace the hardcoded `.tmp/outliers.json` path in Step 2b Mode B with an explicit reference to \"the input file found in Step 1\" to eliminate the path mismatch ambiguity.\n**Failures**: S1: Task Completion, S1: Output Quality, S1: Tool Usage, S1: Instructions Clarity, S1: Completeness, S3: Task Completion, S3: Error Handling, S3: Output Quality, S3: Tool Usage, S3: Instructions Clarity, S3: Completeness, S6: Task Completion, S6: Output Quality, S6: Tool Usage, S6: Instructions Clarity, S6: Completeness\n**Per-criteria**: Task Completion: 3/6, Error Handling: 5/6, Output Quality: 3/6, Tool Usage: 3/6, Instructions Clarity: 3/6, Completeness: 3/6\n**Decision**: Score 20 did not exceed best 35 — mutation produced worse or equal results"
+  },
+  {
+    "round": 6,
+    "score": 25,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Move crash-recovery instructions inline with Step 2b (where crashes occur) rather than leaving them only in the bottom Error Handling section — the current structure requires the model to mentally connect a crash mid-execution back to a footer section, which likely causes it to skip fallback and fail Task Completion, Error Handling, and Completeness in scenarios 5 and 6.",
+    "cost": 0.05,
+    "criteria": [
+      4,
+      5,
+      3,
+      6,
+      3,
+      4
+    ],
+    "failures": [
+      {
+        "scenario": 3,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Completeness"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Completeness"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 25 did not exceed best 35 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-28T22:02:27.640Z",
+    "changelog": "**Mutation**: Move crash-recovery instructions inline with Step 2b (where crashes occur) rather than leaving them only in the bottom Error Handling section — the current structure requires the model to mentally connect a crash mid-execution back to a footer section, which likely causes it to skip fallback and fail Task Completion, Error Handling, and Completeness in scenarios 5 and 6.\n**Failures**: S3: Output Quality, S3: Instructions Clarity, S5: Task Completion, S5: Output Quality, S5: Instructions Clarity, S5: Completeness, S6: Task Completion, S6: Error Handling, S6: Output Quality, S6: Instructions Clarity, S6: Completeness\n**Per-criteria**: Task Completion: 4/6, Error Handling: 5/6, Output Quality: 3/6, Tool Usage: 6/6, Instructions Clarity: 3/6, Completeness: 4/6\n**Decision**: Score 25 did not exceed best 35 — mutation produced worse or equal results"
+  },
+  {
+    "round": 7,
+    "score": 32,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Split Step 3 into two explicit sub-paths — one for when the script ran (read the output file first, then print the table) and one for when variants were generated inline (write the file, then print the table) — eliminating the ambiguity about where variants come from when printing the summary.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      4,
+      4
+    ],
+    "failures": [
+      {
+        "scenario": 3,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Completeness"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Completeness"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 32 did not exceed best 35 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-28T22:03:53.413Z",
+    "changelog": "**Mutation**: Split Step 3 into two explicit sub-paths — one for when the script ran (read the output file first, then print the table) and one for when variants were generated inline (write the file, then print the table) — eliminating the ambiguity about where variants come from when printing the summary.\n**Failures**: S3: Instructions Clarity, S3: Completeness, S5: Instructions Clarity, S5: Completeness\n**Per-criteria**: Task Completion: 6/6, Error Handling: 6/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 4/6, Completeness: 4/6\n**Decision**: Score 32 did not exceed best 35 — mutation produced worse or equal results"
+  },
+  {
+    "round": 7,
+    "score": 32,
+    "max": 36,
+    "status": "escalation",
+    "mutation": "Stuck escalation: The optimization is stuck in a local optimum because all recent mutations have followed the same strategy: **increasing procedural complexity to resolve ambiguity**. Each round adds more explicit `if/",
+    "cost": 0.03,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      4,
+      4
+    ],
+    "failures": [],
+    "decisionReason": "Stuck escalation triggered after 3+ rounds with no improvement",
+    "escalation": {
+      "diagnosis": "The optimization is stuck in a local optimum because all recent mutations have followed the same strategy: **increasing procedural complexity to resolve ambiguity**. Each round adds more explicit `if/then` logic, numbered sub-steps, and conditional paths (e.g., \"Path A,\" \"Path B\"). While intended to improve clarity, this has resulted in a convoluted, hard-to-follow wall of text. The model is failing not because an instruction is missing, but because the cognitive load required to parse the entire complex flowchart has become too high. The incremental \"clarifications\" are now causing more confusion than they solve, leading to a score plateau and even regression. The core problem is the skill's structure, not missing details.",
+      "evalRedesignNeeded": false,
+      "strategy": "The current strategy of incremental clarification has failed. The new strategy must be **Radical Simplification through Structural Reorganization**. Instead of adding more branches to a single complex procedure, we will refactor the skill into two distinct, self-contained, linear workflows. This reduces cognitive load by allowing the model to select one simple plan and execute it from top to bottom, rather than navigating a maze of interwoven conditional steps. The top-level instruction will be a simple choice between \"Plan A\" and \"Plan B,\" not a series of micro-decisions.",
+      "suggestedMutation": "Restructure the entire skill into two primary, mutually exclusive plans: \"Plan A: Script-Based Generation\" and \"Plan B: Direct Generation (Fallback)\". This replaces the confusing, interwoven Step 2a/2b/2c and Step 3 Path A/B logic with two clean, linear procedures.\n\n```markdown\n---\nname: title-variants\ndescription: Generate title variants for YouTube videos from outlier analysis. Use when user asks to create title variations, generate YouTube titles, or adapt video titles.\nallowed-tools: Bash, Read, Write, Edit, Glob, Grep\n---\n\n> **Demo Library Skill** — This skill is from a demo library. Some configuration values use placeholders (e.g. `{{USER_NAME}}`, `{{COMMUNITY_ID}}`). If something doesn't work, check for placeholder values and replace them with your own information first.\n\n# Title Variant Generation\n\n## Goal\nAnalyze top-performing video titles and generate variants adapted to your niche.\n\n## Configuration\n```python\nUSER_CHANNEL_NICHE = \"AI agents, automation, LangGraph, CrewAI, agentic workflows\"\n```\n\n## Execution Strategy\nYour primary goal is to use the dedicated Python script. Follow **Plan A** first.\n\n**If any step in Plan A fails** (e.g., the script is not found, the script crashes with an error), you must **stop immediately and switch to Plan B**.\n\n---\n\n## Plan A: Script-Based Generation\n\n**Step A1: Find Input File**\nFind an input JSON file containing titles.\n```bash\n# Check for input files\nls .tmp/outliers.json 2>/dev/null || ls .tmp/*.json 2>/dev/null || ls chain-results/*.json 2>/dev/null\n```\n- If no file is found, this plan fails. **Switch to Plan B.**\n- If a file is found, note its path as `INPUT_FILE`.\n\n**Step A2: Run Generation Script**\nExecute the script `scripts/generate_title_variants.py`.\n- **If a `SHEET_URL` is available** (from user or env var), use `--mode update`:\n```bash\npython3 ./scripts/generate_title_variants.py --sheet-url \"SHEET_URL\" --mode update\n```\n- **Otherwise**, use the `INPUT_FILE` from Step A1 and `--mode create`:\n```bash\npython3 ./scripts/generate_title_variants.py --input <INPUT_FILE> --mode create\n```\n- If this script is not found or exits with an error, this plan fails. **Switch to Plan B.**\n\n**Step A3: Output Results from Script**\nThe script created `.tmp/title-variants.json`. Read this file and print a summary for each title in the required format.\n```bash\n# Example of what to do:\n# 1. Read .tmp/title-variants.json\n# 2. For each object in the JSON array, print the summary:\necho \"Original : <original title>\"\necho \"Variant 1: <variant 1>\"\necho \"Variant 2: <variant 2>\"\necho \"Variant 3: <variant 3>\"\necho \"---\"\n```\n\n---\n\n## Plan B: Direct Generation (Fallback)\n\n**Step B1: Get Input Titles**\n- First, try to find an input file just like in Step A1. If a file is found, read the titles from it.\n- If no file is found, ask the user: \"No input title files found. Please paste the titles you want me to generate variants for.\" Use their provided titles as input.\n\n**Step B2: Generate Variants Directly**\nFor each input title, apply these rules to produce exactly 3 variants:\n- **Variant 1 (Reframe Hook):** Change the emotional angle (e.g., curiosity → urgency).\n- **Variant 2 (Swap Structure):** If it's a question, try a statement. If it's a list, try a bold claim.\n- **Variant 3 (Niche-Adapt):** Explicitly add terms from `USER_CHANNEL_NICHE`.\n\n**Rules for all variants:**\n- Must be under 100 characters.\n- Preserve key performing elements (numbers, specific outcomes).\n- Do not use clickbait.\n\n**Step B3: Write and Output Results**\n1.  Ensure the output directory exists: `mkdir -p .tmp`\n2.  Write the generated variants to `.tmp/title-variants.json` in the standard JSON format:\n    ```json\n    [\n      {\n        \"original\": \"Original title here\",\n        \"variant_1\": \"Variant 1 here\",\n        \"variant_2\": \"Variant 2 here\",\n        \"variant_3\": \"Variant 3 here\"\n      }\n    ]\n    ```\n3.  Print the summary for each title to the terminal in the required format:\n    ```\n    Original : <original title>\n    Variant 1: <variant 1>\n    Variant 2: <variant 2>\n    Variant 3: <variant 3>\n    ---\n    ```\n```"
+    },
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-28T22:05:10.763Z"
+  },
+  {
+    "round": 8,
+    "score": 26,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Apply the meta-analyst's recommended radical simplification — restructure into two mutually exclusive linear plans (Plan A: Script-Based, Plan B: Direct Generation) to eliminate the confusing interwoven Step 2a/2b/2c and Step 3 Path A/B logic.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      1,
+      1
+    ],
+    "failures": [
+      {
+        "scenario": 1,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 1,
+        "criterion": "Completeness"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Completeness"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Completeness"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Completeness"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Completeness"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 26 did not exceed best 35 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-28T22:05:55.092Z",
+    "changelog": "**Mutation**: Apply the meta-analyst's recommended radical simplification — restructure into two mutually exclusive linear plans (Plan A: Script-Based, Plan B: Direct Generation) to eliminate the confusing interwoven Step 2a/2b/2c and Step 3 Path A/B logic.\n**Failures**: S1: Instructions Clarity, S1: Completeness, S3: Instructions Clarity, S3: Completeness, S4: Instructions Clarity, S4: Completeness, S5: Instructions Clarity, S5: Completeness, S6: Instructions Clarity, S6: Completeness\n**Per-criteria**: Task Completion: 6/6, Error Handling: 6/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 1/6, Completeness: 1/6\n**Decision**: Score 26 did not exceed best 35 — mutation produced worse or equal results"
+  },
+  {
+    "round": 9,
+    "score": 27,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Add file-existence validation in Step A3 — if `.tmp/title-variants.json` is missing or empty after the script runs, treat it as a Plan A failure and switch to Plan B, closing the silent-failure gap that causes Task Completion/Error Handling/Completeness failures in scenarios 2 and 3.",
+    "cost": 0.05,
+    "criteria": [
+      4,
+      4,
+      4,
+      6,
+      5,
+      4
+    ],
+    "failures": [
+      {
+        "scenario": 2,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Completeness"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Completeness"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 27 did not exceed best 35 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-28T22:06:49.698Z",
+    "changelog": "**Mutation**: Add file-existence validation in Step A3 — if `.tmp/title-variants.json` is missing or empty after the script runs, treat it as a Plan A failure and switch to Plan B, closing the silent-failure gap that causes Task Completion/Error Handling/Completeness failures in scenarios 2 and 3.\n**Failures**: S2: Task Completion, S2: Error Handling, S2: Output Quality, S2: Instructions Clarity, S2: Completeness, S3: Task Completion, S3: Error Handling, S3: Output Quality, S3: Completeness\n**Per-criteria**: Task Completion: 4/6, Error Handling: 4/6, Output Quality: 4/6, Tool Usage: 6/6, Instructions Clarity: 5/6, Completeness: 4/6\n**Decision**: Score 27 did not exceed best 35 — mutation produced worse or equal results"
+  },
+  {
+    "round": 10,
+    "score": 32,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Add the expected JSON schema to Step A3 so the model knows which fields to extract from .tmp/title-variants.json when printing the terminal summary, fixing Output Quality and Completeness failures in scenario 3.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "failures": [
+      {
+        "scenario": 3,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Completeness"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Completeness"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 32 did not exceed best 35 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-29T07:01:58.122Z",
+    "changelog": "**Mutation**: Add the expected JSON schema to Step A3 so the model knows which fields to extract from .tmp/title-variants.json when printing the terminal summary, fixing Output Quality and Completeness failures in scenario 3.\n**Failures**: S3: Output Quality, S3: Completeness, S6: Instructions Clarity, S6: Completeness\n**Per-criteria**: Task Completion: 6/6, Error Handling: 6/6, Output Quality: 5/6, Tool Usage: 6/6, Instructions Clarity: 5/6, Completeness: 4/6\n**Decision**: Score 32 did not exceed best 35 — mutation produced worse or equal results"
+  },
+  {
+    "round": 11,
+    "score": 31,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Add explicit bash exit-code detection to Step A2 commands (using `||` fallback pattern) so the model can programmatically detect script failure rather than relying on ambiguous implicit error interpretation.",
+    "cost": 0.05,
+    "criteria": [
+      5,
+      5,
+      5,
+      6,
+      5,
+      5
+    ],
+    "failures": [
+      {
+        "scenario": 2,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Completeness"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 31 did not exceed best 35 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-29T07:03:15.277Z",
+    "changelog": "**Mutation**: Add explicit bash exit-code detection to Step A2 commands (using `||` fallback pattern) so the model can programmatically detect script failure rather than relying on ambiguous implicit error interpretation.\n**Failures**: S2: Task Completion, S2: Error Handling, S2: Output Quality, S2: Instructions Clarity, S2: Completeness\n**Per-criteria**: Task Completion: 5/6, Error Handling: 5/6, Output Quality: 5/6, Tool Usage: 6/6, Instructions Clarity: 5/6, Completeness: 5/6\n**Decision**: Score 31 did not exceed best 35 — mutation produced worse or equal results"
+  },
+  {
+    "round": 12,
+    "score": 31,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Rewrite Plan B Step B1 to explicitly reuse the INPUT_FILE already found in Step A1 (if applicable) rather than re-searching, eliminating the ambiguous re-discovery loop that causes all five scenario-2 failures.",
+    "cost": 0.05,
+    "criteria": [
+      5,
+      5,
+      5,
+      6,
+      5,
+      5
+    ],
+    "failures": [
+      {
+        "scenario": 2,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Completeness"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 31 did not exceed best 35 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-29T07:04:36.698Z",
+    "changelog": "**Mutation**: Rewrite Plan B Step B1 to explicitly reuse the INPUT_FILE already found in Step A1 (if applicable) rather than re-searching, eliminating the ambiguous re-discovery loop that causes all five scenario-2 failures.\n**Failures**: S2: Task Completion, S2: Error Handling, S2: Output Quality, S2: Instructions Clarity, S2: Completeness\n**Per-criteria**: Task Completion: 5/6, Error Handling: 5/6, Output Quality: 5/6, Tool Usage: 6/6, Instructions Clarity: 5/6, Completeness: 5/6\n**Decision**: Score 31 did not exceed best 35 — mutation produced worse or equal results"
+  },
+  {
+    "round": 12,
+    "score": 31,
+    "max": 36,
+    "status": "escalation",
+    "mutation": "Stuck escalation: The optimization is stuck in a local optimum because all recent mutations have focused on perfecting the *procedural integrity* of the skill, specifically the logic for detecting Plan A failures and t",
+    "cost": 0.03,
+    "criteria": [
+      5,
+      5,
+      5,
+      6,
+      5,
+      5
+    ],
+    "failures": [],
+    "decisionReason": "Stuck escalation triggered after 3+ rounds with no improvement",
+    "escalation": {
+      "diagnosis": "The optimization is stuck in a local optimum because all recent mutations have focused on perfecting the *procedural integrity* of the skill, specifically the logic for detecting Plan A failures and transitioning to Plan B. While these changes have made the skill more robust at identifying when to use the fallback, they have completely ignored the quality and reliability of the fallback (Plan B) itself. The remaining 5 failures are almost certainly occurring in test scenarios that successfully trigger Plan B, but where the AI then fails to execute the abstract, creative instructions in Step B2 correctly. The system is perfecting the error-handling scaffolding while the core fallback logic remains the weak point.",
+      "evalRedesignNeeded": false,
+      "strategy": "Shift the optimization focus from procedural flow and error detection to the **substantive quality and determinism of the fallback plan (Plan B)**. The current instructions in Plan B are too abstract (\"Reframe Hook\", \"Swap Structure\"), requiring creative interpretation that is prone to failure. The new strategy is to make Plan B's generation rules as concrete and prescriptive as possible, transforming them from a creative brief into a deterministic recipe. This will improve the reliability of the fallback path, which is where the remaining failures likely lie.",
+      "suggestedMutation": "Rewrite the instructions in **Plan B, Step B2** to be highly specific and template-driven, removing the abstract creative concepts.\n\n**Current Step B2:**\n```markdown\n**Step B2: Generate Variants Directly**\nFor each input title, apply these rules to produce exactly 3 variants:\n- **Variant 1 (Reframe Hook):** Change the emotional angle (e.g., curiosity → urgency).\n- **Variant 2 (Swap Structure):** If it's a question, try a statement. If it's a list, try a bold claim.\n- **Variant 3 (Niche-Adapt):** Explicitly add terms from `USER_CHANNEL_NICHE`.\n\nRules for all variants:\n- Must be under 100 characters.\n- Preserve key performing elements (numbers, specific outcomes).\n- Do not use clickbait.\n```\n\n**Proposed New Step B2:**\n```markdown\n**Step B2: Generate Variants Directly**\nFor each input title, generate exactly 3 variants using these specific templates.\n\n- **Variant 1 (Question Format):** Rephrase the original title as a question. If the original is \"How to Build an AI Agent in 5 Minutes\", a variant could be \"Can You Really Build an AI Agent in 5 Minutes?\"\n- **Variant 2 (Bold Statement Format):** Turn the core idea into a strong, definitive statement. If the original is \"My Top 5 LangGraph Tricks\", a variant could be \"This is the Only LangGraph Tutorial You Need.\"\n- **Variant 3 (Niche Keyword Insertion):** Add a specific keyword from the `USER_CHANNEL_NICHE` list. For example, add \"with CrewAI\" or \"for Agentic Workflows\" to the end of the original title.\n\n**Strict Rules for Generation:**\n- Each original title must have exactly three variants generated.\n- All variants must be under 100 characters.\n- Do not invent new facts or outcomes; only rephrase the existing title.\n```"
+    },
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-29T07:05:42.504Z"
+  },
+  {
+    "round": 13,
+    "score": 32,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Rewrite Plan B Step B2 with concrete template-driven examples replacing abstract creative concepts (Reframe Hook, Swap Structure) to make variant generation deterministic and reduce interpretation failures.",
+    "cost": 0.05,
+    "criteria": [
+      5,
+      5,
+      5,
+      6,
+      6,
+      5
+    ],
+    "failures": [
+      {
+        "scenario": 3,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Completeness"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 32 did not exceed best 35 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-29T07:06:18.679Z",
+    "changelog": "**Mutation**: Rewrite Plan B Step B2 with concrete template-driven examples replacing abstract creative concepts (Reframe Hook, Swap Structure) to make variant generation deterministic and reduce interpretation failures.\n**Failures**: S3: Task Completion, S3: Error Handling, S3: Output Quality, S3: Completeness\n**Per-criteria**: Task Completion: 5/6, Error Handling: 5/6, Output Quality: 5/6, Tool Usage: 6/6, Instructions Clarity: 6/6, Completeness: 5/6\n**Decision**: Score 32 did not exceed best 35 — mutation produced worse or equal results"
+  },
+  {
+    "round": 14,
+    "score": 34,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Add an explicit `cat .tmp/title-variants.json` bash command in Step A3 so the model reads the actual file contents (not a cached/hallucinated value) before printing the terminal summary, fixing Output Quality and Completeness failures in scenario 3.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      6,
+      5,
+      6,
+      6,
+      5
+    ],
+    "failures": [
+      {
+        "scenario": 3,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Completeness"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 34 did not exceed best 35 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-29T07:07:19.189Z",
+    "changelog": "**Mutation**: Add an explicit `cat .tmp/title-variants.json` bash command in Step A3 so the model reads the actual file contents (not a cached/hallucinated value) before printing the terminal summary, fixing Output Quality and Completeness failures in scenario 3.\n**Failures**: S3: Output Quality, S3: Completeness\n**Per-criteria**: Task Completion: 6/6, Error Handling: 6/6, Output Quality: 5/6, Tool Usage: 6/6, Instructions Clarity: 6/6, Completeness: 5/6\n**Decision**: Score 34 did not exceed best 35 — mutation produced worse or equal results"
   }
 ]

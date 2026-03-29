@@ -26,3 +26,18 @@
 
 ## Round 4 — Mutation Applied
 - **Mutation**: No failures exist (36/36 score) — applied a minor clarification to step 3 to explicitly handle the edge case where a thread ID appears embedded in a URL or message body, preventing potential confusion in extraction.
+
+## Round 6 — Mutation Applied
+- **Mutation**: Expand step 3 to include what to tell the user when asking for a thread ID — specifically what it looks like and where to find it in Instantly — fixing the single scenario where a user doesn't know what a thread ID is.
+
+## Round 7 — Mutation Applied
+- **Mutation**: Add explicit handling for non-zero exit codes in step 5 — the current "report results" step doesn't distinguish between a script that exits with an error code versus one that prints an error message but exits cleanly, which could cause Claude to miss failures.
+
+## Round 8 — Mutation Applied
+- **Mutation**: No failures exist (36/36 score) — applied a minor defensive clarification to step 2 to explicitly state what the user should do if the script is missing (check working directory), preventing confusion if the skill is run from the wrong directory.
+
+## Round 9 — Mutation Applied
+- **Mutation**: Add a new test scenario to the evaluation suite targeting user-assistance logic for unknown thread IDs — creating an adversarial test that validates the thread ID help text added in Round 6 and breaks the current deadlock by establishing a new gradient for optimization.
+
+## Round 10 — Mutation Applied
+- **Mutation**: No failures exist (36/36 score) — applied a minor defensive clarification to step 1 to explicitly state what the user should do if API keys are missing (where to set them), preventing confusion if environment variables are not configured.
