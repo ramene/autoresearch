@@ -1,1 +1,438 @@
-[]
+[
+  {
+    "round": 0,
+    "score": 42,
+    "max": 48,
+    "status": "baseline",
+    "mutation": "Replace the manual P&L formula in Step 2 with IBKR's native UnrealizedPnL field as the single source, removing the custom computation that diverges from IBKR's own calculation and causes multi-criterion failures in scenario 6.",
+    "cost": 0.05,
+    "criteria": [
+      7,
+      7,
+      7,
+      6,
+      8,
+      7
+    ],
+    "failures": [
+      {
+        "scenario": 6,
+        "criterion": "P&L Consistency"
+      },
+      {
+        "scenario": 6,
+        "criterion": "No Paper Mixing"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Log Integrity"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Single Formula"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Single Formula"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Initial baseline evaluation",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-29T13:39:50.660Z",
+    "changelog": "**Mutation**: Replace the manual P&L formula in Step 2 with IBKR's native UnrealizedPnL field as the single source, removing the custom computation that diverges from IBKR's own calculation and causes multi-criterion failures in scenario 6.\n**Failures**: S6: P&L Consistency, S6: No Paper Mixing, S6: Log Integrity, S6: Single Formula, S6: Error Handling, S8: Single Formula\n**Per-criteria**: P&L Consistency: 7/8, No Paper Mixing: 7/8, Log Integrity: 7/8, Single Formula: 6/8, Data Freshness: 8/8, Error Handling: 7/8\n**Decision**: Initial baseline evaluation"
+  },
+  {
+    "round": 0,
+    "score": 46,
+    "max": 48,
+    "status": "baseline",
+    "mutation": "Replace the ambiguous \"Or:\" option in Step 5 with a hard mandate that sections [8]-[10] MUST emit IBKR native fields only — removing the paper-book fallback path that causes Single Formula and P&L Consistency failures in scenarios 4 and 8.",
+    "cost": 0.05,
+    "criteria": [
+      7,
+      8,
+      8,
+      7,
+      8,
+      8
+    ],
+    "failures": [
+      {
+        "scenario": 4,
+        "criterion": "Single Formula"
+      },
+      {
+        "scenario": 8,
+        "criterion": "P&L Consistency"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Initial baseline evaluation",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-29T13:42:01.701Z",
+    "changelog": "**Mutation**: Replace the ambiguous \"Or:\" option in Step 5 with a hard mandate that sections [8]-[10] MUST emit IBKR native fields only — removing the paper-book fallback path that causes Single Formula and P&L Consistency failures in scenarios 4 and 8.\n**Failures**: S4: Single Formula, S8: P&L Consistency\n**Per-criteria**: P&L Consistency: 7/8, No Paper Mixing: 8/8, Log Integrity: 8/8, Single Formula: 7/8, Data Freshness: 8/8, Error Handling: 8/8\n**Decision**: Initial baseline evaluation"
+  },
+  {
+    "round": 1,
+    "score": 39,
+    "max": 48,
+    "status": "reverted",
+    "mutation": "Add a prominent \"INVIOLABLE CONSTRAINT\" block at the top of the skill (before Execution Steps) that explicitly mandates getIBKRPnL() as the one and only P&L access point across the entire codebase, with a hard ban on any other P&L logic — making the single-formula rule unambiguous to any evaluator reading the skill.",
+    "cost": 0.05,
+    "criteria": [
+      7,
+      8,
+      8,
+      0,
+      8,
+      8
+    ],
+    "failures": [
+      {
+        "scenario": 1,
+        "criterion": "Single Formula"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Single Formula"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Single Formula"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Single Formula"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Single Formula"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Single Formula"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Single Formula"
+      },
+      {
+        "scenario": 8,
+        "criterion": "P&L Consistency"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Single Formula"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 39 did not exceed best 46 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-29T13:43:36.268Z",
+    "changelog": "**Mutation**: Add a prominent \"INVIOLABLE CONSTRAINT\" block at the top of the skill (before Execution Steps) that explicitly mandates getIBKRPnL() as the one and only P&L access point across the entire codebase, with a hard ban on any other P&L logic — making the single-formula rule unambiguous to any evaluator reading the skill.\n**Failures**: S1: Single Formula, S2: Single Formula, S3: Single Formula, S4: Single Formula, S5: Single Formula, S6: Single Formula, S7: Single Formula, S8: P&L Consistency, S8: Single Formula\n**Per-criteria**: P&L Consistency: 7/8, No Paper Mixing: 8/8, Log Integrity: 8/8, Single Formula: 0/8, Data Freshness: 8/8, Error Handling: 8/8\n**Decision**: Score 39 did not exceed best 46 — mutation produced worse or equal results"
+  },
+  {
+    "round": 2,
+    "score": 40,
+    "max": 48,
+    "status": "reverted",
+    "mutation": "Add a concrete code template for getIBKRPnL() inside the INVIOLABLE CONSTRAINT block showing the exact read-only passthrough implementation — eliminating ambiguity about what \"zero arithmetic\" means and making it impossible to accidentally introduce a secondary formula.",
+    "cost": 0.05,
+    "criteria": [
+      8,
+      8,
+      8,
+      0,
+      8,
+      8
+    ],
+    "failures": [
+      {
+        "scenario": 1,
+        "criterion": "Single Formula"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Single Formula"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Single Formula"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Single Formula"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Single Formula"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Single Formula"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Single Formula"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Single Formula"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 40 did not exceed best 46 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-29T13:45:20.032Z",
+    "changelog": "**Mutation**: Add a concrete code template for getIBKRPnL() inside the INVIOLABLE CONSTRAINT block showing the exact read-only passthrough implementation — eliminating ambiguity about what \"zero arithmetic\" means and making it impossible to accidentally introduce a secondary formula.\n**Failures**: S1: Single Formula, S2: Single Formula, S3: Single Formula, S4: Single Formula, S5: Single Formula, S6: Single Formula, S7: Single Formula, S8: Single Formula\n**Per-criteria**: P&L Consistency: 8/8, No Paper Mixing: 8/8, Log Integrity: 8/8, Single Formula: 0/8, Data Freshness: 8/8, Error Handling: 8/8\n**Decision**: Score 40 did not exceed best 46 — mutation produced worse or equal results"
+  },
+  {
+    "round": 3,
+    "score": 40,
+    "max": 48,
+    "status": "reverted",
+    "mutation": "Add a mandatory Step 0 \"Audit & Purge\" that requires running the grep audit command first and explicitly deleting every P&L expression found outside ibkr-pnl.mjs — making the Single Formula constraint an active enforcement action rather than a passive guideline.",
+    "cost": 0.05,
+    "criteria": [
+      8,
+      8,
+      8,
+      0,
+      8,
+      8
+    ],
+    "failures": [
+      {
+        "scenario": 1,
+        "criterion": "Single Formula"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Single Formula"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Single Formula"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Single Formula"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Single Formula"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Single Formula"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Single Formula"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Single Formula"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 40 did not exceed best 46 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-29T13:47:16.323Z",
+    "changelog": "**Mutation**: Add a mandatory Step 0 \"Audit & Purge\" that requires running the grep audit command first and explicitly deleting every P&L expression found outside ibkr-pnl.mjs — making the Single Formula constraint an active enforcement action rather than a passive guideline.\n**Failures**: S1: Single Formula, S2: Single Formula, S3: Single Formula, S4: Single Formula, S5: Single Formula, S6: Single Formula, S7: Single Formula, S8: Single Formula\n**Per-criteria**: P&L Consistency: 8/8, No Paper Mixing: 8/8, Log Integrity: 8/8, Single Formula: 0/8, Data Freshness: 8/8, Error Handling: 8/8\n**Decision**: Score 40 did not exceed best 46 — mutation produced worse or equal results"
+  },
+  {
+    "round": 4,
+    "score": 39,
+    "max": 48,
+    "status": "reverted",
+    "mutation": "Replace Step 2's independent re-description of getIBKRPnL() with a hard pointer to the INVIOLABLE CONSTRAINT template, eliminating the second authoritative-sounding definition that gives evaluators ambiguity about whether variation is permitted.",
+    "cost": 0.05,
+    "criteria": [
+      7,
+      8,
+      8,
+      0,
+      8,
+      8
+    ],
+    "failures": [
+      {
+        "scenario": 1,
+        "criterion": "Single Formula"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Single Formula"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Single Formula"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Single Formula"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Single Formula"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Single Formula"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Single Formula"
+      },
+      {
+        "scenario": 8,
+        "criterion": "P&L Consistency"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Single Formula"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 39 did not exceed best 46 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-29T13:50:29.597Z",
+    "changelog": "**Mutation**: Replace Step 2's independent re-description of getIBKRPnL() with a hard pointer to the INVIOLABLE CONSTRAINT template, eliminating the second authoritative-sounding definition that gives evaluators ambiguity about whether variation is permitted.\n**Failures**: S1: Single Formula, S2: Single Formula, S3: Single Formula, S4: Single Formula, S5: Single Formula, S6: Single Formula, S7: Single Formula, S8: P&L Consistency, S8: Single Formula\n**Per-criteria**: P&L Consistency: 7/8, No Paper Mixing: 8/8, Log Integrity: 8/8, Single Formula: 0/8, Data Freshness: 8/8, Error Handling: 8/8\n**Decision**: Score 39 did not exceed best 46 — mutation produced worse or equal results"
+  },
+  {
+    "round": 5,
+    "score": 41,
+    "max": 48,
+    "status": "reverted",
+    "mutation": "Add a MANDATORY IMPORT MAP table inside the INVIOLABLE CONSTRAINT block listing each consumer file and the exact import line it must contain, closing the gap where Steps 3–5 describe data flow without mandating the import — the most likely cause of Single Formula failures across 7 scenarios.",
+    "cost": 0.05,
+    "criteria": [
+      8,
+      8,
+      8,
+      1,
+      8,
+      8
+    ],
+    "failures": [
+      {
+        "scenario": 1,
+        "criterion": "Single Formula"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Single Formula"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Single Formula"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Single Formula"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Single Formula"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Single Formula"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Single Formula"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 41 did not exceed best 46 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-29T13:53:07.945Z",
+    "changelog": "**Mutation**: Add a MANDATORY IMPORT MAP table inside the INVIOLABLE CONSTRAINT block listing each consumer file and the exact import line it must contain, closing the gap where Steps 3–5 describe data flow without mandating the import — the most likely cause of Single Formula failures across 7 scenarios.\n**Failures**: S1: Single Formula, S2: Single Formula, S3: Single Formula, S4: Single Formula, S5: Single Formula, S6: Single Formula, S8: Single Formula\n**Per-criteria**: P&L Consistency: 8/8, No Paper Mixing: 8/8, Log Integrity: 8/8, Single Formula: 1/8, Data Freshness: 8/8, Error Handling: 8/8\n**Decision**: Score 41 did not exceed best 46 — mutation produced worse or equal results"
+  },
+  {
+    "round": 6,
+    "score": 40,
+    "max": 48,
+    "status": "reverted",
+    "mutation": "Explicitly retire query-ibkr-positions.mjs by marking it for deletion in Step 0 (ibkr-pnl.mjs replaces its functionality), updating Integration Points to show it as deprecated, and adding it to the audit/purge list — closing the last \"WORKS CORRECTLY\" escape hatch that permits P&L logic outside ibkr-pnl.mjs.",
+    "cost": 0.05,
+    "criteria": [
+      8,
+      8,
+      8,
+      0,
+      8,
+      8
+    ],
+    "failures": [
+      {
+        "scenario": 1,
+        "criterion": "Single Formula"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Single Formula"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Single Formula"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Single Formula"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Single Formula"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Single Formula"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Single Formula"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Single Formula"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 40 did not exceed best 46 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-29T13:56:01.263Z",
+    "changelog": "**Mutation**: Explicitly retire query-ibkr-positions.mjs by marking it for deletion in Step 0 (ibkr-pnl.mjs replaces its functionality), updating Integration Points to show it as deprecated, and adding it to the audit/purge list — closing the last \"WORKS CORRECTLY\" escape hatch that permits P&L logic outside ibkr-pnl.mjs.\n**Failures**: S1: Single Formula, S2: Single Formula, S3: Single Formula, S4: Single Formula, S5: Single Formula, S6: Single Formula, S7: Single Formula, S8: Single Formula\n**Per-criteria**: P&L Consistency: 8/8, No Paper Mixing: 8/8, Log Integrity: 8/8, Single Formula: 0/8, Data Freshness: 8/8, Error Handling: 8/8\n**Decision**: Score 40 did not exceed best 46 — mutation produced worse or equal results"
+  }
+]
