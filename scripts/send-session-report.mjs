@@ -151,14 +151,15 @@ let boardUrl = ''
 try {
   const ghToken = readFileSync(resolve(process.env.HOME, '.claude/.credentials/github-pat.txt'), 'utf8').trim()
   const { execSync: ex } = await import('child_process')
-  const boardJson = ex(`GH_TOKEN=${ghToken} gh api graphql -f query='{ viewer { projectsV2(first: 30) { nodes { title url } } } }' --jq '.data.viewer.projectsV2.nodes'`, { encoding: 'utf8', timeout: 10000 }).trim()
+  const boardJson = ex(`GH_TOKEN=${ghToken} gh api graphql -f query='{ viewer { projectsV2(last: 50) { nodes { title url number } } } }' --jq '.data.viewer.projectsV2.nodes'`, { encoding: 'utf8', timeout: 10000 }).trim()
   const boards = JSON.parse(boardJson)
   const nameWords = sessionName.toLowerCase().split('-').filter(w => w.length > 3)
-  const match = boards.find(b => {
+  // Find all matches, pick the OLDEST (lowest number) to avoid duplicates
+  const matches = boards.filter(b => {
     const title = b.title.toLowerCase()
-    return nameWords.some(w => title.includes(w)) || title.includes(sessionName.toLowerCase())
-  })
-  if (match) boardUrl = match.url
+    return nameWords.filter(w => title.includes(w)).length >= 2 || title.includes(sessionName.toLowerCase())
+  }).sort((a, b) => (a.number || 0) - (b.number || 0))
+  if (matches.length) boardUrl = matches[0].url
 } catch {}
 
 // Memory bank count
