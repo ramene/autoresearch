@@ -80,9 +80,9 @@ if (planFile && existsSync(planFile)) {
   planTargets = (plan.match(/\*\*Workspace\*\*|\*\*Build:\*\*|\*\*Wire/gm) || []).length
 
   if (planDays > 0) {
-    planSummary = `${planContext || planTitle}<br>${planDays} days | ${planTargets} build targets`
+    planSummary = `${planContext || planTitle}<div style="margin-top:10px;padding-top:8px;border-top:1px solid #e2e8f0;font-size:12px;color:#64748b;font-weight:600;">${planDays} days &nbsp;·&nbsp; ${planTargets} build targets</div>`
   } else if (planPhases > 0) {
-    planSummary = `${planContext || planTitle}<br>${planPhases} phases | ${planTargets} targets`
+    planSummary = `${planContext || planTitle}<div style="margin-top:10px;padding-top:8px;border-top:1px solid #e2e8f0;font-size:12px;color:#64748b;font-weight:600;">${planPhases} phases &nbsp;·&nbsp; ${planTargets} targets</div>`
   } else {
     planSummary = planContext || `Plan loaded (${plan.split('\n').length} lines)`
   }
@@ -145,6 +145,26 @@ let gitUrl = ''
 if (gitInfo && gitInfo !== 'none' && gitInfo !== 'local (no remote)') {
   gitUrl = `https://github.com/${gitInfo}`
 }
+
+// Find GitHub Project board for this session
+let boardUrl = ''
+try {
+  const ghToken = readFileSync(resolve(process.env.HOME, '.claude/.credentials/github-pat.txt'), 'utf8').trim()
+  const boardReq = await fetch('https://api.github.com/graphql', {
+    method: 'POST',
+    headers: { 'Authorization': `Bearer ${ghToken}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ query: '{ viewer { projectsV2(first: 30) { nodes { title url } } } }' })
+  })
+  const boardData = await boardReq.json()
+  const boards = boardData?.data?.viewer?.projectsV2?.nodes || []
+  // Match by session name (fuzzy: split kebab-case, match any board containing key words)
+  const nameWords = sessionName.toLowerCase().split('-').filter(w => w.length > 3)
+  const match = boards.find(b => {
+    const title = b.title.toLowerCase()
+    return nameWords.some(w => title.includes(w)) || title.includes(sessionName.toLowerCase())
+  })
+  if (match) boardUrl = match.url
+} catch {}
 
 // Memory bank count
 let memoryCount = 0
@@ -238,8 +258,11 @@ const html = `<!DOCTYPE html>
     </div>
   </div>
 
-  <div style="padding:12px 16px;text-align:center;">
-    <div style="color:#94a3b8;font-size:10px;">Session: <code style="font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:10px;color:#64748b;">${sessionName}</code></div>
+  <div style="padding:12px 16px;text-align:center;background:#f8fafc;">
+    ${gitUrl ? `<a href="${gitUrl}" style="font-size:11px;color:#4338ca;text-decoration:none;margin-right:16px;">GitHub Repo</a>` : ''}
+    ${boardUrl ? `<a href="${boardUrl}" style="font-size:11px;color:#4338ca;text-decoration:none;margin-right:16px;">Project Board</a>` : ''}
+    <span style="color:#cbd5e1;margin:0 4px;">|</span>
+    <span style="color:#94a3b8;font-size:10px;">Session: <code style="font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:10px;color:#64748b;">${sessionName}</code></span>
   </div>
 
 </div>
