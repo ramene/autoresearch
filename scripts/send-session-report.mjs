@@ -71,7 +71,7 @@ if (planFile && existsSync(planFile)) {
   // Context line — first paragraph after the title
   const contextMatch = plan.match(/^##\s+Context\s*\n+([\s\S]*?)(?=\n##|\n---)/m)
   if (contextMatch) {
-    planContext = contextMatch[1].trim().split('\n')[0].slice(0, 200)
+    planContext = contextMatch[1].trim().split('\n')[0]
   }
 
   // Count phases (### Phase N or ### Day N)
@@ -150,14 +150,9 @@ if (gitInfo && gitInfo !== 'none' && gitInfo !== 'local (no remote)') {
 let boardUrl = ''
 try {
   const ghToken = readFileSync(resolve(process.env.HOME, '.claude/.credentials/github-pat.txt'), 'utf8').trim()
-  const boardReq = await fetch('https://api.github.com/graphql', {
-    method: 'POST',
-    headers: { 'Authorization': `Bearer ${ghToken}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ query: '{ viewer { projectsV2(first: 30) { nodes { title url } } } }' })
-  })
-  const boardData = await boardReq.json()
-  const boards = boardData?.data?.viewer?.projectsV2?.nodes || []
-  // Match by session name (fuzzy: split kebab-case, match any board containing key words)
+  const { execSync: ex } = await import('child_process')
+  const boardJson = ex(`GH_TOKEN=${ghToken} gh api graphql -f query='{ viewer { projectsV2(first: 30) { nodes { title url } } } }' --jq '.data.viewer.projectsV2.nodes'`, { encoding: 'utf8', timeout: 10000 }).trim()
+  const boards = JSON.parse(boardJson)
   const nameWords = sessionName.toLowerCase().split('-').filter(w => w.length > 3)
   const match = boards.find(b => {
     const title = b.title.toLowerCase()
