@@ -140,6 +140,12 @@ if (gitInfo === 'none' && existsSync(resolve(workspace, '.git'))) {
   gitInfo = 'local (no remote)'
 }
 
+// Build GitHub URL from gitInfo
+let gitUrl = ''
+if (gitInfo && gitInfo !== 'none' && gitInfo !== 'local (no remote)') {
+  gitUrl = `https://github.com/${gitInfo}`
+}
+
 // Memory bank count
 let memoryCount = 0
 try {
@@ -186,26 +192,28 @@ const html = `<!DOCTYPE html>
     <div style="font-size:13px;color:#334155;line-height:1.5;">${planSummary}</div>
   </div>
 
-  <div style="display:flex;flex-wrap:wrap;border-bottom:1px solid #e2e8f0;">
-    <div style="flex:1 1 33%;text-align:center;padding:14px 8px;">
-      <div style="font-size:24px;font-weight:700;color:#d97706;">${skillCount}</div>
-      <div style="font-size:10px;color:#94a3b8;text-transform:uppercase;letter-spacing:0.05em;margin-top:2px;">Skills</div>
-    </div>
-    <div style="flex:1 1 33%;text-align:center;padding:14px 8px;border-left:1px solid #e2e8f0;border-right:1px solid #e2e8f0;">
-      <div style="font-size:24px;font-weight:700;color:#7c3aed;">${ecosystemCount}</div>
-      <div style="font-size:10px;color:#94a3b8;text-transform:uppercase;letter-spacing:0.05em;margin-top:2px;">Ecosystem</div>
-    </div>
-    <div style="flex:1 1 33%;text-align:center;padding:14px 8px;">
-      <div style="font-size:24px;font-weight:700;color:#0891b2;">${mcpServers.length}</div>
-      <div style="font-size:10px;color:#94a3b8;text-transform:uppercase;letter-spacing:0.05em;margin-top:2px;">MCP Servers</div>
-    </div>
-  </div>
+  <table width="100%" cellpadding="0" cellspacing="0" style="border-bottom:1px solid #e2e8f0;">
+    <tr>
+      <td width="33%" align="center" style="padding:14px 8px;">
+        <div style="font-size:28px;font-weight:700;color:#d97706;">${skillCount}</div>
+        <div style="font-size:10px;color:#94a3b8;text-transform:uppercase;letter-spacing:0.05em;margin-top:2px;">Skills</div>
+      </td>
+      <td width="34%" align="center" style="padding:14px 8px;border-left:1px solid #e2e8f0;border-right:1px solid #e2e8f0;">
+        <div style="font-size:28px;font-weight:700;color:#7c3aed;">${ecosystemCount}</div>
+        <div style="font-size:10px;color:#94a3b8;text-transform:uppercase;letter-spacing:0.05em;margin-top:2px;">Ecosystem</div>
+      </td>
+      <td width="33%" align="center" style="padding:14px 8px;">
+        <div style="font-size:28px;font-weight:700;color:#0891b2;">${mcpServers.length}</div>
+        <div style="font-size:10px;color:#94a3b8;text-transform:uppercase;letter-spacing:0.05em;margin-top:2px;">MCP Servers</div>
+      </td>
+    </tr>
+  </table>
 
   <div style="padding:12px 16px;border-bottom:1px solid #e2e8f0;">
     <div style="font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:#94a3b8;margin-bottom:8px;font-weight:600;">Workspace</div>
     <table style="width:100%;font-size:12px;border-collapse:collapse;">
       <tr><td style="color:#94a3b8;width:50px;padding:4px 8px 4px 0;white-space:nowrap;">Path</td><td style="color:#334155;word-break:break-all;font-size:11px;padding:4px 0;"><span style="background:#f1f5f9;padding:2px 6px;border-radius:4px;font-size:11px;font-family:ui-monospace,'SF Mono',Menlo,monospace;">${workspace}</span></td></tr>
-      <tr><td style="color:#94a3b8;width:50px;padding:4px 8px 4px 0;white-space:nowrap;">Git</td><td style="color:#334155;font-size:11px;padding:4px 0;">${gitInfo}</td></tr>
+      <tr><td style="color:#94a3b8;width:50px;padding:4px 8px 4px 0;white-space:nowrap;">Git</td><td style="color:#334155;font-size:11px;padding:4px 0;">${gitUrl ? `<a href="${gitUrl}" style="color:#4338ca;text-decoration:none;">${gitInfo}</a>` : gitInfo}</td></tr>
       <tr><td style="color:#94a3b8;width:50px;padding:4px 8px 4px 0;white-space:nowrap;">Logs</td><td style="color:#334155;font-size:11px;padding:4px 0;word-break:break-all;">${logsPath}</td></tr>
     </table>
   </div>
