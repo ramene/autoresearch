@@ -29,3 +29,33 @@
 
 ## Round 5 — Mutation Applied
 - **Mutation**: All criteria show 0 failures — the skill is passing perfectly. No mutation needed; return the skill unchanged.
+
+## Round 6 — Mutation Applied
+- **Mutation**: All criteria show 0 failures — the skill is passing perfectly. No mutation needed; return the skill unchanged.
+
+## Round 7 — Mutation Applied
+- **Mutation**: All criteria show 1 failure each across 3 scenarios — this pattern suggests a subtle regression. Adding explicit HTML entity escaping guidance for ampersands in email content to prevent invalid HTML that could cause email sending failures.
+
+## Round 8 — Mutation Applied
+- **Mutation**: All criteria show 0 failures — the skill is passing perfectly. No mutation needed; return the skill unchanged.
+
+## Round 9 — Mutation Applied
+- **Mutation**: Add Step 0 for input normalization and pre-validation to handle messy/unstructured inputs and validate financial values before proceeding, following the meta-analyst's recommended strategy.
+
+## Round 10 — Mutation Applied
+- **Mutation**: All criteria show 0 failures — the skill is passing perfectly. No mutation needed; return the skill unchanged.
+
+## Round 11 — Mutation Applied
+- **Mutation**: All criteria show 0 failures — the skill is passing perfectly. No mutation needed; return the skill unchanged.
+
+## Round 12 — Mutation Applied
+- **Mutation**: All criteria show 0 failures — the skill is passing perfectly. No mutation needed; return the skill unchanged.
+
+## Round 13 — Mutation Applied
+- **Mutation**: All criteria show 0 failures — the skill is passing perfectly. No mutation needed; return the skill unchanged.
+
+## Round 14 — Mutation Applied
+- **Mutation**: Enhanced Step 5 email opening to require personalization based on Client Research Summary from Step 2, carrying research context forward into email generation.
+
+## Round 15 — Mutation Applied
+- **Mutation**: No failures detected — skill is passing perfectly; returning unchanged.

@@ -23,3 +23,23 @@
 
 ## Round 5 — Mutation Applied
 - **Mutation**: Refactor Execution Steps into a unified linear pipeline with a single "Execution Flow" section that merges the mandatory pre-step into universal steps followed by conditional augmentation, removing all deprecated `/price` and `/midpoint` endpoint mentions from individual steps to eliminate ambiguity.
+
+## Round 6 — Mutation Applied
+- **Mutation**: Add explicit batch-mode Phase 1 path that uses POST /books and computes all baseline fields (best_bid, best_ask, spread, spread_pct, mid, liquidity totals) per token — fixing batch spread/midpoint calculation and downstream data insufficiency in batch scenarios.
+
+## Round 7 — Mutation Applied
+- **Mutation**: Add explicit empty/one-sided orderbook handling with guard clauses and sentinel output fields so all computed values degrade gracefully when bids or asks arrays are empty, fixing parse, spread, fill, and downstream failures in that edge case.
+
+## Round 8 — Mutation Applied
+- **Mutation**: Add an explicit interval-to-API-parameter mapping table in the --history phase that translates user-facing interval strings to the fidelity integer and startTs/endTs unix timestamp offsets that the Polymarket CLOB API actually requires, fixing all 6 price history failures.
+
+## Round 8
+- **Score**: 36/36 (kept)
+- **Failures**: none
+- **Per-criteria**: Orderbook correctly parsed with price/size levels: 6/6, Spread and midpoint calculated correctly: 6/6, Fill estimation walks orderbook for accurate slippage: 6/6, Batch queries handle multiple tokens efficiently: 6/6, Price history returns data at correct intervals: 6/6, Output includes sufficient data for downstream analysis: 6/6
+
+## Round 9 — Mutation Applied
+- **Mutation**: Refactor monolithic Execution Flow into a shared `Core Logic: Processing an Orderbook` section plus modular `Flag-Specific Execution` subsections — isolating each flag's linear steps to reduce cognitive load and make logic robust by eliminating cross-phase dependencies.
+
+## Round 10 — Mutation Applied
+- **Mutation**: No failures detected (36/36 score) — apply a minor defensive clarification to the --history section to make the `market` vs `token_id` query parameter distinction explicit, preventing potential API call errors on a boundary case.

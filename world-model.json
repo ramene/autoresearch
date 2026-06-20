@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-03-29T07:07:57.176Z",
+  "timestamp": "2026-06-20T14:01:41.198Z",
   "version": "1.1",
   "research_demands": [
     {
@@ -105,6 +105,11 @@
       "current_capability": "classify-leads"
     },
     {
+      "signal": "Skill \"classify-leads\" ready for promotion (score: 36/36)",
+      "source": "skills/working-classify-leads/events.jsonl",
+      "current_capability": "classify-leads"
+    },
+    {
       "signal": "Skill \"classify-leads\" last improved: 31 → 36/36",
       "source": "skills/working-classify-leads/events.jsonl",
       "current_capability": "classify-leads"
@@ -133,6 +138,16 @@
       "signal": "Skill \"context-loader\" ready for promotion (score: 224/224)",
       "source": "skills/working-context-loader/events.jsonl",
       "current_capability": "context-loader"
+    },
+    {
+      "signal": "Skill \"context-loader\" ready for promotion (score: 224/224)",
+      "source": "skills/working-context-loader/events.jsonl",
+      "current_capability": "context-loader"
+    },
+    {
+      "signal": "Skill \"create-proposal\" ready for promotion (score: 36/36)",
+      "source": "skills/working-create-proposal/events.jsonl",
+      "current_capability": "create-proposal"
     },
     {
       "signal": "Skill \"create-proposal\" ready for promotion (score: 36/36)",
@@ -170,9 +185,19 @@
       "current_capability": "cross-model-intelligence-pipeline"
     },
     {
+      "signal": "Skill \"cross-model-intelligence-pipeline\" ready for promotion (score: 48/48)",
+      "source": "skills/working-cross-model-intelligence-pipeline/events.jsonl",
+      "current_capability": "cross-model-intelligence-pipeline"
+    },
+    {
       "signal": "Skill \"cross-model-intelligence-pipeline\" last improved: 44 → 48/48",
       "source": "skills/working-cross-model-intelligence-pipeline/events.jsonl",
       "current_capability": "cross-model-intelligence-pipeline"
+    },
+    {
+      "signal": "Skill \"cross-niche-outliers\" ready for promotion (score: 36/36)",
+      "source": "skills/working-cross-niche-outliers/events.jsonl",
+      "current_capability": "cross-niche-outliers"
     },
     {
       "signal": "Skill \"cross-niche-outliers\" ready for promotion (score: 36/36)",
@@ -210,6 +235,16 @@
       "current_capability": "defi-arbitrage-executor"
     },
     {
+      "signal": "Skill \"defi-arbitrage-executor\" ready for promotion (score: 36/36)",
+      "source": "skills/working-defi-arbitrage-executor/events.jsonl",
+      "current_capability": "defi-arbitrage-executor"
+    },
+    {
+      "signal": "Skill \"eaas-payment-linker\" ready for promotion (score: 36/36)",
+      "source": "skills/working-eaas-payment-linker/events.jsonl",
+      "current_capability": "eaas-payment-linker"
+    },
+    {
       "signal": "Skill \"eaas-payment-linker\" ready for promotion (score: 36/36)",
       "source": "skills/working-eaas-payment-linker/events.jsonl",
       "current_capability": "eaas-payment-linker"
@@ -228,6 +263,11 @@
       "signal": "Skill \"eaas-payment-linker\" last improved: 27 → 36/36",
       "source": "skills/working-eaas-payment-linker/events.jsonl",
       "current_capability": "eaas-payment-linker"
+    },
+    {
+      "signal": "Skill \"gmail\" ready for promotion (score: 36/36)",
+      "source": "skills/working-gmail/events.jsonl",
+      "current_capability": "gmail"
     },
     {
       "signal": "Skill \"gmail\" ready for promotion (score: 36/36)",
@@ -265,14 +305,24 @@
       "current_capability": "gmail-inbox"
     },
     {
+      "signal": "Skill \"gmail-inbox\" ready for promotion (score: 36/36)",
+      "source": "skills/working-gmail-inbox/events.jsonl",
+      "current_capability": "gmail-inbox"
+    },
+    {
       "signal": "Skill \"gmail-inbox\" last improved: 30 → 36/36",
       "source": "skills/working-gmail-inbox/events.jsonl",
       "current_capability": "gmail-inbox"
     },
     {
-      "signal": "Skill \"gmail-label\" last improved: 31 → 34/36",
+      "signal": "Skill \"gmail-label\" last improved: 34 → 36/36",
       "source": "skills/working-gmail-label/events.jsonl",
       "current_capability": "gmail-label"
+    },
+    {
+      "signal": "Skill \"goal-to-skill-executor\" ready for promotion (score: 48/48)",
+      "source": "skills/working-goal-to-skill-executor/events.jsonl",
+      "current_capability": "goal-to-skill-executor"
     },
     {
       "signal": "Skill \"goal-to-skill-executor\" ready for promotion (score: 48/48)",
@@ -290,9 +340,19 @@
       "current_capability": "inbox-cleaner"
     },
     {
+      "signal": "Skill \"instantly-autoreply\" ready for promotion (score: 36/36)",
+      "source": "skills/working-instantly-autoreply/events.jsonl",
+      "current_capability": "instantly-autoreply"
+    },
+    {
       "signal": "Skill \"instantly-autoreply\" last improved: 28 → 36/36",
       "source": "skills/working-instantly-autoreply/events.jsonl",
       "current_capability": "instantly-autoreply"
+    },
+    {
+      "signal": "Skill \"instantly-campaigns\" ready for promotion (score: 36/36)",
+      "source": "skills/working-instantly-campaigns/events.jsonl",
+      "current_capability": "instantly-campaigns"
     },
     {
       "signal": "Skill \"instantly-campaigns\" ready for promotion (score: 36/36)",
@@ -315,6 +375,16 @@
       "current_capability": "intent-clarifier"
     },
     {
+      "signal": "Skill \"intent-clarifier\" ready for promotion (score: 48/48)",
+      "source": "skills/working-intent-clarifier/events.jsonl",
+      "current_capability": "intent-clarifier"
+    },
+    {
+      "signal": "Skill \"k8s-deployment-manager\" ready for promotion (score: 36/36)",
+      "source": "skills/working-k8s-deployment-manager/events.jsonl",
+      "current_capability": "k8s-deployment-manager"
+    },
+    {
       "signal": "Skill \"k8s-deployment-manager\" ready for promotion (score: 36/36)",
       "source": "skills/working-k8s-deployment-manager/events.jsonl",
       "current_capability": "k8s-deployment-manager"
@@ -328,6 +398,11 @@
       "signal": "Skill \"k8s-deployment-manager\" ready for promotion (score: 36/36)",
       "source": "skills/working-k8s-deployment-manager/events.jsonl",
       "current_capability": "k8s-deployment-manager"
+    },
+    {
+      "signal": "Skill \"linkedin-response\" ready for promotion (score: 36/36)",
+      "source": "skills/working-linkedin-response/events.jsonl",
+      "current_capability": "linkedin-response"
     },
     {
       "signal": "Skill \"linkedin-response\" ready for promotion (score: 36/36)",
@@ -350,7 +425,7 @@
       "current_capability": "linkedin-response"
     },
     {
-      "signal": "Skill \"onboarding-kickoff\" last improved: 21 → 34/36",
+      "signal": "Skill \"onboarding-kickoff\" last improved: 34 → 36/36",
       "source": "skills/working-onboarding-kickoff/events.jsonl",
       "current_capability": "onboarding-kickoff"
     },
@@ -368,6 +443,16 @@
       "signal": "Skill \"polymarket-5min-strategy\" ready for promotion (score: 25/25)",
       "source": "skills/working-polymarket-5min-strategy/events.jsonl",
       "current_capability": "polymarket-5min-strategy"
+    },
+    {
+      "signal": "Skill \"polymarket-5min-strategy\" ready for promotion (score: 25/25)",
+      "source": "skills/working-polymarket-5min-strategy/events.jsonl",
+      "current_capability": "polymarket-5min-strategy"
+    },
+    {
+      "signal": "Skill \"polymarket-bridge\" ready for promotion (score: 25/25)",
+      "source": "skills/working-polymarket-bridge/events.jsonl",
+      "current_capability": "polymarket-bridge"
     },
     {
       "signal": "Skill \"polymarket-bridge\" ready for promotion (score: 25/25)",
@@ -405,6 +490,16 @@
       "current_capability": "polymarket-clob-trader"
     },
     {
+      "signal": "Skill \"polymarket-clob-trader\" ready for promotion (score: 64/64)",
+      "source": "skills/working-polymarket-clob-trader/events.jsonl",
+      "current_capability": "polymarket-clob-trader"
+    },
+    {
+      "signal": "Skill \"polymarket-ctf-operations\" ready for promotion (score: 25/25)",
+      "source": "skills/working-polymarket-ctf-operations/events.jsonl",
+      "current_capability": "polymarket-ctf-operations"
+    },
+    {
       "signal": "Skill \"polymarket-ctf-operations\" ready for promotion (score: 25/25)",
       "source": "skills/working-polymarket-ctf-operations/events.jsonl",
       "current_capability": "polymarket-ctf-operations"
@@ -438,6 +533,16 @@
       "signal": "Skill \"polymarket-flash-crash-detector\" ready for promotion (score: 36/36)",
       "source": "skills/working-polymarket-flash-crash-detector/events.jsonl",
       "current_capability": "polymarket-flash-crash-detector"
+    },
+    {
+      "signal": "Skill \"polymarket-flash-crash-detector\" ready for promotion (score: 36/36)",
+      "source": "skills/working-polymarket-flash-crash-detector/events.jsonl",
+      "current_capability": "polymarket-flash-crash-detector"
+    },
+    {
+      "signal": "Skill \"polymarket-gasless-trader\" ready for promotion (score: 25/25)",
+      "source": "skills/working-polymarket-gasless-trader/events.jsonl",
+      "current_capability": "polymarket-gasless-trader"
     },
     {
       "signal": "Skill \"polymarket-gasless-trader\" ready for promotion (score: 25/25)",
@@ -475,6 +580,11 @@
       "current_capability": "polymarket-market-analyzer"
     },
     {
+      "signal": "Skill \"polymarket-market-analyzer\" ready for promotion (score: 25/25)",
+      "source": "skills/working-polymarket-market-analyzer/events.jsonl",
+      "current_capability": "polymarket-market-analyzer"
+    },
+    {
       "signal": "Skill \"polymarket-market-analyzer\" last improved: 22 → 25/25",
       "source": "skills/working-polymarket-market-analyzer/events.jsonl",
       "current_capability": "polymarket-market-analyzer"
@@ -495,7 +605,12 @@
       "current_capability": "polymarket-market-discovery"
     },
     {
-      "signal": "Skill \"polymarket-orderbook-reader\" last improved: 33 → 34/36",
+      "signal": "Skill \"polymarket-market-discovery\" ready for promotion (score: 36/36)",
+      "source": "skills/working-polymarket-market-discovery/events.jsonl",
+      "current_capability": "polymarket-market-discovery"
+    },
+    {
+      "signal": "Skill \"polymarket-orderbook-reader\" last improved: 34 → 36/36",
       "source": "skills/working-polymarket-orderbook-reader/events.jsonl",
       "current_capability": "polymarket-orderbook-reader"
     },
@@ -503,6 +618,11 @@
       "signal": "Skill \"polymarket-portfolio-tracker\" last improved: 23 → 24/25",
       "source": "skills/working-polymarket-portfolio-tracker/events.jsonl",
       "current_capability": "polymarket-portfolio-tracker"
+    },
+    {
+      "signal": "Skill \"polymarket-position-manager\" ready for promotion (score: 25/25)",
+      "source": "skills/working-polymarket-position-manager/events.jsonl",
+      "current_capability": "polymarket-position-manager"
     },
     {
       "signal": "Skill \"polymarket-position-manager\" ready for promotion (score: 25/25)",
@@ -540,9 +660,19 @@
       "current_capability": "polymarket-websocket-monitor"
     },
     {
+      "signal": "Skill \"polymarket-websocket-monitor\" ready for promotion (score: 25/25)",
+      "source": "skills/working-polymarket-websocket-monitor/events.jsonl",
+      "current_capability": "polymarket-websocket-monitor"
+    },
+    {
       "signal": "Skill \"polymarket-websocket-monitor\" last improved: 23 → 25/25",
       "source": "skills/working-polymarket-websocket-monitor/events.jsonl",
       "current_capability": "polymarket-websocket-monitor"
+    },
+    {
+      "signal": "Skill \"prompt-refiner-for-robustness\" ready for promotion (score: 36/36)",
+      "source": "skills/working-prompt-refiner-for-robustness/events.jsonl",
+      "current_capability": "prompt-refiner-for-robustness"
     },
     {
       "signal": "Skill \"prompt-refiner-for-robustness\" ready for promotion (score: 36/36)",
@@ -580,6 +710,16 @@
       "current_capability": "scrape-leads"
     },
     {
+      "signal": "Skill \"scrape-leads\" ready for promotion (score: 36/36)",
+      "source": "skills/working-scrape-leads/events.jsonl",
+      "current_capability": "scrape-leads"
+    },
+    {
+      "signal": "Skill \"skill-optimizer-v2\" ready for promotion (score: 36/36)",
+      "source": "skills/working-skill-optimizer-v2/events.jsonl",
+      "current_capability": "skill-optimizer-v2"
+    },
+    {
       "signal": "Skill \"skill-optimizer-v2\" ready for promotion (score: 36/36)",
       "source": "skills/working-skill-optimizer-v2/events.jsonl",
       "current_capability": "skill-optimizer-v2"
@@ -593,6 +733,11 @@
       "signal": "Skill \"skill-optimizer-v2\" ready for promotion (score: 36/36)",
       "source": "skills/working-skill-optimizer-v2/events.jsonl",
       "current_capability": "skill-optimizer-v2"
+    },
+    {
+      "signal": "Skill \"skill-test-generator\" ready for promotion (score: 36/36)",
+      "source": "skills/working-skill-test-generator/events.jsonl",
+      "current_capability": "skill-test-generator"
     },
     {
       "signal": "Skill \"skill-test-generator\" ready for promotion (score: 36/36)",
@@ -628,6 +773,16 @@
       "signal": "Skill \"skill-test-runner\" ready for promotion (score: 36/36)",
       "source": "skills/working-skill-test-runner/events.jsonl",
       "current_capability": "skill-test-runner"
+    },
+    {
+      "signal": "Skill \"skill-test-runner\" ready for promotion (score: 36/36)",
+      "source": "skills/working-skill-test-runner/events.jsonl",
+      "current_capability": "skill-test-runner"
+    },
+    {
+      "signal": "Skill \"stuck-skill-diagnoser\" ready for promotion (score: 42/42)",
+      "source": "skills/working-stuck-skill-diagnoser/events.jsonl",
+      "current_capability": "stuck-skill-diagnoser"
     },
     {
       "signal": "Skill \"stuck-skill-diagnoser\" ready for promotion (score: 42/42)",
@@ -670,6 +825,11 @@
       "current_capability": "the-real-scrumness"
     },
     {
+      "signal": "Skill \"the-real-scrumness\" ready for promotion (score: 36/36)",
+      "source": "skills/working-the-real-scrumness/events.jsonl",
+      "current_capability": "the-real-scrumness"
+    },
+    {
       "signal": "Skill \"title-variants\" last improved: 33 → 35/36",
       "source": "skills/working-title-variants/events.jsonl",
       "current_capability": "title-variants"
@@ -685,9 +845,19 @@
       "current_capability": "tradfi-market-analyzer"
     },
     {
+      "signal": "Skill \"tradfi-market-analyzer\" ready for promotion (score: 48/48)",
+      "source": "skills/working-tradfi-market-analyzer/events.jsonl",
+      "current_capability": "tradfi-market-analyzer"
+    },
+    {
       "signal": "Skill \"video-to-action\" last improved: 34 → 36/36",
       "source": "skills/working-video-to-action/events.jsonl",
       "current_capability": "video-to-action"
+    },
+    {
+      "signal": "Skill \"welcome-email\" ready for promotion (score: 36/36)",
+      "source": "skills/working-welcome-email/events.jsonl",
+      "current_capability": "welcome-email"
     },
     {
       "signal": "Skill \"welcome-email\" ready for promotion (score: 36/36)",
@@ -725,6 +895,11 @@
       "current_capability": "youtube-channel-analysis"
     },
     {
+      "signal": "Skill \"youtube-channel-analysis\" ready for promotion (score: 36/36)",
+      "source": "skills/working-youtube-channel-analysis/events.jsonl",
+      "current_capability": "youtube-channel-analysis"
+    },
+    {
       "signal": "Skill \"youtube-channel-analysis\" last improved: 25 → 36/36",
       "source": "skills/working-youtube-channel-analysis/events.jsonl",
       "current_capability": "youtube-channel-analysis"
@@ -740,12 +915,17 @@
       "current_capability": "container-security-auditor"
     },
     {
-      "signal": "Skill \"container-security-auditor\" has 5 unresolved failure(s) in round 4",
+      "signal": "Skill \"container-security-auditor\" has 5 unresolved failure(s) in round 9",
       "source": "skills/working-container-security-auditor/rounds.json",
       "current_capability": "container-security-auditor"
     },
     {
-      "signal": "Skill \"content-strategy-optimizer\" has 48 unresolved failure(s) in round 42",
+      "signal": "Skill \"content-strategy-optimizer\" score plateaued at 0 for 3 rounds",
+      "source": "skills/working-content-strategy-optimizer/rounds.json",
+      "current_capability": "content-strategy-optimizer"
+    },
+    {
+      "signal": "Skill \"content-strategy-optimizer\" has 48 unresolved failure(s) in round 117",
       "source": "skills/working-content-strategy-optimizer/rounds.json",
       "current_capability": "content-strategy-optimizer"
     },
@@ -755,9 +935,29 @@
       "current_capability": "context-drift-detector"
     },
     {
+      "signal": "Skill \"context-loader\" has 1 unresolved failure(s) in round 13",
+      "source": "skills/working-context-loader/rounds.json",
+      "current_capability": "context-loader"
+    },
+    {
+      "signal": "Skill \"create-proposal\" score plateaued at 36 for 3 rounds",
+      "source": "skills/working-create-proposal/rounds.json",
+      "current_capability": "create-proposal"
+    },
+    {
+      "signal": "Skill \"cross-model-intelligence-pipeline\" score plateaued at 48 for 3 rounds",
+      "source": "skills/working-cross-model-intelligence-pipeline/rounds.json",
+      "current_capability": "cross-model-intelligence-pipeline"
+    },
+    {
       "signal": "Skill \"defi-arbitrage-executor\" score plateaued at 36 for 3 rounds",
       "source": "skills/working-defi-arbitrage-executor/rounds.json",
       "current_capability": "defi-arbitrage-executor"
+    },
+    {
+      "signal": "Skill \"eaas-payment-linker\" has 9 unresolved failure(s) in round 9",
+      "source": "skills/working-eaas-payment-linker/rounds.json",
+      "current_capability": "eaas-payment-linker"
     },
     {
       "signal": "Skill \"failure-log-analyzer\" score plateaued at 30 for 3 rounds",
@@ -770,22 +970,27 @@
       "current_capability": "failure-log-analyzer"
     },
     {
-      "signal": "Skill \"gmail-label\" has 2 unresolved failure(s) in round 4",
-      "source": "skills/working-gmail-label/rounds.json",
-      "current_capability": "gmail-label"
+      "signal": "Skill \"gmail\" has 3 unresolved failure(s) in round 14",
+      "source": "skills/working-gmail/rounds.json",
+      "current_capability": "gmail"
     },
     {
-      "signal": "Skill \"gmaps-leads\" has 4 unresolved failure(s) in round 4",
+      "signal": "Skill \"gmaps-leads\" score plateaued at 36 for 3 rounds",
       "source": "skills/working-gmaps-leads/rounds.json",
       "current_capability": "gmaps-leads"
     },
     {
-      "signal": "Skill \"inbox-cleaner\" has 1 unresolved failure(s) in round 4",
+      "signal": "Skill \"goal-to-skill-executor\" score plateaued at 48 for 3 rounds",
+      "source": "skills/working-goal-to-skill-executor/rounds.json",
+      "current_capability": "goal-to-skill-executor"
+    },
+    {
+      "signal": "Skill \"inbox-cleaner\" score plateaued at 36 for 3 rounds",
       "source": "skills/working-inbox-cleaner/rounds.json",
       "current_capability": "inbox-cleaner"
     },
     {
-      "signal": "Skill \"instantly-autoreply\" score plateaued at 36 for 3 rounds",
+      "signal": "Skill \"instantly-autoreply\" has 36 unresolved failure(s) in round 14",
       "source": "skills/working-instantly-autoreply/rounds.json",
       "current_capability": "instantly-autoreply"
     },
@@ -795,17 +1000,37 @@
       "current_capability": "instantly-campaigns"
     },
     {
-      "signal": "Skill \"interactive-skill-refiner\" has 5 unresolved failure(s) in round 2",
+      "signal": "Skill \"intent-clarifier\" score plateaued at 48 for 3 rounds",
+      "source": "skills/working-intent-clarifier/rounds.json",
+      "current_capability": "intent-clarifier"
+    },
+    {
+      "signal": "Skill \"interactive-skill-refiner\" has 6 unresolved failure(s) in round 7",
       "source": "skills/working-interactive-skill-refiner/rounds.json",
       "current_capability": "interactive-skill-refiner"
     },
     {
-      "signal": "Skill \"k8s-deployment-manager\" score plateaued at 36 for 3 rounds",
+      "signal": "Skill \"k8s-deployment-manager\" has 19 unresolved failure(s) in round 9",
       "source": "skills/working-k8s-deployment-manager/rounds.json",
       "current_capability": "k8s-deployment-manager"
     },
     {
-      "signal": "Skill \"onboarding-kickoff\" has 2 unresolved failure(s) in round 4",
+      "signal": "Skill \"linkedin-response\" score plateaued at 36 for 3 rounds",
+      "source": "skills/working-linkedin-response/rounds.json",
+      "current_capability": "linkedin-response"
+    },
+    {
+      "signal": "Skill \"mae-trading-report\" score plateaued at 40 for 3 rounds",
+      "source": "skills/working-mae-trading-report/rounds.json",
+      "current_capability": "mae-trading-report"
+    },
+    {
+      "signal": "Skill \"mae-trading-report\" has 8 unresolved failure(s) in round 16",
+      "source": "skills/working-mae-trading-report/rounds.json",
+      "current_capability": "mae-trading-report"
+    },
+    {
+      "signal": "Skill \"onboarding-kickoff\" score plateaued at 36 for 3 rounds",
       "source": "skills/working-onboarding-kickoff/rounds.json",
       "current_capability": "onboarding-kickoff"
     },
@@ -825,7 +1050,7 @@
       "current_capability": "polymarket-flash-crash-detector"
     },
     {
-      "signal": "Skill \"polymarket-gasless-trader\" score plateaued at 25 for 3 rounds",
+      "signal": "Skill \"polymarket-gasless-trader\" has 4 unresolved failure(s) in round 15",
       "source": "skills/working-polymarket-gasless-trader/rounds.json",
       "current_capability": "polymarket-gasless-trader"
     },
@@ -835,12 +1060,12 @@
       "current_capability": "polymarket-market-discovery"
     },
     {
-      "signal": "Skill \"polymarket-orderbook-reader\" has 2 unresolved failure(s) in round 4",
+      "signal": "Skill \"polymarket-orderbook-reader\" score plateaued at 36 for 3 rounds",
       "source": "skills/working-polymarket-orderbook-reader/rounds.json",
       "current_capability": "polymarket-orderbook-reader"
     },
     {
-      "signal": "Skill \"polymarket-portfolio-tracker\" has 1 unresolved failure(s) in round 4",
+      "signal": "Skill \"polymarket-portfolio-tracker\" has 4 unresolved failure(s) in round 14",
       "source": "skills/working-polymarket-portfolio-tracker/rounds.json",
       "current_capability": "polymarket-portfolio-tracker"
     },
@@ -860,7 +1085,7 @@
       "current_capability": "prompt-refiner-for-robustness"
     },
     {
-      "signal": "Skill \"scaffold\" has 4 unresolved failure(s) in round 10",
+      "signal": "Skill \"scaffold\" has 19 unresolved failure(s) in round 15",
       "source": "skills/working-scaffold/rounds.json",
       "current_capability": "scaffold"
     },
@@ -895,19 +1120,14 @@
       "current_capability": "stuck-skill-diagnoser"
     },
     {
-      "signal": "Skill \"system-dashboard-generator\" has 2 unresolved failure(s) in round 4",
+      "signal": "Skill \"system-dashboard-generator\" has 3 unresolved failure(s) in round 14",
       "source": "skills/working-system-dashboard-generator/rounds.json",
       "current_capability": "system-dashboard-generator"
     },
     {
-      "signal": "Skill \"system-status-reporter\" has 3 unresolved failure(s) in round 12",
+      "signal": "Skill \"system-status-reporter\" has 13 unresolved failure(s) in round 22",
       "source": "skills/working-system-status-reporter/rounds.json",
       "current_capability": "system-status-reporter"
-    },
-    {
-      "signal": "Skill \"the-real-scrumness\" score plateaued at 36 for 3 rounds",
-      "source": "skills/working-the-real-scrumness/rounds.json",
-      "current_capability": "the-real-scrumness"
     },
     {
       "signal": "Skill \"title-variants\" has 2 unresolved failure(s) in round 14",
@@ -915,62 +1135,63 @@
       "current_capability": "title-variants"
     },
     {
-      "signal": "Skill \"video-to-action\" has 2 unresolved failure(s) in round 4",
-      "source": "skills/working-video-to-action/rounds.json",
-      "current_capability": "video-to-action"
+      "signal": "Skill \"tradfi-market-analyzer\" has 27 unresolved failure(s) in round 13",
+      "source": "skills/working-tradfi-market-analyzer/rounds.json",
+      "current_capability": "tradfi-market-analyzer"
     },
     {
-      "signal": "Skill \"welcome-email\" score plateaued at 36 for 3 rounds",
-      "source": "skills/working-welcome-email/rounds.json",
-      "current_capability": "welcome-email"
-    },
-    {
-      "signal": "Skill \"youtube-channel-analysis\" score plateaued at 36 for 3 rounds",
-      "source": "skills/working-youtube-channel-analysis/rounds.json",
-      "current_capability": "youtube-channel-analysis"
+      "signal": "Skill \"youtube-outliers\" score plateaued at 36 for 3 rounds",
+      "source": "skills/working-youtube-outliers/rounds.json",
+      "current_capability": "youtube-outliers"
     }
   ],
   "user_intent_signals": [
     {
-      "signal": "User intent pattern: \"skill improvement\" detected across tmux transcripts",
-      "source": "tmux-logs transcripts (11 files scanned)",
-      "frequency": 741,
-      "current_capability": null
-    },
-    {
       "signal": "User intent pattern: \"error debugging\" detected across tmux transcripts",
-      "source": "tmux-logs transcripts (11 files scanned)",
-      "frequency": 529,
+      "source": "tmux-logs transcripts (7 files scanned)",
+      "frequency": 71,
       "current_capability": null
     },
     {
-      "signal": "User intent pattern: \"testing\" detected across tmux transcripts",
-      "source": "tmux-logs transcripts (11 files scanned)",
-      "frequency": 101,
-      "current_capability": null
-    },
-    {
-      "signal": "User intent pattern: \"dashboard\" detected across tmux transcripts",
-      "source": "tmux-logs transcripts (11 files scanned)",
-      "frequency": 155,
+      "signal": "User intent pattern: \"security audit\" detected across tmux transcripts",
+      "source": "tmux-logs transcripts (7 files scanned)",
+      "frequency": 3,
       "current_capability": null
     },
     {
       "signal": "User intent pattern: \"documentation\" detected across tmux transcripts",
-      "source": "tmux-logs transcripts (11 files scanned)",
-      "frequency": 47,
-      "current_capability": null
-    },
-    {
-      "signal": "User intent pattern: \"research pipeline\" detected across tmux transcripts",
-      "source": "tmux-logs transcripts (11 files scanned)",
-      "frequency": 12,
+      "source": "tmux-logs transcripts (7 files scanned)",
+      "frequency": 21,
       "current_capability": null
     },
     {
       "signal": "User intent pattern: \"deployment\" detected across tmux transcripts",
-      "source": "tmux-logs transcripts (11 files scanned)",
-      "frequency": 49,
+      "source": "tmux-logs transcripts (7 files scanned)",
+      "frequency": 140,
+      "current_capability": null
+    },
+    {
+      "signal": "User intent pattern: \"testing\" detected across tmux transcripts",
+      "source": "tmux-logs transcripts (7 files scanned)",
+      "frequency": 39,
+      "current_capability": null
+    },
+    {
+      "signal": "User intent pattern: \"dashboard\" detected across tmux transcripts",
+      "source": "tmux-logs transcripts (7 files scanned)",
+      "frequency": 206,
+      "current_capability": null
+    },
+    {
+      "signal": "User intent pattern: \"research pipeline\" detected across tmux transcripts",
+      "source": "tmux-logs transcripts (7 files scanned)",
+      "frequency": 23,
+      "current_capability": null
+    },
+    {
+      "signal": "User intent pattern: \"skill improvement\" detected across tmux transcripts",
+      "source": "tmux-logs transcripts (7 files scanned)",
+      "frequency": 82,
       "current_capability": null
     }
   ],
@@ -1026,7 +1247,8 @@
         "defi-arbitrage-executor (seed-base)"
       ],
       "existing_autoresearch_skills": [
-        "working-defi-arbitrage-executor"
+        "working-defi-arbitrage-executor",
+        "working-mae-trading-report"
       ],
       "gap": "Autoresearch skills exist for this domain"
     },
@@ -1193,6 +1415,7 @@
         "eaas-expansion-brainstorm-to-blueprint-v1 (seed-base)",
         "eaas-payment-linker (seed-base)",
         "eaas-platform-build-self-discovery-v1 (seed-base)",
+        "platform (seed-base)",
         "eaas-domain-expansion-agent-team-v1 (builds-karve-ai)",
         "eaas-expansion-brainstorm-to-blueprint-v1 (builds-karve-ai)",
         "eaas-platform-build-self-discovery-v1 (builds-karve-ai)",
@@ -1205,9 +1428,9 @@
     }
   ],
   "summary": {
-    "total_demands": 184,
-    "unmet_demands": 8,
-    "partially_met": 176,
+    "total_demands": 228,
+    "unmet_demands": 9,
+    "partially_met": 219,
     "research_gap_count": 1,
     "system_gap_count": 0,
     "mcp_domain_count": 7,

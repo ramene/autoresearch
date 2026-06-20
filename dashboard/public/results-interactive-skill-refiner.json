@@ -1,0 +1,473 @@
+{
+  "skill": "interactive-skill-refiner",
+  "criteria": [
+    "Identify the target skill from user input",
+    "Invoke `stuck-skill-diagnoser` or `failure-log-analyzer` to find root causes",
+    "Propose a specific, actionable modification based on the diagnosis",
+    "Generate new, relevant tests using `skill-test-generator` to verify the fix",
+    "Apply the user-approved modification to the skill's definition",
+    "Run the new tests using `skill-test-runner` and report the before/after scores"
+  ],
+  "totalCost": 0.48,
+  "models": {
+    "mutator": "sonnet",
+    "evaluator": "gemini-2.5-pro"
+  },
+  "rounds": [
+    {
+      "round": 0,
+      "score": 42,
+      "max": 48,
+      "status": "baseline",
+      "mutation": "Modified Step 2d to always invoke `stuck-skill-diagnoser` before proceeding, even for feature requests, ensuring the diagnostic quality gate is never bypassed.",
+      "cost": 0.05,
+      "criteria": [
+        8,
+        6,
+        7,
+        7,
+        7,
+        7
+      ],
+      "failures": [
+        {
+          "scenario": 3,
+          "criterion": "Invoke `stuck-skill-diagnoser` or `failure-log-analyzer` to find root causes"
+        },
+        {
+          "scenario": 7,
+          "criterion": "Invoke `stuck-skill-diagnoser` or `failure-log-analyzer` to find root causes"
+        },
+        {
+          "scenario": 7,
+          "criterion": "Propose a specific, actionable modification based on the diagnosis"
+        },
+        {
+          "scenario": 7,
+          "criterion": "Generate new, relevant tests using `skill-test-generator` to verify the fix"
+        },
+        {
+          "scenario": 7,
+          "criterion": "Apply the user-approved modification to the skill's definition"
+        },
+        {
+          "scenario": 7,
+          "criterion": "Run the new tests using `skill-test-runner` and report the before/after scores"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Initial baseline evaluation",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-25T23:11:39.419Z",
+      "changelog": "**Mutation**: Modified Step 2d to always invoke `stuck-skill-diagnoser` before proceeding, even for feature requests, ensuring the diagnostic quality gate is never bypassed.\n**Failures**: S3: Invoke `stuck-skill-diagnoser` or `failure-log-analyzer` to find root causes, S7: Invoke `stuck-skill-diagnoser` or `failure-log-analyzer` to find root causes, S7: Propose a specific, actionable modification based on the diagnosis, S7: Generate new, relevant tests using `skill-test-generator` to verify the fix, S7: Apply the user-approved modification to the skill's definition, S7: Run the new tests using `skill-test-runner` and report the before/after scores\n**Per-criteria**: Identify the target skill from user input: 8/8, Invoke `stuck-skill-diagnoser` or `failure-log-analyzer` to find root causes: 6/8, Propose a specific, actionable modification based on the diagnosis: 7/8, Generate new, relevant tests using `skill-test-generator` to verify the fix: 7/8, Apply the user-approved modification to the skill's definition: 7/8, Run the new tests using `skill-test-runner` and report the before/after scores: 7/8\n**Decision**: Initial baseline evaluation"
+    },
+    {
+      "round": 0,
+      "score": 44,
+      "max": 48,
+      "status": "baseline",
+      "mutation": "Remove the conditional in Step 5 so `skill-test-generator` is always invoked for every modification, eliminating the path that skips test generation (and cascades into skipping baseline runs, application, and post-test reporting).",
+      "cost": 0.05,
+      "criteria": [
+        8,
+        8,
+        7,
+        7,
+        7,
+        7
+      ],
+      "failures": [
+        {
+          "scenario": 7,
+          "criterion": "Propose a specific, actionable modification based on the diagnosis"
+        },
+        {
+          "scenario": 7,
+          "criterion": "Generate new, relevant tests using `skill-test-generator` to verify the fix"
+        },
+        {
+          "scenario": 7,
+          "criterion": "Apply the user-approved modification to the skill's definition"
+        },
+        {
+          "scenario": 7,
+          "criterion": "Run the new tests using `skill-test-runner` and report the before/after scores"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Initial baseline evaluation",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-25T23:15:06.963Z",
+      "changelog": "**Mutation**: Remove the conditional in Step 5 so `skill-test-generator` is always invoked for every modification, eliminating the path that skips test generation (and cascades into skipping baseline runs, application, and post-test reporting).\n**Failures**: S7: Propose a specific, actionable modification based on the diagnosis, S7: Generate new, relevant tests using `skill-test-generator` to verify the fix, S7: Apply the user-approved modification to the skill's definition, S7: Run the new tests using `skill-test-runner` and report the before/after scores\n**Per-criteria**: Identify the target skill from user input: 8/8, Invoke `stuck-skill-diagnoser` or `failure-log-analyzer` to find root causes: 8/8, Propose a specific, actionable modification based on the diagnosis: 7/8, Generate new, relevant tests using `skill-test-generator` to verify the fix: 7/8, Apply the user-approved modification to the skill's definition: 7/8, Run the new tests using `skill-test-runner` and report the before/after scores: 7/8\n**Decision**: Initial baseline evaluation"
+    },
+    {
+      "round": 1,
+      "score": 42,
+      "max": 48,
+      "status": "reverted",
+      "mutation": "Replace `~` with `$HOME` in path construction (Step 1d and Prerequisites) so tilde expansion works correctly inside double-quoted bash strings, fixing the cascade failure in S7.",
+      "cost": 0.05,
+      "criteria": [
+        7,
+        7,
+        7,
+        7,
+        7,
+        7
+      ],
+      "failures": [
+        {
+          "scenario": 7,
+          "criterion": "Identify the target skill from user input"
+        },
+        {
+          "scenario": 7,
+          "criterion": "Invoke `stuck-skill-diagnoser` or `failure-log-analyzer` to find root causes"
+        },
+        {
+          "scenario": 7,
+          "criterion": "Propose a specific, actionable modification based on the diagnosis"
+        },
+        {
+          "scenario": 7,
+          "criterion": "Generate new, relevant tests using `skill-test-generator` to verify the fix"
+        },
+        {
+          "scenario": 7,
+          "criterion": "Apply the user-approved modification to the skill's definition"
+        },
+        {
+          "scenario": 7,
+          "criterion": "Run the new tests using `skill-test-runner` and report the before/after scores"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 42 did not exceed best 44 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-25T23:17:24.859Z",
+      "changelog": "**Mutation**: Replace `~` with `$HOME` in path construction (Step 1d and Prerequisites) so tilde expansion works correctly inside double-quoted bash strings, fixing the cascade failure in S7.\n**Failures**: S7: Identify the target skill from user input, S7: Invoke `stuck-skill-diagnoser` or `failure-log-analyzer` to find root causes, S7: Propose a specific, actionable modification based on the diagnosis, S7: Generate new, relevant tests using `skill-test-generator` to verify the fix, S7: Apply the user-approved modification to the skill's definition, S7: Run the new tests using `skill-test-runner` and report the before/after scores\n**Per-criteria**: Identify the target skill from user input: 7/8, Invoke `stuck-skill-diagnoser` or `failure-log-analyzer` to find root causes: 7/8, Propose a specific, actionable modification based on the diagnosis: 7/8, Generate new, relevant tests using `skill-test-generator` to verify the fix: 7/8, Apply the user-approved modification to the skill's definition: 7/8, Run the new tests using `skill-test-runner` and report the before/after scores: 7/8\n**Decision**: Score 42 did not exceed best 44 — mutation produced worse or equal results"
+    },
+    {
+      "round": 2,
+      "score": 43,
+      "max": 48,
+      "status": "reverted",
+      "mutation": "Add a check at the start of Step 2 to skip the user-prompt sub-step (2a) when the initial trigger already contains a problem description or log, so diagnosis proceeds immediately without blocking on a redundant question.",
+      "cost": 0.05,
+      "criteria": [
+        8,
+        7,
+        7,
+        7,
+        7,
+        7
+      ],
+      "failures": [
+        {
+          "scenario": 7,
+          "criterion": "Invoke `stuck-skill-diagnoser` or `failure-log-analyzer` to find root causes"
+        },
+        {
+          "scenario": 7,
+          "criterion": "Propose a specific, actionable modification based on the diagnosis"
+        },
+        {
+          "scenario": 7,
+          "criterion": "Generate new, relevant tests using `skill-test-generator` to verify the fix"
+        },
+        {
+          "scenario": 7,
+          "criterion": "Apply the user-approved modification to the skill's definition"
+        },
+        {
+          "scenario": 7,
+          "criterion": "Run the new tests using `skill-test-runner` and report the before/after scores"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 43 did not exceed best 44 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-25T23:19:54.995Z",
+      "changelog": "**Mutation**: Add a check at the start of Step 2 to skip the user-prompt sub-step (2a) when the initial trigger already contains a problem description or log, so diagnosis proceeds immediately without blocking on a redundant question.\n**Failures**: S7: Invoke `stuck-skill-diagnoser` or `failure-log-analyzer` to find root causes, S7: Propose a specific, actionable modification based on the diagnosis, S7: Generate new, relevant tests using `skill-test-generator` to verify the fix, S7: Apply the user-approved modification to the skill's definition, S7: Run the new tests using `skill-test-runner` and report the before/after scores\n**Per-criteria**: Identify the target skill from user input: 8/8, Invoke `stuck-skill-diagnoser` or `failure-log-analyzer` to find root causes: 7/8, Propose a specific, actionable modification based on the diagnosis: 7/8, Generate new, relevant tests using `skill-test-generator` to verify the fix: 7/8, Apply the user-approved modification to the skill's definition: 7/8, Run the new tests using `skill-test-runner` and report the before/after scores: 7/8\n**Decision**: Score 43 did not exceed best 44 — mutation produced worse or equal results"
+    },
+    {
+      "round": 3,
+      "score": 42,
+      "max": 48,
+      "status": "reverted",
+      "mutation": "Expand Step 1a to extract the target skill name from all available context (failure logs, error messages, file paths, implicit references) — not just explicit user statements — so S7's implicit-identification case doesn't cascade-fail all criteria.",
+      "cost": 0.05,
+      "criteria": [
+        7,
+        7,
+        7,
+        7,
+        7,
+        7
+      ],
+      "failures": [
+        {
+          "scenario": 7,
+          "criterion": "Identify the target skill from user input"
+        },
+        {
+          "scenario": 7,
+          "criterion": "Invoke `stuck-skill-diagnoser` or `failure-log-analyzer` to find root causes"
+        },
+        {
+          "scenario": 7,
+          "criterion": "Propose a specific, actionable modification based on the diagnosis"
+        },
+        {
+          "scenario": 7,
+          "criterion": "Generate new, relevant tests using `skill-test-generator` to verify the fix"
+        },
+        {
+          "scenario": 7,
+          "criterion": "Apply the user-approved modification to the skill's definition"
+        },
+        {
+          "scenario": 7,
+          "criterion": "Run the new tests using `skill-test-runner` and report the before/after scores"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 42 did not exceed best 44 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-30T22:00:34.892Z",
+      "changelog": "**Mutation**: Expand Step 1a to extract the target skill name from all available context (failure logs, error messages, file paths, implicit references) — not just explicit user statements — so S7's implicit-identification case doesn't cascade-fail all criteria.\n**Failures**: S7: Identify the target skill from user input, S7: Invoke `stuck-skill-diagnoser` or `failure-log-analyzer` to find root causes, S7: Propose a specific, actionable modification based on the diagnosis, S7: Generate new, relevant tests using `skill-test-generator` to verify the fix, S7: Apply the user-approved modification to the skill's definition, S7: Run the new tests using `skill-test-runner` and report the before/after scores\n**Per-criteria**: Identify the target skill from user input: 7/8, Invoke `stuck-skill-diagnoser` or `failure-log-analyzer` to find root causes: 7/8, Propose a specific, actionable modification based on the diagnosis: 7/8, Generate new, relevant tests using `skill-test-generator` to verify the fix: 7/8, Apply the user-approved modification to the skill's definition: 7/8, Run the new tests using `skill-test-runner` and report the before/after scores: 7/8\n**Decision**: Score 42 did not exceed best 44 — mutation produced worse or equal results"
+    },
+    {
+      "round": 4,
+      "score": 44,
+      "max": 48,
+      "status": "reverted",
+      "mutation": "Replace the fragile `diff -u <(cat ...) <(echo ...)` process-substitution command in Step 3d with a temp-file approach so the diff always renders correctly regardless of content, unblocking the S7 cascade.",
+      "cost": 0.05,
+      "criteria": [
+        8,
+        8,
+        7,
+        7,
+        7,
+        7
+      ],
+      "failures": [
+        {
+          "scenario": 7,
+          "criterion": "Propose a specific, actionable modification based on the diagnosis"
+        },
+        {
+          "scenario": 7,
+          "criterion": "Generate new, relevant tests using `skill-test-generator` to verify the fix"
+        },
+        {
+          "scenario": 7,
+          "criterion": "Apply the user-approved modification to the skill's definition"
+        },
+        {
+          "scenario": 7,
+          "criterion": "Run the new tests using `skill-test-runner` and report the before/after scores"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 44 did not exceed best 44 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-30T22:03:15.066Z",
+      "changelog": "**Mutation**: Replace the fragile `diff -u <(cat ...) <(echo ...)` process-substitution command in Step 3d with a temp-file approach so the diff always renders correctly regardless of content, unblocking the S7 cascade.\n**Failures**: S7: Propose a specific, actionable modification based on the diagnosis, S7: Generate new, relevant tests using `skill-test-generator` to verify the fix, S7: Apply the user-approved modification to the skill's definition, S7: Run the new tests using `skill-test-runner` and report the before/after scores\n**Per-criteria**: Identify the target skill from user input: 8/8, Invoke `stuck-skill-diagnoser` or `failure-log-analyzer` to find root causes: 8/8, Propose a specific, actionable modification based on the diagnosis: 7/8, Generate new, relevant tests using `skill-test-generator` to verify the fix: 7/8, Apply the user-approved modification to the skill's definition: 7/8, Run the new tests using `skill-test-runner` and report the before/after scores: 7/8\n**Decision**: Score 44 did not exceed best 44 — mutation produced worse or equal results"
+    },
+    {
+      "round": 5,
+      "score": 43,
+      "max": 48,
+      "status": "reverted",
+      "mutation": "In Step 3d, separate the write step (use Write tool) from the diff step (use Bash), eliminating the confusing `printf '%s' \"$PROPOSED_CONTENT\"` shell pseudo-variable that causes agents to fail when they try to execute it as an actual bash command.",
+      "cost": 0.05,
+      "criteria": [
+        8,
+        8,
+        7,
+        6,
+        7,
+        7
+      ],
+      "failures": [
+        {
+          "scenario": 3,
+          "criterion": "Generate new, relevant tests using `skill-test-generator` to verify the fix"
+        },
+        {
+          "scenario": 7,
+          "criterion": "Propose a specific, actionable modification based on the diagnosis"
+        },
+        {
+          "scenario": 7,
+          "criterion": "Generate new, relevant tests using `skill-test-generator` to verify the fix"
+        },
+        {
+          "scenario": 7,
+          "criterion": "Apply the user-approved modification to the skill's definition"
+        },
+        {
+          "scenario": 7,
+          "criterion": "Run the new tests using `skill-test-runner` and report the before/after scores"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 43 did not exceed best 44 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-30T22:06:11.748Z",
+      "changelog": "**Mutation**: In Step 3d, separate the write step (use Write tool) from the diff step (use Bash), eliminating the confusing `printf '%s' \"$PROPOSED_CONTENT\"` shell pseudo-variable that causes agents to fail when they try to execute it as an actual bash command.\n**Failures**: S3: Generate new, relevant tests using `skill-test-generator` to verify the fix, S7: Propose a specific, actionable modification based on the diagnosis, S7: Generate new, relevant tests using `skill-test-generator` to verify the fix, S7: Apply the user-approved modification to the skill's definition, S7: Run the new tests using `skill-test-runner` and report the before/after scores\n**Per-criteria**: Identify the target skill from user input: 8/8, Invoke `stuck-skill-diagnoser` or `failure-log-analyzer` to find root causes: 8/8, Propose a specific, actionable modification based on the diagnosis: 7/8, Generate new, relevant tests using `skill-test-generator` to verify the fix: 6/8, Apply the user-approved modification to the skill's definition: 7/8, Run the new tests using `skill-test-runner` and report the before/after scores: 7/8\n**Decision**: Score 43 did not exceed best 44 — mutation produced worse or equal results"
+    },
+    {
+      "round": 5,
+      "score": 43,
+      "max": 48,
+      "status": "escalation",
+      "mutation": "Stuck escalation: The optimization is stuck in a local optimum because all recent mutations have been low-level, tactical fixes to individual steps (e.g., shell command syntax, input parsing) rather than addressing the",
+      "cost": 0.03,
+      "criteria": [
+        8,
+        8,
+        7,
+        6,
+        7,
+        7
+      ],
+      "failures": [],
+      "decisionReason": "Stuck escalation triggered after 3+ rounds with no improvement",
+      "escalation": {
+        "diagnosis": "The optimization is stuck in a local optimum because all recent mutations have been low-level, tactical fixes to individual steps (e.g., shell command syntax, input parsing) rather than addressing the core architectural flaw. The persistent failure across multiple criteria (proposing, generating tests, applying, and running tests) indicates a cascade failure originating from a single weak point: **fragile state management**. The skill relies on the agent to implicitly remember the content of `/tmp/skill_proposed.tmp` across multiple, complex steps (user confirmation, test generation, baseline test run). When it finally reaches Step 7 (\"Apply the Modification\"), any slight deviation or misinterpretation causes the agent to lose this state, breaking the rest of the chain. The mutations have fixed *how* to show a diff, but not *how to reliably apply what was diffed*.",
+        "evalRedesignNeeded": false,
+        "strategy": "Shift from fixing the mechanics of individual steps to improving the robustness of state transfer between steps. The current implicit state management (relying on the agent to remember a temp file's purpose) must be replaced with an explicit, stateful workflow. The act of user approval should trigger a concrete action that \"stages\" the approved content, making it unambiguously available for the final application step, thus eliminating the possibility of the agent losing context.",
+        "suggestedMutation": "Modify the workflow to explicitly rename the temporary file upon user approval, creating a clear \"staged change\" file that is then used in the application step. This makes the state transition a concrete file system operation.\n\n1.  **In Step 4a, after the user approves, add a new sub-step to rename the temp file, making the approval a concrete state change:**\n    *   **Current Step 4a:** \"If the user approves (\"yes\", \"looks good\"), proceed to Step 5.\"\n    *   **Proposed Change:**\n        > a. If the user approves (\"yes\", \"looks good\"), **stage the change and** proceed to Step 5.\n        >    i. **(Bash)** `mv /tmp/skill_proposed.tmp /tmp/approved_change.tmp`\n        >    ii. Inform the user: \"Great, I've staged that change. Now, let's generate a test for it.\"\n\n2.  **In Step 7c, change the instruction to use this new, explicitly named file:**\n    *   **Current Step 7c:** \"(Write/Edit) Write the approved content to the target file (e.g., `$TARGET_SKILL_DIR/SKILL.md`).\"\n    *   **Proposed Change:**\n        > c. **(Bash)** Apply the staged change by copying it to the target file: `cp /tmp/approved_change.tmp \"$TARGET_SKILL_DIR/SKILL.md\"` (or whichever file was being modified).\n\n3.  **In Step 9d, update the cleanup command to remove the new file:**\n    *   **Current Step 9d:** `rm -f /tmp/eval_with_new_test.json /tmp/skill_proposed.tmp`\n    *   **Proposed Change:**\n        > d. **(Bash)** Clean up temporary files: `rm -f /tmp/eval_with_new_test.json /tmp/approved_change.tmp`."
+      },
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-30T22:09:46.038Z"
+    },
+    {
+      "round": 6,
+      "score": 42,
+      "max": 48,
+      "status": "reverted",
+      "mutation": "Add explicit file staging (mv to /tmp/approved_change.tmp) on user approval in Step 4a, update Step 7c to use cp from staged file, and update Step 9d cleanup to remove the staged file — making state transfer between approval and application a concrete filesystem operation.",
+      "cost": 0.05,
+      "criteria": [
+        7,
+        7,
+        7,
+        7,
+        7,
+        7
+      ],
+      "failures": [
+        {
+          "scenario": 7,
+          "criterion": "Identify the target skill from user input"
+        },
+        {
+          "scenario": 7,
+          "criterion": "Invoke `stuck-skill-diagnoser` or `failure-log-analyzer` to find root causes"
+        },
+        {
+          "scenario": 7,
+          "criterion": "Propose a specific, actionable modification based on the diagnosis"
+        },
+        {
+          "scenario": 7,
+          "criterion": "Generate new, relevant tests using `skill-test-generator` to verify the fix"
+        },
+        {
+          "scenario": 7,
+          "criterion": "Apply the user-approved modification to the skill's definition"
+        },
+        {
+          "scenario": 7,
+          "criterion": "Run the new tests using `skill-test-runner` and report the before/after scores"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 42 did not exceed best 44 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-30T22:10:16.978Z",
+      "changelog": "**Mutation**: Add explicit file staging (mv to /tmp/approved_change.tmp) on user approval in Step 4a, update Step 7c to use cp from staged file, and update Step 9d cleanup to remove the staged file — making state transfer between approval and application a concrete filesystem operation.\n**Failures**: S7: Identify the target skill from user input, S7: Invoke `stuck-skill-diagnoser` or `failure-log-analyzer` to find root causes, S7: Propose a specific, actionable modification based on the diagnosis, S7: Generate new, relevant tests using `skill-test-generator` to verify the fix, S7: Apply the user-approved modification to the skill's definition, S7: Run the new tests using `skill-test-runner` and report the before/after scores\n**Per-criteria**: Identify the target skill from user input: 7/8, Invoke `stuck-skill-diagnoser` or `failure-log-analyzer` to find root causes: 7/8, Propose a specific, actionable modification based on the diagnosis: 7/8, Generate new, relevant tests using `skill-test-generator` to verify the fix: 7/8, Apply the user-approved modification to the skill's definition: 7/8, Run the new tests using `skill-test-runner` and report the before/after scores: 7/8\n**Decision**: Score 42 did not exceed best 44 — mutation produced worse or equal results"
+    },
+    {
+      "round": 7,
+      "score": 42,
+      "max": 48,
+      "status": "reverted",
+      "mutation": "Fix incorrect sub-step references in Step 2a — \"proceed to 2b, 2c, or 2d\" is wrong because 2b is the \"ask user\" branch; correct references are 2c, 2d, or 2e so agents with initial context skip the redundant prompt and go directly to diagnosis.",
+      "cost": 0.05,
+      "criteria": [
+        7,
+        7,
+        7,
+        7,
+        7,
+        7
+      ],
+      "failures": [
+        {
+          "scenario": 7,
+          "criterion": "Identify the target skill from user input"
+        },
+        {
+          "scenario": 7,
+          "criterion": "Invoke `stuck-skill-diagnoser` or `failure-log-analyzer` to find root causes"
+        },
+        {
+          "scenario": 7,
+          "criterion": "Propose a specific, actionable modification based on the diagnosis"
+        },
+        {
+          "scenario": 7,
+          "criterion": "Generate new, relevant tests using `skill-test-generator` to verify the fix"
+        },
+        {
+          "scenario": 7,
+          "criterion": "Apply the user-approved modification to the skill's definition"
+        },
+        {
+          "scenario": 7,
+          "criterion": "Run the new tests using `skill-test-runner` and report the before/after scores"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 42 did not exceed best 44 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-30T22:12:24.107Z",
+      "changelog": "**Mutation**: Fix incorrect sub-step references in Step 2a — \"proceed to 2b, 2c, or 2d\" is wrong because 2b is the \"ask user\" branch; correct references are 2c, 2d, or 2e so agents with initial context skip the redundant prompt and go directly to diagnosis.\n**Failures**: S7: Identify the target skill from user input, S7: Invoke `stuck-skill-diagnoser` or `failure-log-analyzer` to find root causes, S7: Propose a specific, actionable modification based on the diagnosis, S7: Generate new, relevant tests using `skill-test-generator` to verify the fix, S7: Apply the user-approved modification to the skill's definition, S7: Run the new tests using `skill-test-runner` and report the before/after scores\n**Per-criteria**: Identify the target skill from user input: 7/8, Invoke `stuck-skill-diagnoser` or `failure-log-analyzer` to find root causes: 7/8, Propose a specific, actionable modification based on the diagnosis: 7/8, Generate new, relevant tests using `skill-test-generator` to verify the fix: 7/8, Apply the user-approved modification to the skill's definition: 7/8, Run the new tests using `skill-test-runner` and report the before/after scores: 7/8\n**Decision**: Score 42 did not exceed best 44 — mutation produced worse or equal results"
+    }
+  ]
+}

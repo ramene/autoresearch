@@ -5,3 +5,13 @@
 {"type":"promotion_ready","skill":"context-loader","score":224,"max":224,"baselineScore":191,"diffSummary":"362 lines changed across 5 rounds","proposalPath":"/Users/ramene/.remote/@autoresearch/skills/promotions/context-loader-2026-03-27_08-26-58.md","timestamp":"2026-03-27T08:26:58.977Z"}
 {"type":"promoted","skill":"context-loader","score":224,"max":224,"baselineScore":191,"seedPath":"/Users/ramene/Journal/.seed/base/skills/context-loader/SKILL.md","backupTimestamp":"2026-03-27_08-27-40","timestamp":"2026-03-27T08:27:40.089Z"}
 {"type":"promotion_ready","skill":"context-loader","score":224,"max":224,"baselineScore":191,"diffSummary":"362 lines changed across 5 rounds","proposalPath":"/Users/ramene/.remote/@autoresearch/skills/promotions/context-loader-2026-03-29_13-59-39.md","timestamp":"2026-03-29T13:59:39.290Z"}
+{"type":"target_reached","skill":"context-loader","score":223,"max":224,"timestamp":"2026-04-15T22:00:42.424Z"}
+{"type":"target_reached","skill":"context-loader","score":224,"max":224,"timestamp":"2026-04-16T06:00:35.506Z"}
+{"type":"target_reached","skill":"context-loader","score":208,"max":224,"timestamp":"2026-04-16T14:00:48.612Z"}
+{"type":"target_reached","skill":"context-loader","score":221,"max":224,"timestamp":"2026-04-16T22:00:55.546Z"}
+{"type":"target_reached","skill":"context-loader","score":223,"max":224,"timestamp":"2026-04-17T06:00:39.900Z"}
+{"type":"target_reached","skill":"context-loader","score":210,"max":224,"timestamp":"2026-04-17T14:00:52.634Z"}
+{"type":"target_reached","skill":"context-loader","score":223,"max":224,"timestamp":"2026-04-17T22:00:47.980Z"}
+{"type":"target_reached","skill":"context-loader","score":224,"max":224,"timestamp":"2026-04-18T06:00:34.602Z"}
+{"type":"target_reached","skill":"context-loader","score":223,"max":224,"timestamp":"2026-04-18T14:00:40.649Z"}
+{"type":"target_reached","skill":"context-loader","score":223,"max":224,"timestamp":"2026-04-18T22:00:36.218Z"}

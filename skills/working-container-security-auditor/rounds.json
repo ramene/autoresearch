@@ -257,5 +257,268 @@
     },
     "timestamp": "2026-03-20T20:46:57.452Z",
     "changelog": "**Mutation**: Replace Step 2 Target Resolution with a parameterized script that parses `INPUT_TARGET` into variables, handling both Kubernetes pod references and direct image names explicitly, removing reliance on AI generalization from a static non-executable example.\n**Failures**: S5: Scan the target container image, S5: Does the output list identified vulnerabilities with severity levels, S5: Check for common misconfigurations (e.g., running as root), S5: Is the final report structured in a machine-readable format (e.g., JSON), S5: Provide actionable remediation advice for high-severity findings\n**Per-criteria**: Scan the target container image: 6/7, Does the output list identified vulnerabilities with severity levels: 6/7, Check for common misconfigurations (e.g., running as root): 6/7, Is the final report structured in a machine-readable format (e.g., JSON): 6/7, Provide actionable remediation advice for high-severity findings: 6/7, Complete the scan without crashing or timing out: 7/7\n**Decision**: Score 37 did not exceed best 37 — mutation produced worse or equal results"
+  },
+  {
+    "round": 5,
+    "score": 36,
+    "max": 42,
+    "status": "reverted",
+    "mutation": "Add an explicit Step 0 \"Parse User Input\" that instructs Claude to extract the target image name directly from the user's message and substitute it as a literal string into `INPUT_TARGET` in the bash script — removing reliance on an implicit \"the system will populate\" assumption that causes S5 to silently skip the scan.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      5,
+      6,
+      6,
+      6,
+      7
+    ],
+    "failures": [
+      {
+        "scenario": 5,
+        "criterion": "Scan the target container image"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Does the output list identified vulnerabilities with severity levels"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Check for common misconfigurations (e.g., running as root)"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Is the final report structured in a machine-readable format (e.g., JSON)"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Provide actionable remediation advice for high-severity findings"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Does the output list identified vulnerabilities with severity levels"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 37 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-30T06:00:54.024Z",
+    "changelog": "**Mutation**: Add an explicit Step 0 \"Parse User Input\" that instructs Claude to extract the target image name directly from the user's message and substitute it as a literal string into `INPUT_TARGET` in the bash script — removing reliance on an implicit \"the system will populate\" assumption that causes S5 to silently skip the scan.\n**Failures**: S5: Scan the target container image, S5: Does the output list identified vulnerabilities with severity levels, S5: Check for common misconfigurations (e.g., running as root), S5: Is the final report structured in a machine-readable format (e.g., JSON), S5: Provide actionable remediation advice for high-severity findings, S7: Does the output list identified vulnerabilities with severity levels\n**Per-criteria**: Scan the target container image: 6/7, Does the output list identified vulnerabilities with severity levels: 5/7, Check for common misconfigurations (e.g., running as root): 6/7, Is the final report structured in a machine-readable format (e.g., JSON): 6/7, Provide actionable remediation advice for high-severity findings: 6/7, Complete the scan without crashing or timing out: 7/7\n**Decision**: Score 36 did not exceed best 37 — mutation produced worse or equal results"
+  },
+  {
+    "round": 6,
+    "score": 37,
+    "max": 42,
+    "status": "reverted",
+    "mutation": "Replace the `<REPLACE_WITH_EXTRACTED_TARGET>` placeholder pattern in Step 2 with an instruction to write `INPUT_TARGET` as the first line of the bash block using the literal value extracted in Step 0, with a concrete before/after example — eliminating the template-copy failure mode where Claude pastes the placeholder unchanged.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      7
+    ],
+    "failures": [
+      {
+        "scenario": 5,
+        "criterion": "Scan the target container image"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Does the output list identified vulnerabilities with severity levels"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Check for common misconfigurations (e.g., running as root)"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Is the final report structured in a machine-readable format (e.g., JSON)"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Provide actionable remediation advice for high-severity findings"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 37 did not exceed best 37 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-30T06:03:26.910Z",
+    "changelog": "**Mutation**: Replace the `<REPLACE_WITH_EXTRACTED_TARGET>` placeholder pattern in Step 2 with an instruction to write `INPUT_TARGET` as the first line of the bash block using the literal value extracted in Step 0, with a concrete before/after example — eliminating the template-copy failure mode where Claude pastes the placeholder unchanged.\n**Failures**: S5: Scan the target container image, S5: Does the output list identified vulnerabilities with severity levels, S5: Check for common misconfigurations (e.g., running as root), S5: Is the final report structured in a machine-readable format (e.g., JSON), S5: Provide actionable remediation advice for high-severity findings\n**Per-criteria**: Scan the target container image: 6/7, Does the output list identified vulnerabilities with severity levels: 6/7, Check for common misconfigurations (e.g., running as root): 6/7, Is the final report structured in a machine-readable format (e.g., JSON): 6/7, Provide actionable remediation advice for high-severity findings: 6/7, Complete the scan without crashing or timing out: 7/7\n**Decision**: Score 37 did not exceed best 37 — mutation produced worse or equal results"
+  },
+  {
+    "round": 7,
+    "score": 37,
+    "max": 42,
+    "status": "reverted",
+    "mutation": "Replace the relative `trivy-report.json` filename with the absolute path `/tmp/trivy-report.json` everywhere in the skill so the Read tool in Step 4 can reliably locate the file regardless of the shell's working directory.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      7
+    ],
+    "failures": [
+      {
+        "scenario": 5,
+        "criterion": "Scan the target container image"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Does the output list identified vulnerabilities with severity levels"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Check for common misconfigurations (e.g., running as root)"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Is the final report structured in a machine-readable format (e.g., JSON)"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Provide actionable remediation advice for high-severity findings"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 37 did not exceed best 37 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-30T06:06:05.189Z",
+    "changelog": "**Mutation**: Replace the relative `trivy-report.json` filename with the absolute path `/tmp/trivy-report.json` everywhere in the skill so the Read tool in Step 4 can reliably locate the file regardless of the shell's working directory.\n**Failures**: S5: Scan the target container image, S5: Does the output list identified vulnerabilities with severity levels, S5: Check for common misconfigurations (e.g., running as root), S5: Is the final report structured in a machine-readable format (e.g., JSON), S5: Provide actionable remediation advice for high-severity findings\n**Per-criteria**: Scan the target container image: 6/7, Does the output list identified vulnerabilities with severity levels: 6/7, Check for common misconfigurations (e.g., running as root): 6/7, Is the final report structured in a machine-readable format (e.g., JSON): 6/7, Provide actionable remediation advice for high-severity findings: 6/7, Complete the scan without crashing or timing out: 7/7\n**Decision**: Score 37 did not exceed best 37 — mutation produced worse or equal results"
+  },
+  {
+    "round": 7,
+    "score": 37,
+    "max": 42,
+    "status": "escalation",
+    "mutation": "Stuck escalation: The optimization loop is stuck in a local optimum because all recent mutations have focused on hardening a fundamentally flawed architectural pattern. The core weakness is the **brittle interface betw",
+    "cost": 0.03,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      7
+    ],
+    "failures": [],
+    "decisionReason": "Stuck escalation triggered after 3+ rounds with no improvement",
+    "escalation": {
+      "diagnosis": "The optimization loop is stuck in a local optimum because all recent mutations have focused on hardening a fundamentally flawed architectural pattern. The core weakness is the **brittle interface between the AI's cognitive step (parsing) and the shell execution step (scanning)**. The current design requires the AI to \"remember\" a string from Step 0 and then perfectly write it into a bash script in Step 2. This \"memory-to-code\" transcription is inherently unreliable. The numerous patches (adding explicit instructions, forbidding placeholders, using absolute paths) have improved reliability but cannot eliminate the root failure mode where the AI misremembers, hallucinates, or incorrectly formats the `INPUT_TARGET` line, causing the entire scan to fail. We have reached the point of diminishing returns for prompt engineering this specific weak point.",
+      "evalRedesignNeeded": false,
+      "strategy": "The new strategy is to **structurally decouple state management from code generation**. Instead of instructing the AI on *how to write code that contains state*, we will instruct the AI to use a dedicated tool to *set the state* in the environment, and then provide a static, self-contained script that *reads* that state. This replaces the fragile \"memory-to-code\" step with a robust, standard interface (environment variables), which is a much more reliable way to pass data from a controlling agent to a sub-process. This moves the skill's logic from brittle, dynamically-generated code to a more resilient, parameterized script.",
+      "suggestedMutation": "Refactor the skill to use an environment variable (`SCAN_TARGET`) to pass the target from the AI's parsing step to the bash execution steps. This eliminates the need for the AI to dynamically write the `INPUT_TARGET` line into the bash script.\n\n---\n**Modify Step 0:** Change the final instruction from \"hold in mind\" to \"set an environment variable\".\n\n```diff\n-   **Hold the extracted target value in mind.** You will use it in Step 2.\n+   **Set an environment variable.** Use the appropriate tool (e.g., `[SetEnv]`) to store the extracted target in an environment variable named `SCAN_TARGET`. For example: `[SetEnv] SCAN_TARGET=\"nginx:latest\"`. This is how you will pass the target to the bash script in the next steps.\n```\n\n---\n**Replace Step 2:** Replace the entire step with a static bash block that reads from the `SCAN_TARGET` environment variable. This removes the complex instructions telling the AI how to write the script.\n\n```diff\n-2.  **[Bash] Target Resolution:**\n-    *   **Write a new bash block** where the very first line sets `INPUT_TARGET` to the **literal string value** you identified in Step 0. Do NOT copy a template — write the assignment yourself with the real value.\n-    *   The first line of this bash block MUST be one of these forms (using the actual extracted value, not a placeholder):\n-        *   `INPUT_TARGET=\"nginx:latest\"` ← if user said nginx:latest\n-        *   `INPUT_TARGET=\"ubuntu:22.04\"` ← if user said ubuntu:22.04\n-        *   `INPUT_TARGET=\"f64e70b92a98\"` ← if user said that image ID\n-        *   `INPUT_TARGET=\"pod/prod-api-server -n production\"` ← if user gave a pod reference\n-    *   **Never write** `INPUT_TARGET=\"<REPLACE_WITH_EXTRACTED_TARGET>\"` or any angle-bracket placeholder. If you find yourself writing angle brackets, stop and substitute the real value instead.\n-    *   After setting `INPUT_TARGET`, check if the target is a Kubernetes pod reference. If so, parse the pod name and namespace, then use `kubectl` to find the image name. Otherwise, assume the target is an image name/ID.\n-\n-    **Example of a correctly written Step 2 bash block** (if user said `/scan-container nginx:latest`):\n-    ```bash\n-    INPUT_TARGET=\"nginx:latest\"\n-\n-    TARGET_IMAGE=\"\"\n-\n-    if [[ \"$INPUT_TARGET\" == pod/* ]]; then\n-        POD_NAME=$(echo \"$INPUT_TARGET\" | sed -n 's;pod/\\([^ ]*\\).*;\\1;p')\n-        NAMESPACE=$(echo \"$INPUT_TARGET\" | sed -n 's/.*-n \\([^ ]*\\).*/\\1/p')\n-        if [ -z \"$NAMESPACE\" ]; then\n-            NAMESPACE=\"default\"\n-        fi\n-        echo \"Attempting to resolve image from Kubernetes pod '$POD_NAME' in namespace '$NAMESPACE'...\"\n-        TARGET_IMAGE=$(kubectl get pod \"$POD_NAME\" -n \"$NAMESPACE\" -o jsonpath='{.spec.containers[0].image}' 2>/dev/null)\n-        if [ -z \"$TARGET_IMAGE\" ]; then\n-            echo \"Error: Could not resolve image for pod '$POD_NAME' in namespace '$NAMESPACE'. Check pod name, namespace, and kubectl permissions.\"\n-            exit 1\n-        fi\n-        echo \"Resolved image from pod: $TARGET_IMAGE\"\n-    else\n-        TARGET_IMAGE=\"$INPUT_TARGET\"\n-        echo \"Target is a direct image reference: $TARGET_IMAGE\"\n-    fi\n-    ```\n-    *(When you write this block for real, replace `\"nginx:latest\"` on line 1 with whatever target was extracted in Step 0.)*\n\n+2.  **[Bash] Target Resolution:**\n+    *   This script reads the scan target from the `SCAN_TARGET` environment variable, which you must have set in Step 0. It then resolves the final image name, handling both direct image references and Kubernetes pod lookups.\n+    ```bash\n+    if [ -z \"$SCAN_TARGET\" ]; then\n+        echo \"Error: SCAN_TARGET environment variable is not set. The skill's Step 0 must set this before execution.\"\n+        exit 1\n+    fi\n+    \n+    INPUT_TARGET=\"$SCAN_TARGET\"\n+    TARGET_IMAGE=\"\"\n+    \n+    if [[ \"$INPUT_TARGET\" == pod/* ]]; then\n+        # Handle Kubernetes pod reference\n+        POD_NAME=$(echo \"$INPUT_TARGET\" | sed -n 's;pod/\\([^ ]*\\).*;\\1;p')\n+        NAMESPACE=$(echo \"$INPUT_TARGET\" | sed -n 's/.*-n \\([^ ]*\\).*/\\1/p')\n+        if [ -z \"$NAMESPACE\" ]; then\n+            NAMESPACE=\"default\"\n+        fi\n+        echo \"Attempting to resolve image from Kubernetes pod '$POD_NAME' in namespace '$NAMESPACE'...\"\n+        TARGET_IMAGE=$(kubectl get pod \"$POD_NAME\" -n \"$NAMESPACE\" -o jsonpath='{.spec.containers[0].image}' 2>/dev/null)\n+        if [ -z \"$TARGET_IMAGE\" ]; then\n+            echo \"Error: Could not resolve image for pod '$POD_NAME' in namespace '$NAMESPACE'. Check pod name, namespace, and kubectl permissions.\"\n+            exit 1\n+        fi\n+        echo \"Resolved image from pod: $TARGET_IMAGE\"\n+    else\n+        # Handle direct image reference\n+        TARGET_IMAGE=\"$INPUT_TARGET\"\n+        echo \"Target is a direct image reference: $TARGET_IMAGE\"\n+    fi\n+    ```\n```\n\n---\n**Update Examples:** Modify the execution flow in the examples to reflect the new `SetEnv` step.\n\n```diff\n ### Example 1: Scan `nginx:latest` and filter for high-severity issues\n *   **Command:** `/scan-container nginx:latest --severity HIGH,CRITICAL`\n *   **Execution:**\n-    1.  **Step 0:** Agent reads user command, extracts target `nginx:latest`.\n-    2.  **Step 2:** Agent writes bash block with `INPUT_TARGET=\"nginx:latest\"` as the literal first line.\n+    1.  **Step 0:** Agent reads user command, extracts target `nginx:latest` and uses `[SetEnv] SCAN_TARGET=\"nginx:latest\"`.\n+    2.  **Step 2:** Agent runs the static bash script, which reads `$SCAN_TARGET` and resolves `TARGET_IMAGE` to `nginx:latest`.\n     3.  Agent runs `trivy image --exit-code 0 --severity HIGH,CRITICAL nginx:latest`.\n     4.  Agent runs `trivy image --exit-code 0 --format json --scanners vuln,config --output /tmp/trivy-report.json nginx:latest`.\n     5.  Agent verifies `/tmp/trivy-report.json` is non-empty; if empty, retries with `--scanners vuln`.\n```"
+    },
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-30T06:08:52.243Z"
+  },
+  {
+    "round": 8,
+    "score": 37,
+    "max": 42,
+    "status": "reverted",
+    "mutation": "Refactor Step 0 to set a `SCAN_TARGET` environment variable and replace Step 2 with a static bash script that reads `$SCAN_TARGET`, eliminating the fragile AI-writes-literal-string pattern that causes target substitution failures.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      7
+    ],
+    "failures": [
+      {
+        "scenario": 5,
+        "criterion": "Scan the target container image"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Does the output list identified vulnerabilities with severity levels"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Check for common misconfigurations (e.g., running as root)"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Is the final report structured in a machine-readable format (e.g., JSON)"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Provide actionable remediation advice for high-severity findings"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 37 did not exceed best 37 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-30T06:09:24.945Z",
+    "changelog": "**Mutation**: Refactor Step 0 to set a `SCAN_TARGET` environment variable and replace Step 2 with a static bash script that reads `$SCAN_TARGET`, eliminating the fragile AI-writes-literal-string pattern that causes target substitution failures.\n**Failures**: S5: Scan the target container image, S5: Does the output list identified vulnerabilities with severity levels, S5: Check for common misconfigurations (e.g., running as root), S5: Is the final report structured in a machine-readable format (e.g., JSON), S5: Provide actionable remediation advice for high-severity findings\n**Per-criteria**: Scan the target container image: 6/7, Does the output list identified vulnerabilities with severity levels: 6/7, Check for common misconfigurations (e.g., running as root): 6/7, Is the final report structured in a machine-readable format (e.g., JSON): 6/7, Provide actionable remediation advice for high-severity findings: 6/7, Complete the scan without crashing or timing out: 7/7\n**Decision**: Score 37 did not exceed best 37 — mutation produced worse or equal results"
+  },
+  {
+    "round": 9,
+    "score": 37,
+    "max": 42,
+    "status": "reverted",
+    "mutation": "Replace env-var-based target passing (which doesn't persist across separate bash tool calls) with file-based persistence — Step 0 writes the target to `/tmp/scan_target.txt`, Step 2 reads it back with `cat`.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      7
+    ],
+    "failures": [
+      {
+        "scenario": 5,
+        "criterion": "Scan the target container image"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Does the output list identified vulnerabilities with severity levels"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Check for common misconfigurations (e.g., running as root)"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Is the final report structured in a machine-readable format (e.g., JSON)"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Provide actionable remediation advice for high-severity findings"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 37 did not exceed best 37 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-30T06:11:54.874Z",
+    "changelog": "**Mutation**: Replace env-var-based target passing (which doesn't persist across separate bash tool calls) with file-based persistence — Step 0 writes the target to `/tmp/scan_target.txt`, Step 2 reads it back with `cat`.\n**Failures**: S5: Scan the target container image, S5: Does the output list identified vulnerabilities with severity levels, S5: Check for common misconfigurations (e.g., running as root), S5: Is the final report structured in a machine-readable format (e.g., JSON), S5: Provide actionable remediation advice for high-severity findings\n**Per-criteria**: Scan the target container image: 6/7, Does the output list identified vulnerabilities with severity levels: 6/7, Check for common misconfigurations (e.g., running as root): 6/7, Is the final report structured in a machine-readable format (e.g., JSON): 6/7, Provide actionable remediation advice for high-severity findings: 6/7, Complete the scan without crashing or timing out: 7/7\n**Decision**: Score 37 did not exceed best 37 — mutation produced worse or equal results"
   }
 ]

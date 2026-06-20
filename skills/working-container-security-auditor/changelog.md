@@ -26,3 +26,18 @@
 
 ## Round 5 — Mutation Applied
 - **Mutation**: Replace Step 2 Target Resolution with a parameterized script that parses `INPUT_TARGET` into variables, handling both Kubernetes pod references and direct image names explicitly, removing reliance on AI generalization from a static non-executable example.
+
+## Round 6 — Mutation Applied
+- **Mutation**: Add an explicit Step 0 "Parse User Input" that instructs Claude to extract the target image name directly from the user's message and substitute it as a literal string into `INPUT_TARGET` in the bash script — removing reliance on an implicit "the system will populate" assumption that causes S5 to silently skip the scan.
+
+## Round 7 — Mutation Applied
+- **Mutation**: Replace the `<REPLACE_WITH_EXTRACTED_TARGET>` placeholder pattern in Step 2 with an instruction to write `INPUT_TARGET` as the first line of the bash block using the literal value extracted in Step 0, with a concrete before/after example — eliminating the template-copy failure mode where Claude pastes the placeholder unchanged.
+
+## Round 8 — Mutation Applied
+- **Mutation**: Replace the relative `trivy-report.json` filename with the absolute path `/tmp/trivy-report.json` everywhere in the skill so the Read tool in Step 4 can reliably locate the file regardless of the shell's working directory.
+
+## Round 9 — Mutation Applied
+- **Mutation**: Refactor Step 0 to set a `SCAN_TARGET` environment variable and replace Step 2 with a static bash script that reads `$SCAN_TARGET`, eliminating the fragile AI-writes-literal-string pattern that causes target substitution failures.
+
+## Round 10 — Mutation Applied
+- **Mutation**: Replace env-var-based target passing (which doesn't persist across separate bash tool calls) with file-based persistence — Step 0 writes the target to `/tmp/scan_target.txt`, Step 2 reads it back with `cat`.

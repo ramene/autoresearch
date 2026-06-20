@@ -29,3 +29,18 @@
 
 ## Round 5 — Mutation Applied
 - **Mutation**: No failures to fix — all criteria passed 6/6. Preserving the current skill as-is since any change risks breaking the perfect score.
+
+## Round 6 — Mutation Applied
+- **Mutation**: Restructure the Process section to lead with flexible single/multi-account execution logic before presenting the 3-account parallel example, so the skill works correctly when invoked for one account, two accounts, or all three.
+
+## Round 7 — Mutation Applied
+- **Mutation**: No failures to fix — all criteria passed 0/0 failures. Preserving the current skill as-is since any change risks breaking the perfect score.
+
+## Round 8 — Mutation Applied
+- **Mutation**: No failures to fix — all criteria passed 0/0 failures. Preserving the current skill as-is since any change risks breaking the perfect score.
+
+## Round 9 — Mutation Applied
+- **Mutation**: Refactor the Process section to use a single `--run-all` flag per account, replacing the chained three-command sequences with a cleaner, more robust consolidated command pattern.
+
+## Round 10 — Mutation Applied
+- **Mutation**: No failures to fix — all criteria passed 0/0 failures. Preserving the current skill as-is since any change risks breaking the perfect score.

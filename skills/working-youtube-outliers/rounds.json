@@ -303,5 +303,184 @@
       "mutator": "sonnet"
     },
     "timestamp": "2026-03-20T23:12:13.234Z"
+  },
+  {
+    "round": 5,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "No failures detected — all criteria pass at 0 failures. Adding a note clarifying when to use `update_transcripts.py` vs re-running the full scrape, to make the workflow decision more explicit for users.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-04-04T22:00:54.382Z",
+    "changelog": "**Mutation**: No failures detected — all criteria pass at 0 failures. Adding a note clarifying when to use `update_transcripts.py` vs re-running the full scrape, to make the workflow decision more explicit for users.\n**Failures**: none\n**Per-criteria**: Task Completion: 6/6, Error Handling: 6/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 6/6, Completeness: 6/6\n**Decision**: Score 36 did not exceed best 36 — mutation produced worse or equal results"
+  },
+  {
+    "round": 6,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-youtube-outliers/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n",
+    "cost": 0.03,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-05-11T06:00:29.757Z",
+    "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-youtube-outliers/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n\n**Failures**: none"
+  },
+  {
+    "round": 7,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-youtube-outliers/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n",
+    "cost": 0.03,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-05-11T06:01:00.595Z",
+    "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-youtube-outliers/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n\n**Failures**: none"
+  },
+  {
+    "round": 8,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-youtube-outliers/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n",
+    "cost": 0.03,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-05-11T06:01:26.857Z",
+    "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-youtube-outliers/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n\n**Failures**: none"
+  },
+  {
+    "round": 8,
+    "score": 36,
+    "max": 36,
+    "status": "escalation",
+    "mutation": "Stuck escalation: The optimization loop is stuck in a local optimum because the skill has achieved a perfect score against the current evaluation suite. The skill is a highly structured, procedural \"cookbook\" that perf",
+    "cost": 0.03,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "decisionReason": "Stuck escalation triggered after 3+ rounds with no improvement",
+    "escalation": {
+      "diagnosis": "The optimization loop is stuck in a local optimum because the skill has achieved a perfect score against the current evaluation suite. The skill is a highly structured, procedural \"cookbook\" that perfectly guides the AI through a fixed set of tasks, and the tests confirm it can follow these instructions flawlessly. Subsequent mutations are minor, safe clarifications (e.g., explaining parameters) that don't introduce new capabilities, and therefore cannot improve upon a perfect score. The system is essentially trying to \"improve\" a skill that already fully solves the problems it's being tested against.",
+      "evalRedesignNeeded": true,
+      "strategy": "The current mutation strategy of adding incremental clarifications has reached its limit. The new strategy must shift from **procedural documentation** to **analytical guidance**. Instead of just explaining *how* to run the scripts, the skill must evolve to teach the AI *how to think* about the results and adapt its strategy based on the output. This involves adding a new \"playbook\" or \"strategy\" section that outlines common analytical scenarios and the corresponding actions, moving the skill's focus from mere execution to interpretation and decision-making. This will necessitate new, more complex evaluation scenarios that test for analytical reasoning rather than just procedural adherence.",
+      "suggestedMutation": "Add a new section titled `## Analysis & Strategy Playbook` that provides guidance on how to interpret the script's output and refine the search. This introduces a new strategic layer that the current skill lacks.\n\n```markdown\n## Analysis & Strategy Playbook\n\nThe goal isn't just to generate a list, but to derive insights. Use this guide to analyze the results and plan your next steps.\n\n| If you see this... | It might mean... | Your next action should be... |\n| :--- | :--- | :--- |\n| **Too many irrelevant videos** | Your keywords are too broad. | Refine your `--keywords` to be more specific. Increase `--min_score` to `2.0` to filter for only exceptional outliers. |\n| **Too few (or zero) videos** | Your keywords are too narrow, or the niche is slow-moving. | Broaden your keywords. Increase the lookback window with `--days 90`. Check your Apify quota. |\n| **A competitor appears frequently** | They have a repeatable, successful format. | Deep-dive into their outlier videos. Analyze their titles, thumbnails, and the first 30 seconds of their content for patterns. |\n| **An unexpected topic is an outlier** | An emerging trend or a new angle is gaining traction. | Consider this a content opportunity. Run a new search focused on keywords related to that specific topic to validate the trend. |\n| **Outliers have low absolute views** | You're monitoring a very small or new niche. | This is valuable! It shows you what's working even with a small audience. The outlier score is more important than raw view count here. |\n\nAfter the initial run, use this playbook to perform a second, more targeted run to zero in on the most valuable insights.\n```"
+    },
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-05-11T06:01:51.305Z"
+  },
+  {
+    "round": 9,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-youtube-outliers/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n",
+    "cost": 0.03,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-05-11T06:02:16.468Z",
+    "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-youtube-outliers/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n\n**Failures**: none"
+  },
+  {
+    "round": 10,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-youtube-outliers/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n",
+    "cost": 0.03,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-05-11T06:02:42.240Z",
+    "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-youtube-outliers/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n\n**Failures**: none"
   }
 ]

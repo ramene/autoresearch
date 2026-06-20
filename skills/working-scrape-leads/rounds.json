@@ -181,5 +181,180 @@
     },
     "timestamp": "2026-03-20T21:45:48.027Z",
     "changelog": "**Mutation**: Restructure instructions by adding a \"Critical Command Parameters\" table after the Inputs section and removing redundant Note blocks from Steps 2 and 5 to reduce cognitive load and consolidate authoritative parameter references.\n**Failures**: none\n**Per-criteria**: Task Completion: 6/6, Error Handling: 6/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 6/6, Completeness: 6/6\n**Decision**: Score 36 did not exceed best 36 — mutation produced worse or equal results"
+  },
+  {
+    "round": 5,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-scrape-leads/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n",
+    "cost": 0.03,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-05-05T14:00:37.527Z",
+    "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-scrape-leads/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n\n**Failures**: none"
+  },
+  {
+    "round": 6,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-scrape-leads/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n",
+    "cost": 0.03,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-05-05T14:01:07.922Z",
+    "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-scrape-leads/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n\n**Failures**: none"
+  },
+  {
+    "round": 7,
+    "score": 31,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-scrape-leads/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n",
+    "cost": 0.03,
+    "criteria": [
+      5,
+      5,
+      5,
+      6,
+      5,
+      5
+    ],
+    "failures": [
+      {
+        "scenario": 2,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Completeness"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 31 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-05-05T14:01:46.983Z",
+    "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-scrape-leads/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n\n**Failures**: S2: Task Completion, S2: Error Handling, S2: Output Quality, S2: Instructions Clarity, S2: Completeness"
+  },
+  {
+    "round": 7,
+    "score": 31,
+    "max": 36,
+    "status": "escalation",
+    "mutation": "Stuck escalation: The optimization loop is stuck in a local optimum of \"clarification.\" The changelog shows a history of successful mutations that improved the skill's clarity and structure, culminating in a perfect 36",
+    "cost": 0.03,
+    "criteria": [
+      5,
+      5,
+      5,
+      6,
+      5,
+      5
+    ],
+    "failures": [],
+    "decisionReason": "Stuck escalation triggered after 3+ rounds with no improvement",
+    "escalation": {
+      "diagnosis": "The optimization loop is stuck in a local optimum of \"clarification.\" The changelog shows a history of successful mutations that improved the skill's clarity and structure, culminating in a perfect 36/36 score after the Round 5 refactoring. The subsequent score drop to 31/36, despite no new content mutations being successfully applied (due to environment errors), strongly indicates that the *evaluation test suite has become more stringent*. The skill is now failing on new, more complex edge cases that test the robustness of the *process itself*, not just the clarity of its documentation. The current optimization strategy of making minor documentation tweaks is no longer effective because the skill is already exceptionally clear; the new failures require adding new logic and error-handling capabilities to the workflow.",
+      "evalRedesignNeeded": true,
+      "strategy": "Shift from \"Instructional Clarification\" to \"Process Robustness.\" The current skill describes a happy-path workflow with some basic retries. The new strategy should focus on adding explicit verification and recovery steps to handle failures in the later stages of the process (e.g., upload or enrichment failures). This involves adding a final quality assurance step where the agent inspects its own work (the final Google Sheet) and takes corrective action *before* considering the task complete. This moves beyond simply documenting the process to building resilience into the process itself.",
+      "suggestedMutation": "Add a new \"Step 9: Final Verification & Recovery\" to the process. This step instructs the agent to inspect the final deliverable for common failure modes (e.g., empty sheet, failed enrichment) and provides explicit commands to recover from them, making the skill more resilient to intermittent tool failures.\n\n---\n**ADD the following section between the existing \"Step 8: Enrich Missing Emails\" and \"Outputs (Deliverables)\" sections:**\n\n### 9. Final Verification & Recovery\n**Objective**: Before delivering the final URL, perform a quick quality check to ensure the previous steps completed successfully.\n\n**Agent Actions**:\n1.  **Read the final Google Sheet**: Use a tool to read the first 5-10 rows of the sheet created in Step 7 and updated in Step 8.\n2.  **Verify Content**: Check for two common failure modes:\n    - **Is the sheet empty or has very few rows?** This indicates a potential failure during the `update_sheet.py` step.\n    - **Is the 'email' column completely empty?** This indicates a failure during the `enrich_emails.py` step.\n\n**Recovery Tree**:\n- **IF sheet is empty or has incorrect row count**:\n  1. Check if the source JSON file (`active/classified_leads.json` or `active/leads_final.json`) exists and contains data.\n  2. If the JSON is valid, re-run the `update_sheet.py` command from Step 7.\n- **IF email column is empty**:\n  1. Re-run the `enrich_emails.py` command from Step 8, ensuring you are using the correct sheet URL.\n- **IF content looks correct**: Proceed to deliver the Google Sheet URL to the user."
+    },
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-05-05T14:02:15.042Z"
+  },
+  {
+    "round": 8,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-scrape-leads/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n",
+    "cost": 0.03,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-05-05T14:02:50.132Z",
+    "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-scrape-leads/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n\n**Failures**: none"
+  },
+  {
+    "round": 9,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-scrape-leads/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n",
+    "cost": 0.03,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-05-05T14:03:17.323Z",
+    "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-scrape-leads/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n\n**Failures**: none"
   }
 ]

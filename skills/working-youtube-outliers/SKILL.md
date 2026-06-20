@@ -77,6 +77,10 @@ python3 ./scripts/update_transcripts.py
 python3 ./scripts/update_transcripts.py --limit 20
 ```
 
+**When to use `update_transcripts.py` vs re-scraping:**
+- Use `update_transcripts.py` when you already have outlier rows in your sheet but the Transcript or Summary columns are empty — it avoids re-fetching video metadata and is much faster
+- Use `scrape_youtube_outliers.py` when you want to discover new videos or refresh the outlier list with recent data
+
 **When to use `update_transcripts.py`:**
 - After scraping, if some transcripts failed to fetch
 - To backfill transcripts for older entries

@@ -57,5 +57,6 @@
       "status": "completed"
     }
   },
-  "requestedLanguage": "fr"
+  "requestedLanguage": "fr",
+  "requestedArtifact": "briefing_doc"
 }

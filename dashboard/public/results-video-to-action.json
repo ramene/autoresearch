@@ -8,7 +8,7 @@
     "Instructions Clarity",
     "Completeness"
   ],
-  "totalCost": 0.25,
+  "totalCost": 0.68,
   "models": {
     "mutator": "sonnet",
     "evaluator": "gemini-2.5-pro"
@@ -218,6 +218,490 @@
       },
       "timestamp": "2026-03-20T22:45:29.411Z",
       "changelog": "**Mutation**: Extend Step 4's decision table with a note on appending additional flags (-o, --json, -m) to any command variant, so Claude knows how to handle output/model options in all scenarios.\n**Failures**: S3: Instructions Clarity, S3: Completeness\n**Per-criteria**: Task Completion: 6/6, Error Handling: 6/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 5/6, Completeness: 5/6\n**Decision**: Score 34 did not exceed best 36 — mutation produced worse or equal results"
+    },
+    {
+      "round": 5,
+      "score": 26,
+      "max": 36,
+      "status": "reverted",
+      "mutation": "Fix Step 2's environment check to also inspect the actual shell env var (not just .env file), preventing false \"MISSING\" halts when the key is set in the environment rather than a .env file.",
+      "cost": 0.05,
+      "criteria": [
+        4,
+        5,
+        4,
+        5,
+        4,
+        4
+      ],
+      "failures": [
+        {
+          "scenario": 2,
+          "criterion": "Task Completion"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Error Handling"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Output Quality"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Tool Usage"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Instructions Clarity"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Completeness"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Task Completion"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Output Quality"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Instructions Clarity"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Completeness"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 26 did not exceed best 36 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-04-08T14:00:57.395Z",
+      "changelog": "**Mutation**: Fix Step 2's environment check to also inspect the actual shell env var (not just .env file), preventing false \"MISSING\" halts when the key is set in the environment rather than a .env file.\n**Failures**: S2: Task Completion, S2: Error Handling, S2: Output Quality, S2: Tool Usage, S2: Instructions Clarity, S2: Completeness, S3: Task Completion, S3: Output Quality, S3: Instructions Clarity, S3: Completeness\n**Per-criteria**: Task Completion: 4/6, Error Handling: 5/6, Output Quality: 4/6, Tool Usage: 5/6, Instructions Clarity: 4/6, Completeness: 4/6\n**Decision**: Score 26 did not exceed best 36 — mutation produced worse or equal results"
+    },
+    {
+      "round": 6,
+      "score": 27,
+      "max": 36,
+      "status": "reverted",
+      "mutation": "Make Steps 5-7 explicit with concrete output format, required presentation structure, and specific next-action options Claude must offer, fixing Instructions Clarity and Completeness failures in scenarios 2, 3, and 5.",
+      "cost": 0.05,
+      "criteria": [
+        6,
+        5,
+        4,
+        6,
+        3,
+        3
+      ],
+      "failures": [
+        {
+          "scenario": 2,
+          "criterion": "Error Handling"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Output Quality"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Instructions Clarity"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Completeness"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Instructions Clarity"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Completeness"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Output Quality"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Instructions Clarity"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Completeness"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 27 did not exceed best 36 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-04-08T14:02:42.560Z",
+      "changelog": "**Mutation**: Make Steps 5-7 explicit with concrete output format, required presentation structure, and specific next-action options Claude must offer, fixing Instructions Clarity and Completeness failures in scenarios 2, 3, and 5.\n**Failures**: S2: Error Handling, S2: Output Quality, S2: Instructions Clarity, S2: Completeness, S3: Instructions Clarity, S3: Completeness, S5: Output Quality, S5: Instructions Clarity, S5: Completeness\n**Per-criteria**: Task Completion: 6/6, Error Handling: 5/6, Output Quality: 4/6, Tool Usage: 6/6, Instructions Clarity: 3/6, Completeness: 3/6\n**Decision**: Score 27 did not exceed best 36 — mutation produced worse or equal results"
+    },
+    {
+      "round": 7,
+      "score": 26,
+      "max": 36,
+      "status": "reverted",
+      "mutation": "Add conditional output format in Step 6 — when -q (question mode) was used, present the answer directly rather than forcing the step-extraction structure, fixing Output Quality and Instructions Clarity failures in question-based scenarios.",
+      "cost": 0.05,
+      "criteria": [
+        4,
+        5,
+        4,
+        6,
+        3,
+        4
+      ],
+      "failures": [
+        {
+          "scenario": 2,
+          "criterion": "Task Completion"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Error Handling"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Output Quality"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Instructions Clarity"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Completeness"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Task Completion"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Instructions Clarity"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Completeness"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Output Quality"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Instructions Clarity"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 26 did not exceed best 36 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-04-08T14:04:38.261Z",
+      "changelog": "**Mutation**: Add conditional output format in Step 6 — when -q (question mode) was used, present the answer directly rather than forcing the step-extraction structure, fixing Output Quality and Instructions Clarity failures in question-based scenarios.\n**Failures**: S2: Task Completion, S2: Error Handling, S2: Output Quality, S2: Instructions Clarity, S2: Completeness, S3: Task Completion, S3: Instructions Clarity, S3: Completeness, S5: Output Quality, S5: Instructions Clarity\n**Per-criteria**: Task Completion: 4/6, Error Handling: 5/6, Output Quality: 4/6, Tool Usage: 6/6, Instructions Clarity: 3/6, Completeness: 4/6\n**Decision**: Score 26 did not exceed best 36 — mutation produced worse or equal results"
+    },
+    {
+      "round": 7,
+      "score": 26,
+      "max": 36,
+      "status": "escalation",
+      "mutation": "Stuck escalation: The optimization loop is stuck because it has over-engineered the skill past a global maximum. The skill achieved a perfect score of 36/36 in Round 3 with a simple, clear decision table for command co",
+      "cost": 0.03,
+      "criteria": [
+        4,
+        5,
+        4,
+        6,
+        3,
+        4
+      ],
+      "failures": [],
+      "decisionReason": "Stuck escalation triggered after 3+ rounds with no improvement",
+      "escalation": {
+        "diagnosis": "The optimization loop is stuck because it has over-engineered the skill past a global maximum. The skill achieved a perfect score of 36/36 in Round 3 with a simple, clear decision table for command construction. Subsequent mutations, while attempting to add robustness and handle more edge cases (additional flags, more complex environment checks, conditional output formatting), have progressively increased the prompt's cognitive load. This added complexity, particularly in Steps 4 and 6, has fractured the model's ability to follow the core instructions, leading to consistent regressions. The system is now making incremental changes to a flawed version rather than recognizing that the simpler, earlier version was superior. It is optimizing for completeness at the expense of clarity and executability.",
+        "evalRedesignNeeded": false,
+        "strategy": "The current strategy of adding more rules and text is failing. The new strategy is to **revert and consolidate**.\n1.  **Revert to Peak Performance:** Immediately revert the skill to the version that scored 36/36 in Round 3. This is our known-good, high-performing baseline.\n2.  **Consolidate Logic:** Re-introduce the functionality from the failed mutations (like handling `-o`, `--json`, `-m` flags) not by adding more text or notes, but by *integrating them directly into the core logic*. Specifically, expand the central decision table to handle all command variations in a single, unified structure. This reduces the cognitive load on the model, as it no longer has to read a table and then cross-reference a separate list of instructions to construct the final command. The goal is to have one single point of truth for command generation.",
+        "suggestedMutation": "Revert the skill to the simpler version from Round 3, and then apply the following mutation to Step 4. This new version replaces the small table and separate list of \"Additional flags\" with a single, comprehensive table that covers all primary combinations in a self-contained, easy-to-parse format. This directly implements the \"consolidate logic\" strategy.\n\n**Replace the current Step 4 with this:**\n\n4.  **Construct and run the command** — use the Bash tool. Find the row in the decision table below that matches the user's request and construct the command exactly as shown, replacing placeholders like `<URL>` and `<question>`.\n\n| User wants \"quick\"? | User asked a question? | User wants to save to a file? | Command to run |\n| :--- | :--- | :--- | :--- |\n| No | No | No | `python3 .claude/skills/video-to-action/video_to_action.py \"<URL>\"` |\n| No | No | Yes (e.g., `steps.md`) | `python3 .claude/skills/video-to-action/video_to_action.py \"<URL>\" -o steps.md` |\n| No | Yes | No | `python3 .claude/skills/video-to-action/video_to_action.py \"<URL>\" -q \"<question>\"` |\n| No | Yes | Yes (e.g., `results.md`) | `python3 .claude/skills/video-to-action/video_to_action.py \"<URL>\" -q \"<question>\" -o results.md` |\n| Yes | No | No | `python3 .claude/skills/video-to-action/video_to_action.py \"<URL>\" --quick` |\n| Yes | No | Yes (e.g., `transcript.txt`) | `python3 .claude/skills/video-to-action/video_to_action.py \"<URL>\" --quick -o transcript.txt` |\n| Yes | Yes | No | `python3 .claude/skills/video-to-action/video_to_action.py \"<URL>\" --quick -q \"<question>\"` |\n| Yes | Yes | Yes (e.g., `answer.txt`) | `python3 .claude/skills/video-to-action/video_to_action.py \"<URL>\" --quick -q \"<question>\" -o answer.txt` |\n\n**Important Notes for Command Construction:**\n- **Quick Mode Triggers**: Use a \"Yes\" row for \"quick\" if the user says \"quick\", \"fast\", or \"transcript\", OR if the video is clearly a talk/lecture with no visual interaction. Default to \"No\" otherwise.\n- **Other Flags**: If the user requests JSON output, add `--json`. If they request a specific model, add `-m <model_name>`. These can be appended to any command from the table. For example: `... -q \"<question>\" -o results.json --json`."
+      },
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-04-08T14:06:43.199Z"
+    },
+    {
+      "round": 8,
+      "score": 24,
+      "max": 36,
+      "status": "reverted",
+      "mutation": "Replace Step 4's 4-row table + separate \"Additional flags\" list with a single comprehensive 8-row table covering all quick/question/file-output combinations, eliminating the cognitive overhead of cross-referencing two separate instruction blocks.",
+      "cost": 0.05,
+      "criteria": [
+        4,
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "failures": [
+        {
+          "scenario": 2,
+          "criterion": "Task Completion"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Error Handling"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Output Quality"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Tool Usage"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Instructions Clarity"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Completeness"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Task Completion"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Error Handling"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Output Quality"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Tool Usage"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Instructions Clarity"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Completeness"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 24 did not exceed best 36 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-04-08T14:07:24.944Z",
+      "changelog": "**Mutation**: Replace Step 4's 4-row table + separate \"Additional flags\" list with a single comprehensive 8-row table covering all quick/question/file-output combinations, eliminating the cognitive overhead of cross-referencing two separate instruction blocks.\n**Failures**: S2: Task Completion, S2: Error Handling, S2: Output Quality, S2: Tool Usage, S2: Instructions Clarity, S2: Completeness, S3: Task Completion, S3: Error Handling, S3: Output Quality, S3: Tool Usage, S3: Instructions Clarity, S3: Completeness\n**Per-criteria**: Task Completion: 4/6, Error Handling: 4/6, Output Quality: 4/6, Tool Usage: 4/6, Instructions Clarity: 4/6, Completeness: 4/6\n**Decision**: Score 24 did not exceed best 36 — mutation produced worse or equal results"
+    },
+    {
+      "round": 9,
+      "score": 24,
+      "max": 36,
+      "status": "reverted",
+      "mutation": "Make full-mode failure auto-retry with --quick (mirroring the existing quick→full auto-retry), removing the asymmetric \"suggest\" behavior that causes Claude to halt instead of recovering.",
+      "cost": 0.05,
+      "criteria": [
+        4,
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "failures": [
+        {
+          "scenario": 2,
+          "criterion": "Task Completion"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Error Handling"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Output Quality"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Tool Usage"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Instructions Clarity"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Completeness"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Task Completion"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Error Handling"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Output Quality"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Tool Usage"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Instructions Clarity"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Completeness"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 24 did not exceed best 36 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-04-08T14:09:33.989Z",
+      "changelog": "**Mutation**: Make full-mode failure auto-retry with --quick (mirroring the existing quick→full auto-retry), removing the asymmetric \"suggest\" behavior that causes Claude to halt instead of recovering.\n**Failures**: S2: Task Completion, S2: Error Handling, S2: Output Quality, S2: Tool Usage, S2: Instructions Clarity, S2: Completeness, S6: Task Completion, S6: Error Handling, S6: Output Quality, S6: Tool Usage, S6: Instructions Clarity, S6: Completeness\n**Per-criteria**: Task Completion: 4/6, Error Handling: 4/6, Output Quality: 4/6, Tool Usage: 4/6, Instructions Clarity: 4/6, Completeness: 4/6\n**Decision**: Score 24 did not exceed best 36 — mutation produced worse or equal results"
+    },
+    {
+      "round": 10,
+      "score": 31,
+      "max": 36,
+      "status": "reverted",
+      "mutation": "Clarify the error retry chain to cover all quick-mode failure reasons (not just \"no captions\"), and add explicit stop conditions so Claude never retries more than once per direction, fixing cascading failures in Error Handling, Task Completion, Instructions Clarity, Output Quality, and Completeness.",
+      "cost": 0.05,
+      "criteria": [
+        5,
+        5,
+        5,
+        6,
+        5,
+        5
+      ],
+      "failures": [
+        {
+          "scenario": 2,
+          "criterion": "Task Completion"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Error Handling"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Output Quality"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Instructions Clarity"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Completeness"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 31 did not exceed best 36 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-04-08T22:00:43.951Z",
+      "changelog": "**Mutation**: Clarify the error retry chain to cover all quick-mode failure reasons (not just \"no captions\"), and add explicit stop conditions so Claude never retries more than once per direction, fixing cascading failures in Error Handling, Task Completion, Instructions Clarity, Output Quality, and Completeness.\n**Failures**: S2: Task Completion, S2: Error Handling, S2: Output Quality, S2: Instructions Clarity, S2: Completeness\n**Per-criteria**: Task Completion: 5/6, Error Handling: 5/6, Output Quality: 5/6, Tool Usage: 6/6, Instructions Clarity: 5/6, Completeness: 5/6\n**Decision**: Score 31 did not exceed best 36 — mutation produced worse or equal results"
+    },
+    {
+      "round": 11,
+      "score": 32,
+      "max": 36,
+      "status": "reverted",
+      "mutation": "Clarify that after an auto-retry mode switch, the error handling \"inform the user\" message is fulfilled by the \"Mode used\" field in Step 6 (not as a separate message), eliminating the dual-output ambiguity that causes fragmented responses and Instructions Clarity/Completeness failures.",
+      "cost": 0.05,
+      "criteria": [
+        6,
+        5,
+        5,
+        6,
+        5,
+        5
+      ],
+      "failures": [
+        {
+          "scenario": 2,
+          "criterion": "Error Handling"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Output Quality"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Instructions Clarity"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Completeness"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 32 did not exceed best 36 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-04-08T22:02:55.067Z",
+      "changelog": "**Mutation**: Clarify that after an auto-retry mode switch, the error handling \"inform the user\" message is fulfilled by the \"Mode used\" field in Step 6 (not as a separate message), eliminating the dual-output ambiguity that causes fragmented responses and Instructions Clarity/Completeness failures.\n**Failures**: S2: Error Handling, S2: Output Quality, S2: Instructions Clarity, S2: Completeness\n**Per-criteria**: Task Completion: 6/6, Error Handling: 5/6, Output Quality: 5/6, Tool Usage: 6/6, Instructions Clarity: 5/6, Completeness: 5/6\n**Decision**: Score 32 did not exceed best 36 — mutation produced worse or equal results"
+    },
+    {
+      "round": 12,
+      "score": 36,
+      "max": 36,
+      "status": "reverted",
+      "mutation": "Add explicit note in Step 1 that shortened YouTube URLs (youtu.be/...) and YouTube Shorts URLs (/shorts/...) are valid and should be passed as-is to the script, preventing Claude from hesitating or reformatting URLs unnecessarily.",
+      "cost": 0.05,
+      "criteria": [
+        6,
+        6,
+        6,
+        6,
+        6,
+        6
+      ],
+      "failures": [],
+      "geminiThoughts": null,
+      "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-04-08T22:04:40.987Z",
+      "changelog": "**Mutation**: Add explicit note in Step 1 that shortened YouTube URLs (youtu.be/...) and YouTube Shorts URLs (/shorts/...) are valid and should be passed as-is to the script, preventing Claude from hesitating or reformatting URLs unnecessarily.\n**Failures**: none\n**Per-criteria**: Task Completion: 6/6, Error Handling: 6/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 6/6, Completeness: 6/6\n**Decision**: Score 36 did not exceed best 36 — mutation produced worse or equal results"
     }
   ]
 }

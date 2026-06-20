@@ -34,3 +34,8 @@
 
 ## Round 5 — Mutation Applied
 - **Mutation**: Replace the hardcoded `CHUNKS=10` placeholder in the polling loop with a dynamic `ls` count so the loop always uses the actual chunk count without requiring manual substitution — fixes Instructions Clarity and Completeness for scenario 6.
+
+## Round 5
+- **Score**: 36/36 (kept)
+- **Failures**: none
+- **Per-criteria**: Task Completion: 6/6, Error Handling: 6/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 6/6, Completeness: 6/6

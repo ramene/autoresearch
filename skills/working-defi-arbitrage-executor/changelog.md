@@ -26,3 +26,18 @@
 
 ## Round 5 — Mutation Applied
 - **Mutation**: Added pre-approval allowance check in Step 7 to skip redundant `approve` transactions when sufficient allowance already exists, saving gas on repeated trades with the same token pairs.
+
+## Round 6 — Mutation Applied
+- **Mutation**: Add `fee_tier` field to monitored_pairs config and pass it to `quoteExactInputSingle` in the scanner, since V3-style DEX quoters require a pool fee tier to route to the correct liquidity pool — omitting it causes all price queries to silently fail or return stale data.
+
+## Round 7 — Mutation Applied
+- **Mutation**: Add explicit token decimal normalization to scanner.js — the script must call `decimals()` on each token contract and use `ethers.formatUnits` to convert raw BigInt quotes to human-readable prices before comparing across DEXes, preventing incorrect profit calculations due to decimal mismatch (e.g., WETH=18 vs USDC=6).
+
+## Round 8 — Mutation Applied
+- **Mutation**: Add receipt-based amount chaining in executor.js — parse the actual token transfer amount from Swap 1's receipt logs (ERC-20 Transfer event) and use that as Swap 2's exact input amount, replacing the pre-quoted value to prevent allowance mismatches and incorrect Swap 2 sizing.
+
+## Round 9 — Mutation Applied
+- **Mutation**: Evolve from single-pair to multi-hop arbitrage by replacing `monitored_pairs` with `monitored_routes` (path arrays with alternating token addresses and fee tiers), and updating scanner.js to use `quoteExactInput` for multi-hop paths vs `quoteExactInputSingle` for direct swaps.
+
+## Round 10 — Mutation Applied
+- **Mutation**: Add explicit ETH price oracle call (via a simple RPC-based check or fallback constant) in Step 4c so gas costs are accurately denominated in USD when populating `net_profit_usd` in opportunities.json, preventing silent underestimation when ETH price is volatile.

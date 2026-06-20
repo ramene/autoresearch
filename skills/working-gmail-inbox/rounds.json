@@ -497,5 +497,218 @@
     },
     "timestamp": "2026-03-21T18:07:50.886Z",
     "changelog": "**Mutation**: No failures remain (36/36); preserve current state with no changes.\n**Failures**: none\n**Per-criteria**: Task Completion: 6/6, Error Handling: 6/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 6/6, Completeness: 6/6\n**Decision**: Score 36 did not exceed best 36 — mutation produced worse or equal results"
+  },
+  {
+    "round": 10,
+    "score": 34,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-gmail-inbox/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n",
+    "cost": 0.03,
+    "criteria": [
+      6,
+      5,
+      6,
+      6,
+      6,
+      5
+    ],
+    "failures": [
+      {
+        "scenario": 6,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Completeness"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 34 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-04-22T14:00:50.475Z",
+    "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-gmail-inbox/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n\n**Failures**: S6: Error Handling, S6: Completeness"
+  },
+  {
+    "round": 11,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-gmail-inbox/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n",
+    "cost": 0.03,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-04-22T14:01:23.612Z",
+    "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-gmail-inbox/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n\n**Failures**: none"
+  },
+  {
+    "round": 12,
+    "score": 30,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-gmail-inbox/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n",
+    "cost": 0.03,
+    "criteria": [
+      6,
+      5,
+      6,
+      5,
+      4,
+      4
+    ],
+    "failures": [
+      {
+        "scenario": 3,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Completeness"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Tool Usage"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Completeness"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 30 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-04-22T14:01:54.914Z",
+    "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-gmail-inbox/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n\n**Failures**: S3: Instructions Clarity, S3: Completeness, S6: Error Handling, S6: Tool Usage, S6: Instructions Clarity, S6: Completeness"
+  },
+  {
+    "round": 12,
+    "score": 30,
+    "max": 36,
+    "status": "escalation",
+    "mutation": "Stuck escalation: The optimization is stuck due to a combination of test suite exhaustion and flawed expansion attempts. The skill achieved a perfect score of 36/36 in Round 2, indicating it has mastered the existing t",
+    "cost": 0.03,
+    "criteria": [
+      6,
+      5,
+      6,
+      5,
+      4,
+      4
+    ],
+    "failures": [],
+    "decisionReason": "Stuck escalation triggered after 3+ rounds with no improvement",
+    "escalation": {
+      "diagnosis": "The optimization is stuck due to a combination of test suite exhaustion and flawed expansion attempts. The skill achieved a perfect score of 36/36 in Round 2, indicating it has mastered the existing test scenarios. Subsequent attempts to add new functionality (e.g., filter creation in Round 8) caused a score regression to 24/36, because the new instructions likely confused the agent on the core tasks the tests evaluate, or were incomplete. The system correctly reverted this change. The optimization loop is now oscillating between a \"perfect\" state where no mutations are needed and failed attempts to expand functionality that aren't supported by the test suite. The most recent rounds also show a systemic failure in the mutation engine itself (`claude: No such file or directory`), which is preventing any new changes from being tested and locking the skill in a regressed state.",
+      "evalRedesignNeeded": true,
+      "strategy": "The core issue is that the test suite only covers the primary email checking/management workflow (`gmail_unified.py`) and does not have scenarios for the advanced features the skill claims to support (e.g., `gmail_create_filters.py`). To break the optimum, we must restructure the skill to isolate new, advanced functionality from the core workflow. This will prevent regressions on the existing 36 test cases. The new functionality should be presented as a distinct, self-contained procedure that is only invoked for specific user intents, rather than being blended into the main workflow. This makes the skill more robust and prepares it for future test suite expansion.",
+      "suggestedMutation": "Restructure the skill to create a clear separation between the primary, well-tested workflow and the advanced, less-tested filter creation workflow. Rename the main \"Workflow\" to \"Primary Workflow\" and explicitly state it's for reading and managing existing emails. Then, elevate the \"Advanced Actions\" section to be a parallel workflow, making it clear that the agent should follow one path OR the other, not both. Add a crucial missing step to the filter creation workflow: how to find a `LABEL_ID` from a label name, which was a likely point of failure in the previous attempt.\n\n```markdown\n---\nname: gmail-inbox\ndescription: Manage emails across multiple Gmail accounts with unified tooling. Use when user asks to check email, read inbox, label emails, archive messages, or manage Gmail across accounts.\nallowed-tools: Bash, Read, Write, Edit, Glob, Grep\n---\n\n> **Demo Library Skill** — This skill is from a demo library. Some configuration values use placeholders (e.g. `{{USER_NAME}}`, `{{COMMUNITY_ID}}`). If something doesn't work, check for placeholder values and replace them with your own information first.\n\n# Gmail Inbox Management\n\n## Goal\nCheck and manage emails across multiple Gmail accounts using unified tooling.\n\n## Primary Workflow: Checking and Managing Emails\n\n**Use this workflow for tasks like checking for new mail, reading messages, archiving, labeling, or marking as read.**\n\n1.  **List registered accounts** — run `python3 ./scripts/gmail_unified.py --accounts` to confirm which accounts are available.\n2.  **Fetch emails** — run the appropriate query (see Quick Reference below) based on what the user asked for. Default to `is:unread` across all accounts if no specific query is given.\n3.  **Handle auth errors immediately** — if any step produces an auth error, do NOT continue. Instead:\n    -   For \"Token file not found\": run `python3 ./scripts/gmail_multi_auth.py --account <account> --email <email>` for the failing account, then retry.\n    -   For \"invalid_scope: Bad Request\": delete the failing token (`rm token_<account>.json`), re-run `python3 ./scripts/gmail_multi_auth.py --account <account> --email <email>`, then retry.\n    -   For \"Failed to authenticate\": check that `credentials.json` exists in the workspace root, then retry.\n    -   After re-authing, resume from the step that failed.\n4.  **Display results clearly** — summarize emails in a table or list showing: account, sender, subject, date, and any labels. Group by account if multiple accounts are checked.\n5.  **Perform requested actions** — if the user asked to label, archive, or mark-read, execute those commands directly. Use `--dry-run` only when the user explicitly requests a preview or when the action scope is unclear (e.g. query would match more than 100 emails unexpectedly).\n6.  **Confirm completion** — report what was done: how many emails found, how many actioned, on which accounts.\n\n## Advanced Workflow: Creating Filters\n\n**If the user asks to create a new filter to automatically manage incoming mail, follow this procedure INSTEAD of the primary workflow.**\n\n1.  **Identify Criteria & Action:** Determine the filter criteria (e.g., from sender, subject) and the action (e.g., apply a label, archive) from the user's request.\n2.  **Find Label ID (If Necessary):** If the action involves applying a label by name (e.g., \"Newsletters\"), you MUST first find the corresponding `LABEL_ID`. To do this, list all labels for the account:\n    ```bash\n    # This command will output a list of labels and their IDs\n    python3 ./scripts/gmail_unified.py --list-labels --account youruser\n    ```\n    Extract the correct `LABEL_ID` from the output for the next step.\n3.  **Construct Filter Command:** Use the `gmail_create_filters.py` script with the account and a JSON string defining the filter. Use the `LABEL_ID` you found in the previous step.\n    ```bash\n    # Example: Create a filter to label emails from \"newsletter@example.com\" as \"Newsletters\"\n    python3 ./scripts/gmail_create_filters.py --account youruser --filter '{\"criteria\": {\"from\": \"newsletter@example.com\"}, \"action\": {\"addLabelIds\": [\"LABEL_123456789\"]}}'\n    ```\n4.  **Confirm Creation:** Report back to the user that the filter has been successfully created, confirming the criteria and action.\n\n## Scripts\n-   `./scripts/gmail_unified.py` - Check, manage, and list labels\n-   `./scripts/gmail_multi_auth.py` - Authenticate accounts\n-   `./scripts/gmail_create_filters.py` - Create filters\n-   `./scripts/gmail_bulk_label.py` - Bulk labeling\n-   `./scripts/gmail_auth.py` - Auth helper\n\n## Quick Reference\n\n```bash\n# Check unread across all accounts\npython3 ./scripts/gmail_unified.py --query \"is:unread\" --limit 50\n\n# Check specific account only\npython3 ./scripts/gmail_unified.py --query \"is:unread\" --account yourcompany\n\n# List registered accounts\npython3 ./scripts/gmail_unified.py --accounts\n\n# List labels for an account (to find a LABEL_ID)\npython3 ./scripts/gmail_unified.py --list-labels --account youruser\n\n# Label and archive emails\npython3 ./scripts/gmail_unified.py --query \"from:notifications@\" --label \"Notifications\" --archive\n\n# Create a filter\npython3 ./scripts/gmail_create_filters.py --account youruser --filter '{\"criteria\": {\"from\": \"sender@example.com\"}, \"action\": {\"addLabelIds\": [\"LABEL_ID_FOUND_ABOVE\"]}}'\n```\n\n## Account Registry\n\n| Account | Email | Credentials | Token |\n|---------|-------|-------------|-------|\n| youruser | you@example.com | credentials.json | token_youruser.json |\n| yourcompany | you@yourdomain.com | credentials_yourcompany.json | token_yourcompany.json |\n\n## Required Scopes\n- `gmail.modify` - Read/write emails\n- `gmail.labels` - Create/manage labels\n- `gmail.settings.basic` - Manage settings\n- `spreadsheets` - Google Sheets access\n- `drive` - Google Drive access\n\n## Credentials Location\nAll credential files should be in the workspace root:\n- `credentials.json` / `credentials_yourcompany.json` - OAuth client configs\n- `token_*.json` - Auth tokens (auto-generated)\n- `gmail_accounts.json` - Account registry\n```"
+    },
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-04-22T14:02:33.180Z"
+  },
+  {
+    "round": 13,
+    "score": 30,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-gmail-inbox/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n",
+    "cost": 0.03,
+    "criteria": [
+      0,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [
+      {
+        "scenario": 1,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Task Completion"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 30 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-04-22T14:03:09.478Z",
+    "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-gmail-inbox/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n\n**Failures**: S1: Task Completion, S2: Task Completion, S3: Task Completion, S4: Task Completion, S5: Task Completion, S6: Task Completion"
+  },
+  {
+    "round": 14,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-gmail-inbox/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n",
+    "cost": 0.03,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-04-22T14:03:42.942Z",
+    "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-gmail-inbox/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n\n**Failures**: none"
   }
 ]

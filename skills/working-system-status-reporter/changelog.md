@@ -60,3 +60,24 @@
 
 ## Round 13 — Mutation Applied
 - **Mutation**: Swap status classification order in Step 3 so `stuck == 1` is checked before `score >= 0.9`, ensuring skills plateaued at a high score are correctly classified as "Stuck" rather than "At Target".
+
+## Round 14 — Mutation Applied
+- **Mutation**: Normalize rounds.json scores by computing raw/max in the bash script, fixing systematic misclassification of all skills as "At Target" due to raw integer scores (e.g., 37) being compared against the 0.9 threshold.
+
+## Round 16 — Mutation Applied
+- **Mutation**: Change skill directory glob from `working-*/` to `*/` and add a guard to skip directories lacking eval.json or rounds.json, fixing zero-skill data collection in scenarios where skills aren't prefixed with `working-`.
+
+## Round 17 — Mutation Applied
+- **Mutation**: Replace fragile pipe-delimited SKILL| output with JSON Lines format (one JSON object per skill), eliminating delimiter collision issues that cause full data-parse failures in scenarios 2, 3, 6.
+
+## Round 18 — Mutation Applied
+- **Mutation**: Fix grep -c double-output bug: when grep finds 0 matches it outputs "0" AND exits 1, causing `|| echo 0` to append a second "0", producing "0\n0" which breaks arithmetic and corrupts JSON output for skills with zero failures — replace with `grep ... | wc -l` which always exits 0.
+
+## Round 21 — Mutation Applied
+- **Mutation**: Add `set +e` at the top of the Step 2 bash script to prevent premature exit on intermediate command failures, ensuring all skill and wants records are always emitted even when individual commands (stat, jq, awk, etc.) fail in edge-case scenarios.
+
+## Round 22 — Mutation Applied
+- **Mutation**: Add a fallback after the eval.json history read to also check rounds.json for history scores when eval.json had a score but no history (s1/s2/s3 all null), fixing stuck detection and status misclassification for skills that store their score in eval.json but progression history in rounds.json.
+
+## Round 23 — Mutation Applied
+- **Mutation**: Add an elif fallback in the rounds.json score block to accept the score as-is when .max is absent but .score is already a 0–1 float, fixing silent score loss that causes all skills to be misclassified as Untested.

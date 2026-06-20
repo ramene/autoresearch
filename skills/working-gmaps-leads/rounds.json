@@ -169,5 +169,313 @@
     },
     "timestamp": "2026-03-20T20:22:36.064Z",
     "changelog": "**Mutation**: Added AI-powered lead qualification feature (`--qualify` flag) that generates a one-sentence sales-fit summary per lead using Claude, with new pipeline step 4.5, updated output schema, new usage example, and overview mention — addressing Task Completion, Output Quality, Instructions Clarity, and Completeness failures by expanding the skill's core value proposition.\n**Failures**: S2: Output Quality, S2: Instructions Clarity, S2: Completeness, S4: Task Completion\n**Per-criteria**: Task Completion: 5/6, Error Handling: 6/6, Output Quality: 5/6, Tool Usage: 6/6, Instructions Clarity: 5/6, Completeness: 5/6\n**Decision**: Score 32 did not exceed best 36 — mutation produced worse or equal results"
+  },
+  {
+    "round": 5,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "No failures detected — added a \"Common Mistakes\" quick-reference section near the top to consolidate the most actionable gotchas (state-wide queries, missing .env, auth issues) so users can self-diagnose before running, improving first-run success rate.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-30T14:00:38.133Z",
+    "changelog": "**Mutation**: No failures detected — added a \"Common Mistakes\" quick-reference section near the top to consolidate the most actionable gotchas (state-wide queries, missing .env, auth issues) so users can self-diagnose before running, improving first-run success rate.\n**Failures**: none\n**Per-criteria**: Task Completion: 6/6, Error Handling: 6/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 6/6, Completeness: 6/6\n**Decision**: Score 36 did not exceed best 36 — mutation produced worse or equal results"
+  },
+  {
+    "round": 6,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "No failures detected — reorganized the Learnings section into categorized subsections (Query Limits, Website Scraping, Data Pipeline, Performance, Credentials) to improve navigability and make the operational knowledge more scannable for users debugging or optimizing their runs.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-30T14:02:48.278Z",
+    "changelog": "**Mutation**: No failures detected — reorganized the Learnings section into categorized subsections (Query Limits, Website Scraping, Data Pipeline, Performance, Credentials) to improve navigability and make the operational knowledge more scannable for users debugging or optimizing their runs.\n**Failures**: none\n**Per-criteria**: Task Completion: 6/6, Error Handling: 6/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 6/6, Completeness: 6/6\n**Decision**: Score 36 did not exceed best 36 — mutation produced worse or equal results"
+  },
+  {
+    "round": 7,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "No failures detected — added a \"Multi-City Campaign\" example showing how to scrape 4+ cities in one command, since the tested-at-scale claim (\"94 HVAC leads across 4 Texas cities\") isn't matched by any example showing that pattern.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-30T14:04:37.536Z",
+    "changelog": "**Mutation**: No failures detected — added a \"Multi-City Campaign\" example showing how to scrape 4+ cities in one command, since the tested-at-scale claim (\"94 HVAC leads across 4 Texas cities\") isn't matched by any example showing that pattern.\n**Failures**: none\n**Per-criteria**: Task Completion: 6/6, Error Handling: 6/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 6/6, Completeness: 6/6\n**Decision**: Score 36 did not exceed best 36 — mutation produced worse or equal results"
+  },
+  {
+    "round": 7,
+    "score": 36,
+    "max": 36,
+    "status": "escalation",
+    "mutation": "Stuck escalation: The optimization loop is stuck because the skill has saturated its evaluation suite, achieving a perfect 36/36 score. Subsequent mutations are either minor documentation tweaks that don't affect the s",
+    "cost": 0.03,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "decisionReason": "Stuck escalation triggered after 3+ rounds with no improvement",
+    "escalation": {
+      "diagnosis": "The optimization loop is stuck because the skill has saturated its evaluation suite, achieving a perfect 36/36 score. Subsequent mutations are either minor documentation tweaks that don't affect the score (Rounds 1-4, 6-8) or significant feature additions that introduce regressions and are reverted (Round 5). The system correctly identifies that the current state is optimal *according to the existing tests*. It lacks a mechanism to reward the addition of new capabilities or to expand the evaluation criteria when a skill has clearly mastered them. The problem is not the skill's quality, but the evaluation's inability to provide a gradient for further improvement.",
+      "evalRedesignNeeded": true,
+      "strategy": "Shift from documentation improvements to adding new, value-added filtering capabilities that give the user more control over lead quality. The current skill is excellent at generating a *quantity* of leads, but lacks features to pre-qualify them based on simple, structured metrics available from Google Maps. By introducing filtering parameters, we create a new dimension of functionality that the current test suite does not cover, forcing an expansion of evaluation criteria and creating headroom for a score higher than 36/36 (once new tests are added). This moves beyond simple execution success and towards the *relevance and quality* of the output.",
+      "suggestedMutation": "Add two new filtering flags, `--min-rating` and `--min-reviews`, to the pipeline script. These flags will filter the initial Google Maps results *before* the expensive enrichment process, saving time and cost while improving lead quality.\n\n1.  **Update the Inputs section:**\n    | Parameter | Required | Description |\n    |-----------|----------|-------------|\n    | ... | ... | ... |\n    | `--min-rating` | No | Minimum Google Maps rating to include (e.g., 4.0) |\n    | `--min-reviews` | No | Minimum number of Google Maps reviews to include (e.g., 10) |\n    | ... | ... | ... |\n\n2.  **Add a new usage example in the Execution section:**\n    ```bash\n    # Filter for high-quality leads only\n    python3 .claude/skills/gmaps-leads/gmaps_lead_pipeline.py \\\n      --search \"dentists in Miami FL\" --limit 50 \\\n      --min-rating 4.2 --min-reviews 20\n    ```\n\n3.  **Update the Pipeline Steps section:**\n    1.  **Google Maps Scrape** - Apify `compass/crawler-google-places` actor returns business listings...\n    1.5. **Pre-Enrichment Filtering** - If `--min-rating` or `--min-reviews` are provided, leads that do not meet the criteria are discarded before the enrichment process begins.\n    2.  **Website Scraping** - ..."
+    },
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-30T14:06:24.469Z"
+  },
+  {
+    "round": 8,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Added `--min-rating` and `--min-reviews` filtering flags to enable pre-enrichment quality filtering, updating Inputs table, Execution examples, and Pipeline Steps to document the new capability.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-30T14:06:55.559Z",
+    "changelog": "**Mutation**: Added `--min-rating` and `--min-reviews` filtering flags to enable pre-enrichment quality filtering, updating Inputs table, Execution examples, and Pipeline Steps to document the new capability.\n**Failures**: none\n**Per-criteria**: Task Completion: 6/6, Error Handling: 6/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 6/6, Completeness: 6/6\n**Decision**: Score 36 did not exceed best 36 — mutation produced worse or equal results"
+  },
+  {
+    "round": 9,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "No failures detected — added a \"Credentials & Environment Setup\" quick-start checklist near the top to consolidate the one-time setup steps (Apify token, Google OAuth, credentials path) that users must complete before any run succeeds, reducing setup friction for first-time users.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-30T14:09:03.698Z",
+    "changelog": "**Mutation**: No failures detected — added a \"Credentials & Environment Setup\" quick-start checklist near the top to consolidate the one-time setup steps (Apify token, Google OAuth, credentials path) that users must complete before any run succeeds, reducing setup friction for first-time users.\n**Failures**: none\n**Per-criteria**: Task Completion: 6/6, Error Handling: 6/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 6/6, Completeness: 6/6\n**Decision**: Score 36 did not exceed best 36 — mutation produced worse or equal results"
+  },
+  {
+    "round": 10,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-gmaps-leads/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n",
+    "cost": 0.03,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-04-23T22:00:24.530Z",
+    "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-gmaps-leads/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n\n**Failures**: none"
+  },
+  {
+    "round": 11,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-gmaps-leads/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n",
+    "cost": 0.03,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-04-23T22:00:55.050Z",
+    "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-gmaps-leads/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n\n**Failures**: none"
+  },
+  {
+    "round": 12,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-gmaps-leads/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n",
+    "cost": 0.03,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-04-23T22:01:20.359Z",
+    "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-gmaps-leads/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n\n**Failures**: none"
+  },
+  {
+    "round": 12,
+    "score": 36,
+    "max": 36,
+    "status": "escalation",
+    "mutation": "Stuck escalation: The optimization loop is stuck in a local optimum of \"perfect documentation.\" The skill has achieved a maximum score of 36/36, indicating it has saturated the existing evaluation suite. The evaluation",
+    "cost": 0.03,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "decisionReason": "Stuck escalation triggered after 3+ rounds with no improvement",
+    "escalation": {
+      "diagnosis": "The optimization loop is stuck in a local optimum of \"perfect documentation.\" The skill has achieved a maximum score of 36/36, indicating it has saturated the existing evaluation suite. The evaluation criteria appear to focus on clarity, completeness, correctness of examples, and the presence of core features. Subsequent mutations are making valid but incremental improvements (e.g., adding examples, reorganizing sections, adding quality-of-life flags like `--min-rating`), but these changes cannot increase a score that is already maxed out. The system is trying to perfect a skill that already meets all defined quality bars, leading to zero-gain mutations.",
+      "evalRedesignNeeded": true,
+      "strategy": "The current mutation strategy of incremental feature addition and documentation refinement needs to be replaced. The new strategy should be to **expand the skill's scope from a single-shot data generation tool into a multi-stage workflow tool**. Instead of just producing a list of leads, the skill should be mutated to perform subsequent actions on that list, such as analysis, summarization, or preparation for the next step in a sales pipeline. This introduces a new dimension of capability (post-processing and analysis) that the current evaluation suite likely does not cover, forcing the creation of new test scenarios and breaking the score ceiling.",
+      "suggestedMutation": "Add a post-processing analysis feature triggered by a new `--analyze` flag. After generating the leads and populating the Google Sheet, this feature would re-read the sheet data and generate a concise summary report.\n\n**Specific Changes:**\n\n1.  **Add a new parameter:** `--analyze` to the `Inputs` table.\n2.  **Update the `Pipeline Steps` section:** Add a new final step: \"9. **Results Analysis (optional)** - If `--analyze` is set, the script reads the final sheet and generates a summary report including total leads, breakdown by query, average rating, and highlights the top 3-5 leads.\"\n3.  **Add a new `Execution` example:**\n    ```bash\n    # Generate leads and get a summary report\n    python3 .claude/skills/gmaps-leads/gmaps_lead_pipeline.py \\\n      --search \"HVAC in Houston TX\" \"HVAC in Dallas TX\" \\\n      --limit 25 --min-rating 4.0 --analyze\n    ```\n4.  **Add a new section `Analysis Report`:**\n    ```markdown\n    ## Analysis Report\n\n    Using the `--analyze` flag provides a summary of the run's output, printed to the console after the sheet is updated. This is useful for quickly assessing the quality and distribution of a lead generation campaign.\n\n    **Example Analysis Output:**\n\n    ```\n    ✓ Added 42 new leads to sheet \"HVAC Texas\"\n      Sheet URL: https://docs.google.com/spreadsheets/d/...\n\n    --- Lead Analysis Report ---\n    Total Leads Generated: 42\n    Breakdown by Query:\n      - \"HVAC in Houston TX\": 22 leads\n      - \"HVAC in Dallas TX\": 20 leads\n    Average Rating: 4.6\n    Leads with Owner Email: 15 (35.7%)\n\n    Top 3 Leads (by rating & contact info):\n    1. Houston Cool Guys (4.9 stars, 150 reviews) - Owner email found.\n    2. Dallas HVAC Pros (4.8 stars, 121 reviews) - Owner email found.\n    3. The Air Experts (4.8 stars, 98 reviews) - General email found.\n    ```\n    ```"
+    },
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-04-23T22:01:47.418Z"
+  },
+  {
+    "round": 13,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-gmaps-leads/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n",
+    "cost": 0.03,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-04-23T22:02:21.361Z",
+    "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-gmaps-leads/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n\n**Failures**: none"
+  },
+  {
+    "round": 14,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-gmaps-leads/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n",
+    "cost": 0.03,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-04-23T22:02:47.587Z",
+    "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-gmaps-leads/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n\n**Failures**: none"
   }
 ]

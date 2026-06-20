@@ -15,37 +15,79 @@ Take a YouTube URL → send the video to Gemini → get back structured, actiona
 
 When this skill is invoked, Claude must follow these steps in order:
 
-1. **Identify the YouTube URL** from the user's message
-2. **Check environment** — verify `NANO_BANANA_API_KEY` is set in `.env` (run `grep NANO_BANANA_API_KEY .env 2>/dev/null || echo "MISSING"`)
+1. **Identify the YouTube URL** from the user's message. Accept any of these URL formats as-is — do not reformat or expand them:
+   - Standard: `https://www.youtube.com/watch?v=VIDEO_ID`
+   - Shortened: `https://youtu.be/VIDEO_ID`
+   - Shorts: `https://www.youtube.com/shorts/VIDEO_ID`
+   - With timestamp: any of the above with `&t=123s` or `?t=123`
+
+2. **Check environment** — verify `NANO_BANANA_API_KEY` is available. Run both checks and consider it found if either succeeds:
+   - Check `.env` file: `grep NANO_BANANA_API_KEY .env 2>/dev/null | head -1`
+   - Check shell environment: `echo "${NANO_BANANA_API_KEY:-MISSING}"`
+   - If both return empty/MISSING: tell the user to add it to `.env` and stop
+   - If either returns a non-empty value that isn't "MISSING": proceed to step 3
 3. **Check dependencies** — verify `yt-dlp` and `python3` are available (`which yt-dlp && python3 -c "import google.generativeai" 2>&1`)
-4. **Construct and run the command** — use the Bash tool with this decision table:
+4. **Construct and run the command** — use the Bash tool. Find the row in the decision table below that matches the user's request and construct the command exactly as shown, replacing placeholders like `<URL>` and `<question>`.
 
-   | User requested quick? | User asked a question? | Command to run |
-   |----------------------|----------------------|----------------|
-   | No | No | `python3 .claude/skills/video-to-action/video_to_action.py "<URL>"` |
-   | No | Yes | `python3 .claude/skills/video-to-action/video_to_action.py "<URL>" -q "<question>"` |
-   | Yes | No | `python3 .claude/skills/video-to-action/video_to_action.py "<URL>" --quick` |
-   | Yes | Yes | `python3 .claude/skills/video-to-action/video_to_action.py "<URL>" --quick -q "<question>"` |
+| User wants "quick"? | User asked a question? | User wants to save to a file? | Command to run |
+| :--- | :--- | :--- | :--- |
+| No | No | No | `python3 .claude/skills/video-to-action/video_to_action.py "<URL>"` |
+| No | No | Yes (e.g., `steps.md`) | `python3 .claude/skills/video-to-action/video_to_action.py "<URL>" -o steps.md` |
+| No | Yes | No | `python3 .claude/skills/video-to-action/video_to_action.py "<URL>" -q "<question>"` |
+| No | Yes | Yes (e.g., `results.md`) | `python3 .claude/skills/video-to-action/video_to_action.py "<URL>" -q "<question>" -o results.md` |
+| Yes | No | No | `python3 .claude/skills/video-to-action/video_to_action.py "<URL>" --quick` |
+| Yes | No | Yes (e.g., `transcript.txt`) | `python3 .claude/skills/video-to-action/video_to_action.py "<URL>" --quick -o transcript.txt` |
+| Yes | Yes | No | `python3 .claude/skills/video-to-action/video_to_action.py "<URL>" --quick -q "<question>"` |
+| Yes | Yes | Yes (e.g., `answer.txt`) | `python3 .claude/skills/video-to-action/video_to_action.py "<URL>" --quick -q "<question>" -o answer.txt` |
 
-   **Quick mode triggers**: user says "quick", "fast", or "transcript", OR video is clearly a talk/lecture/podcast with no visual interaction. Default to full mode otherwise.
+   **Important Notes for Command Construction:**
+   - **Quick Mode Triggers**: Use a "Yes" row for "quick" if the user says "quick", "fast", or "transcript", OR if the video is clearly a talk/lecture with no visual interaction. Default to "No" otherwise.
+   - **Other Flags**: If the user requests JSON output, add `--json`. If they request a specific model, add `-m <model_name>`. These can be appended to any command from the table. For example: `... -q "<question>" -o results.json --json`.
 
-   **Additional flags** — append any of these to the base command above as needed:
-   - User wants output saved to a file → add `-o <filepath>` (e.g. `-o steps.md`)
-   - User wants JSON output → add `--json`
-   - User requests maximum detail or a specific model → add `-m gemini-2.5-pro` (or the model they named)
-   - These flags are independent and can be combined: e.g. `python3 ... "<URL>" --quick -q "..." --json -o results.json`
+5. **Parse the output** — read the script's stdout. The output is structured text (or JSON if `--json` was used). Extract:
+   - The numbered/bulleted steps or sections Gemini returned
+   - Any timestamps, tool names, keyboard shortcuts, or menu paths mentioned
+   - Any warnings or notes Gemini included about the video content
 
-5. **Parse the output** — read the structured steps returned by Gemini
-6. **Present results** — show the extracted steps to the user with context
-7. **Offer next actions** — ask if user wants to execute steps, save as checklist, or build automation
+6. **Present results** — choose the format based on whether a question (`-q`) was used. Always present a single, unified response — do not output a separate notification before Step 6; the "Mode used" field below is where any mode-switch information belongs.
+
+   **When a specific question was asked (`-q` flag used):**
+   - **One-sentence summary** of what the video covers
+   - **Mode used**: state which mode was actually used (e.g., "Full video analysis", "Quick/transcript mode"). If an auto-retry mode switch occurred (see Error Handling), state it here: e.g., "Quick mode (auto-switched from full — video upload failed)"
+   - **Direct answer**: present Gemini's answer to the question clearly, preserving any technical details, timestamps, or menu paths exactly as returned
+   - **Supporting context**: 1-2 bullet points with relevant background from the video that supports the answer
+
+   **When no question was asked (step-extraction mode):**
+   - **One-sentence summary** of what the video covers
+   - **Mode used**: state which mode was actually used (e.g., "Full video analysis", "Quick/transcript mode"). If an auto-retry mode switch occurred (see Error Handling), state it here: e.g., "Quick mode (auto-switched from full — video upload failed)"
+   - **Extracted steps**: display each step clearly numbered, preserving timestamps and technical details (keyboard shortcuts, menu paths, commands) exactly as Gemini returned them
+   - **Key takeaways**: 2-3 bullet points highlighting the most important techniques or concepts
+
+7. **Offer next actions** — after presenting results, explicitly ask the user which of these they want:
+   - **"Execute steps"** — Claude will run any CLI commands or code steps directly
+   - **"Save as checklist"** — Claude will write the steps to a markdown file (ask for filename if not provided)
+   - **"Build automation"** — Claude will turn the steps into a script or workflow
+   - **"Ask a follow-up question"** — Claude will re-run the script with `-q` to dig deeper into a specific part
+   - State these options explicitly so the user can choose by number or keyword
 
 ### Error Handling
-- If `NANO_BANANA_API_KEY` is missing: tell the user to add it to `.env` and stop
-- If `yt-dlp` is missing: tell the user to run `pip install yt-dlp` and stop
-- If video download fails (private/age-restricted): suggest `--quick` mode if captions exist, or inform user the video is inaccessible
-- If script exits with error: show the error output and suggest trying `--quick` mode as fallback
-- If `--quick` fails (no captions available): automatically retry with full mode (no `--quick` flag) — do not ask the user, just switch and inform them
-- If both full mode and `--quick` fail: report both error outputs and ask the user for a different video
+
+Use this decision tree exactly — each retry happens **at most once**. When a retry succeeds, proceed directly to Step 6 (do not output a separate mid-flow notification; report the mode switch in the "Mode used" field of Step 6 instead):
+
+1. **`NANO_BANANA_API_KEY` missing** from both `.env` and shell environment → tell the user to add it to `.env` and **stop**
+2. **`yt-dlp` missing** → tell the user to run `pip install yt-dlp` and **stop**
+3. **Video download fails** (private/age-restricted) → suggest `--quick` mode if captions may exist, or inform user the video is inaccessible and **stop**
+4. **Full mode fails for any reason** (video too large, upload error, API error, timeout, etc.):
+   - **Automatically retry once with `--quick` mode** (append `--quick` to the same command, keeping all other flags) — do not ask the user first, do not output a notification yet
+   - If `--quick` succeeds: proceed to Step 6; in the "Mode used" field write: "Quick mode (auto-switched from full — [brief reason])"
+   - If `--quick` also fails → go to step 6 (both failed)
+5. **Quick mode fails for any reason** (no captions, API error, timeout, parse error, etc.) when quick was the **original** user request:
+   - **Automatically retry once with full mode** (remove the `--quick` flag, keeping all other flags) — do not ask the user first, do not output a notification yet
+   - If full mode succeeds: proceed to Step 6; in the "Mode used" field write: "Full video analysis (auto-switched from quick — [brief reason])"
+   - If full mode also fails → go to step 6 (both failed)
+6. **Both modes have been attempted and both failed** → report both error outputs to the user and ask them for a different video. **Do not retry again.**
+
+> **Important**: Each direction of retry happens at most once per invocation. If full fails → try quick (once). If quick then also fails, stop. Never retry the same mode twice or loop back.
 
 ## How It Works
 
@@ -104,7 +146,7 @@ User: Learn how to model a donut from this video: https://youtube.com/watch?v=..
 3. Claude can then guide the user through each step, or even drive Blender via scripting
 
 ## Environment
-Requires in `.env`:
+Requires `NANO_BANANA_API_KEY` set either in `.env` file or as a shell environment variable:
 ```
 NANO_BANANA_API_KEY=your_gemini_api_key
 ```

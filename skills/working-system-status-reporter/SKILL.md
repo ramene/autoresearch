@@ -14,7 +14,7 @@ This skill should be activated under the following conditions:
 The following files and directory structures must be present in the `~/.remote/@autoresearch/` directory for the skill to function correctly:
 1.  A `skills/` directory containing subdirectories for each skill.
 2.  Each skill subdirectory (e.g., `skills/working-code-generator/`) must contain:
-    *   `eval.json` OR `rounds.json`: Contains evaluation scores and status. `eval.json` is preferred; `rounds.json` is used as a fallback.
+    *   `eval.json` OR `rounds.json`: Contains evaluation scores and status. `eval.json` is preferred if it contains a top-level `.score` field; `rounds.json` (with `.score` and optional `.max` fields per round) is used as a fallback.
     *   `events.jsonl`: A log of significant events, including failures.
 3.  A root-level `wants.json` file tracking unmet demands and capability gaps.
 
@@ -38,26 +38,51 @@ The following files and directory structures must be present in the `~/.remote/@
     *   **Tool:** `Bash`
     *   **Action:** Run the following script to collect all skill data AND wants.json data in one fast execution. The output is only visible to you (the agent) as a tool result — it is NOT sent to the user console.
         ```bash
+        set +e
         SKILLS_DIR="$HOME/.remote/@autoresearch/skills"
         WANTS_FILE="$HOME/.remote/@autoresearch/wants.json"
         NOW=$(date +%s)
 
-        # --- Collect skill data ---
-        for skill_path in "$SKILLS_DIR"/working-*/; do
+        # --- Collect skill data as JSON Lines ---
+        for skill_path in "$SKILLS_DIR"/*/; do
           [ -d "$skill_path" ] || continue
+          # Only process directories that contain skill score files
+          [ -f "$skill_path/eval.json" ] || [ -f "$skill_path/rounds.json" ] || continue
           skill_name=$(basename "$skill_path")
 
-          # Read score + last 3 scores from eval.json, fall back to rounds.json
+          # Read score from eval.json (only if it has a top-level .score field),
+          # fall back to rounds.json and normalize raw/max to a 0-1 float.
           score="null"
           s1="null"; s2="null"; s3="null"
           if [ -f "$skill_path/eval.json" ]; then
             score=$(jq -r '.score // "null"' "$skill_path/eval.json" 2>/dev/null)
-            s1=$(jq -r '.history[-3].score // "null"' "$skill_path/eval.json" 2>/dev/null)
-            s2=$(jq -r '.history[-2].score // "null"' "$skill_path/eval.json" 2>/dev/null)
-            s3=$(jq -r '.history[-1].score // "null"' "$skill_path/eval.json" 2>/dev/null)
+            if [ "$score" != "null" ]; then
+              s1=$(jq -r '.history[-3].score // "null"' "$skill_path/eval.json" 2>/dev/null)
+              s2=$(jq -r '.history[-2].score // "null"' "$skill_path/eval.json" 2>/dev/null)
+              s3=$(jq -r '.history[-1].score // "null"' "$skill_path/eval.json" 2>/dev/null)
+            fi
           fi
+
+          # If eval.json provided a score but no history (s1/s2/s3 still null),
+          # fall back to rounds.json for the history progression data.
+          if [ "$score" != "null" ] && [ "$s1" = "null" ] && [ "$s2" = "null" ] && [ -f "$skill_path/rounds.json" ]; then
+            s1=$(jq -r '.[-3].score // "null"' "$skill_path/rounds.json" 2>/dev/null)
+            s2=$(jq -r '.[-2].score // "null"' "$skill_path/rounds.json" 2>/dev/null)
+            s3=$(jq -r '.[-1].score // "null"' "$skill_path/rounds.json" 2>/dev/null)
+          fi
+
           if [ "$score" = "null" ] && [ -f "$skill_path/rounds.json" ]; then
-            score=$(jq -r '.[-1].score // "null"' "$skill_path/rounds.json" 2>/dev/null)
+            raw_score=$(jq -r '.[-1].score // "null"' "$skill_path/rounds.json" 2>/dev/null)
+            max_score=$(jq -r '.[-1].max // "null"' "$skill_path/rounds.json" 2>/dev/null)
+            if [ "$raw_score" != "null" ] && [ "$max_score" != "null" ] && [ "$max_score" != "0" ]; then
+              # Has both score and max — normalize to 0-1 float
+              score=$(awk -v r="$raw_score" -v m="$max_score" 'BEGIN { printf "%.4f", r/m }')
+            elif [ "$raw_score" != "null" ]; then
+              # No .max field (or max is null/zero) — treat score as already normalized (0–1 float).
+              # This handles rounds.json files that store pre-normalized scores without a .max field.
+              score="$raw_score"
+            fi
+            # History scores from rounds.json (raw values — used only for relative comparison)
             s1=$(jq -r '.[-3].score // "null"' "$skill_path/rounds.json" 2>/dev/null)
             s2=$(jq -r '.[-2].score // "null"' "$skill_path/rounds.json" 2>/dev/null)
             s3=$(jq -r '.[-1].score // "null"' "$skill_path/rounds.json" 2>/dev/null)
@@ -74,11 +99,14 @@ The following files and directory structures must be present in the `~/.remote/@
           fi
 
           # Count failures from events.jsonl
+          # IMPORTANT: Use `grep ... | wc -l` instead of `grep -c ... || echo 0`.
+          # `grep -c` exits with code 1 when there are zero matches (while still outputting "0"),
+          # causing `|| echo 0` to append a second "0", producing "0\n0" which breaks arithmetic.
           failures=0
           if [ -f "$skill_path/events.jsonl" ]; then
-            failures=$(grep -c '"event_type": "failure"' "$skill_path/events.jsonl" 2>/dev/null || echo 0)
-            alt=$(grep -c '"type": "failure"' "$skill_path/events.jsonl" 2>/dev/null || echo 0)
-            failures=$((failures + alt))
+            f1=$(grep '"event_type": "failure"' "$skill_path/events.jsonl" 2>/dev/null | wc -l | tr -d ' ')
+            f2=$(grep '"type": "failure"' "$skill_path/events.jsonl" 2>/dev/null | wc -l | tr -d ' ')
+            failures=$((f1 + f2))
           fi
 
           # Last modified time of score file
@@ -89,36 +117,46 @@ The following files and directory structures must be present in the `~/.remote/@
             last_mod=$(stat -f %m "$skill_path/rounds.json" 2>/dev/null || stat -c %Y "$skill_path/rounds.json" 2>/dev/null || echo 0)
           fi
 
-          echo "SKILL|${skill_name}|${score}|${stuck}|${failures}|${last_mod}"
+          # Emit one JSON object per skill (avoids delimiter-collision in pipe-separated formats)
+          score_json=$([ "$score" = "null" ] && echo "null" || echo "$score")
+          # Escape skill_name for JSON safety
+          safe_name=$(printf '%s' "$skill_name" | sed 's/\\/\\\\/g; s/"/\\"/g')
+          printf '{"record":"skill","name":"%s","score":%s,"stuck":%d,"failures":%d,"last_mod":%d}\n' \
+            "$safe_name" "$score_json" "$stuck" "$failures" "$last_mod"
         done
+
+        # --- Emit current timestamp for stuck-age calculation ---
+        printf '{"record":"now","ts":%d}\n' "$NOW"
 
         # --- Collect wants.json data ---
         wants_count=0
         if [ -f "$WANTS_FILE" ]; then
           wants_count=$(jq '[.[] | select(.status == "open" or .status == "unmet")] | length' "$WANTS_FILE" 2>/dev/null || echo 0)
         fi
-        echo "WANTS|${wants_count}"
+        printf '{"record":"wants","count":%d}\n' "$wants_count"
         ```
-    *   Parse each line from the tool result:
-        *   Lines starting with `SKILL|` have 6 pipe-separated fields: `SKILL`, name, score, stuck (0 or 1), failures (integer), last_mod (unix timestamp). Build an internal list of skill records: `{name, score, stuck, failures, last_mod}`.
-        *   The single line starting with `WANTS|` contains the count of open/unmet demands.
-    *   If the script produces no `SKILL|` lines, treat the skill list as empty (Total Skills = 0) and add an alert in Step 4 about no skills being found.
-    *   If the script produces no `WANTS|` line (script error), use 0 for unmet demands and note it in the Alerts section.
+    *   Parse each line of the tool result as a JSON object:
+        *   Lines where `"record"` is `"skill"` contain fields: `name` (string), `score` (number or null), `stuck` (0 or 1), `failures` (integer), `last_mod` (unix timestamp). Build an internal list of skill records.
+        *   The single line where `"record"` is `"now"` contains `ts` — the current Unix timestamp (use this for stuck-age calculation in Step 3).
+        *   The single line where `"record"` is `"wants"` contains `count` — the number of open/unmet demands.
+    *   If no skill records appear, treat the skill list as empty (Total Skills = 0) and add an alert in Step 4 about no skills being found.
+    *   If no wants record appears (script error), use 0 for unmet demands and note it in the Alerts section.
 
 3.  **Determine Status for Each Skill:**
     *   For each skill record collected in Step 2, determine its status using these rules **in the exact order listed** (first matching rule wins):
-        1.  If `score` is `null` or empty → **Untested**
+        1.  If `score` is `null` or absent → **Untested**
         2.  If `stuck == 1` → **Stuck** *(a skill plateaued at any score, including ≥ 0.9, is Stuck, not At Target)*
         3.  If `score >= 0.9` → **At Target**
         4.  Otherwise → **Improving**
-    *   **Note:** The `stuck` flag was already computed in bash (Step 2). You do NOT need to re-analyze history arrays. Just read the flag directly.
-    *   For **Stuck** skills: check if `last_mod` is within the last 86400 seconds (24 hours) relative to the current time. If yes, flag this skill as "newly stuck" for System Alerts.
+    *   **Note:** The `stuck` flag was already computed in bash (Step 2). You do NOT need to re-analyze history arrays. Just read the flag directly from the JSON record.
+    *   **Note:** The `score` from `rounds.json` is already normalized to a 0–1 float by the bash script (either via raw/max division, or directly if no .max field was present). Do not treat it as a raw integer.
+    *   For **Stuck** skills: check if `last_mod` is within the last 86400 seconds (24 hours) relative to the `ts` value from the `"now"` record. If yes, flag this skill as "newly stuck" for System Alerts.
 
 4.  **Synthesize and Deliver the Report:**
     *   Calculate the total counts for each skill status (At Target, Stuck, Untested, Improving). Verify these sum to Total Skills.
     *   Sort the skills by their `failures` count in descending order and select the top 3 for the "Top Failing Skills" list.
     *   Collect all "newly stuck" flagged skills (from Step 3) for the System Alerts section.
-    *   Use the `WANTS|` count from Step 2 as the **Unmet Demands** count.
+    *   Use the `count` from the wants record (Step 2) as the **Unmet Demands** count.
     *   Check the `--format` parameter.
     *   **If `markdown` (default):**
         *   Assemble a human-readable Markdown string using the synthesized data. Use headings (`##`), bold text (`**`), and bullet points (`-`).
@@ -176,7 +214,7 @@ The primary output is a Markdown formatted report printed to standard output.
 - **Open Unmet Demands:** 0
 
 ## System Alerts
-- ⚠️ No skill directories matching `working-*/` were found in the skills directory.
+- ⚠️ No skill directories containing score files were found in the skills directory.
 
 ## Top 3 Skills by Failure Count
 - No skills found.
@@ -230,8 +268,8 @@ Before marking the task as complete, verify the following:
 
 ## Error Handling
 - **Missing `skills/` directory:** If the main skills directory is not found, still generate the report with zero counts and a System Alert noting the missing directory. Do NOT abort.
-- **Zero skills found (glob returns nothing):** Treat as 0 total skills, generate the report with zero counts and a System Alert noting no `working-*/` directories were found.
-- **Missing `eval.json` and `rounds.json`:** If a skill is missing both score files, mark it as "Untested" in the report and continue processing other skills.
+- **Zero skills found (glob returns nothing or no dirs contain score files):** Treat as 0 total skills, generate the report with zero counts and a System Alert noting no skill directories were found.
+- **Missing `eval.json` and `rounds.json`:** If a skill directory is missing both score files, it is skipped during discovery (not counted at all). This is handled by the guard in Step 2.
 - **Missing `events.jsonl`:** Treat failure count as 0 and continue.
 - **Corrupt JSON:** If a JSON file is malformed and cannot be parsed, report a data corruption error for that specific file/skill in a dedicated "Errors" section of the report and continue.
 - **Permission Denied:** If unable to read a file due to permissions, report the specific file path and the permission error in the Alerts section.
@@ -249,5 +287,5 @@ Before marking the task as complete, verify the following:
 
 **Example 3: Focused Report on Failing Skills**
 *   **User Command:** `/status --focus=failing`
-*   **Agent Action:** Executes the standard steps but modifies the final report to provide more detail on skills that are "Stuck" or have a high failure count, potentially omitting sections on healthy or untested skills.
-*   **Output:** A Markdown report with an expanded section on failing skills, perhaps including the last few error messages from their `events.jsonl`.
+*   **Agent Action:** Executes the standard steps unchanged. In Step 4, expands the "Top 3 Skills by Failure Count" section to show all Stuck and high-failure skills with additional detail (e.g., last event from `events.jsonl`). All standard report sections — Skill Health Summary, Goal Progress, System Alerts, and Top Failing Skills — MUST still be present and fully populated. Do NOT omit any section.
+*   **Output:** A Markdown report with the same structure as the standard report, with an expanded failing-skills section appended after the standard Top 3 list.

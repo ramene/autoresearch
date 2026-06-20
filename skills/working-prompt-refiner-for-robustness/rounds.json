@@ -152,5 +152,159 @@
     },
     "timestamp": "2026-03-20T21:38:05.524Z",
     "changelog": "**Mutation**: Added Self-Correction/Validation as a best practice check in Step 4 and a corresponding refinement action in Step 6, per the meta-analyst's Proactive Hardening strategy.\n**Failures**: none\n**Per-criteria**: Identify the weakest part of the input prompt: 6/6, Does the proposed rewrite explicitly address a known failure mode (e.g., ambiguity): 6/6, Add or improve few-shot examples for better guidance: 6/6, Suggest adding explicit instructions for error handling and output formatting: 6/6, Is the refined prompt syntactically correct and ready to be used: 6/6, Can the skill explain why its proposed change should improve performance: 6/6\n**Decision**: Score 36 did not exceed best 36 — mutation produced worse or equal results"
+  },
+  {
+    "round": 5,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-prompt-refiner-for-robustness/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n",
+    "cost": 0.03,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-05-05T06:00:31.434Z",
+    "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-prompt-refiner-for-robustness/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n\n**Failures**: none"
+  },
+  {
+    "round": 6,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-prompt-refiner-for-robustness/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n",
+    "cost": 0.03,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-05-05T06:01:05.620Z",
+    "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-prompt-refiner-for-robustness/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n\n**Failures**: none"
+  },
+  {
+    "round": 7,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-prompt-refiner-for-robustness/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n",
+    "cost": 0.03,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-05-05T06:01:33.723Z",
+    "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-prompt-refiner-for-robustness/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n\n**Failures**: none"
+  },
+  {
+    "round": 7,
+    "score": 36,
+    "max": 36,
+    "status": "escalation",
+    "mutation": "Stuck escalation: The optimization loop is stuck in a local optimum of \"perfection\" because the evaluation suite is saturated. The skill consistently scores 36/36, meaning the current test scenarios are not challenging",
+    "cost": 0.03,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "decisionReason": "Stuck escalation triggered after 3+ rounds with no improvement",
+    "escalation": {
+      "diagnosis": "The optimization loop is stuck in a local optimum of \"perfection\" because the evaluation suite is saturated. The skill consistently scores 36/36, meaning the current test scenarios are not challenging enough to reveal any remaining weaknesses. The mutations from rounds 0-4 were minor \"hardening\" clarifications that couldn't possibly improve an already perfect score. The mutations in rounds 5-7 failed due to an external environment error, not a flaw in the mutation logic, but this has compounded the lack of progress. The root cause is not the skill's quality but the evaluation's lack of difficulty.",
+      "evalRedesignNeeded": true,
+      "strategy": "**Deepening Analytical Scope.** The current strategy of \"Proactive Hardening\" (making minor clarifications) is ineffective against a saturated test suite. The new strategy should be to speculatively add a more advanced analytical capability to the skill. Instead of just checking for the *presence* of best practices (e.g., \"Is there error handling?\"), we will teach the skill to analyze the *quality and coherence* of the instructions themselves. This involves adding a new, more sophisticated principle to the analysis step, preparing the skill for a future, more challenging set of evaluation scenarios.",
+      "suggestedMutation": "Add a new analysis principle in Step 4 to check for logical consistency and overly complex steps, and add a corresponding refinement action in Step 6. This moves the skill's capability from a simple checklist-follower to a more advanced logical reasoner.\n\n```markdown\n# M-prompt-refiner-for-robustness\n...\n## Execution Steps\n...\n4.  **Analyze Prompt against Best Practices:**\n    - Critically evaluate the `ORIGINAL_PROMPT` against the following principles.\n    - **Priority Rule:** If `--focus=<criterion>` was provided, treat that criterion as the highest-priority weakness to address. If failure data from `rounds.json` or `eval.json` is also available, surface any criteria with recurring failures as secondary weaknesses — but do not let them displace the `--focus` criterion from top priority. If no `--focus` is specified, use the failure data to rank weaknesses by frequency and severity.\n    - **Clarity and Specificity:** Are instructions unambiguous? Is there jargon or vague language like \"handle it appropriately\"? Are all inputs and outputs clearly defined?\n    - **Task Decomposition:** Is the task broken down into a logical sequence of small, verifiable steps? Or is it a single, monolithic instruction?\n    - **Logical Consistency and Simplicity:** Are there any contradictory instructions (e.g., Step 2 says to save a file as `.csv` but Step 5 says to output JSON)? Is any single step trying to accomplish too many distinct actions at once?\n    - **Output Formatting:** Does the prompt specify the exact output format required? For structured data, does it provide a schema (e.g., JSON schema) or a clear template? Does it instruct the agent to use code fences (e.g., ```json)?\n    - **Error Handling:** Does the prompt explicitly tell the agent what to do when things go wrong? (e.g., \"If a file is not found, you MUST report the error and stop.\", \"If the API returns a 404 error, assume the resource does not exist and proceed to the next step.\").\n    - **Few-Shot Examples:** Does the prompt include concrete examples of both desired and undesired behavior (`Good Example` / `Bad Example`)? This is crucial for teaching by example.\n    - **Persona and Role:** Does the prompt establish a clear role for the agent (e.g., \"You are an expert code reviewer.\")?\n    - **Self-Correction/Validation:** Does the prompt include a final step where the agent reviews its own work against the requirements before outputting the final answer? This is a powerful technique to catch its own errors.\n\n5.  **Identify Top 1-3 Weaknesses:**\n...\n6.  **Generate Specific Refinements:**\n    - For each identified weakness, formulate a concrete change to the prompt text.\n    - **To improve clarity:** Rephrase ambiguous sentences. Replace vague terms with precise instructions.\n    - **To improve consistency or simplicity:** Propose breaking down an overly complex step into smaller, distinct sub-steps. Flag contradictory instructions and suggest a resolution (e.g., \"Step 2 and Step 5 provide conflicting output formats. I will standardize on the JSON format mentioned in Step 5 for consistency.\").\n    - **To add error handling:** Add a new step or a sub-bullet to an existing step, such as: `If the 'Read' tool fails with a 'file not found' error, you must output an error message in JSON format: {\"error\": \"File not found: [path]\"}`.\n    - **To improve formatting:** Add a concluding step like: `Your final output must be a single, valid JSON object enclosed in a ```json code fence. Do not include any explanatory text outside the code fence. Adhere to the following schema: ...`.\n    - **To add examples:** Create a new section within the prompt called `### Examples` with `#### Good Example` and `#### Bad Example` subsections that illustrate correct and incorrect execution.\n    - **To add self-correction:** Add a final review step, such as: `Before providing your final output, review all previous steps and verify that your answer directly addresses the original request and meets all formatting requirements.`\n...\n```"
+    },
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-05-05T06:02:02.144Z"
+  },
+  {
+    "round": 8,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-prompt-refiner-for-robustness/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n",
+    "cost": 0.03,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-05-05T06:02:32.549Z",
+    "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-prompt-refiner-for-robustness/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n\n**Failures**: none"
+  },
+  {
+    "round": 9,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-prompt-refiner-for-robustness/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n",
+    "cost": 0.03,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-05-05T06:03:08.679Z",
+    "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-prompt-refiner-for-robustness/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n\n**Failures**: none"
   }
 ]

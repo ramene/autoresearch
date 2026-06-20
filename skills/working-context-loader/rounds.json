@@ -194,5 +194,495 @@
     },
     "timestamp": "2026-03-14T22:17:50.978Z",
     "changelog": "Target reached at 224/224 (100.0%)\n**Mutation that achieved this**: Original SKILL.md — no mutations"
+  },
+  {
+    "round": 4,
+    "score": 223,
+    "max": 224,
+    "status": "reverted",
+    "mutation": "Reverted — scored 223 vs best 224",
+    "cost": 0.03,
+    "criteria": [
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      15,
+      16,
+      16,
+      16
+    ],
+    "failures": [
+      {
+        "scenario": 7,
+        "criterion": "Argument Clarity"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 223 did not exceed best 224 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-04-15T22:00:42.392Z",
+    "changelog": "Target reached at 223/224 (99.6%)\n**Mutation that achieved this**: Original SKILL.md — no mutations"
+  },
+  {
+    "round": 5,
+    "score": 224,
+    "max": 224,
+    "status": "reverted",
+    "mutation": "Reverted — scored 224 vs best 224",
+    "cost": 0.03,
+    "criteria": [
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 224 did not exceed best 224 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-04-16T06:00:35.486Z",
+    "changelog": "Target reached at 224/224 (100.0%)\n**Mutation that achieved this**: Original SKILL.md — no mutations"
+  },
+  {
+    "round": 6,
+    "score": 208,
+    "max": 224,
+    "status": "reverted",
+    "mutation": "Reverted — scored 208 vs best 224",
+    "cost": 0.03,
+    "criteria": [
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      0,
+      16,
+      16,
+      16
+    ],
+    "failures": [
+      {
+        "scenario": 1,
+        "criterion": "Argument Clarity"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Argument Clarity"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Argument Clarity"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Argument Clarity"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Argument Clarity"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Argument Clarity"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Argument Clarity"
+      },
+      {
+        "scenario": 8,
+        "criterion": "Argument Clarity"
+      },
+      {
+        "scenario": 9,
+        "criterion": "Argument Clarity"
+      },
+      {
+        "scenario": 10,
+        "criterion": "Argument Clarity"
+      },
+      {
+        "scenario": 11,
+        "criterion": "Argument Clarity"
+      },
+      {
+        "scenario": 12,
+        "criterion": "Argument Clarity"
+      },
+      {
+        "scenario": 13,
+        "criterion": "Argument Clarity"
+      },
+      {
+        "scenario": 14,
+        "criterion": "Argument Clarity"
+      },
+      {
+        "scenario": 15,
+        "criterion": "Argument Clarity"
+      },
+      {
+        "scenario": 16,
+        "criterion": "Argument Clarity"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 208 did not exceed best 224 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-04-16T14:00:48.573Z",
+    "changelog": "Target reached at 208/224 (92.9%)\n**Mutation that achieved this**: Original SKILL.md — no mutations"
+  },
+  {
+    "round": 7,
+    "score": 221,
+    "max": 224,
+    "status": "reverted",
+    "mutation": "Reverted — scored 221 vs best 224",
+    "cost": 0.03,
+    "criteria": [
+      16,
+      16,
+      16,
+      16,
+      14,
+      16,
+      16,
+      16,
+      16,
+      16,
+      15,
+      16,
+      16,
+      16
+    ],
+    "failures": [
+      {
+        "scenario": 6,
+        "criterion": "Output Specification"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Argument Clarity"
+      },
+      {
+        "scenario": 15,
+        "criterion": "Output Specification"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 221 did not exceed best 224 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-04-16T22:00:55.283Z",
+    "changelog": "Target reached at 221/224 (98.7%)\n**Mutation that achieved this**: Original SKILL.md — no mutations"
+  },
+  {
+    "round": 8,
+    "score": 223,
+    "max": 224,
+    "status": "reverted",
+    "mutation": "Reverted — scored 223 vs best 224",
+    "cost": 0.03,
+    "criteria": [
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      15,
+      16,
+      16,
+      16
+    ],
+    "failures": [
+      {
+        "scenario": 7,
+        "criterion": "Argument Clarity"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 223 did not exceed best 224 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-04-17T06:00:39.850Z",
+    "changelog": "Target reached at 223/224 (99.6%)\n**Mutation that achieved this**: Original SKILL.md — no mutations"
+  },
+  {
+    "round": 9,
+    "score": 210,
+    "max": 224,
+    "status": "reverted",
+    "mutation": "Reverted — scored 210 vs best 224",
+    "cost": 0.03,
+    "criteria": [
+      15,
+      15,
+      15,
+      15,
+      15,
+      15,
+      15,
+      15,
+      15,
+      15,
+      15,
+      15,
+      15,
+      15
+    ],
+    "failures": [
+      {
+        "scenario": 7,
+        "criterion": "Default Behavior"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Depth Differentiation"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Refresh Logic"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Targeted Scans"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Output Specification"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Implicit No-Op"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Tool Requirements"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Scope Definition"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Error Handling (Permissions)"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Error Handling (Invalid Target)"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Argument Clarity"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Conditional Execution"
+      },
+      {
+        "scenario": 7,
+        "criterion": "No-Op Gate Precedence"
+      },
+      {
+        "scenario": 7,
+        "criterion": "Input/Output Path Separation"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 210 did not exceed best 224 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-04-17T14:00:52.549Z",
+    "changelog": "Target reached at 210/224 (93.8%)\n**Mutation that achieved this**: Original SKILL.md — no mutations"
+  },
+  {
+    "round": 10,
+    "score": 223,
+    "max": 224,
+    "status": "reverted",
+    "mutation": "Reverted — scored 223 vs best 224",
+    "cost": 0.03,
+    "criteria": [
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      15,
+      16,
+      16,
+      16
+    ],
+    "failures": [
+      {
+        "scenario": 7,
+        "criterion": "Argument Clarity"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 223 did not exceed best 224 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-04-17T22:00:47.972Z",
+    "changelog": "Target reached at 223/224 (99.6%)\n**Mutation that achieved this**: Original SKILL.md — no mutations"
+  },
+  {
+    "round": 11,
+    "score": 224,
+    "max": 224,
+    "status": "reverted",
+    "mutation": "Reverted — scored 224 vs best 224",
+    "cost": 0.03,
+    "criteria": [
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 224 did not exceed best 224 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-04-18T06:00:34.552Z",
+    "changelog": "Target reached at 224/224 (100.0%)\n**Mutation that achieved this**: Original SKILL.md — no mutations"
+  },
+  {
+    "round": 12,
+    "score": 223,
+    "max": 224,
+    "status": "reverted",
+    "mutation": "Reverted — scored 223 vs best 224",
+    "cost": 0.03,
+    "criteria": [
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      15,
+      16,
+      16,
+      16
+    ],
+    "failures": [
+      {
+        "scenario": 7,
+        "criterion": "Argument Clarity"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 223 did not exceed best 224 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-04-18T14:00:40.635Z",
+    "changelog": "Target reached at 223/224 (99.6%)\n**Mutation that achieved this**: Original SKILL.md — no mutations"
+  },
+  {
+    "round": 13,
+    "score": 223,
+    "max": 224,
+    "status": "reverted",
+    "mutation": "Reverted — scored 223 vs best 224",
+    "cost": 0.03,
+    "criteria": [
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      15,
+      16,
+      16,
+      16
+    ],
+    "failures": [
+      {
+        "scenario": 7,
+        "criterion": "Argument Clarity"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 223 did not exceed best 224 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-04-18T22:00:36.207Z",
+    "changelog": "Target reached at 223/224 (99.6%)\n**Mutation that achieved this**: Original SKILL.md — no mutations"
   }
 ]

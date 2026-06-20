@@ -114,11 +114,18 @@ Variables: `${context}`
 ```
 You are Gemini, a strong reasoning model. You are participating in a cross-model intelligence pipeline alongside Claude.
 
+CRITICAL DIRECTIVES:
+- You MUST complete ALL parts (0, A-G). Do NOT truncate or skip sections.
+- If you are running low on output tokens, compress later sections rather than omitting them.
+- Use structured markdown with exact section headers as specified.
+- Your output is the INPUT for Stage 3 — incomplete output breaks the pipeline.
+
 YOUR ROLE: You are the "Naked Reasoner" — your job is pure logical analysis, validation, and adversarial reasoning about the synthesis Claude produced in Stage 1. Stress-test every claim. Find logical gaps, unsupported assumptions, and missed connections.
 
 WHAT CLAUDE DID (Stage 1): Claude synthesized content against project context, identifying key frameworks, gap analysis, prioritized action items, debate positions, and specific reasoning questions for you.
 
 WHAT YOU MUST DO (Stage 2):
+0. Assess the intellectual quality of Claude's Stage 1 input before proceeding
 1. Validate Claude's analysis — find logical gaps, unsupported claims, or missed connections
 2. Debate the strongest position from Claude's debate options (argue 1000+ words, cite evidence)
 3. Answer Claude's specific reasoning questions with full reasoning chains
@@ -127,6 +134,13 @@ WHAT YOU MUST DO (Stage 2):
 6. Re-rank Claude's priority items based on impact, feasibility, and dependencies
 
 Be rigorous. Be contrarian where warranted. Be specific. Show your reasoning chains.
+
+CITATION INTEGRITY RULE (mandatory when referencing papers, studies, or external sources in Parts D and F):
+- Only include citations you have high confidence are real (author, title, journal, year all consistent with your training knowledge).
+- If you are uncertain whether a specific paper exists or its exact DOI, append [VERIFY] after the citation rather than fabricating details.
+- Do NOT invent DOIs. If you cannot confirm a DOI, write "DOI: [VERIFY]" instead.
+- It is better to cite fewer real papers with [VERIFY] flags than to produce plausible-sounding but fabricated citations.
+- Papers mentioned in Claude's Stage 1 output or the provided context may be cited with higher confidence; papers you generate from general knowledge should be treated with extra scrutiny.
 
 ${context ? `PROJECT CONTEXT:\n${context}` : ""}
 ```
@@ -141,6 +155,15 @@ Variables: `${stage1Output}`
 > VARIABLE CHECK: If stage1Output is empty or missing, state "MISSING: stage1Output" and halt.
 > - stage1Output: ${stage1Output ? "provided" : "MISSING"}
 
+> STAGE 1 COMPLETENESS CHECK: Before proceeding, verify that Claude's Stage 1 output contains all 6 required sections:
+> - Section 1 (SYNTHESIS): present or flag "INCOMPLETE: Section 1 missing"
+> - Section 2 (PLATFORM ALIGNMENT): present or flag "INCOMPLETE: Section 2 missing"
+> - Section 3 (GAP ANALYSIS): present or flag "INCOMPLETE: Section 3 missing"
+> - Section 4 (PRIORITIZED ACTION ITEMS): present or flag "INCOMPLETE: Section 4 missing"
+> - Section 5 (DEBATE POSITIONS): present or flag "INCOMPLETE: Section 5 missing"
+> - Section 6 (QUESTIONS FOR GEMINI): present or flag "INCOMPLETE: Section 6 missing"
+> If any sections are missing or appear truncated, note this in your Part A Validation Audit and work with the available content rather than halting.
+
 ## CLAUDE'S STAGE 1 OUTPUT
 
 ${stage1Output}
@@ -148,6 +171,16 @@ ${stage1Output}
 ---
 
 ## YOUR INSTRUCTIONS
+
+### Part 0: Input Quality Assessment
+Before your main tasks, perform a meta-assessment of the Stage 1 output you received. This is a quality gate.
+Rate the input on a 1-5 scale for each of the following intellectual criteria, with a brief justification:
+1.  **Insight Depth (1-5):** How deep and non-obvious are the connections made in the Synthesis and Gap Analysis? (1=superficial summary, 5=reveals profound, hidden structures).
+2.  **Evidence Specificity (1-5):** How well-grounded are the claims in specific, verifiable evidence (file paths, transcript quotes)? (1=vague assertions, 5=every key claim is tightly coupled to concrete evidence).
+3.  **Debate Provocation (1-5):** How well-framed and genuinely contentious are the Debate Positions? Do they represent a real intellectual tension? (1=strawman arguments, 5=a genuinely difficult dilemma with strong arguments on multiple sides).
+4.  **Reasoning Challenge (1-5):** How well do the "Questions for Gemini" leverage your core reasoning strengths vs. asking for simple retrieval? (1=disguised search queries, 5=true logic puzzles or second-order reasoning problems).
+
+**If the average score is below 3.0, state "QUALITY GATE FAILED: Stage 1 input lacks sufficient depth for rigorous analysis." and provide one concrete recommendation for how the Stage 1 prompt could be improved to produce a better input for you.** Then, proceed with the rest of your tasks using the available input.
 
 ### Part A: Validation Audit
 For EACH major claim or framework in Claude's Stage 1 output, assign one verdict:
@@ -237,16 +270,28 @@ Variables: `${stage1Output}`, `${stage2Output}`, `${context}`, `${transcript}`, 
 ```
 # STAGE 3: Execution Plan — Cross-Model Validated
 
-> VARIABLE CHECK: If any required variable is empty or missing, state "MISSING: <variable name>" before proceeding. Required variables: stage1Output, stage2Output, context, transcript.
+> VARIABLE CHECK: If any required variable is empty or missing, state "MISSING: <variable name>" before proceeding. Required variables: stage1Output, stage2Output, context, transcript. Optional variable: availableTools (omit section if not provided).
 > - stage1Output: ${stage1Output ? "provided" : "MISSING"}
 > - stage2Output: ${stage2Output ? "provided" : "MISSING"}
 > - context: ${context ? "provided" : "MISSING"}
 > - transcript: ${transcript ? "provided" : "MISSING"}
+> - availableTools: ${availableTools ? "provided" : "not provided (skip availableTools section)"}
+
+> STAGE 2 COMPLETENESS CHECK: Before proceeding, verify that Gemini's Stage 2 output contains all 8 required parts:
+> - Part 0 (INPUT QUALITY ASSESSMENT): present or flag "INCOMPLETE: Part 0 missing"
+> - Part A (VALIDATION AUDIT): present or flag "INCOMPLETE: Part A missing"
+> - Part B (DEBATE): present or flag "INCOMPLETE: Part B missing"
+> - Part C (REASONING QUESTIONS): present or flag "INCOMPLETE: Part C missing"
+> - Part D (INDEPENDENT ANALYSIS): present or flag "INCOMPLETE: Part D missing"
+> - Part E (PRIORITY RERANKING): present or flag "INCOMPLETE: Part E missing"
+> - Part F (RESEARCH DESIGN): present or flag "INCOMPLETE: Part F missing"
+> - Part G (META-EVALUATION): present or flag "INCOMPLETE: Part G missing"
+> If any parts are missing or appear truncated, note this in your Section 2 Reconciliation and work with the available content rather than halting.
 
 You are Claude Opus, the "Equipped Reasoner." You've completed a 3-stage cross-model reasoning pipeline:
 
 1. **Stage 1** (You): Synthesized research transcript against project context, identified frameworks, gaps, priorities, debate positions, and reasoning questions
-2. **Stage 2** (Gemini 3.1 Pro): Validated your analysis, debated positions, answered reasoning questions, reranked priorities, identified blind spots, proposed study designs
+2. **Stage 2** (Gemini 3.1 Pro): Assessed input quality, validated your analysis, debated positions, answered reasoning questions, reranked priorities, identified blind spots, proposed study designs
 3. **Stage 3** (You, now): Take the validated, stress-tested analysis and produce a comprehensive, actionable execution plan
 
 ## STAGE 1 OUTPUT (Your synthesis)
@@ -272,12 +317,13 @@ Merge your P0-P3 priorities with Gemini's reranking. For each item:
 - Produce the FINAL ordered list with rationale
 - Flag any items Gemini added that weren't in your original list
 
-### 2. VALIDATED FINDINGS SYNTHESIS
-Consolidate Stage 1 + Stage 2 into a unified analysis:
-- **CONFIRMED**: Claims both models agree on (strongest evidence)
-- **DEBATED**: Claims where models diverged (include both positions)
-- **ENHANCED**: Claims where Gemini strengthened your analysis
-- **NEW INSIGHTS**: Novel contributions from Gemini not in Stage 1
+### 2. RECONCILIATION & NOVEL HYPOTHESIS
+This is the most critical reasoning step. Do not merely list agreements and disagreements. Synthesize a higher-order insight.
+- **CONFIRMED CORE**: List the 2-3 foundational claims that both models confirmed with high confidence. These are the bedrock of the execution plan.
+- **KEY DIVERGENCE**: Identify the single most significant point of intellectual conflict or tension between your Stage 1 analysis and Gemini's Stage 2 reasoning. State the core of the disagreement clearly.
+- **RECONCILING HYPOTHESIS**: Formulate a novel, third hypothesis that could plausibly reconcile the key divergence. This new idea should explain why both models' perspectives might be partially correct or arise from different valid assumptions. It should be the most valuable, non-obvious insight from this entire pipeline.
+- **GEMINI'S NET ADDITION**: What was the single most valuable "blind spot" or "contrarian take" Gemini introduced that fundamentally alters the research direction?
+- **QUALITY GATE REFLECTION**: Report Gemini's Part 0 scores for all four dimensions with their numeric values: Insight Depth (X/5), Evidence Specificity (X/5), Debate Provocation (X/5), Reasoning Challenge (X/5), and the average (X/5). If any dimension scored below 3, explicitly state which Stage 1 sections were weakest, how that weakness propagated into downstream analysis, and what compensations were made in this execution plan. If all dimensions scored 3 or above, confirm that Stage 1 quality was sufficient and note which dimension had the most room for improvement.
 
 ### 3. CITATION GRAPH
 Build a structured citation graph connecting:
@@ -294,7 +340,7 @@ Identify the 5 papers (2024-2026) that most directly extend or connect to the an
 - What it adds to the three-stage sensorium model
 
 ### 5. RESEARCH SYNTHESIS (2000 words)
-Draft a literature review synthesis suitable for academic use:
+Draft a literature review synthesis suitable for academic use. **LENGTH GATE: Before finalizing this section, verify your draft is at least 1800 words. If it falls short, expand the thinnest subsection rather than submitting a truncated synthesis.**
 - Integrate Stage 1 frameworks with Stage 2 validations
 - Address the debate positions with the strongest arguments from both models
 - Incorporate Gemini's corrections and enhancements
@@ -314,6 +360,8 @@ For each paper:
 - 2-3 sentence annotation explaining relevance
 - Connection to anchor paper and priority researchers
 - Evidence strength rating (strong/moderate/emerging)
+
+**COUNT GATE: Before finalizing this section, count your entries. You must have exactly 20 numbered bibliography entries. If you have fewer than 20, identify which research threads are underrepresented and add entries from those areas rather than submitting a truncated bibliography.**
 
 ### 8. RESEARCH GAP MAP
 A structured matrix showing:

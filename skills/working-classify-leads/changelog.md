@@ -44,3 +44,30 @@
 
 ## Round 10 — Mutation Applied
 - **Mutation**: Added `mkdir -p .tmp` as an explicit prerequisite before Steps 1/2b to prevent silent FileNotFoundError failures when the `.tmp/` directory doesn't yet exist — a common edge case that produces confusing errors not covered by current error handling.
+
+## Round 11 — Mutation Applied
+- **Mutation**: No failures detected (36/36 score) — keeping the skill as-is since all criteria pass perfectly.
+
+## Round 12 — Mutation Applied
+- **Mutation**: Added explicit decision criteria to Step 5 clarifying when to run update_sheet.py (Sheet input path only) vs skip it (local file path), preventing agents from either skipping it when needed or running it inappropriately.
+
+## Round 13 — Mutation Applied
+- **Mutation**: No failures detected (36/36 score) — keeping the skill as-is since all criteria pass perfectly.
+
+## Round 14 — Mutation Applied
+- **Mutation**: Added an explicit "Option B Quick Reference" checklist at the top of the workflow section summarizing all steps for local file input in order, so agents following the non-sheet path have a complete, scannable workflow without having to parse conditional logic throughout.
+
+## Round 15 — Mutation Applied
+- **Mutation**: Added an explicit "choose your classification_type" decision block inside Step 3 that maps user intent phrases directly to the correct flag value, so agents don't default to product_saas when the user asked for high-ticket or subscription classification.
+
+## Round 16 — Mutation Applied
+- **Mutation**: Replaced the conditional `## Input Options` and `## Step-by-Step Workflow` sections with two distinct, self-contained Path A and Path B workflows to eliminate conditional logic parsing and reduce procedural errors.
+
+## Round 17 — Mutation Applied
+- **Mutation**: Added an explicit "Path Selection Decision Block" at the top of Core Workflows with clear, deterministic criteria for choosing Path A vs Path B before any steps execute, eliminating ambiguous path detection that causes cascading failures across Task Completion, Output Quality, Tool Usage, Instructions Clarity, and Completeness.
+
+## Round 18 — Mutation Applied
+- **Mutation**: Added explicit "then proceed with Path A/B" directives to the two clarification rows in the Step 0 decision table, so agents don't stall after gathering the user's answer.
+
+## Round 19 — Mutation Applied
+- **Mutation**: All criteria pass with 0 failures — keeping the skill as-is since no mutations are needed.

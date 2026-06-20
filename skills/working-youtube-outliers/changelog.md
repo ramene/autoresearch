@@ -24,3 +24,6 @@
 
 ## Round 5 — Mutation Applied
 - **Mutation**: Added a "Verify Results" section explaining how to confirm a successful run and access the Google Sheet output, addressing the Completeness and Instructions Clarity failures in scenario 3.
+
+## Round 6 — Mutation Applied
+- **Mutation**: No failures detected — all criteria pass at 0 failures. Adding a note clarifying when to use `update_transcripts.py` vs re-running the full scrape, to make the workflow decision more explicit for users.

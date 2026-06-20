@@ -9,7 +9,7 @@ allowed-tools: Read, Grep, Glob, Bash
 # Inbox Cleaner — AI-Powered Unread Email Triage
 
 ## Goal
-Go through every unread email across ALL 3 accounts, classify each one as important or not, and mark unimportant ones as read automatically (no confirmation step). Only truly personalized, human-written emails survive as unread.
+Go through every unread email across the requested account(s), classify each one as important or not, and mark unimportant ones as read automatically (no confirmation step). Only truly personalized, human-written emails survive as unread.
 
 ## What Counts as Important
 An email is important ONLY if it was clearly written by a human specifically for the user. Indicators:
@@ -30,38 +30,28 @@ An email is important ONLY if it was clearly written by a human specifically for
 
 ## Process
 
-Run all 3 accounts in parallel. For each account, run fetch → classify → mark-read sequentially, then present a single summary at the end. **Do NOT ask for confirmation before marking as read** — just do it and report what was kept.
+For each account, run the full clean-up process, then present a single summary at the end. **Do NOT ask for confirmation before marking as read** — just do it and report what was kept.
 
-### Parallel execution — run all 3 accounts at the same time using background jobs:
+### Single account (default):
+Use the `--run-all` flag to execute the full fetch → classify → mark-read sequence.
+```bash
+.venv/bin/python3 .claude/skills/inbox-cleaner/inbox_cleaner.py --run-all --account yourwork
+```
 
+### All 3 accounts in parallel — run simultaneously using background jobs:
+This is the most efficient method for multiple accounts.
 ```bash
 # Launch all 3 accounts in parallel (background jobs)
-(
-  .venv/bin/python3 .claude/skills/inbox-cleaner/inbox_cleaner.py --fetch --account yourwork &&
-  .venv/bin/python3 .claude/skills/inbox-cleaner/inbox_cleaner.py --classify --account yourwork &&
-  .venv/bin/python3 .claude/skills/inbox-cleaner/inbox_cleaner.py --mark-read --account yourwork
-) &
-
-(
-  .venv/bin/python3 .claude/skills/inbox-cleaner/inbox_cleaner.py --fetch --account youraccount &&
-  .venv/bin/python3 .claude/skills/inbox-cleaner/inbox_cleaner.py --classify --account youraccount &&
-  .venv/bin/python3 .claude/skills/inbox-cleaner/inbox_cleaner.py --mark-read --account youraccount
-) &
-
-(
-  .venv/bin/python3 .claude/skills/inbox-cleaner/inbox_cleaner.py --fetch --account personal &&
-  .venv/bin/python3 .claude/skills/inbox-cleaner/inbox_cleaner.py --classify --account personal &&
-  .venv/bin/python3 .claude/skills/inbox-cleaner/inbox_cleaner.py --mark-read --account personal
-) &
+.venv/bin/python3 .claude/skills/inbox-cleaner/inbox_cleaner.py --run-all --account yourwork &
+.venv/bin/python3 .claude/skills/inbox-cleaner/inbox_cleaner.py --run-all --account youraccount &
+.venv/bin/python3 .claude/skills/inbox-cleaner/inbox_cleaner.py --run-all --account personal &
 
 wait  # Wait for all 3 to finish before proceeding to summary
 ```
 
-Within each account's subshell, steps run sequentially (fetch → classify → mark-read). All 3 accounts run simultaneously. If any step fails within an account, that account's remaining steps are skipped (see Error Handling).
-
 ### After all accounts are done:
 
-Run `--review` on each account and present a single combined summary showing only the important emails that were kept unread. Keep it brief.
+Run `--review` on each processed account and present a single combined summary showing only the important emails that were kept unread. Keep it brief.
 
 ```bash
 .venv/bin/python3 .claude/skills/inbox-cleaner/inbox_cleaner.py --review --account yourwork
@@ -71,12 +61,10 @@ Run `--review` on each account and present a single combined summary showing onl
 
 ## Error Handling
 
-If any step fails for an account, **do not stop — skip that account and continue with the remaining ones**. The final summary must always be shown, even if some accounts errored.
+If the `--run-all` command fails for an account, **do not stop — skip that account and continue with the remaining ones**. The final summary must always be shown, even if some accounts errored.
 
-### Per-step failure rules:
-- **`--fetch` fails**: Log the error, skip `--classify` and `--mark-read` for that account, note it as "unavailable" in the summary.
-- **`--classify` fails**: Log the error, skip `--mark-read` for that account (do not mark anything without classification), note it in the summary.
-- **`--mark-read` fails**: Log the error, report which emails were classified as unimportant but could not be marked read, note this in the summary.
+### Failure rules:
+- **`--run-all` fails**: The script's internal error handling will log which sub-step (fetch, classify, mark-read) failed. Note the account as "failed to process" in the summary.
 - **Auth errors** (401, token expired, missing credentials): Report "Auth failed — check `active/config/` tokens" for that account in the summary. Do not retry.
 - **Script not found / venv missing**: Report the setup fix inline (see Setup Notes) and skip that account.
 
@@ -85,7 +73,7 @@ Always include a section for each account in the final summary, even failed ones
 - ✅ Account processed normally → show kept emails
 - ⚠️ Account had errors → show what failed and why
 
-**Never silently skip an account.** If all 3 accounts fail, still output a summary explaining what went wrong for each.
+**Never silently skip an account.** If all accounts fail, still output a summary explaining what went wrong for each.
 
 ## Accounts
 Supports all 3 Gmail accounts via `--account`:
@@ -98,10 +86,10 @@ Supports all 3 Gmail accounts via `--account`:
 
 ```bash
 # Clean yourwork (default)
-python3 .claude/skills/inbox-cleaner/inbox_cleaner.py --fetch
+python3 .claude/skills/inbox-cleaner/inbox_cleaner.py --run-all
 
 # Clean a specific account
-python3 .claude/skills/inbox-cleaner/inbox_cleaner.py --fetch --account youraccount
+python3 .claude/skills/inbox-cleaner/inbox_cleaner.py --run-all --account youraccount
 ```
 
 Auth tokens and credentials are in `active/config/` (same as the gmail skill).

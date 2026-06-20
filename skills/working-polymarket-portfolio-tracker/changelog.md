@@ -28,3 +28,33 @@
 
 ## Round 5 — Mutation Applied
 - **Mutation**: Expanded the `summary` object in the JSON export schema to include explicit value mappings for each field (matching the same annotation style used in the `positions` array), eliminating ambiguity about ratio vs. percentage formatting and ensuring completeness.
+
+## Round 6 — Mutation Applied
+- **Mutation**: Add a concrete worked example of portfolio.json output with actual numeric values (not string placeholders) to clarify that numeric fields must be JSON numbers, not strings.
+
+## Round 7 — Mutation Applied
+- **Mutation**: Clarify that portfolio.json is always written on every execution regardless of which flags are used, not only when --export is passed — the --export flag only controls whether the path is printed to stdout.
+
+## Round 8 — Mutation Applied
+- **Mutation**: Add explicit zero-guard for `total_exposure == 0` in Step 3's concentration_risk calculation to prevent division-by-zero when all positions are closed, which likely causes all 4 criteria to fail in the all-closed-positions scenario.
+
+## Round 9 — Mutation Applied
+- **Mutation**: Add explicit zero-guard for drawdown when `total_exposure == 0` (all positions closed/resolved), since "portfolio drawn to zero via exits" ≠ "portfolio drawdown" — the formula otherwise computes 100% drawdown for any fully-exited portfolio, contradicting the all-closed example that shows 0.0.
+
+## Round 10 — Mutation Applied
+- **Mutation**: Add explicit rule to zero out `avg_price` for closed positions (`size == 0`) in Step 2 instructions and Quality Gate 3, matching the closed-position example which already shows `avg_price: 0` but whose rationale was never stated.
+
+## Round 11 — Mutation Applied
+- **Mutation**: Add explicit instruction in Step 4 mandating that the `safety_limits` object must be fully populated with both the calculated `exposure_used_pct` and the three hardcoded constants from the Safety Limits section.
+
+## Round 12 — Mutation Applied
+- **Mutation**: Restrict `peak` in the drawdown calculation to only open positions (`size > 0`), preventing closed positions' `initialValue` from inflating peak and producing incorrect drawdown/risk_score in mixed open+closed portfolios.
+
+## Round 13 — Mutation Applied
+- **Mutation**: Add explicit instruction to parse the CLOB `mid` field as a float before using it in calculations, since the API returns it as a JSON string — this would corrupt all numeric computations and cause all 5 criteria to fail in any scenario with open positions.
+
+## Round 14 — Mutation Applied
+- **Mutation**: Fix Quality Gate 10 which erroneously lists `timestamp` among `summary` fields — `timestamp` is a top-level JSON field, not inside `summary` — and add an explicit instruction in Step 4 to include `timestamp` at the top level of `portfolio.json`.
+
+## Round 15 — Mutation Applied
+- **Mutation**: Always compute current_value = current_price * size from the CLOB midpoint instead of preferring Data API's currentValue, eliminating price-source inconsistency that corrupts unrealized_pnl, total_exposure, risk scores, and the export.

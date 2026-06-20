@@ -28,3 +28,18 @@
 
 ## Round 3 — Mutation Applied
 - **Mutation**: Add a check at the start of Step 2 to skip the user-prompt sub-step (2a) when the initial trigger already contains a problem description or log, so diagnosis proceeds immediately without blocking on a redundant question.
+
+## Round 4 — Mutation Applied
+- **Mutation**: Expand Step 1a to extract the target skill name from all available context (failure logs, error messages, file paths, implicit references) — not just explicit user statements — so S7's implicit-identification case doesn't cascade-fail all criteria.
+
+## Round 5 — Mutation Applied
+- **Mutation**: Replace the fragile `diff -u <(cat ...) <(echo ...)` process-substitution command in Step 3d with a temp-file approach so the diff always renders correctly regardless of content, unblocking the S7 cascade.
+
+## Round 6 — Mutation Applied
+- **Mutation**: In Step 3d, separate the write step (use Write tool) from the diff step (use Bash), eliminating the confusing `printf '%s' "$PROPOSED_CONTENT"` shell pseudo-variable that causes agents to fail when they try to execute it as an actual bash command.
+
+## Round 7 — Mutation Applied
+- **Mutation**: Add explicit file staging (mv to /tmp/approved_change.tmp) on user approval in Step 4a, update Step 7c to use cp from staged file, and update Step 9d cleanup to remove the staged file — making state transfer between approval and application a concrete filesystem operation.
+
+## Round 8 — Mutation Applied
+- **Mutation**: Fix incorrect sub-step references in Step 2a — "proceed to 2b, 2c, or 2d" is wrong because 2b is the "ask user" branch; correct references are 2c, 2d, or 2e so agents with initial context skip the redundant prompt and go directly to diagnosis.

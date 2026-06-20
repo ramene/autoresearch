@@ -34,3 +34,23 @@
 
 ## Round 5 — Mutation Applied
 - **Mutation**: Annotate the JSON output template with explicit source comments for each field so Claude substitutes actual runtime values instead of the example placeholders.
+
+## Round 6 — Mutation Applied
+- **Mutation**: Replace "Confirm the query string to the user" in Step 1 with "Display the query string as an informational note" — the word "confirm" creates an ambiguous pause point that contradicts the no-confirmation directive, likely causing Task Completion/Completeness failures in scenarios where Claude waits for acknowledgment before proceeding.
+
+## Round 7 — Mutation Applied
+- **Mutation**: Clarify that the "0 leads found" fatal stop condition still requires outputting the JSON summary with error details before stopping — "Stop and report error" is ambiguous and likely causes Claude to skip the required JSON output.
+
+## Round 7
+- **Score**: 36/36 (kept)
+- **Failures**: none
+- **Per-criteria**: Task Completion: 6/6, Error Handling: 6/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 6/6, Completeness: 6/6
+
+## Round 8 — Mutation Applied
+- **Mutation**: Add explicit reminder in the JSON output section that `lead_count` must be parsed from Step 2 stdout (not assumed/defaulted), since Output Quality and Instructions Clarity failures in S5 likely stem from Claude using placeholder or estimated values rather than actual stdout-extracted numbers.
+
+## Round 9 — Mutation Applied
+- **Mutation**: Add explicit fallback instruction for missing VALUE_PROPOSITION in Step 4 — when omitted, Claude should derive it from SERVICE_TYPE + TARGET_AUDIENCE instead of pausing to ask the user, preventing Task Completion failures when optional inputs aren't provided.
+
+## Round 10 — Mutation Applied
+- **Mutation**: No failures detected (36/36 score) — apply a minor defensive clarification to Step 3 to explicitly state the SHEET_URL substitution pattern matches Step 5/7, preventing any future ambiguity about which URL value to use.

@@ -12,10 +12,14 @@ allowed-tools: Read, Grep, Glob, Bash, Write, WebFetch, mcp__gmail__send_email
 
 ## Process
 
-1. **Gather Information**
-   - The user may provide information in one of two formats:
+**0. Normalize and Validate Input**
+   - **Goal:** Convert any user input format into the required structured data.
+   - **Action:** Examine the user's prompt. It may be a clean transcript, structured bullet points, or a messy, conversational email. Your first task is to parse this input and extract the key fields required in Step 1.
+   - **If any information is missing after parsing,** create a clear, bulleted list of the missing items and ask the user to provide them before proceeding.
+   - **Pre-validation:** Check that financial values (Project Value, Platform Costs, Investment Breakdown) appear to be valid numbers. If you see non-numeric text like "TBD" or "to be discussed," ask the user for a specific number before proceeding.
 
-     **Option A: Structured Bullet Points** (if user provides organized data)
+1. **Gather Information**
+   - The goal is to populate the following structured data, either from the initial input or by asking the user for missing pieces:
      - Client First Name
      - Client Last Name
      - Client Email
@@ -27,17 +31,6 @@ allowed-tools: Read, Grep, Glob, Bash, Write, WebFetch, mcp__gmail__send_email
      - Project Value (Total)
      - Platform Costs
      - Investment Breakdown (Month 1, Month 2, Month 3+)
-
-     **Option B: Call Transcript** (if user provides a sales call transcript)
-     - Extract the following from the transcript:
-       - Client information (name, company, email if mentioned)
-       - Project context and title
-       - 4 main problems/pain points discussed
-       - 4 proposed solutions/benefits
-       - Any financial terms discussed (duration, value, costs)
-     - If any critical information is missing from the transcript, ask the user to provide it
-
-   - If information is not already provided in either format, ask the user for the missing details
 
 2. **Research Client (Optional)**
    - **Goal:** Understand the client's brand voice and current context to personalize the proposal.
@@ -109,6 +102,7 @@ allowed-tools: Read, Grep, Glob, Bash, Write, WebFetch, mcp__gmail__send_email
      EOF
      ```
    - **Important**: Every `<...>` placeholder above must be replaced with actual content before running. The JSON must be valid.
+   - **JSON Safety**: Ensure all string values have internal double-quotes escaped as `\"` and backslashes escaped as `\\`. Do not include raw newlines inside JSON string values.
    - **Error Handling:** If the script exits with a non-zero exit code or prints an error:
      - Display the full error output to the user
      - **Stop here — do not proceed to the email step**
@@ -129,7 +123,7 @@ allowed-tools: Read, Grep, Glob, Bash, Write, WebFetch, mcp__gmail__send_email
      - Never use a literal placeholder like `{{USER_NAME}}` in the sent email.
    - **Email Template Structure:**
      - Subject: "Re: [Brief Project Context] Discussion"
-     - Opening: Thank them for discussing their challenges/goals
+     - Opening: Personalize the opening sentence by referencing one key finding from the "Client Research Summary" (if available). For example: "Thanks for the chat. Seeing your recent focus on [Keyword from research], I'm confident this plan will help..." If no research was done, use a generic opening like "Thank you for discussing your challenges and goals."
      - Body: Break down the proposed solution into 2-4 numbered sections with clear headers
      - Each section should have:
        - **Bold section header** describing the deliverable (e.g., "1. Tool Consolidation Audit & Migration Plan")
@@ -142,6 +136,7 @@ allowed-tools: Read, Grep, Glob, Bash, Write, WebFetch, mcp__gmail__send_email
      - Provide both `body` (plain text) and `htmlBody` (HTML version) parameters
      - In HTML: Use `<p>` tags for paragraphs, `<ul>` and `<li>` for bullet lists
      - Bold section headers ONLY using `<strong>` tags (e.g., `<strong>1. Tool Consolidation Audit &amp; Migration Plan</strong>`)
+     - Escape all ampersands (`&`) in HTML content as `&amp;` — this is required for valid HTML and prevents email rendering failures
      - Do NOT bold body text or steps - only section headers
      - Avoid RFC 2822 plain text wrapping issues by using HTML format
 

@@ -37,7 +37,7 @@ Automated onboarding workflow that runs after kickoff call. Generates leads, cre
 
 **Optional:**
 - `LEAD_LIMIT`: Number of leads (default: 500)
-- `VALUE_PROPOSITION`: Additional context
+- `VALUE_PROPOSITION`: Additional context (if not provided, derive it as: `"SERVICE_TYPE for TARGET_AUDIENCE"` — do NOT ask the user for this)
 
 ## Scripts
 - `./scripts/gmaps_lead_pipeline.py` - Lead generation
@@ -48,8 +48,8 @@ Automated onboarding workflow that runs after kickoff call. Generates leads, cre
 
 ## Execution Checklist — Complete ALL 7 Steps
 
-### ✅ Step 1: Confirm Search Query
-Construct the search query as: `SERVICE_TYPE in TARGET_LOCATION` (e.g. "plumbers in Austin TX"). Confirm the query string to the user, then immediately proceed to Step 2 — do not wait for approval.
+### ✅ Step 1: Construct Search Query
+Build the search query as: `SERVICE_TYPE in TARGET_LOCATION` (e.g. "plumbers in Austin TX"). Display it to the user as an informational note (e.g. "Search query: plumbers in Austin TX"), then **IMMEDIATELY execute Step 2 without waiting for any response or approval**.
 
 ### ✅ Step 2: Scrape and Enrich Leads
 **RUN THIS NOW with the Bash tool** (substitute real values):
@@ -61,9 +61,10 @@ python3 ./scripts/gmaps_lead_pipeline.py \
   --workers 5
 ```
 **Required**: Extract `sheet_url` from stdout. Store it — you will use this exact string in Steps 3, 5, and 7.
+**Required**: Extract the lead count (number of leads found/scraped) from stdout. Store it — you will use this exact number in the final JSON `lead_count` field.
 
 ### ✅ Step 3: Casualize Company Names
-**RUN THIS NOW with the Bash tool** (substitute SHEET_URL with the actual URL from Step 2):
+**RUN THIS NOW with the Bash tool** (substitute SHEET_URL with the exact URL string extracted from Step 2 stdout — the same URL you will use in Steps 5 and 7):
 ```bash
 python3 ./scripts/casualize_company_names_batch.py \
   --sheet-url "SHEET_URL" \
@@ -72,12 +73,12 @@ python3 ./scripts/casualize_company_names_batch.py \
 ```
 
 ### ✅ Step 4: Create Instantly Campaigns
-**RUN THIS NOW with the Bash tool**:
+**RUN THIS NOW with the Bash tool**. For `--client_description`, use the VALUE_PROPOSITION if provided; otherwise substitute `"SERVICE_TYPE for TARGET_AUDIENCE"` (e.g. "plumbers for homeowners in Austin TX"). Do NOT ask the user — derive the value and run immediately:
 ```bash
 python3 ./scripts/instantly_create_campaigns.py \
   --client_name "CLIENT_NAME" \
   --client_email "CLIENT_EMAIL" \
-  --client_description "VALUE_PROPOSITION" \
+  --client_description "VALUE_PROPOSITION_OR_DERIVED_FALLBACK" \
   --offers "OFFERS" \
   --target_audience "TARGET_AUDIENCE" \
   --social_proof "SOCIAL_PROOF"
@@ -116,20 +117,27 @@ python3 ./scripts/onboarding_post_kickoff.py \
 ```
 
 ## Output
-**After Step 7 completes, you MUST output this JSON summary using ACTUAL values from the run — do NOT use the placeholder values shown here:**
+**After Step 7 completes, you MUST output this JSON summary. Every field MUST use ACTUAL values extracted from the Bash tool stdout — do NOT use the placeholder text shown below, do NOT estimate or assume values, do NOT leave any field as a template string:**
 
 ```json
 {
   "status": "success",
-  "client_name": "<actual CLIENT_NAME you used>",
-  "sheet_url": "<actual sheet_url extracted from Step 2 stdout>",
-  "lead_count": "<actual number of leads returned by Step 2 stdout>",
+  "client_name": "<actual CLIENT_NAME you used — e.g. 'Acme Plumbing'>",
+  "sheet_url": "<actual sheet_url extracted from Step 2 stdout — e.g. 'https://docs.google.com/spreadsheets/d/...'>",
+  "lead_count": "<actual integer count of leads returned by Step 2 stdout — e.g. 487>",
   "campaigns": ["<campaign ID 1 from Step 4 stdout>", "<campaign ID 2 from Step 4 stdout>"],
   "leads_uploaded": "<true if Step 5 succeeded, false if it failed>",
   "knowledge_base_updated": "<true if Step 6 succeeded, false if it failed>",
   "summary_email_sent": "<true if Step 7 succeeded, false if it failed>"
 }
 ```
+
+**Critical field sourcing rules:**
+- `client_name`: the exact CLIENT_NAME input you received
+- `sheet_url`: parsed from Step 2 stdout (look for a URL beginning with `https://`)
+- `lead_count`: parsed from Step 2 stdout (look for a number indicating leads found/scraped); never default to 0 unless stdout explicitly reports 0
+- `campaigns`: each ID parsed from Step 4 stdout; include all campaign IDs returned
+- Boolean fields: `true` only if the step completed without error, `false` otherwise
 
 If any step failed, set its corresponding field to `false` and add an `"errors"` key listing each failure with the step number and error message:
 ```json
@@ -146,6 +154,6 @@ If any step failed, set its corresponding field to `false` and add an `"errors"`
 
 ## Error Handling
 - **< 10 leads found**: Warn the user but continue with remaining steps
-- **0 leads found**: Stop and report error — search query is likely invalid (this is the ONLY fatal stop condition)
+- **0 leads found**: This is a fatal error — the search query is likely invalid. Skip Steps 3–7, then **output the JSON summary** with `"status": "error"`, `"lead_count": 0`, all step fields set to `false`, and `"errors": [{"step": 2, "message": "0 leads found — invalid search query"}]`. Do not silently stop; the JSON output is still required.
 - **Instantly API error**: Capture the error message, note it in the final summary, continue remaining steps
 - **Sheet/email failures**: Log the failure in summary output, complete the rest of the workflow

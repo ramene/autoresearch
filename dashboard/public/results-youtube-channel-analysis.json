@@ -8,7 +8,7 @@
     "Instructions Clarity",
     "Completeness"
   ],
-  "totalCost": 0.25,
+  "totalCost": 0.5500000000000003,
   "models": {
     "mutator": "sonnet",
     "evaluator": "gemini-2.5-pro"
@@ -208,6 +208,379 @@
       },
       "timestamp": "2026-03-20T23:03:42.531Z",
       "changelog": "**Mutation**: No failures present — all criteria score 0 failures. Adding Google Trends URL-encoding guidance to the curl fallback Step 4 to improve robustness for multi-word topic queries.\n**Failures**: none\n**Per-criteria**: Task Completion: 6/6, Error Handling: 6/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 6/6, Completeness: 6/6\n**Decision**: Score 36 did not exceed best 36 — mutation produced worse or equal results"
+    },
+    {
+      "round": 4,
+      "score": 36,
+      "max": 36,
+      "status": "escalation",
+      "mutation": "Stuck escalation: The optimization loop is stuck in a \"perfect score\" local optimum. The skill achieved a 36/36 score in Round 1 by addressing the most significant failures in the initial test suite (handling missing t",
+      "cost": 0.03,
+      "criteria": [
+        6,
+        6,
+        6,
+        6,
+        6,
+        6
+      ],
+      "failures": [],
+      "decisionReason": "Stuck escalation triggered after 3+ rounds with no improvement",
+      "escalation": {
+        "diagnosis": "The optimization loop is stuck in a \"perfect score\" local optimum. The skill achieved a 36/36 score in Round 1 by addressing the most significant failures in the initial test suite (handling missing tools and data). Subsequent mutations have been logical, incremental improvements to robustness—specifically hardening the `curl`-based fallback path with better command patterns and URL encoding. However, these improvements address edge cases that are not present in the current evaluation scenarios. The evaluation suite has been \"solved,\" and the metric is saturated. The system is now polishing a skill that already passes all its tests, leading to no change in score.",
+        "evalRedesignNeeded": true,
+        "strategy": "The current strategy of reactive, incremental refinement based on past failures is no longer effective. The new strategy must be to **proactively introduce a structural improvement that represents a significant leap in capability and robustness**, even without a corresponding failure in the logs. We will move from improving the existing brittle `Bash` commands to replacing them entirely with a more robust, maintainable, and powerful tool. This forces a higher standard of execution and implicitly demands more complex evaluation scenarios to test the new capability. We will replace the series of `curl | grep | sed` commands with a single, purpose-built Python script for data extraction.",
+        "suggestedMutation": "Add a new Python script, `youtube_scraper.py`, to handle all external data gathering, and update the skill's fallback path to use this script instead of the multi-step `curl` commands. This encapsulates the complex, brittle parsing logic into a more reliable tool, simplifying the agent's workflow and reducing the likelihood of errors from malformed shell commands or changes in website HTML structure.\n\n**Modify the `Prerequisites & Fallback Behavior` section as follows:**\n\n```markdown\n### Prerequisites & Fallback Behavior\n\n**Before starting, check what tools and data are available:**\n\n### Tool availability\n- **Chrome DevTools MCP available:** Follow Phases 1-2 as written (browse YouTube and Google Trends directly).\n- **Chrome DevTools MCP NOT available (only Read, Grep, Glob, Bash):** Use the purpose-built Python scraper. This is more robust than raw `curl` commands.\n\n  **Step 1 — Create the scraper script:**\n  If it doesn't exist, create the file `.claude/skills/youtube-channel-analysis/youtube_scraper.py` with the necessary Python code to scrape YouTube and Google Trends using libraries like `requests` and `BeautifulSoup4`. The script should accept command-line arguments to specify the target (e.g., `--channel-about`, `--channel-videos`, `--youtube-search`, `--google-trends`) and the query terms, returning structured JSON output.\n\n  **Step 2 — Use the scraper for data collection:**\n\n  *   **Fetch channel page and extract subscriber/video counts:**\n      ```bash\n      python3 .claude/skills/youtube-channel-analysis/youtube_scraper.py \\\n        --channel-about \"{channel}\"\n      ```\n\n  *   **Fetch video list (sorted by popular) and extract titles + view counts:**\n      ```bash\n      python3 .claude/skills/youtube-channel-analysis/youtube_scraper.py \\\n        --channel-videos \"{channel}\" --sort popular\n      ```\n\n  *   **Fetch search results for a candidate topic:**\n      ```bash\n      python3 .claude/skills/youtube-channel-analysis/youtube_scraper.py \\\n        --youtube-search \"{topic}\"\n      ```\n\n  *   **Fetch Google Trends data for multiple topics:**\n      ```bash\n      python3 .claude/skills/youtube-channel-analysis/youtube_scraper.py \\\n        --google-trends --terms \"claude code tutorial\" \"cursor ai\" --timeframe \"12m\"\n      ```\n      *To get YouTube search trends, add the `--source youtube` flag.*\n\n  **If the scraper script fails or returns insufficient data**, note the limitation explicitly in the report and proceed with whatever data is available. Do not stall — a partial report with clear data-gap annotations is better than no report.\n```"
+      },
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-20T23:06:39.363Z"
+    },
+    {
+      "round": 5,
+      "score": 36,
+      "max": 36,
+      "status": "reverted",
+      "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-youtube-channel-analysis/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n",
+      "cost": 0.03,
+      "criteria": [
+        6,
+        6,
+        6,
+        6,
+        6,
+        6
+      ],
+      "failures": [],
+      "geminiThoughts": null,
+      "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-05-09T06:21:21.195Z",
+      "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-youtube-channel-analysis/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n\n**Failures**: none"
+    },
+    {
+      "round": 6,
+      "score": 36,
+      "max": 36,
+      "status": "reverted",
+      "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-youtube-channel-analysis/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n",
+      "cost": 0.03,
+      "criteria": [
+        6,
+        6,
+        6,
+        6,
+        6,
+        6
+      ],
+      "failures": [],
+      "geminiThoughts": null,
+      "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-05-09T22:27:39.670Z",
+      "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-youtube-channel-analysis/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n\n**Failures**: none"
+    },
+    {
+      "round": 7,
+      "score": 36,
+      "max": 36,
+      "status": "reverted",
+      "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-youtube-channel-analysis/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n",
+      "cost": 0.03,
+      "criteria": [
+        6,
+        6,
+        6,
+        6,
+        6,
+        6
+      ],
+      "failures": [],
+      "geminiThoughts": null,
+      "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-05-10T06:30:50.148Z",
+      "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-youtube-channel-analysis/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n\n**Failures**: none"
+    },
+    {
+      "round": 8,
+      "score": 36,
+      "max": 36,
+      "status": "reverted",
+      "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-youtube-channel-analysis/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n",
+      "cost": 0.03,
+      "criteria": [
+        6,
+        6,
+        6,
+        6,
+        6,
+        6
+      ],
+      "failures": [],
+      "geminiThoughts": null,
+      "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-05-10T22:00:29.002Z",
+      "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-youtube-channel-analysis/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n\n**Failures**: none"
+    },
+    {
+      "round": 9,
+      "score": 12,
+      "max": 36,
+      "status": "reverted",
+      "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-youtube-channel-analysis/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n",
+      "cost": 0.03,
+      "criteria": [
+        0,
+        6,
+        0,
+        6,
+        0,
+        0
+      ],
+      "failures": [
+        {
+          "scenario": 1,
+          "criterion": "Task Completion"
+        },
+        {
+          "scenario": 1,
+          "criterion": "Output Quality"
+        },
+        {
+          "scenario": 1,
+          "criterion": "Instructions Clarity"
+        },
+        {
+          "scenario": 1,
+          "criterion": "Completeness"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Task Completion"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Output Quality"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Instructions Clarity"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Completeness"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Task Completion"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Output Quality"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Instructions Clarity"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Completeness"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Task Completion"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Output Quality"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Instructions Clarity"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Completeness"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Task Completion"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Output Quality"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Instructions Clarity"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Completeness"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Task Completion"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Output Quality"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Instructions Clarity"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Completeness"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 12 did not exceed best 36 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-05-10T22:01:23.224Z",
+      "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-youtube-channel-analysis/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n\n**Failures**: S1: Task Completion, S1: Output Quality, S1: Instructions Clarity, S1: Completeness, S2: Task Completion, S2: Output Quality, S2: Instructions Clarity, S2: Completeness, S3: Task Completion, S3: Output Quality, S3: Instructions Clarity, S3: Completeness, S4: Task Completion, S4: Output Quality, S4: Instructions Clarity, S4: Completeness, S5: Task Completion, S5: Output Quality, S5: Instructions Clarity, S5: Completeness, S6: Task Completion, S6: Output Quality, S6: Instructions Clarity, S6: Completeness"
+    },
+    {
+      "round": 10,
+      "score": 33,
+      "max": 36,
+      "status": "reverted",
+      "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-youtube-channel-analysis/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n",
+      "cost": 0.03,
+      "criteria": [
+        6,
+        6,
+        5,
+        6,
+        5,
+        5
+      ],
+      "failures": [
+        {
+          "scenario": 3,
+          "criterion": "Output Quality"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Instructions Clarity"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Completeness"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 33 did not exceed best 36 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-05-10T22:01:55.343Z",
+      "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-youtube-channel-analysis/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n\n**Failures**: S3: Output Quality, S3: Instructions Clarity, S3: Completeness"
+    },
+    {
+      "round": 10,
+      "score": 33,
+      "max": 36,
+      "status": "escalation",
+      "mutation": "Stuck escalation: The optimization loop is not stuck in a performance-based local optimum; it is stuck due to a recurring infrastructure failure. The logs for rounds 5 through 10 all show the exact same error: `Mutatio",
+      "cost": 0.03,
+      "criteria": [
+        6,
+        6,
+        5,
+        6,
+        5,
+        5
+      ],
+      "failures": [],
+      "decisionReason": "Stuck escalation triggered after 3+ rounds with no improvement",
+      "escalation": {
+        "diagnosis": "The optimization loop is not stuck in a performance-based local optimum; it is stuck due to a recurring infrastructure failure. The logs for rounds 5 through 10 all show the exact same error: `Mutation failed: Command failed: ... /claude: No such file or directory`. This indicates the mutation-generation step, which uses a CLI tool to create the next version of the skill, is consistently failing. The system cannot generate new skill candidates to test. Therefore, the score is not improving because the skill content itself is not being successfully mutated. The score of 33/36 is likely the result of the evaluation harness running against a stale or reverted version of the skill from before the infrastructure failures began. The root cause is an environment or configuration issue in the optimization harness, not a deficiency in the skill's logic that incremental changes can't solve.",
+        "evalRedesignNeeded": true,
+        "strategy": "The immediate blocker is the infrastructure failure, which must be resolved. However, the fact that the skill reached a perfect score (36/36) in Round 1 and stayed there until the infrastructure failed suggests the *real* local optimum is the test suite itself. The current tests are no longer challenging enough to reveal weaknesses. The strategy is to **expand the test suite with more complex failure scenarios** that the current skill handles in theory but may fail in practice. We need to move beyond simple \"data available/unavailable\" tests and into scenarios involving partial data corruption, ambiguous tool outputs, and complex inputs. This will create a new gradient for the optimizer to climb, forcing it to improve the skill's resilience and analytical nuance rather than just its structural completeness.",
+        "suggestedMutation": "To proactively address the new, harder test scenarios, we should add a top-level guiding principle about \"Forward Progress\" and make the handling of partial `curl` failures more explicit. This moves the error-handling logic from a specific subsection into a core operational principle, making it more likely to be followed in complex, multi-failure situations.\n\n```markdown\n---\nname: youtube-channel-analysis\ndescription: Full-stack YouTube channel and market analysis. Use when evaluating course/video opportunities, competitive positioning, or content strategy decisions combining YouTube, Google Trends, and Studio analytics.\nallowed-tools: Read, Grep, Glob, Bash\n---\n\n> **Demo Library Skill** — This skill is from a demo library. Some configuration values use placeholders (e.g. `{{USER_NAME}}`, `{{COMMUNITY_ID}}`). If something doesn't work, check for placeholder values and replace them with your own information first.\n\n# YouTube Whole-Channel Analysis\n\n## Guiding Principle: Always Make Forward Progress\n\nThis skill operates on external, often unreliable data sources. It is critical to never get stuck. **A partial report with clear annotations about missing data is always the correct output.** If a tool fails or a data source is unavailable, you MUST:\n1.  Note the failure and the reason in the final report (e.g., `[Data not available — curl request to Google Trends was blocked]`).\n2.  Continue to the next step or phase using whatever data you have already collected.\n3.  Produce the final 8-section report structure, even if some sections are empty except for the \"Data not available\" annotation.\n\n## Purpose\n\nProduce a comprehensive, multi-source analysis of a YouTube channel's market position, competitive landscape, and content opportunities. The output is a research report that separates hype from durable trends and identifies the highest-ROI content investments.\n\n## Why This Exists\n\nNo single data source tells the full story:\n- **YouTube view counts** can't distinguish hype bubbles from platform trends (Clawdbot at 164K looks like the agentic course at 140K -- but one is a bubble and one is evergreen)\n- **Google Trends** can't tell you what YOUR channel captures (Claude Code at 83/100 demand, but you might only capture 0.6% of it)\n- **YouTube Studio** can't tell you whether a topic is growing or dying externally (your n8n search views look massive, but the trend is declining)\n\nThe three-layer validation (market demand via Google Trends, competitive landscape via YouTube browsing, own-channel performance via Studio) produces high-conviction recommendations that any single source would miss.\n\n## Minimum Report Requirements\n\n**Regardless of which data sources are available, every completed run of this skill MUST produce:**\n\n1.  **A saved markdown report file** at `active/youtube-strategy/reports/YYYY-MM-DD_report-slug.md` — even if sections are partially filled with `[Data not available]` annotations.\n2.  **All 8 report sections** from Phase 5 must be present (The Big Picture, What's Working, Competitive Landscape, Search Pipeline, Trend Classification, Course Recommendations, Sequencing, Key Strategic Insights). Sections without data must include the annotation `[Data not available — {reason}]` rather than being omitted.\n3.  **At least one scored course recommendation** in the Course Recommendations section, even if scores are reduced due to missing data. If no Studio data is available, reduce Search Demand scores by 1 point and note this.\n4.  **A Trend Classification section** based on whatever Google Trends data was retrievable. If Google Trends was also unavailable, classify based on YouTube search result volumes alone and note the limitation.\n5.  **A data availability summary** at the top of the report listing which sources were used and which were unavailable:\n   ```\n   **Data Sources Used:**\n   - YouTube browsing: ✅ / ❌ [reason if unavailable]\n   - Google Trends: ✅ / ❌ [reason if unavailable]\n   - YouTube Studio: ✅ / ❌ [reason if unavailable]\n   ```\n\n## Prerequisites & Fallback Behavior\n\n**Before starting, check what tools and data are available:**\n\n### Tool availability\n- **Chrome DevTools MCP available:** Follow Phases 1-2 as written (browse YouTube and Google Trends directly).\n- **Chrome DevTools MCP NOT available (only Read, Grep, Glob, Bash):** Use `Bash` with `curl` to fetch page HTML from YouTube and Google Trends. Follow this extraction sequence:\n\n  **Step 1 — Fetch channel page and extract subscriber/video counts:**\n  ```bash\n  curl -s -A \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36\" \\\n    \"https://www.youtube.com/@{channel}/about\" \\\n    | grep -oP '\"subscriberCountText\":\\{\"simpleText\":\"[^\"]*\"' \\\n    | head -5\n  ```\n\n  **Step 2 — Fetch video list (sorted by popular) and extract titles + view counts:**\n  ```bash\n  curl -s -A \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36\" \\\n    \"https://www.youtube.com/@{channel}/videos?view=0&sort=p\" \\\n    | grep -oP '\"title\":\\{\"runs\":\\[\\{\"text\":\"[^\"]*\"' \\\n    | sed 's/\"title\":{\"runs\":\\[{\"text\":\"//;s/\"//' \\\n    | head -30\n  ```\n\n  **Step 3 — Fetch search results for a candidate topic:**\n  ```bash\n  QUERY=$(python3 -c \"import urllib.parse; print(urllib.parse.quote('{topic}'))\")\n  curl -s -A \"Mozilla/5.0\" \\\n    \"https://www.youtube.com/results?search_query=${QUERY}\" \\\n    | grep -oP '\"title\":\\{\"runs\":\\[\\{\"text\":\"[^\"]*\"' \\\n    | head -20\n  ```\n\n  **Step 4 — Fetch Google Trends data for a topic (web search, 12-month):**\n  ```bash\n  # Always URL-encode the full topic string, including spaces and special characters.\n  # For multi-word topics like \"Claude Code tutorial\", encode each term separately:\n  TERM=$(python3 -c \"import urllib.parse; print(urllib.parse.quote('claude code tutorial'))\")\n  TERM2=$(python3 -c \"import urllib.parse; print(urllib.parse.quote('cursor ai'))\")\n  curl -s -A \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36\" \\\n    \"https://trends.google.com/trends/explore?date=today%2012-m&q=${TERM},${TERM2}&hl=en\" \\\n    | grep -oP '\"value\":\\[\\d+\\]' \\\n    | head -20\n  # For YouTube Search trends instead of Web Search, add &gprop=youtube to the URL.\n  # If the response contains no \"value\" fields, Google Trends may have returned a\n  # JavaScript-rendered page. Note the limitation and proceed with available data.\n  ```\n\n  **If any curl-based extraction yields insufficient data** (e.g., YouTube returns a bot-challenge page, a consent banner, or JavaScript-rendered content that grep can't parse), **do not retry.** Immediately note the specific failure (e.g., \"YouTube search for '{topic}' failed, likely due to bot detection\") in the report and proceed with whatever data is available. A partial report with clear data-gap annotations is better than a stalled process.\n\n### Input availability\n| Input | Required? | If Missing |\n|-------|-----------|------------|\n| Channel URL | Yes | Ask user before proceeding |\n| Topic space | Yes | Infer from channel content if possible, otherwise ask |\n| Candidate topics | No | Generate during Phase 1 research |\n| YouTube Studio data | No | Skip Phase 3; note in report as \"Studio data not provided — search gap analysis omitted\" |\n\n**If YouTube Studio data is not provided:** Complete Phases 1, 2, 4, and 5 using only YouTube browsing + Google Trends data. Mark all Studio-dependent sections (search gap table, watch-time analysis) as `[Data not available — requires Studio export]`. Still produce a full scored report with the data you have; reduce Search Demand scores by 1 point to reflect missing Studio validation.\n\n## Inputs\n\n1.  **Channel to analyze** -- the target YouTube channel URL\n2.  **Topic space** -- the broad category (e.g., \"AI automation,\" \"web development,\" \"finance\")\n3.  **Candidate topics** -- specific course/video ideas to evaluate (can be generated during research)\n4.  **YouTube Studio access** -- the channel owner needs to provide:\n   - Traffic source summary (Content tab -> all videos -> traffic sources)\n   - Top videos by views (last 28 days) with avg view duration\n   - YouTube search terms CSV export (Traffic Source -> YouTube Search -> drill in -> export)\n\n## Outputs\n\n1.  **YouTube Strategy Report** (`active/youtube-strategy/reports/YYYY-MM-DD_report-slug.md`) -- analysis-first strategy doc with scored recommendations\n2.  **Google Doc** -- automatically created from the report via `.claude/skills/youtube-channel-analysis/md_to_gdoc.py`\n3.  **Raw data** (`active/youtube-strategy/research/YYYY-MM-DD_raw-data.md`) -- all raw data collected during browsing\n4.  **YouTube Studio exports** (`active/youtube-strategy/stats/STARTDATE_ENDDATE_type.zip`) -- CSV exports from Studio\n\n### File naming convention\nAll files use `YYYY-MM-DD_descriptive-slug` format for chronological sorting and context.\n\n## Process\n\n### Phase 1: YouTube Browsing -- Channel & Competitor Data\n\n**Tool:** Chrome DevTools MCP (preferred) or `Bash` with `curl` (fallback — see Prerequisites)\n\n**Steps:**\n\n1.  **Analyze the target channel:**\n   - Navigate to `youtube.com/@{channel}/videos` and sort by Popular\n   - Record: subscriber count, total videos, upload frequency\n   - Capture top 25 videos by views (title, views, age)\n   - Capture last 2 weeks of uploads (title, views, age)\n   - Note patterns: what formats work, what titles work, dollar amounts, course lengths\n\n2.  **Analyze 5-8 competitors:**\n   - For each competitor: navigate to their channel, sort by Popular\n   - Record: subscriber count, total videos, top 10 videos, recent uploads\n   - Note their angle, audience overlap, threat level\n   - **Critical:** Verify subscriber counts yourself -- LLM-generated reports are frequently wrong by 2-5x\n\n3.  **Search YouTube for topic gaps:**\n   - Search each candidate topic (e.g., \"claude code full course\")\n   - Note: how many results exist, their view counts, their ages\n   - Identify supply-demand mismatches (high search interest, few quality results)\n\n4.  **Record everything** in `active/youtube_raw_data.md`\n\n**JavaScript snippets for data extraction (Chrome DevTools MCP):**\n\nChannel stats:\n```javascript\n() => {\n  const text = document.body.innerText;\n  const subMatch = text.match(/(\\d+[\\.\\d]*[KMB]?\\s*subscribers)/i);\n  const vidMatch = text.match(/(\\d+[\\.\\d]*[KMB]?\\s*videos)/i);\n  return { subscribers: subMatch ? subMatch[0] : null, videos: vidMatch ? vidMatch[0] : null };\n}\n```\n\nVideo grid data (from channel videos page):\n```javascript\n() => {\n  const videos = document.querySelectorAll('ytd-rich-item-renderer, ytd-grid-video-renderer');\n  return Array.from(videos).slice(0, 25).map(v => ({\n    title: v.querySelector('#video-title')?.textContent?.trim(),\n    views: v.querySelector('#metadata-line span')?.textContent?.trim(),\n    age: v.querySelectorAll('#metadata-line span')[1]?.textContent?.trim()\n  }));\n}\n```\n\n### Phase 2: Google Trends -- Trend Durability Analysis\n\n**Tool:** Chrome DevTools MCP (preferred) or `Bash` with `curl` (fallback — see Prerequisites)\n\n**Purpose:** Classify each topic as Platform Trend, Emerging Durable, Hype Bubble, or Declining/Dead.\n\n**Steps:**\n\n1.  **Run comparison groups** (max 5 terms per comparison on Google Trends):\n\n   Group by relevance. Example groups for AI automation space:\n   - Group 1: `n8n` vs `Claude Code` vs `Make.com` vs `AI agents`\n   - Group 2: `Clawdbot` vs `agentic workflows` vs `vibe coding` vs `MCP server`\n   - Group 3: `voice AI agent` vs `AI automation` vs `AI automation agency` vs `RAG tutorial`\n   - Group 4: `Cursor AI` vs `Claude Code` vs `Copilot AI` vs `Lovable AI`\n   - Group 5: `AI lead generation` vs `AI cold email` vs `AI web scraping` vs `build SaaS with AI`\n\n2.  **For each comparison:**\n   - Navigate to Google Trends with 12-month timeframe, Web Search\n   - Extract the time-series table data\n   - Re-run with YouTube Search as the source (different dropdown)\n   - For suspected hype bubbles: re-run with 90-day timeframe + daily granularity\n\n3.  **Extract table data** using JavaScript:\n   ```javascript\n   () => {\n     const rows = document.querySelectorAll('table tr');\n     const data = [];\n     rows.forEach(row => {\n       const cells = row.querySelectorAll('td, th');\n       if (cells.length >= 5) {\n         const vals = Array.from(cells).map(c => c.textContent.trim());\n         data.push(vals);\n       }\n     });\n     return data;\n   }\n   ```\n\n4.  **Classify each topic:**\n\n   | Pattern | Classification | Content Strategy |\n|---------|---------------|-----------------|\n| Steady growth over 6+ months, no crash after spikes | **Platform Trend** | Build definitive long-form courses |\n| Consistent growth 3-6 months, moderate volume, no bubble shape | **Emerging Durable** | Position early with comprehensive content |\n| Near-vertical spike, 50%+ decline within 2 weeks | **Hype Bubble** | React with short videos, never invest course time |\n| Spike then settle to a lower baseline (not zero) | **Spike-then-Settle** | Single video, not a full course |\n| Peaked months ago, declining, no recovery | **Declining/Dead** | Harvest existing content, don't create new |\n\n5.  **Key Google Trends URL patterns:**\n   - Web search, 12 months: `https://trends.google.com/trends/explore?date=today%2012-m&q={term1},{term2}&hl=en`\n   - YouTube search, 12 months: `https://trends.google.com/trends/explore?date=today%2012-m&gprop=youtube&q={term1},{term2}&hl=en`\n   - 90-day daily granularity: `https://trends.google.com/trends/explore?date=today%203-m&q={term1},{term2}&hl=en`\n\n### Phase 3: YouTube Studio Analytics -- Own-Channel Data\n\n**Skip this phase entirely if Studio data was not provided by the user. Mark affected report sections as `[Data not available — requires Studio export]` and continue to Phase 4.**\n\n**Tool:** User-provided data (screenshots, CSV exports, or pasted summaries)\n\n**What to request from the channel owner:**\n\n1.  **Traffic source summary** (last 28 days):\n   - Path: YouTube Studio -> Content -> select \"All videos\" -> Traffic sources\n   - Need: impressions, CTR, views, avg duration per source (browse, search, suggested, direct, channel pages, external)\n\n2.  **Top videos by views** (last 28 days):\n   - Path: YouTube Studio -> Content -> sort by views\n   - Need: video title, views, avg view duration, retention %, video length\n   - Important: distinguish 28-day views from lifetime totals\n\n3.  **YouTube search terms CSV export:**\n   - Path: YouTube Studio -> Analytics -> Content -> Traffic source: YouTube search -> \"See More\" -> Export (top-right)\n   - This gives 500 search terms with views, avg duration, watch time\n   - **This is the most actionable data in the entire analysis**\n\n4.  **Optional but valuable:**\n   - Retention curves for long-form courses (where people drop off)\n   - Per-video traffic source breakdown\n   - Revenue data per video (if monetized)\n\n**How to analyze the search terms CSV:**\n\n1.  **Cluster by topic** -- group all variants of each topic together:\n   - e.g., \"n8n full course\" + \"n8n tutorial\" + \"n8n\" + \"n8n automation\" = n8n cluster\n   - Sum views within each cluster\n   - Calculate % of total search views\n\n2.  **Identify gaps** -- compare clusters against Google Trends demand:\n   - High Trends demand + low Studio capture = opportunity (make content)\n   - High Trends demand + high Studio capture = protect (don't cannibalize)\n   - Low Trends demand + high Studio capture = brand asset (maintain)\n   - Low Trends demand + low Studio capture = ignore\n\n3.  **Watch-time analysis** -- rank videos by estimated watch-minutes, not raw views:\n   - Watch-minutes = views x avg view duration\n   - Long-form courses often generate more watch-time than viral shorts despite fewer views\n   - YouTube optimizes for watch time, so this reveals true algorithmic value\n\n### Phase 4: Synthesis & Scoring\n\n**Combine all available data sources into a 4-dimension scoring framework:**\n\nFor each candidate course/topic:\n\n| Factor | Score | How to assess |\n|--------|-------|--------------|\n| **Search Demand** | 1-5 | Google Trends volume + trajectory + YouTube Search volume + Studio search capture (reduce by 1 if no Studio data) |\n| **Algorithmic Amplification** | 1-5 | Browse features performance, view/sub ratios across creators, evidence of algorithmic push |\n| **Fit** | 1-5 | Channel's existing audience, brand alignment, creator expertise |\n| **ROI** | 1-5 | Competitive gap (does a definitive course exist?), monetization potential, production effort vs expected return |\n\n**Total = Search Demand + Algorithmic Amplification + Fit + ROI (max 20)**\n\nTier the recommendations:\n- **Tier 1 (16-20):** Highest-impact, do these first\n- **Tier 2 (13-15):** Strong ROI, do after Tier 1\n- **Tier 3 (9-12):** Strategic / opportunistic\n- **Tier 4 (5-8):** Low priority, only if resources permit\n\n**Per-course evidence tables:** Each scored recommendation MUST include a Factor | Evidence table with specific data points, not just a score. Example format:\n\n```\n#### 1. Course Name\n**Score: 18/20** (Search: 4 | Algorithm: 5 | Fit: 5 | ROI: 4)\n\n| Factor | Evidence |\n|--------|---------|\n| **Search Demand (4)** | Specific data: Trends number, Studio search views, growth trajectory. |\n| **Algorithmic Amplification (5)** | Browse %, view/sub ratios, daily views impact evidence. |\n| **Fit (5)** | Brand alignment evidence, existing content performance. |\n| **ROI (4)** | Competitive gap, expected views based on course performance model, risks. |\n```\n\n### Phase 5: Report Assembly\n\n**Title format:** \"YouTube Strategy Report — Month DD, YYYY\" (no \"Prepared for\" line).\n\n**Tone:** Analytical, narrative-driven, consultant perspective. It's fine to hedge when the data is ambiguous — say \"likely declining\" or \"appears to be plateauing\" when that's the honest read. Write as a YouTube consultant delivering analysis, not a data analyst dumping tables. Stats should be woven into prose to support arguments, not front-loaded.\n\n**Table discipline:** Use tables sparingly — only where structured comparison is genuinely clearer than prose (gap analysis, scoring breakdowns). Massive raw-data tables belong in appendices or raw data files, not the strategy doc.\n\nWrite the final report with these sections (all 8 are required — see Minimum Report Requirements):\n\n1.  **The Big Picture** -- 2-3 sentences framing the channel's current competitive position and what to do with it. Set the strategic context.\n\n2.  **What's Working Right Now** -- Narrative analysis of the channel's strongest assets and why they're working. Weave in specific numbers (views, watch-time, revenue, subs) as evidence within prose. Cover: top-performing content, algorithmic tailwinds, format advantages, structural moats.\n\n3.  **Competitive Landscape** -- Place this EARLY (not buried at the end). Brief summary table (subs, growth/wk, threat level) then 1-2 paragraph deep-dives per significant competitor. Focus on: what they're doing, what the risk is, how to defend. Include view/sub ratios where relevant to show algorithmic push.\n\n4.  **The Search Pipeline: Where the Gaps Are** -- Gap analysis table cross-referencing Google Trends demand vs Studio capture (Term | Trends Demand | Your Capture | Signal). If Studio data is unavailable, note this and show Trends demand only. Follow with narrative interpretation of the most important gaps and crossovers.\n\n5.  **Trend Classification** -- Categorize topics into Platform Trends, Stable High-Volume, Spike-then-Settle, Declining, No Urgency. Brief prose per category — what it means for production decisions.\n\n6.  **Course Recommendations** -- Scored recommendations with 4-dimension scores. Each gets a Factor | Evidence table (see Phase 4). Include: realistic expectations (search views vs algorithmic views), format, title, sequencing rationale. Be honest about modest search pipelines vs algorithmic upside.\n\n7.  **Sequencing** -- \"This week\" + phased timeline. Concise, with reasoning for ordering.\n\n8.  **Key Strategic Insights** -- 6-10 numbered insights that synthesize multiple data sources. Each should reveal something only visible through cross-referencing. Be opinionated and actionable.\n\n### Phase 6: Google Doc Creation\n\nAfter saving the markdown report, create a Google Doc:\n\n```bash\npython3 .claude/skills/youtube-channel-analysis/md_to_gdoc.py \"active/youtube-strategy/reports/YYYY-MM-DD_report-slug.md\"\n```\n\nUses `gws` CLI under the hood — no Python Google API dependencies needed. Creates a formatted Google Doc under your-email@example.com with Inter font, headings, bold/italic, bullets, numbered lists, native tables with bold headers, and paragraph spacing. No horizontal rule dividers.\n\nTo update an existing doc instead of creating new:\n```bash\npython3 .claude/skills/youtube-channel-analysis/md_to_gdoc.py \"report.md\" --update DOC_ID\n```\n\n**If Phase 6 fails** (script not found, `gws` CLI unavailable, authentication error, or any other error): Do not retry or stall. Note the failure in your final response to the user (e.g., \"Google Doc creation failed: {error}. The markdown report was saved at {path} and can be manually imported.\") and consider the skill run complete. The markdown report is the primary deliverable; the Google Doc is a convenience artifact.\n\n## Edge Cases & Lessons Learned\n\n- **Subscriber counts from LLMs are unreliable.** Always verify by browsing the channel directly. Reports have been wrong by 2-5x.\n- **28-day Studio views != lifetime views.** Always clarify which is being used. A course with 60K 28-day views might have 140K lifetime.\n- **\"Agentic workflows\" trap:** Terms you invent can perform well via algorithm/audience but have zero search volume. Always check Google Trends before assuming a term has organic search demand.\n- **Hype bubble timing:** A course takes 2-4 weeks to produce. A hype bubble peaks in 1-2 weeks. By the time a course is done, the bubble has popped. React to bubbles with short videos; build courses for platform trends.\n- **YouTube Search != Web Search on Google Trends.** Some terms are huge on web but tiny on YouTube (e.g., voice AI agent: 2 on web, 69 on YouTube). Always check both.\n- **Watch-time > views for algorithmic value.** A 6-hour course with 60K views can generate more watch-time than a viral short with 164K views. YouTube's algorithm rewards the course.\n- **The \"24 views\" pattern:** When Google Trends shows high demand for a term but your Studio shows near-zero capture, you've found an untapped search pipeline. This is the highest-signal gap in the entire analysis.\n- **curl extraction may return bot-challenge pages.** YouTube increasingly serves JavaScript-only pages to non-browser clients. If curl output contains `<noscript>` or `\"UNPLAYABLE\"` patterns, flag it in the report and rely on whatever data was retrievable rather than retrying indefinitely.\n- **Multi-word Google Trends queries via curl require URL encoding.** Always use `python3 -c \"import urllib.parse; print(urllib.parse.quote('{topic}'))\"` for each term before interpolating into the Trends URL. Spaces or special characters in raw query strings will cause malformed requests that return no data.\n\n## Files\n\n- `.claude/skills/youtube-channel-analysis/md_to_gdoc.py` -- Markdown-to-Google-Doc converter via `gws` CLI (reusable across all skills)\n- `active/youtube-strategy/reports/` -- Finished analysis reports (markdown + auto-generated Google Docs)\n- `active/youtube-strategy/research/` -- Working files, raw data, diagrams\n- `active/youtube-strategy/stats/` -- YouTube Studio CSV exports\n\n## Versioning\n\nReports are dated (`YYYY-MM-DD_slug.md`), not versioned (v1, v2). Each analysis round produces a new dated report. Previous reports stay for historical comparison.\n```"
+      },
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-05-10T22:02:50.597Z"
+    },
+    {
+      "round": 11,
+      "score": 35,
+      "max": 36,
+      "status": "reverted",
+      "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-youtube-channel-analysis/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n",
+      "cost": 0.03,
+      "criteria": [
+        6,
+        6,
+        6,
+        6,
+        5,
+        6
+      ],
+      "failures": [
+        {
+          "scenario": 3,
+          "criterion": "Instructions Clarity"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 35 did not exceed best 36 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-05-10T22:03:26.821Z",
+      "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-youtube-channel-analysis/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n\n**Failures**: S3: Instructions Clarity"
+    },
+    {
+      "round": 12,
+      "score": 36,
+      "max": 36,
+      "status": "reverted",
+      "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-youtube-channel-analysis/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n",
+      "cost": 0.03,
+      "criteria": [
+        6,
+        6,
+        6,
+        6,
+        6,
+        6
+      ],
+      "failures": [],
+      "geminiThoughts": null,
+      "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-05-10T22:03:57.314Z",
+      "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-youtube-channel-analysis/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n\n**Failures**: none"
     }
   ]
 }

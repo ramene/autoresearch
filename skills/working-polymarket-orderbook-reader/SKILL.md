@@ -25,116 +25,218 @@ This skill provides read-only market data from Polymarket's CLOB API. It fetches
 1. **Working Directory:** `~/.remote/@autoresearch/skills/working-polymarket-orderbook-reader/`
 2. **Network:** Access to `https://clob.polymarket.com` (no authentication required for read endpoints)
 
-## Execution Flow
+---
 
-Every invocation follows this single, non-negotiable pipeline regardless of which flag is used:
+## Core Logic: Processing an Orderbook
 
-### Phase 1: Universal Data Gathering (always executed first)
+This block defines how to transform a raw orderbook API response into baseline fields. Every flag-specific section below that fetches a single-token orderbook refers back to these steps.
 
-**Step 1 — Fetch the orderbook:**
-```
-GET /book?token_id=<TOKEN_ID>
-```
+**Input:** A raw orderbook response object with `bids` and `asks` arrays (either may be an empty array `[]`).
 
-**Step 2 — Compute and cache all baseline values from the response:**
-```
-best_bid = max(level.price for level in bids)     # bids are sorted descending
-best_ask = min(level.price for level in asks)     # asks are sorted ascending
-spread = best_ask - best_bid
-mid = (best_ask + best_bid) / 2
-spread_pct = (spread / mid) * 100
-total_bid_liquidity = sum(level.size for level in bids)
-total_ask_liquidity = sum(level.size for level in asks)
-top_bids = bids[:depth]   # top N levels (default 20)
-top_asks = asks[:depth]
-```
+**Steps:**
 
-These baseline values are now available for all subsequent phases. No other endpoint may substitute for these values.
+1. **Extract sides with guards:**
+   ```
+   bids = response.bids or []   # may be empty
+   asks = response.asks or []   # may be empty
 
-### Phase 2: Conditional Augmentation (flag-specific additional API calls)
+   has_bids = len(bids) > 0
+   has_asks = len(asks) > 0
+   ```
 
-Only after Phase 1 is complete, make these additional calls based on the active flag:
+2. **Compute price levels (null when side is empty):**
+   ```
+   best_bid = max(level.price for level in bids)  if has_bids  else null
+   best_ask = min(level.price for level in asks)  if has_asks  else null
+   ```
 
-**`--last` flag:**
-```
-GET /last-trade-price?token_id=<TOKEN_ID>
-```
-Returns `{price, side}`. Store as `last_trade_price` and `last_trade_side`.
+3. **Compute spread and mid (only valid when BOTH sides exist):**
+   ```
+   if has_bids and has_asks:
+       spread     = best_ask - best_bid
+       mid        = (best_ask + best_bid) / 2
+       spread_pct = (spread / mid) * 100   # mid is guaranteed non-zero (prices are 0–1)
+   else:
+       spread     = null
+       mid        = null
+       spread_pct = null
+   ```
 
-**`--history` flag:**
-```
-GET /prices-history?market=<TOKEN_ID>&interval=<INTERVAL>
-```
-- Valid intervals: `1h`, `6h`, `1d`, `1w`, `1m`, `max` (default: `1d`)
-- Or use absolute range with `startTs`/`endTs`
-- Each data point: `{t: timestamp, p: price}`
+4. **Compute liquidity totals (0 when side is empty):**
+   ```
+   total_bid_liquidity = sum(level.size for level in bids)   # 0 if empty
+   total_ask_liquidity = sum(level.size for level in asks)   # 0 if empty
+   ```
 
-**`--book`, `--price`, `--mid`, `--spread`, `--fill` flags:**
-No additional API calls required — all needed values are already in the Phase 1 baseline.
+5. **Slice top N levels:**
+   ```
+   top_bids = bids[:depth]   # empty list if no bids
+   top_asks = asks[:depth]   # empty list if no asks
+   ```
 
-### Phase 3: Flag-Specific Computation
+6. **Record market state:**
+   ```
+   one_sided = not (has_bids and has_asks)
+   ```
 
-Using the baseline values from Phase 1 (and augmentation data from Phase 2 if applicable):
+**Output (baseline fields):**
+`best_bid`, `best_ask`, `spread`, `spread_pct`, `mid`, `one_sided`, `total_bid_liquidity`, `total_ask_liquidity`, `top_bids`, `top_asks`
 
-**`--book`:** Use `top_bids`/`top_asks` for depth display; report `total_bid_liquidity` and `total_ask_liquidity`.
+Null values for `best_bid`, `best_ask`, `spread`, `spread_pct`, and `mid` are valid and must be included in output — never omit them.
 
-**`--price`:** Report `best_bid` and `best_ask` from baseline.
+---
 
-**`--mid`:** Report `mid` from baseline. Note: If spread > $0.10, Polymarket UI shows last traded price instead.
+## Flag-Specific Execution
 
-**`--spread`:** Report all five values: `best_bid`, `best_ask`, `spread`, `spread_pct`, `mid`.
+### --spread / --price / --mid / --book
+These flags all require the same baseline data and no additional API calls.
 
-**`--last`:** Report `last_trade_price` and `last_trade_side` from Phase 2, plus baseline fields.
+1. **Fetch Orderbook:** Execute `GET /book?token_id=<TOKEN_ID>`.
+2. **Process Orderbook:** Apply the `Core Logic: Processing an Orderbook` rules to the response to compute all baseline fields.
+3. **Format Output:** Write `orderbook.json` containing all baseline fields.
+   - `--price`: Emphasize `best_bid` and `best_ask` in console output (either may be null).
+   - `--mid`: Emphasize `mid` in console output (null if one-sided; note if spread > $0.10 Polymarket UI shows last traded price instead).
+   - `--spread`: Emphasize all five spread fields (`best_bid`, `best_ask`, `spread`, `spread_pct`, `mid`) plus `one_sided` in console output.
+   - `--book`: Display `top_bids`/`top_asks` depth table plus `total_bid_liquidity`/`total_ask_liquidity` in console output.
 
-**`--history`:** Report price history data points from Phase 2, plus baseline fields.
+---
 
-**`--fill`:** Walk the orderbook from Phase 1 to compute fill estimate:
-- For BUY orders, walk `asks` array sorted ascending by price:
-  ```
-  remaining = fill_size
-  total_cost = 0
-  levels_consumed = []
-  for each ask level (price, size) in ascending order:
-      fill_qty = min(remaining, size)
-      total_cost += fill_qty * price
-      levels_consumed.append({price, fill_qty})
-      remaining -= fill_qty
-      if remaining == 0: break
-  if remaining > 0: report "insufficient liquidity"
-  avg_fill_price = total_cost / fill_size
-  ```
-- For SELL orders, walk `bids` array sorted descending by price using same logic.
-- `slippage_pct = abs(avg_fill_price - mid) / mid * 100`  (uses `mid` from Phase 1 baseline as `reference_mid`)
+### --last
 
-**`--batch`:** Submit all token IDs in single batch requests for efficiency:
-- `POST /books`, `POST /prices`, `POST /midpoints`, `POST /spreads`
-- Up to 500 tokens per request.
+1. **Fetch Orderbook:** Execute `GET /book?token_id=<TOKEN_ID>`.
+2. **Process Orderbook:** Apply the `Core Logic: Processing an Orderbook` rules to compute all baseline fields.
+3. **Fetch Last Trade:** Execute `GET /last-trade-price?token_id=<TOKEN_ID>`. Returns `{price, side}`. Store as `last_trade_price` and `last_trade_side`.
+4. **Format Output:** Write `orderbook.json` merging all baseline fields with `last_trade_price` and `last_trade_side`.
+
+---
+
+### --history
+
+1. **Fetch Orderbook:** Execute `GET /book?token_id=<TOKEN_ID>`.
+2. **Process Orderbook:** Apply the `Core Logic: Processing an Orderbook` rules to compute all baseline fields.
+3. **Map interval to API parameters:** Compute `now_ts` as the current unix timestamp (integer seconds), then use this table:
+
+   | User `--interval` | `fidelity` param | `startTs` (now_ts minus offset) | `endTs`  |
+   |-------------------|------------------|----------------------------------|----------|
+   | `1h`              | `1`              | `now_ts - 3600`                  | `now_ts` |
+   | `6h`              | `1`              | `now_ts - 21600`                 | `now_ts` |
+   | `1d` (default)    | `60`             | `now_ts - 86400`                 | `now_ts` |
+   | `1w`              | `60`             | `now_ts - 604800`                | `now_ts` |
+   | `1m`              | `60`             | `now_ts - 2592000`               | `now_ts` |
+   | `max`             | `60`             | (omit `startTs` and `endTs`)     | (omit)   |
+
+4. **Fetch Price History:**
+   ```
+   # NOTE: The price history endpoint uses the query parameter name "market" (not "token_id").
+   # Pass the TOKEN_ID value as the "market" parameter.
+
+   # For all intervals except max:
+   GET /prices-history?market=<TOKEN_ID>&interval=<INTERVAL>&fidelity=<FIDELITY>&startTs=<startTs>&endTs=<endTs>
+
+   # For max interval:
+   GET /prices-history?market=<TOKEN_ID>&interval=max&fidelity=60
+   ```
+   The response has a `history` key: `[{"t": <unix_timestamp>, "p": <float>}, ...]`. An empty array is a valid result.
+
+5. **Format Output:** Write `orderbook.json` merging all baseline fields with:
+   - `price_history` = `response.history`
+   - `history_interval` = the user-supplied interval string
+   - `history_start_ts` = first point's `t` value (or the requested `startTs`)
+   - `history_end_ts` = last point's `t` value (or `now_ts`)
+
+---
+
+### --fill
+
+1. **Fetch Orderbook:** Execute `GET /book?token_id=<TOKEN_ID>`.
+2. **Process Orderbook:** Apply the `Core Logic: Processing an Orderbook` rules to compute all baseline fields.
+3. **Compute Fill Estimate:**
+   - If the required side is empty (no `asks` for BUY; no `bids` for SELL), immediately set `insufficient_liquidity: true`, `avg_fill_price: null`, and skip the walk.
+   - For BUY: walk `asks` sorted ascending by price:
+     ```
+     remaining = fill_size
+     total_cost = 0
+     levels_consumed = []
+     for each ask level (price, size) in ascending order:
+         fill_qty = min(remaining, size)
+         total_cost += fill_qty * price
+         levels_consumed.append({price, fill_qty})
+         remaining -= fill_qty
+         if remaining == 0: break
+     if remaining > 0: set insufficient_liquidity: true
+     avg_fill_price = total_cost / fill_size
+     ```
+   - For SELL: walk `bids` sorted descending by price using the same logic.
+   - `slippage_pct = abs(avg_fill_price - mid) / mid * 100` (uses `mid` from baseline as `reference_mid`)
+   - If `mid` is null (one-sided book), set `slippage_pct: null` and note the one-sided state.
+4. **Format Output:** Write `orderbook.json` merging all baseline fields with the `fill_estimate` object.
+
+---
+
+### --batch
+
+1. **Fetch All Orderbooks:** Execute a single batch request:
+   ```
+   POST /books
+   Body: {"token_ids": [<TOKEN_ID_1>, <TOKEN_ID_2>, ...]}
+   ```
+   This returns a list of orderbook objects, one per token_id. Do NOT make individual `GET /book` calls per token.
+
+2. **Process Each Token:** For each orderbook object in the response, apply the `Core Logic: Processing an Orderbook` rules independently to compute all baseline fields for that token.
+
+3. **Format Output:** Write `orderbook.json` with the batch structure:
+   ```json
+   {
+     "timestamp": "<ISO8601>",
+     "batch_results": [
+       {
+         "token_id": "<TOKEN_ID>",
+         "best_bid": <float|null>,
+         "best_ask": <float|null>,
+         "spread": <float|null>,
+         "spread_pct": <float|null>,
+         "mid": <float|null>,
+         "one_sided": <bool>,
+         "total_bid_liquidity": <float>,
+         "total_ask_liquidity": <float>,
+         "top_bids": [...],
+         "top_asks": [...]
+       },
+       ...
+     ]
+   }
+   ```
+   Every entry must include all baseline fields. Null values for `spread`/`mid` on one-sided tokens are valid and must be included explicitly.
+
+---
 
 ## Output Format
 
-Every invocation — regardless of which flags are used — **must** write `orderbook.json` containing the **baseline fields** plus any operation-specific fields.
+Every invocation must write `orderbook.json` to the working directory.
 
-### Baseline Fields (always required in every output)
-These fields must be present in `orderbook.json` for every query mode (`--book`, `--price`, `--spread`, `--mid`, `--last`, `--fill`, `--history`):
+### Baseline Fields (always required for single-token modes)
 ```json
 {
   "token_id": "<TOKEN_ID>",
   "timestamp": "<ISO8601>",
-  "best_bid": <float>,
-  "best_ask": <float>,
-  "spread": <float>,
-  "spread_pct": <float>,
-  "mid": <float>,
+  "best_bid": <float|null>,
+  "best_ask": <float|null>,
+  "spread": <float|null>,
+  "spread_pct": <float|null>,
+  "mid": <float|null>,
+  "one_sided": <bool>,
   "total_bid_liquidity": <float>,
   "total_ask_liquidity": <float>,
   "top_bids": [{"price": <float>, "size": <float>}, ...],
   "top_asks": [{"price": <float>, "size": <float>}, ...]
 }
 ```
-- All baseline fields are derived from the Phase 1 `GET /book` call.
-- `top_bids`/`top_asks`: top N levels (default 20) from the fetched orderbook.
+- `top_bids`/`top_asks`: top N levels (default 20); empty array `[]` when that side has no levels.
+- `one_sided`: `true` when bids or asks array is empty; `false` otherwise.
+- `total_bid_liquidity` / `total_ask_liquidity`: `0.0` when the respective side is empty.
+- Null is valid for `best_bid`, `best_ask`, `spread`, `spread_pct`, `mid` — always include these keys even when null.
 
-### Operation-Specific Fields (appended to baseline)
+### Operation-Specific Fields (merged into baseline)
 
 **`--last`** adds:
 ```json
@@ -157,28 +259,29 @@ These fields must be present in `orderbook.json` for every query mode (`--book`,
   "fill_estimate": {
     "fill_size": <float>,
     "fill_side": "<BUY|SELL>",
-    "avg_fill_price": <float>,
-    "total_cost": <float>,
-    "slippage_pct": <float>,
-    "reference_mid": <float>,
+    "avg_fill_price": <float|null>,
+    "total_cost": <float|null>,
+    "slippage_pct": <float|null>,
+    "reference_mid": <float|null>,
     "liquidity_available": <float>,
+    "insufficient_liquidity": <bool>,
     "levels_consumed": [{"price": <float>, "fill_qty": <float>}, ...]
   }
 }
 ```
 
-- **Console:** Formatted summary of all computed values with depth display.
-- **`orderbook.json`:** Written to working directory with all baseline + operation-specific fields merged into one object.
+**`--batch`** uses the batch structure defined in the `--batch` flag section above.
+
+- **Console:** Formatted summary of all computed values with depth display. Flag one-sided markets clearly.
 
 ## Quality Gates
-1. Orderbook data correctly parsed with bid/ask levels.
-2. Spread calculated accurately from best bid/ask derived from Phase 1 `GET /book`.
-3. Price history returns data points at correct intervals.
-4. Fill estimation uses `mid` from Phase 1 baseline as `reference_mid`, then walks orderbook level-by-level accumulating cost correctly.
-5. Batch queries handle up to 500 tokens efficiently.
+1. Orderbook data correctly parsed with bid/ask levels — including the case where one or both sides are empty arrays.
+2. Spread and midpoint calculated correctly from best bid/ask. When either side is empty, spread and mid are null — this is correct, not an error.
+3. Price history returns data points at correct intervals: the `fidelity` and `startTs`/`endTs` parameters must be set per the interval mapping table in the `--history` section — e.g., `1h` → fidelity=1 + startTs=now-3600, `1d` → fidelity=60 + startTs=now-86400. The price history endpoint uses the `market` query parameter (not `token_id`) to identify the token.
+4. Fill estimation uses `mid` from the `Core Logic` baseline as `reference_mid`, then walks orderbook level-by-level accumulating cost correctly. Reports `insufficient_liquidity: true` immediately when the required side is empty.
+5. Batch queries handle up to 500 tokens efficiently using a single `POST /books` request; all per-token baseline fields (including spread, spread_pct, mid — or null for one-sided tokens) are computed from that single response.
 6. All data includes timestamps for freshness verification.
-7. Every output (all modes) includes the full baseline fields (token_id, timestamp, best_bid, best_ask, spread, spread_pct, mid, liquidity totals, top bid/ask levels) so downstream skills always receive a complete market snapshot.
-8. Phase 1 `GET /book` is always the first API call made, before any other endpoint, regardless of which flag is active.
+7. Every output (all modes) includes the full baseline fields so downstream skills always receive a complete market snapshot. Null fields are included explicitly, never omitted.
 
 ## Integration Points
 - **Upstream:** `polymarket-market-discovery` provides token IDs to query
