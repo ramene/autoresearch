@@ -1,0 +1,10 @@
+{
+  "skills": [
+    "deep-plan-v2",
+    "system-self-correction-v2",
+    "scaffold",
+    "context-loader",
+    "context-drift-detector"
+  ],
+  "default": "deep-plan-v2"
+}

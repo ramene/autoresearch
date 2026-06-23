@@ -1,0 +1,18 @@
+{
+  "scenarios": [
+    {"id": "full-sync", "name": "Full Board Sync", "description": "Sync all 39 skills to GitHub Project board with rich content — scores, charts, instructions, genesis tags"},
+    {"id": "no-duplicates", "name": "Deduplication", "description": "Run sync twice in a row — should update existing cards, not create duplicates"},
+    {"id": "new-skill", "name": "New Skill Added", "description": "A new skill appears in working-*/ — sync should create one new card with full detail"},
+    {"id": "score-update", "name": "Score Changed", "description": "A skill's score improves from 30/36 to 36/36 — card should update with new chart and PROMOTION READY tag"},
+    {"id": "genesis-tag", "name": "Genesis Origin", "description": "Skills born from wants should show genesis tag and origin want ID"},
+    {"id": "api-failure", "name": "GitHub API Failure", "description": "GitHub API returns 500 — sync should log error and continue without crashing the cron"}
+  ],
+  "criteria": [
+    "Card Richness: Does every card include score, chart, rounds, mutations, and skill instructions?",
+    "Deduplication: Does the sync avoid creating duplicate cards when run multiple times?",
+    "Status Accuracy: Are cards correctly categorized as Todo (untested), In Progress (improving), or Done (perfect)?",
+    "Chart Correctness: Does the ASCII score chart show all rounds with correct kept/reverted/escalated markers?",
+    "Error Resilience: Does the sync handle API failures without blocking the cron cycle?",
+    "Completeness: Does the sync cover ALL skills in working-*/ directories, including newly created ones?"
+  ]
+}

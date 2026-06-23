@@ -1,0 +1,76 @@
+{
+  "scenarios": [
+    {
+      "id": 1,
+      "type": "happy",
+      "title": "User asks to 'clean my inbox' - skill should ask for criteria (e.g., by sender, ",
+      "event": "User asks to 'clean my inbox' - skill should ask for criteria (e.g., by sender, date, subject).",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 2,
+      "type": "happy",
+      "title": "User asks to 'research competitors' - skill should ask for the market segment an",
+      "event": "User asks to 'research competitors' - skill should ask for the market segment and specific competitors of interest.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 3,
+      "type": "happy",
+      "title": "User provides a complete, unambiguous request - skill should validate the plan w",
+      "event": "User provides a complete, unambiguous request - skill should validate the plan without asking unnecessary questions.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 4,
+      "type": "happy",
+      "title": "User asks to 'improve the skill' - skill should ask which skill and what aspect ",
+      "event": "User asks to 'improve the skill' - skill should ask which skill and what aspect of its performance is lacking.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 5,
+      "type": "diagnostic",
+      "title": "User gives a contradictory request (e.g., 'find cheap flights but only business ",
+      "event": "User gives a contradictory request (e.g., 'find cheap flights but only business class') - skill should identify the conflict.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 6,
+      "type": "diagnostic",
+      "title": "User asks to 'write a proposal' - skill should ask for the client, project scope",
+      "event": "User asks to 'write a proposal' - skill should ask for the client, project scope, and desired tone.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 7,
+      "type": "edge",
+      "title": "User request involves a non-existent tool - skill should identify the missing to",
+      "event": "User request involves a non-existent tool - skill should identify the missing tool capability.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 8,
+      "type": "edge",
+      "title": "User request is vague, like 'what's up with the market?' - skill should ask for ",
+      "event": "User request is vague, like 'what's up with the market?' - skill should ask for clarification (e.g., 'which market? stocks, crypto, real estate?').",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    }
+  ],
+  "criteria": [
+    "Identify implicit assumptions in the user's request: Does the skill correctly identify implicit assumptions in the user's request?",
+    "Generate specific, non-leading questions to resolve ambiguities: Does the skill generate specific, non-leading questions to resolve ambiguities?",
+    "Does the output provide a structured, confirmed plan of action: Does the output provide a structured, confirmed plan of action?",
+    "Halt execution of a downstream skill if the user denies the clarified plan: Does the skill correctly halt execution of a downstream skill if the user denies the clarified plan?",
+    "Can the skill re-phrase the user's goal into a set of explicit, verifiable requirements: Can the skill re-phrase the user's goal into a set of explicit, verifiable requirements?",
+    "Parse and incorporate answers to its own questions into the final plan: Does the skill successfully parse and incorporate answers to its own questions into the final plan?"
+  ]
+}

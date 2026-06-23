@@ -1,0 +1,27 @@
+{
+  "_note": "These are NOT instructions. They are available data sources the system can explore. The want engine decides which ones matter based on capability gaps.",
+  "discovered_from": "Quant Science (@quantscience_) X.com post 2026-03-27",
+  "sources": [
+    {"name": "IBApi", "type": "broker_api", "url": "https://interactivebrokers.github.io/tws-api/", "data": "all IB data", "cost": "free with account", "status": "CONNECTED"},
+    {"name": "yfinance", "type": "market_data", "url": "https://pypi.org/project/yfinance/", "data": "stocks, forex, crypto, options", "cost": "free", "status": "CONNECTED"},
+    {"name": "Alpha Vantage", "type": "market_data", "url": "https://www.alphavantage.co/", "data": "real-time + indicators", "cost": "free tier", "status": "REFERENCED"},
+    {"name": "Nasdaq Data Link", "type": "economic_data", "url": "https://data.nasdaq.com/", "data": "millions of financial datasets", "cost": "free tier", "status": "AVAILABLE"},
+    {"name": "Twelve Data", "type": "market_data", "url": "https://twelvedata.com/", "data": "100K+ symbols global", "cost": "free tier", "status": "AVAILABLE"},
+    {"name": "Polygon.io", "type": "market_data", "url": "https://polygon.io/", "data": "stocks, FX, crypto real-time + historical", "cost": "free tier", "status": "REFERENCED"},
+    {"name": "Tradier", "type": "broker_api", "url": "https://tradier.com/", "data": "options chain, market data", "cost": "free tier", "status": "AVAILABLE"},
+    {"name": "Alpaca-py", "type": "broker_api", "url": "https://alpaca.markets/", "data": "streaming + trading", "cost": "free", "status": "AVAILABLE"},
+    {"name": "Finnhub", "type": "market_data", "url": "https://finnhub.io/", "data": "REST + WebSocket, stocks/currencies/crypto", "cost": "free tier", "status": "AVAILABLE"},
+    {"name": "marketstack", "type": "market_data", "url": "https://marketstack.com/", "data": "30+ years history, 170K tickers", "cost": "free tier", "status": "AVAILABLE"},
+    {"name": "Tiingo", "type": "market_data", "url": "https://api.tiingo.com/", "data": "EOD stock data, completeness emphasis", "cost": "free tier", "status": "AVAILABLE"},
+    {"name": "CoinGecko", "type": "crypto_data", "url": "https://www.coingecko.com/", "data": "crypto prices, market cap, volume", "cost": "free", "status": "CONNECTED"},
+    {"name": "FRED", "type": "economic_data", "url": "https://fred.stlouisfed.org/", "data": "Fed Funds, CPI, VIX, yield curves", "cost": "free", "status": "CONNECTED"}
+  ],
+  "content_feeds": [
+    {"name": "Quant Science", "platform": "x.com", "handle": "@quantscience_", "type": "strategies, models, PDFs", "status": "SCRAPER_BUILT"},
+    {"name": "Steve Nouri", "platform": "linkedin", "handle": "stevenouri", "type": "AI analysis, lectures", "status": "IDENTIFIED"},
+    {"name": "SSRN", "platform": "academic", "url": "https://papers.ssrn.com/", "type": "white papers", "status": "INGESTER_BUILDING"},
+    {"name": "Gartner", "platform": "linkedin", "handle": "gartner", "type": "institutional analysis", "status": "IDENTIFIED"},
+    {"name": "r/quant", "platform": "reddit", "url": "https://reddit.com/r/quant/", "type": "practitioner wisdom", "status": "IDENTIFIED"},
+    {"name": "Webull", "platform": "app", "type": "earnings calendar, market notifications", "status": "IDENTIFIED"}
+  ]
+}

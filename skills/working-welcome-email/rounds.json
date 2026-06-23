@@ -1,0 +1,466 @@
+[
+  {
+    "round": 0,
+    "score": 12,
+    "max": 36,
+    "status": "baseline",
+    "mutation": "Added explicit Error Handling and Expected Output sections to address the complete lack of guidance on failure scenarios and what constitutes a successful result — the root cause driving all 6 failures in Instructions Clarity, Error Handling, Output Quality, and Completeness.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      0,
+      0,
+      6,
+      0,
+      0
+    ],
+    "failures": [
+      {
+        "scenario": 1,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 1,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 1,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 1,
+        "criterion": "Completeness"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Completeness"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Completeness"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Completeness"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Completeness"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Completeness"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Initial baseline evaluation",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-20T22:47:08.094Z",
+    "changelog": "**Mutation**: Added explicit Error Handling and Expected Output sections to address the complete lack of guidance on failure scenarios and what constitutes a successful result — the root cause driving all 6 failures in Instructions Clarity, Error Handling, Output Quality, and Completeness.\n**Failures**: S1: Error Handling, S1: Output Quality, S1: Instructions Clarity, S1: Completeness, S2: Error Handling, S2: Output Quality, S2: Instructions Clarity, S2: Completeness, S3: Error Handling, S3: Output Quality, S3: Instructions Clarity, S3: Completeness, S4: Error Handling, S4: Output Quality, S4: Instructions Clarity, S4: Completeness, S5: Error Handling, S5: Output Quality, S5: Instructions Clarity, S5: Completeness, S6: Error Handling, S6: Output Quality, S6: Instructions Clarity, S6: Completeness\n**Per-criteria**: Task Completion: 6/6, Error Handling: 0/6, Output Quality: 0/6, Tool Usage: 6/6, Instructions Clarity: 0/6, Completeness: 0/6\n**Decision**: Initial baseline evaluation"
+  },
+  {
+    "round": 1,
+    "score": 36,
+    "max": 36,
+    "status": "kept",
+    "mutation": "No failures detected — skill is performing at 100%. Applied a minor clarity improvement to the demo notice to make placeholder configuration more prominent.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Improved from 12 to 36",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-20T22:48:13.087Z",
+    "changelog": "**Mutation**: No failures detected — skill is performing at 100%. Applied a minor clarity improvement to the demo notice to make placeholder configuration more prominent.\n**Failures**: none\n**Per-criteria**: Task Completion: 6/6, Error Handling: 6/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 6/6, Completeness: 6/6\n**Decision**: Improved from 12 to 36"
+  },
+  {
+    "round": 2,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "No failures detected — skill is performing at 100%. Applied a minor formatting improvement to the Usage section to make the bash command easier to scan.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-20T22:49:03.393Z",
+    "changelog": "**Mutation**: No failures detected — skill is performing at 100%. Applied a minor formatting improvement to the Usage section to make the bash command easier to scan.\n**Failures**: none\n**Per-criteria**: Task Completion: 6/6, Error Handling: 6/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 6/6, Completeness: 6/6\n**Decision**: Score 36 did not exceed best 36 — mutation produced worse or equal results"
+  },
+  {
+    "round": 3,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "No failures detected — skill is performing at 100%. Applied a minor clarity improvement to the Error Handling section to make the placeholder check more actionable.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-20T22:49:45.253Z",
+    "changelog": "**Mutation**: No failures detected — skill is performing at 100%. Applied a minor clarity improvement to the Error Handling section to make the placeholder check more actionable.\n**Failures**: none\n**Per-criteria**: Task Completion: 6/6, Error Handling: 6/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 6/6, Completeness: 6/6\n**Decision**: Score 36 did not exceed best 36 — mutation produced worse or equal results"
+  },
+  {
+    "round": 4,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "No failures detected — skill is performing at 100%. Applied a minor clarity improvement to the Expected Output section to make success/failure reporting more explicit.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-20T22:50:33.315Z",
+    "changelog": "**Mutation**: No failures detected — skill is performing at 100%. Applied a minor clarity improvement to the Expected Output section to make success/failure reporting more explicit.\n**Failures**: none\n**Per-criteria**: Task Completion: 6/6, Error Handling: 6/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 6/6, Completeness: 6/6\n**Decision**: Score 36 did not exceed best 36 — mutation produced worse or equal results"
+  },
+  {
+    "round": 4,
+    "score": 36,
+    "max": 36,
+    "status": "escalation",
+    "mutation": "Stuck escalation: The optimization loop is stuck in a \"perfection plateau.\" The skill achieved a perfect score of 36/36 in Round 1 by adding comprehensive error handling and output specifications, which fully addressed",
+    "cost": 0.03,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "decisionReason": "Stuck escalation triggered after 3+ rounds with no improvement",
+    "escalation": {
+      "diagnosis": "The optimization loop is stuck in a \"perfection plateau.\" The skill achieved a perfect score of 36/36 in Round 1 by adding comprehensive error handling and output specifications, which fully addressed all failures in the initial evaluation suite. Subsequent mutations are minor, low-impact \"clarity improvements\" because there are no failure signals to guide more substantial changes. These mutations are correctly reverted because they offer no score improvement over the already-perfect baseline. The root cause is not the skill itself, but an evaluation suite that is no longer challenging enough to reveal weaknesses or create opportunities for meaningful growth. The skill has solved for 100% of the existing test cases.",
+      "evalRedesignNeeded": true,
+      "strategy": "Shift from refinement to capability expansion. The current strategy of making minor clarity tweaks is ineffective against a perfect score. The new strategy is to deliberately expand the skill's functionality to handle more complex, realistic use cases that the current implementation cannot. This will introduce new failure modes when tested against a more demanding evaluation suite, providing the necessary signal to drive meaningful improvements. We will add the capability for batch processing multiple clients from a CSV file, a common real-world requirement for this type of task.",
+      "suggestedMutation": "Add a new \"Batch Usage\" section that describes how to onboard multiple clients from a CSV file. This introduces a new parameter (`--csv_file`) and a new workflow, forcing the skill to evolve beyond its single-client implementation.\n\n```markdown\n---\nname: welcome-email\ndescription: Send welcome email sequence to new clients. Use when user asks to send welcome emails, onboard new client with emails, or trigger welcome sequence.\nallowed-tools: Bash, Read, Write, Edit, Glob, Grep\n---\n\n> **Demo Library Skill** — This skill is from a demo library. Some configuration values use placeholders (e.g. `{{USER_NAME}}`, `{{COMMUNITY_ID}}`). **Before running, replace all placeholders with your actual values.**\n\n# Welcome Client Emails\n\n## Goal\nSend 3-email welcome sequence ({{USER_NAME}}, Peter, Sam) when a new client signs.\n\n## Scripts\n- `./scripts/welcome_client_emails.py` - Send welcome sequence\n\n## Process\n1. Receive client info (name, email, company) for one or more clients.\n2. For each client:\n    a. Send email from {{USER_NAME}} (welcome, expectations)\n    b. Send email from Peter (technical setup)\n    c. Send email from Sam (support intro)\n\n## Single Client Usage\n\nRun the script with the required client details for a single client:\n\n```bash\npython3 ./scripts/welcome_client_emails.py \\\n  --client_name \"John Doe\" \\\n  --client_email \"john@company.com\" \\\n  --company \"Acme Corp\"\n```\n\n**Required arguments:**\n- `--client_name` — Full name of the new client\n- `--client_email` — Client's email address\n- `--company` — Client's company name\n\n## Batch Usage (from CSV)\n\nTo onboard multiple clients at once, provide a path to a CSV file. The script will iterate over each row and send the welcome sequence.\n\n```bash\npython3 ./scripts/welcome_client_emails.py \\\n  --csv_file \"./new_clients.csv\"\n```\n\n**CSV File Format:**\n- The CSV file must contain a header row.\n- Required columns are `name`, `email`, and `company`.\n\nExample `new_clients.csv`:\n```csv\nname,email,company\nJane Smith,jane@widgetco.com,Widget Co\nBob Johnson,bob@globex.net,Globex Corporation\n```\n\n## Email Structure\nEach email is personalized with client details and sent from different team members to establish relationships.\n\n## Error Handling\n- If the script does not exist at `./scripts/welcome_client_emails.py`, report the missing file path and stop.\n- If `{{USER_NAME}}` or any other placeholder is still present, stop and tell the user which placeholders to replace.\n- If using `--csv_file`, and the file does not exist or is improperly formatted (e.g., missing required columns), report the specific file error and stop.\n- If the script exits with a non-zero status, capture and display the full error output.\n- If required arguments for single-client usage are missing, ask the user for them.\n\n## Expected Output\nAfter a successful run, report all of the following:\n1. A summary of actions taken (e.g., \"Processed 3 clients from new_clients.csv\").\n2. For each client, which 3 emails were sent — include the sender name and recipient email.\n3. The script's final exit status (e.g. exit code 0).\n\nIf the run fails, report:\n- The exact error message or stack trace.\n- The specific step or client that failed.\n- What the user should do next to resolve the issue.\n```"
+    },
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-20T22:51:17.132Z"
+  },
+  {
+    "round": 5,
+    "score": 30,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-welcome-email/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n",
+    "cost": 0.03,
+    "criteria": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "failures": [
+      {
+        "scenario": 3,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Tool Usage"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Completeness"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 30 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-05-08T14:00:36.617Z",
+    "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-welcome-email/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n\n**Failures**: S3: Task Completion, S3: Error Handling, S3: Output Quality, S3: Tool Usage, S3: Instructions Clarity, S3: Completeness"
+  },
+  {
+    "round": 6,
+    "score": 30,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-welcome-email/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n",
+    "cost": 0.03,
+    "criteria": [
+      4,
+      5,
+      6,
+      5,
+      5,
+      5
+    ],
+    "failures": [
+      {
+        "scenario": 4,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Tool Usage"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Completeness"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 30 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-05-08T14:01:21.850Z",
+    "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-welcome-email/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n\n**Failures**: S4: Task Completion, S6: Task Completion, S6: Error Handling, S6: Tool Usage, S6: Instructions Clarity, S6: Completeness"
+  },
+  {
+    "round": 7,
+    "score": 34,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-welcome-email/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n",
+    "cost": 0.03,
+    "criteria": [
+      6,
+      5,
+      6,
+      6,
+      6,
+      5
+    ],
+    "failures": [
+      {
+        "scenario": 3,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Completeness"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 34 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-05-08T14:01:47.936Z",
+    "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-welcome-email/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n\n**Failures**: S3: Error Handling, S3: Completeness"
+  },
+  {
+    "round": 7,
+    "score": 34,
+    "max": 36,
+    "status": "escalation",
+    "mutation": "Stuck escalation: The optimization loop is stuck in a \"perfection plateau.\" The initial mutation in Round 1 was highly effective, adding comprehensive error handling and output specifications that fully satisfied the e",
+    "cost": 0.03,
+    "criteria": [
+      6,
+      5,
+      6,
+      6,
+      6,
+      5
+    ],
+    "failures": [],
+    "decisionReason": "Stuck escalation triggered after 3+ rounds with no improvement",
+    "escalation": {
+      "diagnosis": "The optimization loop is stuck in a \"perfection plateau.\" The initial mutation in Round 1 was highly effective, adding comprehensive error handling and output specifications that fully satisfied the existing evaluation suite, resulting in a perfect score of 36/36. Subsequent mutations are minor, cosmetic tweaks that cannot improve the score because the skill already masters all tested scenarios. The recent score drops to 30/36 and 34/36 are red herrings caused by infrastructure failures during the mutation application process (`claude` binary not found), not by flaws in the skill's logic. The system is attempting to incrementally refine a skill that has already reached the performance ceiling defined by its tests.",
+      "evalRedesignNeeded": true,
+      "strategy": "Shift from \"Incremental Refinement\" to \"Capability Expansion.\" The current test suite is not comprehensive enough to guide further improvement. To break the plateau, we must introduce a new feature that the current skill definition does not cover. This will create a new performance gradient for the optimizer to climb. We will add a common, valuable feature for action-oriented scripts: a \"dry run\" mode. This forces the skill to handle conditional logic and produce different output based on a new flag, exposing it to a new class of tests.",
+      "suggestedMutation": "Add a `--dry-run` optional argument to the skill. This will allow the user to preview the actions the script would take without actually sending any emails.\n\n1.  **Update the `Usage` section** to include the new optional argument:\n    ```markdown\n    ## Usage\n\n    Run the script with the required client details:\n\n    ```bash\n    python3 ./scripts/welcome_client_emails.py \\\n      --client_name \"John Doe\" \\\n      --client_email \"john@company.com\" \\\n      --company \"Acme Corp\"\n    ```\n\n    **To preview emails without sending, add the `--dry-run` flag:**\n    ```bash\n    python3 ./scripts/welcome_client_emails.py \\\n      --client_name \"John Doe\" \\\n      --client_email \"john@company.com\" \\\n      --company \"Acme Corp\" \\\n      --dry-run\n    ```\n\n    **Required arguments:**\n    - `--client_name` — Full name of the new client\n    - `--client_email` — Client's email address\n    - `--company` — Client's company name\n\n    **Optional arguments:**\n    - `--dry-run` — If present, the script will print the emails it would send to the console instead of actually sending them.\n    ```\n\n2.  **Update the `Expected Output` section** to account for the new mode:\n    ```markdown\n    ## Expected Output\n    After a successful run, report all of the following:\n    1. Which 3 emails were sent — include the sender name and recipient email for each\n    2. The script's exit status (e.g. exit code 0) or confirmation message from the script\n    3. Any warnings returned by the script (even on success)\n\n    **If `--dry-run` is used**, report that it was a dry run and show the content or a summary of the emails that *would have been sent*.\n    ```"
+    },
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-05-08T14:02:11.018Z"
+  },
+  {
+    "round": 8,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-welcome-email/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n",
+    "cost": 0.03,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-05-08T14:02:35.278Z",
+    "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-welcome-email/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n\n**Failures**: none"
+  },
+  {
+    "round": 9,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-welcome-email/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n",
+    "cost": 0.03,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-05-08T14:03:04.988Z",
+    "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-welcome-email/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n\n**Failures**: none"
+  }
+]

@@ -1,0 +1,92 @@
+{
+  "scenarios": [
+    {
+      "id": 1,
+      "type": "detection",
+      "title": "Dead File Reference",
+      "event": "CLAUDE.md references src/old_module.ts but the file was deleted 5 commits ago.",
+      "expectedAction": "flag-high-severity",
+      "expectedType": "dead-file-ref"
+    },
+    {
+      "id": 2,
+      "type": "detection",
+      "title": "Broken Build Command",
+      "event": "CLAUDE.md says build with make test but the Makefile was replaced by package.json scripts.",
+      "expectedAction": "flag-high-severity",
+      "expectedType": "broken-command"
+    },
+    {
+      "id": 3,
+      "type": "detection",
+      "title": "Undocumented New Files",
+      "event": "Three new files were added to src/api/ in recent commits. CLAUDE.md doesnt mention them.",
+      "expectedAction": "flag-medium-severity",
+      "expectedType": "undocumented-files"
+    },
+    {
+      "id": 4,
+      "type": "detection",
+      "title": "Config Drift — Missing Env Var",
+      "event": "CLAUDE.md references REDIS_URL but its not in .env.example.",
+      "expectedAction": "flag-medium-severity",
+      "expectedType": "config-drift"
+    },
+    {
+      "id": 5,
+      "type": "detection",
+      "title": "Stale Architecture Description",
+      "event": "CLAUDE.md says Entry: git-crypt.cpp → commands.cpp but commands.cpp was renamed to handler.cpp.",
+      "expectedAction": "flag-high-severity",
+      "expectedType": "stale-architecture"
+    },
+    {
+      "id": 6,
+      "type": "severity",
+      "title": "Correct Severity Classification",
+      "event": "Dead file ref should be HIGH. Undocumented new file should be MEDIUM. Orphaned memory bank entry should be LOW.",
+      "expectedAction": "classify-correctly",
+      "expectedType": "severity-classification"
+    },
+    {
+      "id": 7,
+      "type": "ignore",
+      "title": "Respect .context-drift-ignore",
+      "event": "legacy/ directory is in .context-drift-ignore. CLAUDE.md references a deleted file in legacy/. Should be suppressed.",
+      "expectedAction": "suppress-ignored",
+      "expectedType": "ignore-file"
+    },
+    {
+      "id": 8,
+      "type": "fix",
+      "title": "Generate Fix Suggestions",
+      "event": "A HIGH severity dead file ref is found. Should generate a specific fix suggestion.",
+      "expectedAction": "suggest-fix",
+      "expectedType": "fix-generation"
+    },
+    {
+      "id": 9,
+      "type": "git",
+      "title": "Use Git History for Context",
+      "event": "Instructions should guide using git log --name-status to understand what changed.",
+      "expectedAction": "use-git-log",
+      "expectedType": "git-integration"
+    },
+    {
+      "id": 10,
+      "type": "overlap",
+      "title": "Integration with context-loader",
+      "event": "After drift fixes, context-loader should refresh ecosystem context. Instructions should mention this.",
+      "expectedAction": "reference-context-loader",
+      "expectedType": "skill-integration"
+    }
+  ],
+  "criteria": [
+    "Detection Coverage: Do instructions cover all drift types (dead refs, broken commands, stale arch)?",
+    "Severity Classification: Do instructions correctly guide HIGH vs MEDIUM vs LOW severity?",
+    "Git Integration: Do instructions guide using git history for change context?",
+    "Ignore File: Do instructions support .context-drift-ignore for suppressing known drift?",
+    "Fix Generation: Do instructions guide producing specific fix suggestions for HIGH issues?",
+    "Skill Integration: Do instructions reference context-loader as a follow-up action?"
+  ]
+}

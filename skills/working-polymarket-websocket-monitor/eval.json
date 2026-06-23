@@ -1,0 +1,16 @@
+{
+  "scenarios": [
+    {"id": 1, "type": "happy", "title": "Subscribe to market channel and receive price updates", "event": "User asks to monitor real-time prices for a specific token", "expectedAction": "Connect to market WS, subscribe with token ID, receive and display price_change events", "expectedType": "action"},
+    {"id": 2, "type": "happy", "title": "Subscribe to user channel for trade confirmations", "event": "User wants to track their trade lifecycle (MATCHED -> CONFIRMED)", "expectedAction": "Connect to user WS with auth, subscribe, receive trade status events", "expectedType": "action"},
+    {"id": 3, "type": "happy", "title": "Detect market resolution event", "event": "A subscribed market resolves", "expectedAction": "Receive market_resolved event, report winning outcome and asset ID", "expectedType": "action"},
+    {"id": 4, "type": "diagnostic", "title": "WebSocket connection drops and reconnects", "event": "Network interruption causes WS disconnect", "expectedAction": "Detect disconnect, reconnect with backoff, resubscribe to previous tokens", "expectedType": "action"},
+    {"id": 5, "type": "edge", "title": "Tick size changes during monitoring", "event": "A monitored token's price approaches extreme (>0.96)", "expectedAction": "Receive tick_size_change event, update internal state, warn about order format change", "expectedType": "action"}
+  ],
+  "criteria": [
+    "WebSocket connection maintained with heartbeat: Does the skill keep the connection alive with PING every 10s?",
+    "Events correctly parsed and filtered: Does the skill properly parse JSON events and filter by type?",
+    "User channel authenticates successfully: Does the skill pass API credentials correctly for the user channel?",
+    "Dynamic subscription changes work: Can the skill add/remove subscriptions without reconnecting?",
+    "Events logged in structured format: Does the skill save events to JSONL for downstream processing?"
+  ]
+}

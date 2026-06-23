@@ -1,0 +1,148 @@
+{
+  "scenarios": [
+    {
+      "id": 1,
+      "type": "happy",
+      "title": "Default Deep Scan",
+      "event": "User runs `context-loader` with no arguments in a workspace with several sibling projects.",
+      "expectedAction": "The agent should perform a 'deep' scan of all sibling projects, reading their memory banks, synthesizing patterns, and writing the comprehensive results to `CLAUDE-ecosystem.md` in the current project.",
+      "expectedType": "action"
+    },
+    {
+      "id": 2,
+      "type": "happy",
+      "title": "Shallow Scan",
+      "event": "User runs `context-loader --depth shallow`.",
+      "expectedAction": "The agent should perform a quick 'shallow' scan, gathering only registry information (names, paths, descriptions, skill counts) from sibling projects and writing it to `CLAUDE-ecosystem.md`.",
+      "expectedType": "action"
+    },
+    {
+      "id": 3,
+      "type": "happy",
+      "title": "Forced Refresh",
+      "event": "The `CLAUDE-ecosystem.md` file was updated within the last hour. User runs `context-loader --refresh`.",
+      "expectedAction": "The agent should ignore the recent timestamp of `CLAUDE-ecosystem.md` and execute a full (deep by default) re-scan of the ecosystem.",
+      "expectedType": "action"
+    },
+    {
+      "id": 4,
+      "type": "happy",
+      "title": "Targeted Workspace Scan",
+      "event": "User runs `context-loader --target /Users/claude/work/other-org`.",
+      "expectedAction": "The agent should ignore sibling projects and instead scan the projects within the specified target directory, then write the synthesized context to `CLAUDE-ecosystem.md` in the *current* project.",
+      "expectedType": "action"
+    },
+    {
+      "id": 5,
+      "type": "negative",
+      "title": "Up-to-Date, No Refresh",
+      "event": "The `CLAUDE-ecosystem.md` file was updated today. User runs `context-loader` without the `--refresh` flag.",
+      "expectedAction": "The agent should check the timestamp of `CLAUDE-ecosystem.md`, determine it is up-to-date, and skip the scan, informing the user that the context is current and `--refresh` can override this.",
+      "expectedType": "inaction"
+    },
+    {
+      "id": 6,
+      "type": "edge",
+      "title": "No Sibling Projects",
+      "event": "User runs `context-loader` in a project that has no sibling projects in its parent directory.",
+      "expectedAction": "The agent should scan the parent directory, find no other projects, and write to `CLAUDE-ecosystem.md` a message indicating that no other projects were found in the ecosystem.",
+      "expectedType": "action"
+    },
+    {
+      "id": 7,
+      "type": "negative",
+      "title": "Invalid Argument",
+      "event": "User runs `context-loader --depth=full`.",
+      "expectedAction": "The agent should recognize that `--depth=full` is not a valid argument, report an error to the user, and suggest the valid options (`shallow` or `deep`).",
+      "expectedType": "error"
+    },
+    {
+      "id": 8,
+      "type": "edge",
+      "title": "Non-Existent Target Workspace",
+      "event": "User runs `context-loader --target /path/does/not/exist`.",
+      "expectedAction": "The agent should attempt to access the target path, fail, and report a clear error to the user stating that the specified target workspace could not be found.",
+      "expectedType": "error"
+    },
+    {
+      "id": 9,
+      "type": "happy",
+      "title": "Combined Arguments",
+      "event": "User runs `context-loader --depth shallow --target /Users/claude/work/another-project --refresh`.",
+      "expectedAction": "The agent should correctly combine all arguments: perform a forced (`--refresh`) shallow (`--depth shallow`) scan of the specified external workspace (`--target`) and write the results to the local `CLAUDE-ecosystem.md`.",
+      "expectedType": "action"
+    },
+    {
+      "id": 10,
+      "type": "negative",
+      "title": "Permission Denied on Sibling",
+      "event": "User runs `context-loader`, but one of the sibling project directories is not readable by the agent.",
+      "expectedAction": "The agent should handle the permission error gracefully, either by skipping the unreadable project and noting the failure in the final report, or by halting the process with a clear error message about the permission issue.",
+      "expectedType": "error"
+    },
+    {
+      "id": 11,
+      "type": "happy-path",
+      "title": "Default Deep Scan",
+      "event": "User runs `/skill context-loader` with no arguments in a workspace with several sibling projects.",
+      "expectedAction": "The skill should perform a 'deep' scan, reading registry info, active context, decisions, and patterns from all sibling projects, and then write the synthesized findings to a new or updated `CLAUDE-ecosystem.md` file in the current project.",
+      "expectedType": "file-write"
+    },
+    {
+      "id": 12,
+      "type": "happy-path",
+      "title": "Shallow Scan",
+      "event": "User runs `/skill context-loader --depth shallow`.",
+      "expectedAction": "The skill should perform a quick 'shallow' scan, gathering only the registry information (names, paths, descriptions, skill counts) from sibling projects and writing that summary to `CLAUDE-ecosystem.md`.",
+      "expectedType": "file-write"
+    },
+    {
+      "id": 13,
+      "type": "edge-case",
+      "title": "Forced Refresh",
+      "event": "The `CLAUDE-ecosystem.md` file was updated just 5 minutes ago. The user runs `/skill context-loader --refresh`.",
+      "expectedAction": "The skill should ignore the recent timestamp of the existing file and perform a full, deep re-scan of the ecosystem, overwriting `CLAUDE-ecosystem.md` with the new results.",
+      "expectedType": "file-overwrite"
+    },
+    {
+      "id": 14,
+      "type": "edge-case",
+      "title": "Targeted Workspace Scan",
+      "event": "User is working in project `/ws/project-A` and runs `/skill context-loader --target /remote/ws/project-B`.",
+      "expectedAction": "The skill should scan the sibling projects within the `/remote/ws/project-B` workspace, synthesize their context, and write the resulting `CLAUDE-ecosystem.md` into the current project's directory (`/ws/project-A`).",
+      "expectedType": "file-write"
+    },
+    {
+      "id": 15,
+      "type": "negative-case",
+      "title": "No Sibling Projects",
+      "event": "User runs the skill in a project that is the only project in its workspace.",
+      "expectedAction": "The skill should scan for siblings, find none, and gracefully complete, either by creating a minimal `CLAUDE-ecosystem.md` stating no siblings were found or by reporting the result to the user without creating a file. It should not error out.",
+      "expectedType": "message"
+    },
+    {
+      "id": 16,
+      "type": "edge case",
+      "title": "Load Context from a Specific Target Workspace",
+      "event": "The user is working in a local project but needs to understand the context of a different, specific workspace. They run `context-loader --target /path/to/other/workspace --depth shallow`. The current project already has an up-to-date `CLAUDE-ecosystem.md` file from a previous run.",
+      "expectedAction": "The agent should ignore the existing `CLAUDE-ecosystem.md` in the current project because a specific target is provided. It should proceed to scan the registry information (names, paths, descriptions) of all sibling projects within the `/path/to/other/workspace` directory. Finally, it should overwrite the `CLAUDE-ecosystem.md` file in the *current* project with the synthesized information from the target workspace.",
+      "expectedType": "filesystem-write"
+    }
+  ],
+  "criteria": [
+    "Default Behavior: Does the skill's documentation clearly define the default action (deep scan) when no arguments are provided?",
+    "Depth Differentiation: Does the documentation adequately explain the functional and performance differences between 'shallow' and 'deep' scans?",
+    "Refresh Logic: Does the documentation clearly instruct an agent on the purpose of the --refresh flag to bypass timestamp checks?",
+    "Targeted Scans: Is the documentation for the --target argument sufficient for an agent to understand it should scan an external directory?",
+    "Output Specification: Does the documentation explicitly name the output file as `CLAUDE-ecosystem.md` and its location in the current project?",
+    "Implicit No-Op: Is the condition for skipping a scan (an up-to-date file without --refresh) clear from the documentation?",
+    "Tool Requirements: Does the documentation provide enough detail for an agent to infer which tools (like Glob, Read, Write) are necessary for execution?",
+    "Scope Definition: Does the documentation unambiguously define the default scope of a scan as 'all sibling projects'?",
+    "Error Handling (Permissions): Does the documentation guide the agent on how to handle read permission errors for a subset of sibling projects?",
+    "Error Handling (Invalid Target): Does the documentation provide guidance on how to react to a non-existent path in the --target argument?",
+    "Argument Clarity: Does the skill's `Arguments` section provide sufficient detail for an agent to correctly implement the logic for `--depth`, `--refresh`, and `--target`, including their default behaviors and interactions?",
+    "Conditional Execution: Does the skill's description clearly instruct the agent to check the modification date of `CLAUDE-ecosystem.md` and skip execution if it was updated 'today', unless the `--refresh` flag is provided?",
+    "No-Op Gate Precedence: Does the skill definition clearly and unambiguously instruct the agent to check the no-op gate conditions *before* parsing arguments or applying defaults?",
+    "Input/Output Path Separation: Does the skill definition explicitly state that the `--target` argument only affects the *source* directory for the scan, and that the output `CLAUDE-ecosystem.md` is always written to the *current* project's root?"
+  ]
+}

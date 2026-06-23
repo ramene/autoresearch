@@ -1,0 +1,752 @@
+[
+  {
+    "round": 0,
+    "score": 33,
+    "max": 36,
+    "status": "baseline",
+    "mutation": "Add explicit orderbook-walking algorithm for fill estimation with required output fields, fixing vague slippage calculation that causes downstream data insufficiency",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      5,
+      5,
+      6,
+      6,
+      5
+    ],
+    "failures": [
+      {
+        "scenario": 5,
+        "criterion": "Spread and midpoint calculated correctly"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Fill estimation walks orderbook for accurate slippage"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Output includes sufficient data for downstream analysis"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Initial baseline evaluation",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-21T09:44:26.412Z",
+    "changelog": "**Mutation**: Add explicit orderbook-walking algorithm for fill estimation with required output fields, fixing vague slippage calculation that causes downstream data insufficiency\n**Failures**: S5: Spread and midpoint calculated correctly, S5: Fill estimation walks orderbook for accurate slippage, S5: Output includes sufficient data for downstream analysis\n**Per-criteria**: Orderbook correctly parsed with price/size levels: 6/6, Spread and midpoint calculated correctly: 5/6, Fill estimation walks orderbook for accurate slippage: 5/6, Batch queries handle multiple tokens efficiently: 6/6, Price history returns data at correct intervals: 6/6, Output includes sufficient data for downstream analysis: 5/6\n**Decision**: Initial baseline evaluation"
+  },
+  {
+    "round": 1,
+    "score": 32,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "In step 7 (Fill Estimation), add explicit derivation of best_bid, best_ask, and mid from the fetched orderbook before computing slippage (mirroring step 4's spread logic), and add `reference_mid` to required output fields so slippage is always anchored to the live orderbook state.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      5,
+      4,
+      6,
+      6,
+      5
+    ],
+    "failures": [
+      {
+        "scenario": 3,
+        "criterion": "Fill estimation walks orderbook for accurate slippage"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Spread and midpoint calculated correctly"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Fill estimation walks orderbook for accurate slippage"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Output includes sufficient data for downstream analysis"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 32 did not exceed best 33 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-21T09:45:46.703Z",
+    "changelog": "**Mutation**: In step 7 (Fill Estimation), add explicit derivation of best_bid, best_ask, and mid from the fetched orderbook before computing slippage (mirroring step 4's spread logic), and add `reference_mid` to required output fields so slippage is always anchored to the live orderbook state.\n**Failures**: S3: Fill estimation walks orderbook for accurate slippage, S5: Spread and midpoint calculated correctly, S5: Fill estimation walks orderbook for accurate slippage, S5: Output includes sufficient data for downstream analysis\n**Per-criteria**: Orderbook correctly parsed with price/size levels: 6/6, Spread and midpoint calculated correctly: 5/6, Fill estimation walks orderbook for accurate slippage: 4/6, Batch queries handle multiple tokens efficiently: 6/6, Price history returns data at correct intervals: 6/6, Output includes sufficient data for downstream analysis: 5/6\n**Decision**: Score 32 did not exceed best 33 — mutation produced worse or equal results"
+  },
+  {
+    "round": 2,
+    "score": 31,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Restructure Output Format to separate \"always-required baseline fields\" from conditional fields, so every query mode (spread, history, price) produces a complete downstream-usable snapshot with token_id, timestamp, best_bid, best_ask, spread, mid, and liquidity totals — not just fill-estimation scenarios.",
+    "cost": 0.05,
+    "criteria": [
+      5,
+      5,
+      5,
+      6,
+      6,
+      4
+    ],
+    "failures": [
+      {
+        "scenario": 5,
+        "criterion": "Orderbook correctly parsed with price/size levels"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Spread and midpoint calculated correctly"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Fill estimation walks orderbook for accurate slippage"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Output includes sufficient data for downstream analysis"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Output includes sufficient data for downstream analysis"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 31 did not exceed best 33 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-21T09:46:57.900Z",
+    "changelog": "**Mutation**: Restructure Output Format to separate \"always-required baseline fields\" from conditional fields, so every query mode (spread, history, price) produces a complete downstream-usable snapshot with token_id, timestamp, best_bid, best_ask, spread, mid, and liquidity totals — not just fill-estimation scenarios.\n**Failures**: S5: Orderbook correctly parsed with price/size levels, S5: Spread and midpoint calculated correctly, S5: Fill estimation walks orderbook for accurate slippage, S5: Output includes sufficient data for downstream analysis, S6: Output includes sufficient data for downstream analysis\n**Per-criteria**: Orderbook correctly parsed with price/size levels: 5/6, Spread and midpoint calculated correctly: 5/6, Fill estimation walks orderbook for accurate slippage: 5/6, Batch queries handle multiple tokens efficiently: 6/6, Price history returns data at correct intervals: 6/6, Output includes sufficient data for downstream analysis: 4/6\n**Decision**: Score 31 did not exceed best 33 — mutation produced worse or equal results"
+  },
+  {
+    "round": 3,
+    "score": 33,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Add a mandatory Step 0 that always fetches the full orderbook via GET /book before any other endpoint call, so baseline fields are guaranteed regardless of which flag is used — fixing spread, fill, and downstream data failures in non-spread query modes.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      5,
+      5,
+      6,
+      6,
+      5
+    ],
+    "failures": [
+      {
+        "scenario": 5,
+        "criterion": "Spread and midpoint calculated correctly"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Fill estimation walks orderbook for accurate slippage"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Output includes sufficient data for downstream analysis"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 33 did not exceed best 33 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-21T09:48:30.711Z",
+    "changelog": "**Mutation**: Add a mandatory Step 0 that always fetches the full orderbook via GET /book before any other endpoint call, so baseline fields are guaranteed regardless of which flag is used — fixing spread, fill, and downstream data failures in non-spread query modes.\n**Failures**: S5: Spread and midpoint calculated correctly, S5: Fill estimation walks orderbook for accurate slippage, S5: Output includes sufficient data for downstream analysis\n**Per-criteria**: Orderbook correctly parsed with price/size levels: 6/6, Spread and midpoint calculated correctly: 5/6, Fill estimation walks orderbook for accurate slippage: 5/6, Batch queries handle multiple tokens efficiently: 6/6, Price history returns data at correct intervals: 6/6, Output includes sufficient data for downstream analysis: 5/6\n**Decision**: Score 33 did not exceed best 33 — mutation produced worse or equal results"
+  },
+  {
+    "round": 3,
+    "score": 33,
+    "max": 36,
+    "status": "escalation",
+    "mutation": "Stuck escalation: The optimization is stuck in a local optimum because the mutations are patching symptoms rather than addressing the root cause of structural ambiguity. The core issue is that the skill's instructions ",
+    "cost": 0.03,
+    "criteria": [
+      6,
+      5,
+      5,
+      6,
+      6,
+      5
+    ],
+    "failures": [],
+    "decisionReason": "Stuck escalation triggered after 3+ rounds with no improvement",
+    "escalation": {
+      "diagnosis": "The optimization is stuck in a local optimum because the mutations are patching symptoms rather than addressing the root cause of structural ambiguity. The core issue is that the skill's instructions have evolved into a complex set of positive and negative constraints (`Always do X`, `Do NOT do Y`, `Optionally do Z but prefer X`). This creates multiple potential execution paths, and the AI agent is likely failing tests by occasionally choosing a suboptimal or deprecated path (e.g., using `/price` or `/midpoint` APIs instead of deriving values from the `/book` call). The last successful mutation (Round 4) forced a \"mandatory pre-step,\" which was a major improvement, but the rest of the document was not refactored to reflect this new, singular execution flow. The remaining instructions still mention the other endpoints, creating contradictions and cognitive load that lead to inconsistent execution.",
+      "evalRedesignNeeded": false,
+      "strategy": "The current strategy of adding more specific constraints is failing. The new strategy should be **\"Refactor for Unambiguity and Consolidation.\"** Instead of adding more rules and warnings, the skill should be restructured to describe a single, linear execution pipeline that all modes follow. This involves removing all mentions of deprecated API calls (`/price`, `/midpoint`) and integrating the \"mandatory pre-step\" directly into a unified workflow, eliminating any possibility of deviation. The goal is to simplify the logic from a complex conditional tree to a simple, non-branching sequence for data gathering, followed by conditional formatting for the final output.",
+      "suggestedMutation": "Refactor the `Execution Steps` section to eliminate ambiguity and enforce a single, unified data-gathering pipeline. Merge the \"MANDATORY PRE-STEP\" into a new, single \"Execution Flow\" section. This new section will first describe the universal steps (fetch book, calculate all baseline values), then have a subsection for \"Conditional Augmentation\" where flag-specific API calls (`/last-trade-price`, `/history`) are made to add data to the already-computed baseline object. Crucially, completely remove the now-obsolete instructions from the `--price` and `--mid` steps that mention confirming against or avoiding the `/price` and `/midpoint` endpoints. This transforms the instructions from a set of rules to a simple, non-negotiable procedure."
+    },
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-21T09:49:54.079Z"
+  },
+  {
+    "round": 4,
+    "score": 34,
+    "max": 36,
+    "status": "kept",
+    "mutation": "Refactor Execution Steps into a unified linear pipeline with a single \"Execution Flow\" section that merges the mandatory pre-step into universal steps followed by conditional augmentation, removing all deprecated `/price` and `/midpoint` endpoint mentions from individual steps to eliminate ambiguity.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      5,
+      6,
+      6,
+      6,
+      5
+    ],
+    "failures": [
+      {
+        "scenario": 5,
+        "criterion": "Spread and midpoint calculated correctly"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Output includes sufficient data for downstream analysis"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Improved from 33 to 34",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-21T09:50:23.475Z",
+    "changelog": "**Mutation**: Refactor Execution Steps into a unified linear pipeline with a single \"Execution Flow\" section that merges the mandatory pre-step into universal steps followed by conditional augmentation, removing all deprecated `/price` and `/midpoint` endpoint mentions from individual steps to eliminate ambiguity.\n**Failures**: S5: Spread and midpoint calculated correctly, S5: Output includes sufficient data for downstream analysis\n**Per-criteria**: Orderbook correctly parsed with price/size levels: 6/6, Spread and midpoint calculated correctly: 5/6, Fill estimation walks orderbook for accurate slippage: 6/6, Batch queries handle multiple tokens efficiently: 6/6, Price history returns data at correct intervals: 6/6, Output includes sufficient data for downstream analysis: 5/6\n**Decision**: Improved from 33 to 34"
+  },
+  {
+    "round": 5,
+    "score": 29,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Add explicit batch-mode Phase 1 path that uses POST /books and computes all baseline fields (best_bid, best_ask, spread, spread_pct, mid, liquidity totals) per token — fixing batch spread/midpoint calculation and downstream data insufficiency in batch scenarios.",
+    "cost": 0.05,
+    "criteria": [
+      4,
+      4,
+      6,
+      5,
+      6,
+      4
+    ],
+    "failures": [
+      {
+        "scenario": 4,
+        "criterion": "Orderbook correctly parsed with price/size levels"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Spread and midpoint calculated correctly"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Batch queries handle multiple tokens efficiently"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Output includes sufficient data for downstream analysis"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Orderbook correctly parsed with price/size levels"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Spread and midpoint calculated correctly"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Output includes sufficient data for downstream analysis"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 29 did not exceed best 34 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-04-06T14:00:31.857Z",
+    "changelog": "**Mutation**: Add explicit batch-mode Phase 1 path that uses POST /books and computes all baseline fields (best_bid, best_ask, spread, spread_pct, mid, liquidity totals) per token — fixing batch spread/midpoint calculation and downstream data insufficiency in batch scenarios.\n**Failures**: S4: Orderbook correctly parsed with price/size levels, S4: Spread and midpoint calculated correctly, S4: Batch queries handle multiple tokens efficiently, S4: Output includes sufficient data for downstream analysis, S5: Orderbook correctly parsed with price/size levels, S5: Spread and midpoint calculated correctly, S5: Output includes sufficient data for downstream analysis\n**Per-criteria**: Orderbook correctly parsed with price/size levels: 4/6, Spread and midpoint calculated correctly: 4/6, Fill estimation walks orderbook for accurate slippage: 6/6, Batch queries handle multiple tokens efficiently: 5/6, Price history returns data at correct intervals: 6/6, Output includes sufficient data for downstream analysis: 4/6\n**Decision**: Score 29 did not exceed best 34 — mutation produced worse or equal results"
+  },
+  {
+    "round": 6,
+    "score": 30,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Add explicit empty/one-sided orderbook handling with guard clauses and sentinel output fields so all computed values degrade gracefully when bids or asks arrays are empty, fixing parse, spread, fill, and downstream failures in that edge case.",
+    "cost": 0.05,
+    "criteria": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "failures": [
+      {
+        "scenario": 5,
+        "criterion": "Orderbook correctly parsed with price/size levels"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Spread and midpoint calculated correctly"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Fill estimation walks orderbook for accurate slippage"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Batch queries handle multiple tokens efficiently"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Price history returns data at correct intervals"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Output includes sufficient data for downstream analysis"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 30 did not exceed best 34 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-04-06T14:02:10.509Z",
+    "changelog": "**Mutation**: Add explicit empty/one-sided orderbook handling with guard clauses and sentinel output fields so all computed values degrade gracefully when bids or asks arrays are empty, fixing parse, spread, fill, and downstream failures in that edge case.\n**Failures**: S5: Orderbook correctly parsed with price/size levels, S5: Spread and midpoint calculated correctly, S5: Fill estimation walks orderbook for accurate slippage, S5: Batch queries handle multiple tokens efficiently, S5: Price history returns data at correct intervals, S5: Output includes sufficient data for downstream analysis\n**Per-criteria**: Orderbook correctly parsed with price/size levels: 5/6, Spread and midpoint calculated correctly: 5/6, Fill estimation walks orderbook for accurate slippage: 5/6, Batch queries handle multiple tokens efficiently: 5/6, Price history returns data at correct intervals: 5/6, Output includes sufficient data for downstream analysis: 5/6\n**Decision**: Score 30 did not exceed best 34 — mutation produced worse or equal results"
+  },
+  {
+    "round": 7,
+    "score": 22,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Add an explicit interval-to-API-parameter mapping table in the --history phase that translates user-facing interval strings to the fidelity integer and startTs/endTs unix timestamp offsets that the Polymarket CLOB API actually requires, fixing all 6 price history failures.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      6,
+      2,
+      2,
+      0,
+      6
+    ],
+    "failures": [
+      {
+        "scenario": 1,
+        "criterion": "Fill estimation walks orderbook for accurate slippage"
+      },
+      {
+        "scenario": 1,
+        "criterion": "Batch queries handle multiple tokens efficiently"
+      },
+      {
+        "scenario": 1,
+        "criterion": "Price history returns data at correct intervals"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Fill estimation walks orderbook for accurate slippage"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Batch queries handle multiple tokens efficiently"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Price history returns data at correct intervals"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Batch queries handle multiple tokens efficiently"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Price history returns data at correct intervals"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Fill estimation walks orderbook for accurate slippage"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Price history returns data at correct intervals"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Price history returns data at correct intervals"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Fill estimation walks orderbook for accurate slippage"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Batch queries handle multiple tokens efficiently"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Price history returns data at correct intervals"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 22 did not exceed best 34 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-04-06T14:04:11.075Z",
+    "changelog": "**Mutation**: Add an explicit interval-to-API-parameter mapping table in the --history phase that translates user-facing interval strings to the fidelity integer and startTs/endTs unix timestamp offsets that the Polymarket CLOB API actually requires, fixing all 6 price history failures.\n**Failures**: S1: Fill estimation walks orderbook for accurate slippage, S1: Batch queries handle multiple tokens efficiently, S1: Price history returns data at correct intervals, S2: Fill estimation walks orderbook for accurate slippage, S2: Batch queries handle multiple tokens efficiently, S2: Price history returns data at correct intervals, S3: Batch queries handle multiple tokens efficiently, S3: Price history returns data at correct intervals, S4: Fill estimation walks orderbook for accurate slippage, S4: Price history returns data at correct intervals, S5: Price history returns data at correct intervals, S6: Fill estimation walks orderbook for accurate slippage, S6: Batch queries handle multiple tokens efficiently, S6: Price history returns data at correct intervals\n**Per-criteria**: Orderbook correctly parsed with price/size levels: 6/6, Spread and midpoint calculated correctly: 6/6, Fill estimation walks orderbook for accurate slippage: 2/6, Batch queries handle multiple tokens efficiently: 2/6, Price history returns data at correct intervals: 0/6, Output includes sufficient data for downstream analysis: 6/6\n**Decision**: Score 22 did not exceed best 34 — mutation produced worse or equal results"
+  },
+  {
+    "round": 7,
+    "score": 22,
+    "max": 36,
+    "status": "escalation",
+    "mutation": "Stuck escalation: The optimization is stuck because successive mutations have over-engineered the skill into a state of extreme complexity. The attempt to create a single, non-negotiable \"universal pipeline\" has backfi",
+    "cost": 0.03,
+    "criteria": [
+      6,
+      6,
+      2,
+      2,
+      0,
+      6
+    ],
+    "failures": [],
+    "decisionReason": "Stuck escalation triggered after 3+ rounds with no improvement",
+    "escalation": {
+      "diagnosis": "The optimization is stuck because successive mutations have over-engineered the skill into a state of extreme complexity. The attempt to create a single, non-negotiable \"universal pipeline\" has backfired. While logically sound, this monolithic structure forces the AI to parse a large, tangled block of pseudo-code with multiple conditional paths (especially the one-sided book logic added in Round 7, which coincided with a massive score drop from 30 to 22) for every single command. This high cognitive load makes the instructions brittle and prone to misinterpretation. The model is failing not because any individual piece of logic is wrong, but because the overall structure is too complex to follow reliably. Incremental patches are just adding more complexity and worsening the problem.",
+      "evalRedesignNeeded": true,
+      "strategy": "The new strategy is **\"Simplify and Modularize\"**. We will abandon the single, monolithic execution pipeline and restructure the skill around its primary triggers: the flags. Each flag's execution flow will be described in a simple, self-contained section. This trades the software engineering principle of \"Don't Repeat Yourself\" for the more effective prompting principle of \"Clarity and Isolation.\" A central, reusable block of logic for processing a raw orderbook will be defined once, and each flag's section will simply refer to it. This drastically reduces the cognitive load for any given task and makes the skill more robust by isolating the logic for each operation.",
+      "suggestedMutation": "**Refactor the `Execution Flow` into modular, flag-specific instructions with a shared `Core Logic` component.**\n\n1.  **Delete the entire `## Execution Flow` section** (including Phase 1, 2, and 3).\n2.  **Create a new section `## Core Logic: Processing an Orderbook`**.\n    *   This section will contain the detailed logic for taking a raw orderbook response (with `bids` and `asks` arrays) and computing all the \"baseline\" fields: `best_bid`, `best_ask`, `spread`, `mid`, `spread_pct`, `one_sided`, liquidity totals, and top N levels.\n    *   It will explicitly contain the guard clauses and `if/else` logic for handling empty/one-sided books. This isolates the most complex part of the logic into a single, reusable function-like description.\n3.  **Create a new top-level section `## Flag-Specific Execution`**.\n    *   Under this section, create a subsection for each primary flag (e.g., `### --spread`, `### --last`, `### --fill`, `### --batch`).\n    *   For each flag, provide a simple, linear list of steps.\n\n    **Example for `--spread`:**\n    ```markdown\n    ### --spread\n    1.  **Fetch Data:** Execute `GET /book?token_id=<TOKEN_ID>`.\n    2.  **Process Data:** Apply the rules from the `Core Logic: Processing an Orderbook` section to the API response to compute all baseline fields.\n    3.  **Format Output:** Write the `orderbook.json` file containing all the baseline fields computed in the previous step.\n    ```\n\n    **Example for `--last`:**\n    ```markdown\n    ### --last\n    1.  **Fetch Orderbook:** Execute `GET /book?token_id=<TOKEN_ID>`.\n    2.  **Process Orderbook:** Apply the rules from `Core Logic: Processing an Orderbook` to compute all baseline fields.\n    3.  **Fetch Last Trade:** Execute `GET /last-trade-price?token_id=<TOKEN_ID>`.\n    4.  **Format Output:** Write the `orderbook.json` file, merging the baseline fields with the `last_trade_price` and `last_trade_side` from the second API call.\n    ```\n    *   The logic for `--batch` will be similarly self-contained, instructing the AI to loop through the `POST /books` response and apply the `Core Logic` to each item.\n\nThis structural redesign breaks the complex, brittle pipeline into simple, independent, and robust instructions, directly addressing the root cause of the failure."
+    },
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-04-06T14:07:03.778Z"
+  },
+  {
+    "round": 8,
+    "score": 36,
+    "max": 36,
+    "status": "kept",
+    "mutation": "Refactor monolithic Execution Flow into a shared `Core Logic: Processing an Orderbook` section plus modular `Flag-Specific Execution` subsections — isolating each flag's linear steps to reduce cognitive load and make logic robust by eliminating cross-phase dependencies.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Improved from 34 to 36",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-04-06T14:07:34.924Z",
+    "changelog": "**Mutation**: Refactor monolithic Execution Flow into a shared `Core Logic: Processing an Orderbook` section plus modular `Flag-Specific Execution` subsections — isolating each flag's linear steps to reduce cognitive load and make logic robust by eliminating cross-phase dependencies.\n**Failures**: none\n**Per-criteria**: Orderbook correctly parsed with price/size levels: 6/6, Spread and midpoint calculated correctly: 6/6, Fill estimation walks orderbook for accurate slippage: 6/6, Batch queries handle multiple tokens efficiently: 6/6, Price history returns data at correct intervals: 6/6, Output includes sufficient data for downstream analysis: 6/6\n**Decision**: Improved from 34 to 36"
+  },
+  {
+    "round": 9,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "No failures detected (36/36 score) — apply a minor defensive clarification to the --history section to make the `market` vs `token_id` query parameter distinction explicit, preventing potential API call errors on a boundary case.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-04-06T14:09:09.313Z",
+    "changelog": "**Mutation**: No failures detected (36/36 score) — apply a minor defensive clarification to the --history section to make the `market` vs `token_id` query parameter distinction explicit, preventing potential API call errors on a boundary case.\n**Failures**: none\n**Per-criteria**: Orderbook correctly parsed with price/size levels: 6/6, Spread and midpoint calculated correctly: 6/6, Fill estimation walks orderbook for accurate slippage: 6/6, Batch queries handle multiple tokens efficiently: 6/6, Price history returns data at correct intervals: 6/6, Output includes sufficient data for downstream analysis: 6/6\n**Decision**: Score 36 did not exceed best 36 — mutation produced worse or equal results"
+  },
+  {
+    "round": 10,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-polymarket-orderbook-reader/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n",
+    "cost": 0.03,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-05-03T22:00:32.278Z",
+    "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-polymarket-orderbook-reader/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n\n**Failures**: none"
+  },
+  {
+    "round": 11,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-polymarket-orderbook-reader/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n",
+    "cost": 0.03,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-05-03T22:01:08.933Z",
+    "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-polymarket-orderbook-reader/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n\n**Failures**: none"
+  },
+  {
+    "round": 12,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-polymarket-orderbook-reader/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n",
+    "cost": 0.03,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-05-03T22:01:41.426Z",
+    "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-polymarket-orderbook-reader/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n\n**Failures**: none"
+  },
+  {
+    "round": 12,
+    "score": 36,
+    "max": 36,
+    "status": "escalation",
+    "mutation": "Stuck escalation: The optimization is stuck in a local optimum of \"perfection\" because the skill's logic fully satisfies the existing 36 test scenarios. The mutations since Round 8 have been either minor, non-functiona",
+    "cost": 0.03,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "decisionReason": "Stuck escalation triggered after 3+ rounds with no improvement",
+    "escalation": {
+      "diagnosis": "The optimization is stuck in a local optimum of \"perfection\" because the skill's logic fully satisfies the existing 36 test scenarios. The mutations since Round 8 have been either minor, non-functional clarifications (which are correctly reverted as they offer no score improvement) or have failed due to external environment issues (a broken script path), not flawed logic. The core problem is that the evaluation criteria are no longer challenging enough to guide further improvement; the skill has mastered the test. The system is trying to refine a solution that is already considered flawless by its own metrics.",
+      "evalRedesignNeeded": true,
+      "strategy": "The current strategy of incremental refinement of existing logic is exhausted. The new strategy must be to **expand the skill's scope by introducing requirements for real-world operational robustness**, specifically around network and API error handling. This creates a new dimension for improvement and forces the skill to evolve beyond its current \"happy path\" implementation. We will add a dedicated section for handling non-200 HTTP status codes, specifying behavior for common errors like 404s (invalid token) and 5xx/429s (server errors/rate limiting), including a retry mechanism. This introduces new, currently un-tested logic that is critical for a production-ready skill.",
+      "suggestedMutation": "Add a new top-level markdown section titled `## Error Handling & Retries` after the `Prerequisites` section and before the `Core Logic` section. This new section will define the required behavior for handling API failures, making the skill more resilient.\n\n```markdown\n---\n(existing Prerequisites section)\n---\n\n## Error Handling & Retries\n\nAll API calls to `https://clob.polymarket.com` must be wrapped in error handling logic.\n\n1.  **Client-Side Errors (4xx):**\n    -   **404 Not Found:** If any request for a `token_id` returns a 404, the skill must not crash. It should report that the specific token was not found and continue processing any other tokens (in batch mode). The final JSON output for that token should include an `error` field, e.g., `{\"token_id\": \"<ID>\", \"error\": \"Token not found\"}`.\n    -   **429 Too Many Requests:** Treat this as a server-side error and trigger the retry mechanism.\n\n2.  **Server-Side Errors (5xx) & Rate Limiting (429):**\n    -   Implement a retry mechanism with exponential backoff for these transient errors.\n    -   **Policy:** Attempt a total of 3 times (1 initial + 2 retries).\n    -   **Delay:** Wait 1 second before the first retry, and 2 seconds before the second retry.\n    -   If all 3 attempts fail, the skill must exit gracefully, log the final error, and output a JSON with a top-level `error` field indicating the failure.\n\n---\n(existing Core Logic section)\n---\n```"
+    },
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-05-03T22:02:10.726Z"
+  },
+  {
+    "round": 13,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-polymarket-orderbook-reader/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n",
+    "cost": 0.03,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-05-03T22:02:39.827Z",
+    "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-polymarket-orderbook-reader/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n\n**Failures**: none"
+  },
+  {
+    "round": 14,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-polymarket-orderbook-reader/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n",
+    "cost": 0.03,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-05-03T22:03:22.638Z",
+    "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-polymarket-orderbook-reader/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n\n**Failures**: none"
+  },
+  {
+    "round": 15,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-polymarket-orderbook-reader/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n",
+    "cost": 0.03,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-05-04T06:00:39.990Z",
+    "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-polymarket-orderbook-reader/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n\n**Failures**: none"
+  },
+  {
+    "round": 16,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-polymarket-orderbook-reader/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n",
+    "cost": 0.03,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-05-04T06:01:18.272Z",
+    "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-polymarket-orderbook-reader/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n\n**Failures**: none"
+  },
+  {
+    "round": 17,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-polymarket-orderbook-reader/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n",
+    "cost": 0.03,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-05-04T06:01:52.750Z",
+    "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-polymarket-orderbook-reader/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n\n**Failures**: none"
+  },
+  {
+    "round": 17,
+    "score": 36,
+    "max": 36,
+    "status": "escalation",
+    "mutation": "Stuck escalation: The optimization is stuck in a local optimum of \"perfection\" because the skill's logic, as defined, fully satisfies the existing 36 test scenarios. The changelog from Round 4 to Round 8 shows a system",
+    "cost": 0.03,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "decisionReason": "Stuck escalation triggered after 3+ rounds with no improvement",
+    "escalation": {
+      "diagnosis": "The optimization is stuck in a local optimum of \"perfection\" because the skill's logic, as defined, fully satisfies the existing 36 test scenarios. The changelog from Round 4 to Round 8 shows a systematic hardening of the skill's core logic, batch processing, and edge-case handling (one-sided books, API parameter specifics), which successfully addressed all previous failures. The mutations since reaching 36/36 have been minor clarifications or have failed due to an external environment issue (the `claude` command path), not a flaw in the mutation logic itself. The core problem is that the evaluation criteria are no longer challenging the skill; the tests only cover success paths and predictable data variations, not external failure modes or invalid inputs.",
+      "evalRedesignNeeded": true,
+      "strategy": "The current strategy of refining existing logic is exhausted. The new strategy must be to expand the skill's scope by introducing requirements for **robustness and error handling**. This involves creating new test scenarios that simulate real-world failure conditions, which the current skill definition does not address. By adding explicit requirements for handling API errors (e.g., 404 Not Found, 429 Rate Limited) and validating user inputs (e.g., missing required flags), we create new, valid failure conditions that will break the 36/36 deadlock and force the skill to evolve into a more resilient and production-ready tool.",
+      "suggestedMutation": "Add a new top-level section to the skill markdown titled `## Error Handling and Input Validation` that explicitly defines behavior for failure conditions. This introduces new requirements that the current implementation does not meet, creating a clear path for improvement.\n\n```markdown\n---\n(insert at the end of the skill, before ## Quality Gates)\n---\n\n## Error Handling and Input Validation\n\nThis section defines how the skill must behave when encountering non-ideal conditions, such as API errors or invalid user-provided flags. The goal is to fail gracefully with clear, machine-parsable error messages.\n\n### 1. API Response Errors\n\nIf any API call to `https://clob.polymarket.com` returns a non-200 status code, the skill must halt execution for that token and produce a specific error output.\n\n- **404 Not Found:** This typically means the `token_id` is invalid or the market does not exist.\n  - **Console Output:** `ERROR: Token ID '<TOKEN_ID>' not found.`\n  - **`orderbook.json` Output:**\n    ```json\n    {\n      \"token_id\": \"<the_invalid_token_id>\",\n      \"timestamp\": \"<ISO8601>\",\n      \"error\": \"Token ID not found\",\n      \"status_code\": 404\n    }\n    ```\n\n- **429 Too Many Requests:** The skill is being rate-limited.\n  - **Console Output:** `ERROR: API rate limit exceeded. Please wait and try again.`\n  - **`orderbook.json` Output:**\n    ```json\n    {\n      \"token_id\": \"<TOKEN_ID>\",\n      \"timestamp\": \"<ISO8601>\",\n      \"error\": \"API rate limit exceeded\",\n      \"status_code\": 429\n    }\n    ```\n\n- **5xx Server Errors:** The Polymarket API is experiencing issues.\n  - **Console Output:** `ERROR: Polymarket API returned a server error (Status <CODE>). Please try again later.`\n  - **`orderbook.json` Output:**\n    ```json\n    {\n      \"token_id\": \"<TOKEN_ID>\",\n      \"timestamp\": \"<ISO8601>\",\n      \"error\": \"API server error\",\n      \"status_code\": <the_5xx_code>\n    }\n    ```\n\n### 2. User Input Validation\n\n- **`--fill` flag dependencies:** If `--fill` is specified, both `--fill-size` and `--fill-side` must also be present.\n  - **If missing:** Halt immediately.\n  - **Console Output:** `ERROR: --fill requires --fill-size and --fill-side to be specified.`\n  - **Exit Code:** 1 (or non-zero). Do not write an `orderbook.json`.\n\n- **Invalid `--fill-side`:** The value for `--fill-side` must be either `BUY` or `SELL` (case-insensitive).\n  - **If invalid:** Halt immediately.\n  - **Console Output:** `ERROR: Invalid --fill-side value '<VALUE>'. Must be 'BUY' or 'SELL'.`\n  - **Exit Code:** 1 (or non-zero). Do not write an `orderbook.json`.\n```"
+    },
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-05-04T06:02:21.952Z"
+  }
+]

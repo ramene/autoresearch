@@ -1,0 +1,165 @@
+# SKILL: polymarket-flash-crash-detector
+Detect probability crashes on Polymarket prediction markets -- monitoring for 30%+ price drops within 10-second windows and generating buy signals on oversold conditions.
+
+## Purpose
+This skill implements a flash crash detection strategy for Polymarket's short-duration prediction markets (5-minute, 15-minute). It monitors real-time prices via WebSocket, detects when a probability drops 30% or more within a 10-second lookback window, and generates buy signals on the assumption that sharp drops in prediction markets often overshoot and revert. Based on the discountry/polymarket-trading-bot flash crash strategy.
+
+## Trigger Conditions
+1. **Slash Command:** `/skill polymarket-flash-crash-detector [flags]`
+   - `--coin=<BTC|ETH|SOL|XRP>`: Coin to monitor (default: ETH)
+   - `--drop=<float>`: Drop threshold as absolute probability change (default: 0.30)
+   - `--lookback=<seconds>`: Lookback window (default: 10)
+   - `--size=<float>`: Trade size in USDC (default: 5.0)
+   - `--take-profit=<float>`: TP in dollars (default: 0.10)
+   - `--stop-loss=<float>`: SL in dollars (default: 0.05)
+   - `--paper`: Paper trade mode (no real orders)
+   - `--duration=<minutes>`: Monitoring duration (default: 60)
+
+2. **Keywords:** "flash crash polymarket", "detect probability crash", "buy the dip prediction market", "oversold polymarket"
+
+## Prerequisites
+1. **Working Directory:** `~/.remote/@autoresearch/skills/working-polymarket-flash-crash-detector/`
+2. **Dependencies:** `polymarket-websocket-monitor` for real-time data, `polymarket-clob-trader` for execution (if not paper trading)
+3. **For live trading:** `POLY_PRIVATE_KEY`, `POLY_SAFE_ADDRESS`
+
+## Execution Steps
+
+1. **Market Discovery:**
+   - Use `polymarket-market-discovery --5min --coin=<COIN>` to find active 5/15-minute markets
+   - Get token IDs for both YES and NO outcomes
+
+2. **Price Monitoring:**
+   - Subscribe to WebSocket market channel for target token IDs
+   - Maintain rolling price buffer with timestamps (lookback window)
+   - On each price_change event, update buffer
+   - On WebSocket reconnect or detected data gap: flush the price buffer before processing new events (see Quality Gate 7)
+
+3. **Crash Detection Algorithm:**
+   - On each price update:
+     a. Get current price
+     b. Get max price from lookback window (last N seconds)
+     c. Calculate drop: `drop = max_price - current_price`
+     d. If `drop >= drop_threshold` (default 0.30): SIGNAL DETECTED — note this uses `>=` (greater than OR equal to), so a drop of exactly 0.30 with threshold 0.30 DOES trigger a signal
+   - Signal represents probability overshooting downward
+
+4. **Signal Execution:**
+   - Paper mode: Log signal with timestamp, prices, drop magnitude
+   - Live mode: Place buy order via `polymarket-clob-trader`:
+     - Side: BUY
+     - Token: The dropped token (buy low)
+     - Size: configured USDC amount
+     - Type: FOK (fill or kill for immediate execution)
+     - Price: current_price (market order with slippage limit)
+
+5. **Position Management:**
+   - After entry, monitor price for TP/SL:
+     - Take profit: entry_price + take_profit_delta (default +$0.10)
+     - Stop loss: entry_price - stop_loss_delta (default -$0.05)
+   - On TP/SL trigger: place sell order, log result
+
+6. **Statistics:**
+   - Track: signals detected, trades executed, wins, losses, total P&L, win rate
+   - Log all events to `flash_crash_log.jsonl`
+   - Print periodic status updates
+
+## Default Parameters
+- Drop threshold: 0.30 (30% probability drop)
+- Lookback window: 10 seconds
+- Trade size: $5.00
+- Take profit: +$0.10
+- Stop loss: -$0.05
+- Max concurrent positions: 1
+
+## Output Format
+- **Console:** Real-time monitoring display with detected signals and trade status
+- **`flash_crash_log.jsonl`:** Event log with signals, trades, and P&L
+
+## Quality Gates
+
+1. **Rolling price buffer maintained correctly**
+   - Price buffer evicts entries older than the lookback window; max_price reflects only in-window prices
+   - **Scenario:** Price events at t=0: 0.80, t=5s: 0.75, t=12s: 0.70 with lookback=10s → At t=12s, buffer contains only events from t=2s onward; t=0 event is evicted; max_price in window = 0.75
+   - **Pass:** Buffer evicts entries older than lookback window; max_price reflects only in-window prices
+
+2. **Crash detection triggers at correct threshold**
+   - Signal fires when drop ≥ threshold; no false signal when drop < threshold
+   - **Scenario:** Price stream 0.90 → 0.85 → 0.80 → 0.59 (drop = 0.31) within 10s, threshold=0.30 → Signal fires at 0.59 (drop 0.31 ≥ 0.30); no signal at 0.61 (drop 0.29 < threshold)
+   - **Pass:** Signal fires at drop ≥ 0.30; no signal when drop < 0.30
+
+3. **Paper trade mode works without placing real orders**
+   - With `--paper` flag, signals are logged but no orders are sent to `polymarket-clob-trader`
+   - **Scenario:** Run with `--paper`; inject a 0.35 drop signal → Signal logged to `flash_crash_log.jsonl` with fields: `type=signal, price, drop, timestamp`; zero calls made to `polymarket-clob-trader` buy endpoint
+   - **Pass:** Log entry present; no real order placed
+
+4. **TP/SL exit conditions evaluated correctly**
+   - Exit fires at exactly TP=entry+0.10 and SL=entry-0.05; no exit between those bounds
+   - **Scenario:** Entry at price=0.55, take_profit=0.10, stop_loss=0.05 → Sell triggered when price reaches 0.65 (TP hit); sell triggered when price drops to 0.50 (SL hit); no sell between 0.50 and 0.65
+   - **Pass:** Exit fires at exactly TP=entry+0.10 and SL=entry-0.05
+
+5. **Statistics tracked accurately**
+   - All counters match; win_rate = wins/trades; total_pnl = sum of individual P&Ls
+   - **Scenario:** Simulate 3 trades: win (+$0.10), loss (-$0.05), win (+$0.10) → signals_detected=3, trades=3, wins=2, losses=1, total_pnl=+$0.15, win_rate=66.7%
+   - **Pass:** All counters match; win_rate = wins/trades; total_pnl = sum of individual P&Ls
+
+6. **Max position limit enforced**
+   - Position count never exceeds max_concurrent_positions; skipped signals appear in log with reason
+   - **Scenario:** Two simultaneous crash signals while one position is already open (max_concurrent_positions=1) → Second and third signals are skipped/logged as "skipped: max positions reached"; only one active position at a time
+   - **Pass:** Position count never exceeds 1; skipped signals appear in log with reason
+
+7. **Handles data stream interruptions gracefully**
+   - Prevents false signals caused by stale data after a WebSocket reconnect or data gap.
+   - **Scenario:** A price of 0.80 is recorded at t=0. The data stream is interrupted for 15 seconds (longer than the 10s lookback). Upon reconnection, the first new price is 0.40 at t=15.
+   - **Pass:** The skill recognizes the time gap (15s) is larger than the lookback window (10s), flushes the stale price buffer, and does NOT trigger a signal. A signal would be a failure, as the price drop did not occur within the lookback window. The log should indicate a buffer flush or a skipped check due to the data gap.
+
+## Test Scenarios
+
+### Scenario 1: Rolling price buffer eviction
+- **Criterion:** Rolling price buffer maintained correctly
+- **Input:** lookback=10s; price events: `[{t:0, p:0.80}, {t:5, p:0.75}, {t:12, p:0.70}]`
+- **At t=12s:** evaluate buffer contents and max_price
+- **Expected:** buffer contains only `{t:5, p:0.75}` and `{t:12, p:0.70}`; `{t:0, p:0.80}` evicted; `max_price=0.75`
+
+### Scenario 2: Crash signal fires at threshold
+- **Criterion:** Crash detection triggers at correct threshold
+- **Input:** threshold=0.30; price stream within 10s: `[0.90, 0.85, 0.80, 0.59]`
+- **Expected:** signal fires when price reaches 0.59 (drop=0.31 ≥ 0.30); no signal at price=0.61 (drop=0.29 < 0.30)
+
+### Scenario 3: Boundary — exact threshold (drop == threshold triggers signal)
+- **Criterion:** Crash detection triggers at correct threshold
+- **Input:** threshold=0.30; max_price_in_window=0.90; current_price=0.60 (drop=0.30 exactly)
+- **Expected:** signal fires — the condition is `drop >= threshold` (inclusive), so drop=0.30 with threshold=0.30 MUST trigger a signal; a drop of 0.2999 must NOT trigger
+
+### Scenario 4: Paper mode suppresses orders
+- **Criterion:** Paper trade mode works without placing real orders
+- **Input:** `--paper` flag set; inject crash signal with drop=0.35
+- **Expected:** `flash_crash_log.jsonl` contains entry `{type:"signal", drop:0.35, ...}`; `polymarket-clob-trader` buy endpoint called 0 times
+
+### Scenario 5: Take profit exit
+- **Criterion:** TP/SL exit conditions evaluated correctly
+- **Input:** entry_price=0.55; take_profit=0.10; stop_loss=0.05; price rises to 0.65
+- **Expected:** sell order placed at 0.65; no sell at 0.64
+
+### Scenario 6: Stop loss exit
+- **Criterion:** TP/SL exit conditions evaluated correctly
+- **Input:** entry_price=0.55; take_profit=0.10; stop_loss=0.05; price drops to 0.50
+- **Expected:** sell order placed at 0.50; no sell at 0.51
+
+### Scenario 7: Statistics after 3 trades
+- **Criterion:** Statistics tracked accurately
+- **Input:** trade results: `[+0.10, -0.05, +0.10]`
+- **Expected:** `{signals_detected:3, trades:3, wins:2, losses:1, total_pnl:0.15, win_rate:0.667}`
+
+### Scenario 8: Max concurrent position enforcement
+- **Criterion:** Max position limit enforced
+- **Input:** max_concurrent_positions=1; one position already open; two new crash signals fire simultaneously
+- **Expected:** both new signals logged as `{type:"skipped", reason:"max positions reached"}`; active position count remains 1
+
+### Scenario 9: WebSocket reconnect after gap
+- **Criterion:** Handles data stream interruptions gracefully
+- **Input:** lookback=10s; price events: `[{t:0, p:0.80}]`, then a 15-second data gap, then `[{t:15, p:0.40}]`
+- **Expected:** No signal is fired. The price buffer should be flushed or reset upon detecting a time gap greater than the lookback window, preventing the new price at t=15 from being compared against the stale price from t=0. The log should indicate a buffer flush or a skipped check due to the data gap.
+
+## Integration Points
+- **Upstream:** `polymarket-market-discovery --5min` finds target markets
+- **Dependencies:** `polymarket-websocket-monitor` for real-time data, `polymarket-clob-trader` for execution
+- **Downstream:** `polymarket-position-manager` manages position lifecycle

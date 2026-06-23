@@ -1,0 +1,118 @@
+{
+  "scenarios": [
+    {
+      "id": "academic-paper",
+      "name": "Academic Paper Analysis",
+      "description": "Peer-reviewed neuroscience paper on olfactory perception with empirical data, statistical results, and theoretical framework",
+      "input_type": "academic_paper",
+      "complexity": "high",
+      "expected_sections": 6
+    },
+    {
+      "id": "blog-post",
+      "name": "Blog Post Analysis",
+      "description": "Popular science blog post summarizing recent findings on smell and memory with informal tone and no citations",
+      "input_type": "blog_post",
+      "complexity": "low",
+      "expected_sections": 6
+    },
+    {
+      "id": "meeting-transcript",
+      "name": "Meeting Transcript Analysis",
+      "description": "Research team meeting transcript discussing experimental design, preliminary results, and next steps with multiple speakers",
+      "input_type": "meeting_transcript",
+      "complexity": "medium",
+      "expected_sections": 6
+    },
+    {
+      "id": "technical-documentation",
+      "name": "Technical Documentation Analysis",
+      "description": "Software documentation for a multisensory measurement platform including API specs, data schemas, and deployment guides",
+      "input_type": "technical_documentation",
+      "complexity": "medium",
+      "expected_sections": 6
+    },
+    {
+      "id": "research-notes",
+      "name": "Research Notes Analysis",
+      "description": "Unstructured field notes from an architectural phenomenology study with observations, sketches described in text, and preliminary hypotheses",
+      "input_type": "research_notes",
+      "complexity": "medium",
+      "expected_sections": 6
+    },
+    {
+      "id": "podcast-transcript",
+      "name": "Podcast Transcript Analysis",
+      "description": "Long-form interview with a neuroscientist discussing cross-modal perception, containing tangents, anecdotes, and spontaneous insights",
+      "input_type": "podcast_transcript",
+      "complexity": "medium",
+      "expected_sections": 6
+    },
+    {
+      "id": "literature-review",
+      "name": "Literature Review Analysis",
+      "description": "Systematic literature review covering 50+ papers on olfactory-spatial memory with meta-analytic findings and evidence tables",
+      "input_type": "literature_review",
+      "complexity": "high",
+      "expected_sections": 6
+    },
+    {
+      "id": "experimental-report",
+      "name": "Experimental Report Analysis",
+      "description": "Lab report from an fMRI study measuring brain activation during olfactory-architectural stimuli with methods, results, and discussion sections",
+      "input_type": "experimental_report",
+      "complexity": "high",
+      "expected_sections": 6
+    }
+  ],
+  "criteria": [
+    {
+      "id": "synthesis-completeness",
+      "name": "Synthesis Completeness",
+      "question": "Does Stage 1 extract all key frameworks and claims?",
+      "stage": 1,
+      "binary": true,
+      "description": "Stage 1 output must identify and articulate every major framework, mental model, and substantive claim present in the input content. No significant framework or claim should be omitted."
+    },
+    {
+      "id": "evidence-grounding",
+      "name": "Evidence Grounding",
+      "question": "Are claims tied to specific evidence with strength ratings?",
+      "stage": 1,
+      "binary": true,
+      "description": "Every claim in the synthesis must cite specific evidence from the input (direct quotes, page references, timestamps, or file paths). Claims without evidence citations fail this criterion."
+    },
+    {
+      "id": "adversarial-rigor",
+      "name": "Adversarial Rigor",
+      "question": "Does Stage 2 genuinely challenge assumptions rather than rubber-stamp?",
+      "stage": 2,
+      "binary": true,
+      "description": "Stage 2 must contain at least one CHALLENGED or CONTRADICTED verdict with substantive reasoning. If all claims are CONFIRMED without meaningful pushback, this criterion fails."
+    },
+    {
+      "id": "actionability",
+      "name": "Actionability",
+      "question": "Does Stage 3 produce concrete, executable next steps?",
+      "stage": 3,
+      "binary": true,
+      "description": "Stage 3 action items must be specific enough to execute without further clarification. Each must include: what to do, expected output, effort estimate, and dependencies. Vague recommendations fail this criterion."
+    },
+    {
+      "id": "cross-stage-coherence",
+      "name": "Cross-Stage Coherence",
+      "question": "Do findings flow logically across all 3 stages?",
+      "stage": "all",
+      "binary": true,
+      "description": "Stage 2 must directly reference and engage with Stage 1 findings. Stage 3 must incorporate both Stage 1 synthesis and Stage 2 validations/challenges. Disconnected stages fail this criterion."
+    },
+    {
+      "id": "citation-accuracy",
+      "name": "Citation Accuracy",
+      "question": "Are researcher names, paper titles, and DOIs correctly referenced?",
+      "stage": "all",
+      "binary": true,
+      "description": "All researcher names must be spelled correctly, paper titles must match actual publications, and DOIs must be valid. Any fabricated citation or incorrect attribution fails this criterion."
+    }
+  ]
+}

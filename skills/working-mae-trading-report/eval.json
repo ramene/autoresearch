@@ -1,0 +1,20 @@
+{
+  "scenarios": [
+    { "id": 1, "type": "consistency", "title": "P&L Dashboard vs Email Match", "event": "After an hourly loop completes, compare the P&L shown in the dashboard hero with the P&L in the email header. They must be identical within $0.01.", "expectedAction": "verify-pnl-match", "expectedType": "data-consistency" },
+    { "id": 2, "type": "accuracy", "title": "Zero P&L Elimination", "event": "When IBKR has positions with real unrealized P&L (e.g., +$2,247), verify that $0.00 does NOT appear as P&L in any formatted output (dashboard hero, position table, email header, email positions).", "expectedAction": "verify-no-zero-pnl", "expectedType": "data-accuracy" },
+    { "id": 3, "type": "integrity", "title": "Log Consistency", "event": "Read the full chain log from a loop run. Verify there are no contradictory P&L numbers (e.g., $0.00 in section [9] but +$2,247 in [IBKR] section). All P&L references should agree.", "expectedAction": "verify-log-integrity", "expectedType": "data-integrity" },
+    { "id": 4, "type": "source", "title": "Single Source of Truth", "event": "Trace every P&L computation in the codebase (dashboard HTML, server.mjs, email script, chain script). Verify all use the same formula: (NetLiq - Cash) - sum(avgPrice * qty).", "expectedAction": "verify-single-formula", "expectedType": "code-audit" },
+    { "id": 5, "type": "display", "title": "IBKR-Only Positions When Connected", "event": "When IB Gateway is connected and returning positions, verify the dashboard position table shows ONLY IBKR positions (SPY, AAPL, NVDA) and does NOT show paper BTC/ETH.", "expectedAction": "verify-ibkr-only", "expectedType": "ui-accuracy" },
+    { "id": 6, "type": "freshness", "title": "QwQ Analysis Varies Per Run", "event": "Compare QwQ-32B analysis output from two consecutive loop runs. The analysis should reference different data (updated prices, changed P&L, new signals) not produce identical text.", "expectedAction": "verify-qwq-freshness", "expectedType": "content-quality" },
+    { "id": 7, "type": "edge-case", "title": "IBKR Offline Graceful Degradation", "event": "Simulate IB Gateway being offline (port 4002 unreachable). Dashboard should show 'IBKR OFFLINE' and email should note 'No IBKR data' — NOT show fake numbers or crash.", "expectedAction": "verify-offline-handling", "expectedType": "error-handling" },
+    { "id": 8, "type": "completeness", "title": "Per-Position P&L Sums to Total", "event": "Verify that the sum of individual position P&L values in the dashboard table equals the total Unrealized P&L in the hero section (within $1 tolerance).", "expectedAction": "verify-pnl-sum", "expectedType": "math-accuracy" }
+  ],
+  "criteria": [
+    "P&L Consistency: Dashboard hero P&L matches email header P&L matches IBKR query P&L within $0.01",
+    "No Paper Mixing: When IBKR is connected, zero paper book positions or $0 P&L appear in any output",
+    "Log Integrity: The chain log contains one consistent set of P&L numbers, not contradictory sections",
+    "Single Formula: All P&L computations use (NetLiq - Cash) - sum(avgPrice * qty)",
+    "Data Freshness: IBKR data polled within 60s, QwQ analysis references actual position performance",
+    "Error Handling: IBKR offline produces clear messaging, not crashes or fake data"
+  ]
+}

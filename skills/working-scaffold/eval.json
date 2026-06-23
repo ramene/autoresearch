@@ -1,0 +1,92 @@
+{
+  "scenarios": [
+    {
+      "id": 1,
+      "type": "mode-detection",
+      "title": "Greenfield — kebab-case name",
+      "event": "User runs /scaffold my-new-project. No URL, no archive, just a name.",
+      "expectedAction": "greenfield-mode",
+      "expectedType": "mode-detection"
+    },
+    {
+      "id": 2,
+      "type": "mode-detection",
+      "title": "Plan Mode — .md with targets",
+      "event": "User runs /scaffold ~/.claude/plans/security-audit.md. File contains ## Targets and **Workspace**: ~/.remote/@builds.",
+      "expectedAction": "plan-mode",
+      "expectedType": "mode-detection"
+    },
+    {
+      "id": 3,
+      "type": "mode-detection",
+      "title": "Reverse-Engineer — GitHub URL",
+      "event": "User runs /scaffold https://github.com/user/repo. Source is a GitHub URL.",
+      "expectedAction": "reverse-engineer-mode",
+      "expectedType": "mode-detection"
+    },
+    {
+      "id": 4,
+      "type": "greenfield",
+      "title": "Parameter Gathering — All Questions",
+      "event": "User says scaffold a new project. No name, no path, no options specified.",
+      "expectedAction": "ask-all-questions",
+      "expectedType": "parameter-gathering"
+    },
+    {
+      "id": 5,
+      "type": "greenfield",
+      "title": "Terminal Launch — Separate Question",
+      "event": "Scaffolding complete. Instructions say to ask about terminal launch as a SEPARATE follow-up question.",
+      "expectedAction": "separate-follow-up",
+      "expectedType": "terminal-launch"
+    },
+    {
+      "id": 6,
+      "type": "plan-mode",
+      "title": "Template Variables — Unresolved",
+      "event": "Plan file contains {{GITHUB_TOKEN}} but no --plan-var was passed. Validation should catch this.",
+      "expectedAction": "fail-validation",
+      "expectedType": "template-validation"
+    },
+    {
+      "id": 7,
+      "type": "reverse-engineer",
+      "title": "Vendor Detection — Prisma + Clerk",
+      "event": "Codebase has @prisma/client imports and @clerk/nextjs imports. Instructions should guide detection of both.",
+      "expectedAction": "detect-both-vendors",
+      "expectedType": "vendor-detection"
+    },
+    {
+      "id": 8,
+      "type": "reverse-engineer",
+      "title": "Replacement Order — Dependencies First",
+      "event": "Agent needs to replace Prisma (DB) and Clerk (auth). Auth depends on DB. Instructions should guide DB-first order.",
+      "expectedAction": "db-before-auth",
+      "expectedType": "dependency-ordering"
+    },
+    {
+      "id": 9,
+      "type": "verification",
+      "title": "Post-Scaffold Verification Steps",
+      "event": "Scaffold complete. Instructions should guide verifying symlinks, skill count, git init, workspace structure.",
+      "expectedAction": "verify-all-steps",
+      "expectedType": "verification"
+    },
+    {
+      "id": 10,
+      "type": "overlap",
+      "title": "Memory Bank Update After Scaffold",
+      "event": "Scaffold creates a new project. Instructions should guide writing initial memory bank files.",
+      "expectedAction": "update-memory-bank",
+      "expectedType": "memory-bank-integration"
+    }
+  ],
+  "criteria": [
+    "Mode Detection: Do instructions correctly identify greenfield vs plan vs reverse-engineer mode?",
+    "Parameter Gathering: Do instructions guide collecting all required inputs before execution?",
+    "Execution Completeness: Do instructions cover all steps from setup through verification?",
+    "Vendor Detection: Do instructions provide comprehensive vendor lock-in detection patterns?",
+    "Dependency Ordering: Do instructions guide correct replacement order based on dependencies?",
+    "Integration Awareness: Do instructions reference complementary skills (context-loader, drift-detector)?"
+  ]
+}

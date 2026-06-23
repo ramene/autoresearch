@@ -1,0 +1,204 @@
+You are executing a skill chain step. Use the skill instructions below to process the input.
+
+SKILL INSTRUCTIONS:
+# SKILL: polymarket-orderbook-reader
+Real-time orderbook data from Polymarket CLOB — bid/ask depth, spread calculation, midpoint, last trade price, price history, and fill estimation. No authentication required.
+
+## Purpose
+This skill provides read-only market data from Polymarket's CLOB API. It fetches orderbook snapshots, calculates spreads, retrieves midpoints and last trade prices, queries price history, and estimates fill prices for potential orders. All endpoints are public (no auth required), making this the lowest-friction entry point for market intelligence.
+
+## Trigger Conditions
+1. **Slash Command:** `/skill polymarket-orderbook-reader [flags]`
+   - `--book=<token_id>`: Get full orderbook (bids/asks)
+   - `--price=<token_id>`: Get best bid/ask prices
+   - `--mid=<token_id>`: Get midpoint price
+   - `--spread=<token_id>`: Get current spread
+   - `--last=<token_id>`: Get last trade price
+   - `--history=<token_id>`: Get price history
+   - `--interval=<1h|6h|1d|1w|1m|max>`: History interval (default: 1d)
+   - `--fill=<token_id>`: Estimate fill price for a given size
+   - `--fill-size=<shares>`: Size for fill estimation
+   - `--fill-side=<BUY|SELL>`: Side for fill estimation
+   - `--batch=<id1,id2,...>`: Batch query up to 500 tokens
+   - `--depth=<n>`: Orderbook depth (default: 20 levels)
+
+2. **Keywords:** "polymarket orderbook", "prediction market spread", "polymarket price", "what's the bid ask on"
+
+## Prerequisites
+1. **Working Directory:** `~/.remote/@autoresearch/skills/working-polymarket-orderbook-reader/`
+2. **Network:** Access to `https://clob.polymarket.com` (no authentication required for read endpoints)
+
+## Execution Flow
+
+Every invocation follows this single, non-negotiable pipeline regardless of which flag is used:
+
+### Phase 1: Universal Data Gathering (always executed first)
+
+**Step 1 — Fetch the orderbook:**
+```
+GET /book?token_id=<TOKEN_ID>
+```
+
+**Step 2 — Compute and cache all baseline values from the response:**
+```
+best_bid = max(level.price for level in bids)     # bids are sorted descending
+best_ask = min(level.price for level in asks)     # asks are sorted ascending
+spread = best_ask - best_bid
+mid = (best_ask + best_bid) / 2
+spread_pct = (spread / mid) * 100
+total_bid_liquidity = sum(level.size for level in bids)
+total_ask_liquidity = sum(level.size for level in asks)
+top_bids = bids[:depth]   # top N levels (default 20)
+top_asks = asks[:depth]
+```
+
+These baseline values are now available for all subsequent phases. No other endpoint may substitute for these values.
+
+### Phase 2: Conditional Augmentation (flag-specific additional API calls)
+
+Only after Phase 1 is complete, make these additional calls based on the active flag:
+
+**`--last` flag:**
+```
+GET /last-trade-price?token_id=<TOKEN_ID>
+```
+Returns `{price, side}`. Store as `last_trade_price` and `last_trade_side`.
+
+**`--history` flag:**
+```
+GET /prices-history?market=<TOKEN_ID>&interval=<INTERVAL>
+```
+- Valid intervals: `1h`, `6h`, `1d`, `1w`, `1m`, `max` (default: `1d`)
+- Or use absolute range with `startTs`/`endTs`
+- Each data point: `{t: timestamp, p: price}`
+
+**`--book`, `--price`, `--mid`, `--spread`, `--fill` flags:**
+No additional API calls required — all needed values are already in the Phase 1 baseline.
+
+### Phase 3: Flag-Specific Computation
+
+Using the baseline values from Phase 1 (and augmentation data from Phase 2 if applicable):
+
+**`--book`:** Use `top_bids`/`top_asks` for depth display; report `total_bid_liquidity` and `total_ask_liquidity`.
+
+**`--price`:** Report `best_bid` and `best_ask` from baseline.
+
+**`--mid`:** Report `mid` from baseline. Note: If spread > $0.10, Polymarket UI shows last traded price instead.
+
+**`--spread`:** Report all five values: `best_bid`, `best_ask`, `spread`, `spread_pct`, `mid`.
+
+**`--last`:** Report `last_trade_price` and `last_trade_side` from Phase 2, plus baseline fields.
+
+**`--history`:** Report price history data points from Phase 2, plus baseline fields.
+
+**`--fill`:** Walk the orderbook from Phase 1 to compute fill estimate:
+- For BUY orders, walk `asks` array sorted ascending by price:
+  ```
+  remaining = fill_size
+  total_cost = 0
+  levels_consumed = []
+  for each ask level (price, size) in ascending order:
+      fill_qty = min(remaining, size)
+      total_cost += fill_qty * price
+      levels_consumed.append({price, fill_qty})
+      remaining -= fill_qty
+      if remaining == 0: break
+  if remaining > 0: report "insufficient liquidity"
+  avg_fill_price = total_cost / fill_size
+  ```
+- For SELL orders, walk `bids` array sorted descending by price using same logic.
+- `slippage_pct = abs(avg_fill_price - mid) / mid * 100`  (uses `mid` from Phase 1 baseline as `reference_mid`)
+
+**`--batch`:** Submit all token IDs in single batch requests for efficiency:
+- `POST /books`, `POST /prices`, `POST /midpoints`, `POST /spreads`
+- Up to 500 tokens per request.
+
+## Output Format
+
+Every invocation — regardless of which flags are used — **must** write `orderbook.json` containing the **baseline fields** plus any operation-specific fields.
+
+### Baseline Fields (always required in every output)
+These fields must be present in `orderbook.json` for every query mode (`--book`, `--price`, `--spread`, `--mid`, `--last`, `--fill`, `--history`):
+```json
+{
+  "token_id": "<TOKEN_ID>",
+  "timestamp": "<ISO8601>",
+  "best_bid": <float>,
+  "best_ask": <float>,
+  "spread": <float>,
+  "spread_pct": <float>,
+  "mid": <float>,
+  "total_bid_liquidity": <float>,
+  "total_ask_liquidity": <float>,
+  "top_bids": [{"price": <float>, "size": <float>}, ...],
+  "top_asks": [{"price": <float>, "size": <float>}, ...]
+}
+```
+- All baseline fields are derived from the Phase 1 `GET /book` call.
+- `top_bids`/`top_asks`: top N levels (default 20) from the fetched orderbook.
+
+### Operation-Specific Fields (appended to baseline)
+
+**`--last`** adds:
+```json
+{ "last_trade_price": <float>, "last_trade_side": "<BUY|SELL>" }
+```
+
+**`--history`** adds:
+```json
+{
+  "price_history": [{"t": <timestamp>, "p": <float>}, ...],
+  "history_interval": "<1h|6h|1d|1w|1m|max>",
+  "history_start_ts": <int>,
+  "history_end_ts": <int>
+}
+```
+
+**`--fill`** adds:
+```json
+{
+  "fill_estimate": {
+    "fill_size": <float>,
+    "fill_side": "<BUY|SELL>",
+    "avg_fill_price": <float>,
+    "total_cost": <float>,
+    "slippage_pct": <float>,
+    "reference_mid": <float>,
+    "liquidity_available": <float>,
+    "levels_consumed": [{"price": <float>, "fill_qty": <float>}, ...]
+  }
+}
+```
+
+- **Console:** Formatted summary of all computed values with depth display.
+- **`orderbook.json`:** Written to working directory with all baseline + operation-specific fields merged into one object.
+
+## Quality Gates
+1. Orderbook data correctly parsed with bid/ask levels.
+2. Spread calculated accurately from best bid/ask derived from Phase 1 `GET /book`.
+3. Price history returns data points at correct intervals.
+4. Fill estimation uses `mid` from Phase 1 baseline as `reference_mid`, then walks orderbook level-by-level accumulating cost correctly.
+5. Batch queries handle up to 500 tokens efficiently.
+6. All data includes timestamps for freshness verification.
+7. Every output (all modes) includes the full baseline fields (token_id, timestamp, best_bid, best_ask, spread, spread_pct, mid, liquidity totals, top bid/ask levels) so downstream skills always receive a complete market snapshot.
+8. Phase 1 `GET /book` is always the first API call made, before any other endpoint, regardless of which flag is active.
+
+## Integration Points
+- **Upstream:** `polymarket-market-discovery` provides token IDs to query
+- **Downstream:** `polymarket-market-analyzer` uses orderbook data for opportunity scoring, `polymarket-flash-crash-detector` monitors price drops via real-time reads
+- **Cross-skill:** `polymarket-websocket-monitor` provides streaming alternative to polling
+
+CHAIN STEP INPUT:
+{
+  "markets": "[UNRESOLVED: discover.active_markets]",
+  "depth": 5,
+  "compute": [
+    "spread",
+    "mid_price",
+    "liquidity",
+    "imbalance"
+  ]
+}
+
+Execute the skill against this input. Return structured output as JSON where possible.
+If the skill requires external tools/APIs that aren't available, describe what you WOULD do and return mock structured data showing the expected output format.

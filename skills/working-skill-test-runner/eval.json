@@ -1,0 +1,60 @@
+{
+  "scenarios": [
+    {
+      "id": 1,
+      "type": "happy",
+      "title": "Run the full test suite for the 'gmail-label' skill",
+      "event": "Run the full test suite for the 'gmail-label' skill.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 2,
+      "type": "happy",
+      "title": "Run only the third test scenario for the 'create-proposal' skill",
+      "event": "Run only the third test scenario for the 'create-proposal' skill.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 3,
+      "type": "happy",
+      "title": "Run tests for a skill that has no tests defined and report this gracefully",
+      "event": "Run tests for a skill that has no tests defined and report this gracefully.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 4,
+      "type": "diagnostic",
+      "title": "Run tests for a skill that is known to fail certain tests and verify the report ",
+      "event": "Run tests for a skill that is known to fail certain tests and verify the report is accurate.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 5,
+      "type": "edge",
+      "title": "Run tests and output the results in a JSON format",
+      "event": "Run tests and output the results in a JSON format.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 6,
+      "type": "edge",
+      "title": "Use the 'skill-test-generator' to create tests for a new skill, then immediately",
+      "event": "Use the 'skill-test-generator' to create tests for a new skill, then immediately run them with this skill.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    }
+  ],
+  "criteria": [
+    "Identify and parse the test scenarios for the target skill: Does the skill correctly identify and parse the test scenarios for the target skill?",
+    "Execute each test scenario against the target skill: Does the skill execute each test scenario against the target skill?",
+    "Compare the skill's output against the expected outcome for each test: Does the skill compare the skill's output against the expected outcome for each test?",
+    "Is the final report a clear summary of passed, failed, and errored tests: Is the final report a clear summary of passed, failed, and errored tests?",
+    "Can the skill run a single, specified test scenario instead of the whole suite: Can the skill run a single, specified test scenario instead of the whole suite?",
+    "Capture and log stdout/stderr for failed tests: Does the skill capture and log stdout/stderr for failed tests?"
+  ]
+}

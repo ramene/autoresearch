@@ -1,0 +1,62 @@
+{
+  "notebookId": "6f8dbebf-5d52-4a5d-b09c-d88bbbea63a4",
+  "notebookUrl": "https://notebooklm.google.com/notebook/6f8dbebf-5d52-4a5d-b09c-d88bbbea63a4",
+  "sourceCount": 3,
+  "audioGenerating": false,
+  "audioArtifactId": "86fe5f07-40a7-4059-9841-369b9072ece7",
+  "audioStatus": "completed",
+  "createdAt": "2026-03-15T23:24:04Z",
+  "audioTitle": "Your Nose Is the Hidden Architect",
+  "audioUrl": "/api/media/baseline-march7-deep-dive.mp3",
+  "audioPath": "/api/media/baseline-march7-deep-dive.mp3",
+  "audioStreamUrl": "https://lh3.googleusercontent.com/notebooklm/ANHLwAzJrqppcpGMsUCi7FNE_XGXs2P7SNz6ssud7uAiZ8mXaXgOdL_aZbHy8TUTo3Y2_fS_8w3FX9qioz7XEEYi42WlZ6rnbO6FeY3HRtz4ZzawylaQBP0LGiMiQyfExCydO6KpmWF7MqBIKZQRSWN8spqimSd3xw=m140-dv",
+  "artifacts": [
+    {
+      "type": "report",
+      "title": "Informe — Neurociencia Olfativa (Español)",
+      "artifact_id": "10eeea8c-edae-42f9-97b3-71bc3d1992a6",
+      "status": "completed",
+      "language": "es",
+      "url": "https://docs.google.com/document/d/1h6JB-nNvY3TfVhXTZE3fe-yyxi0YWT3c2vDF7cNWju4"
+    },
+    {
+      "type": "report",
+      "title": "Briefing — Olfaktorische Neurowissenschaft (Deutsch)",
+      "artifact_id": "659b04b5-fc5f-49cf-8306-b99544ecacc1",
+      "status": "completed",
+      "language": "de",
+      "url": "https://docs.google.com/document/d/1B3qY-0I_TtGDxtm3O6QuTjoglLUcnsoKEGS8DxVhbkM"
+    }
+  ],
+  "audioLanguages": {
+    "en": {
+      "label": "English — Your Nose Is the Hidden Architect",
+      "audioUrl": "/api/media/baseline-march7-deep-dive.mp3",
+      "status": "completed"
+    },
+    "es": {
+      "label": "Español — Tu nariz es el GPS arquitectónico",
+      "audioUrl": "/api/media/baseline-march7-deep-dive-es.mp3",
+      "status": "completed"
+    },
+    "de": {
+      "label": "Deutsch — Warum wir Architektur riechen bevor wir eintreten",
+      "audioUrl": "/api/media/baseline-march7-deep-dive-de.mp3",
+      "status": "completed"
+    }
+  },
+  "reportLanguages": {
+    "es": {
+      "label": "Informe - Neurociencia Olfativa",
+      "url": "https://docs.google.com/document/d/1h6JB-nNvY3TfVhXTZE3fe-yyxi0YWT3c2vDF7cNWju4",
+      "status": "completed"
+    },
+    "de": {
+      "label": "Briefing - Olfaktorische Neurowissenschaft",
+      "url": "https://docs.google.com/document/d/1B3qY-0I_TtGDxtm3O6QuTjoglLUcnsoKEGS8DxVhbkM",
+      "status": "completed"
+    }
+  },
+  "requestedLanguage": "fr",
+  "requestedArtifact": "briefing_doc"
+}

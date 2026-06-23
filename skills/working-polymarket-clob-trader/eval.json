@@ -1,0 +1,78 @@
+{
+  "scenarios": [
+    {
+      "id": 1,
+      "type": "happy",
+      "title": "Place a GTC limit buy order on a binary prediction market",
+      "event": "User asks to buy 10 shares at $0.50 on a specific token ID",
+      "expectedAction": "Authenticate via L1→L2, validate tick size, place GTC order, return orderID and status",
+      "expectedType": "action"
+    },
+    {
+      "id": 2,
+      "type": "happy",
+      "title": "Place a FOK market buy order spending $100",
+      "event": "User asks to market buy $100 worth of YES tokens with FOK",
+      "expectedAction": "Create market order with amount=100, submit as FOK, report fill or cancellation",
+      "expectedType": "action"
+    },
+    {
+      "id": 3,
+      "type": "happy",
+      "title": "Batch place 5 orders across bid/ask spread",
+      "event": "User asks to place 5 orders at different price levels on the same token",
+      "expectedAction": "Create 5 signed orders, submit via postOrders batch API, report individual results",
+      "expectedType": "action"
+    },
+    {
+      "id": 4,
+      "type": "happy",
+      "title": "Cancel all orders for a specific market",
+      "event": "User asks to cancel all orders on a specific condition ID",
+      "expectedAction": "Call cancelMarketOrders with the condition ID, confirm cancellation",
+      "expectedType": "action"
+    },
+    {
+      "id": 5,
+      "type": "diagnostic",
+      "title": "Order rejected due to tick size mismatch",
+      "event": "User tries to place order at price 0.555 but market tick size is 0.01",
+      "expectedAction": "Detect INVALID_ORDER_MIN_TICK_SIZE error, suggest rounding to 0.56 or 0.55",
+      "expectedType": "action"
+    },
+    {
+      "id": 6,
+      "type": "edge",
+      "title": "Heartbeat timeout would cancel all orders",
+      "event": "Heartbeat thread fails to send within 10 seconds",
+      "expectedAction": "Detect heartbeat failure, warn user that open orders may be cancelled, attempt recovery",
+      "expectedType": "action"
+    },
+    {
+      "id": 7,
+      "type": "edge",
+      "title": "Order exceeds safety limit of $1000",
+      "event": "User asks to place a $1500 order",
+      "expectedAction": "Reject order before submission, report safety limit violation, suggest smaller size",
+      "expectedType": "action"
+    },
+    {
+      "id": 8,
+      "type": "edge",
+      "title": "Place order on negative risk multi-outcome market",
+      "event": "User asks to buy YES on a neg-risk market (e.g., election with 3+ outcomes)",
+      "expectedAction": "Detect negRisk=true, use Neg Risk CTF Exchange, pass negRisk:true in options",
+      "expectedType": "action"
+    }
+  ],
+  "criteria": [
+    "L1 EIP-712 credential derivation and L2 HMAC authentication succeed: Does the skill correctly derive API credentials and authenticate for trading?",
+    "Order price conforms to market tick size: Does the skill validate and adjust price to the market's minimum tick size?",
+    "All order types (GTC, GTD, FOK, FAK) placed correctly: Does the skill handle different order type semantics (amount vs size)?",
+    "Batch orders up to 15 submitted in single request: Does the skill create and submit batch orders efficiently?",
+    "Safety limits enforced before order submission: Does the skill validate against MAX_ORDER_SIZE_USD and other limits?",
+    "Heartbeat maintained to prevent order cancellation: Does the skill manage the 10-second heartbeat requirement?",
+    "Order lifecycle tracked from MATCHED to CONFIRMED/FAILED: Does the skill monitor and report final order status?",
+    "Negative risk markets handled with correct exchange contract: Does the skill detect and use the appropriate exchange?"
+  ]
+}

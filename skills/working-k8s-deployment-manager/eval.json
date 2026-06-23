@@ -1,0 +1,60 @@
+{
+  "scenarios": [
+    {
+      "id": 1,
+      "type": "happy",
+      "title": "List all deployments in the 'production' namespace",
+      "event": "List all deployments in the 'production' namespace.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 2,
+      "type": "happy",
+      "title": "Update the 'api-server' deployment to a new image tag",
+      "event": "Update the 'api-server' deployment to a new image tag.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 3,
+      "type": "happy",
+      "title": "Check the rollout status of the 'api-server' deployment",
+      "event": "Check the rollout status of the 'api-server' deployment.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 4,
+      "type": "diagnostic",
+      "title": "A deployment update fails; rollback the 'api-server' to the previous version",
+      "event": "A deployment update fails; rollback the 'api-server' to the previous version.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 5,
+      "type": "edge",
+      "title": "Attempt to deploy to a namespace that does not exist",
+      "event": "Attempt to deploy to a namespace that does not exist.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 6,
+      "type": "edge",
+      "title": "Get the logs for the latest pod in the 'worker' deployment",
+      "event": "Get the logs for the latest pod in the 'worker' deployment.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    }
+  ],
+  "criteria": [
+    "Can the skill list current deployments in a specified namespace: Can the skill list current deployments in a specified namespace?",
+    "Can the skill update the image for an existing deployment: Can the skill update the image for an existing deployment?",
+    "Can the skill report the status of a rollout successfully: Can the skill report the status of a rollout successfully?",
+    "Can the skill rollback a deployment to its previous version: Can the skill rollback a deployment to its previous version?",
+    "Handle authentication with the Kubernetes API correctly: Does the skill handle authentication with the Kubernetes API correctly?",
+    "Gracefully report errors if a deployment fails: Does the skill gracefully report errors if a deployment fails?"
+  ]
+}

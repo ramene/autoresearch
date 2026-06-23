@@ -1,0 +1,1101 @@
+{
+  "skill": "scaffold",
+  "criteria": [
+    "Mode Detection",
+    "Parameter Gathering",
+    "Execution Completeness",
+    "Vendor Detection",
+    "Dependency Ordering",
+    "Integration Awareness"
+  ],
+  "totalCost": 0.6100000000000001,
+  "models": {
+    "mutator": "sonnet",
+    "evaluator": "gemini-2.5-pro"
+  },
+  "rounds": [
+    {
+      "round": 5,
+      "score": 49,
+      "max": 60,
+      "status": "reverted",
+      "mutation": "Expand the Reverse-Engineer Mode section with more detailed steps and guidelines for the replacement process, including specific examples and best practices for preserving business logic and transitioning away from vendor-specific components.",
+      "cost": 0.05,
+      "criteria": [
+        10,
+        8,
+        5,
+        10,
+        10,
+        6
+      ],
+      "failures": [
+        {
+          "scenario": 1,
+          "criterion": "Execution Completeness"
+        },
+        {
+          "scenario": 1,
+          "criterion": "Integration Awareness"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Parameter Gathering"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Execution Completeness"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Integration Awareness"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Integration Awareness"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Execution Completeness"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Parameter Gathering"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Execution Completeness"
+        },
+        {
+          "scenario": 9,
+          "criterion": "Execution Completeness"
+        },
+        {
+          "scenario": 10,
+          "criterion": "Integration Awareness"
+        }
+      ],
+      "decisionReason": "Score 49 did not exceed best 55 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "claude-3-haiku-20240307"
+      },
+      "timestamp": "2026-03-14T20:22:03.751Z",
+      "changelog": "**Mutation**: Expand the Reverse-Engineer Mode section with more detailed steps and guidelines for the replacement process, including specific examples and best practices for preserving business logic and transitioning away from vendor-specific components.\n**Failures**: S1: Execution Completeness, S1: Integration Awareness, S2: Parameter Gathering, S2: Execution Completeness, S2: Integration Awareness, S3: Integration Awareness, S5: Execution Completeness, S6: Parameter Gathering, S6: Execution Completeness, S9: Execution Completeness, S10: Integration Awareness\n**Per-criteria**: Mode Detection: 10/10, Parameter Gathering: 8/10, Execution Completeness: 5/10, Vendor Detection: 10/10, Dependency Ordering: 10/10, Integration Awareness: 6/10\n**Decision**: Score 49 did not exceed best 55 — mutation produced worse or equal results"
+    },
+    {
+      "round": 6,
+      "score": 56,
+      "max": 60,
+      "status": "kept",
+      "mutation": "Add an explicit Step 0 \"Parameter Gathering\" phase to Reverse-Engineer Mode to fix the Parameter Gathering failure in scenario 6 and improve Execution Completeness by ensuring all required inputs are confirmed before work begins.",
+      "cost": 0.05,
+      "criteria": [
+        10,
+        9,
+        7,
+        10,
+        10,
+        10
+      ],
+      "failures": [
+        {
+          "scenario": 5,
+          "criterion": "Execution Completeness"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Parameter Gathering"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Execution Completeness"
+        },
+        {
+          "scenario": 9,
+          "criterion": "Execution Completeness"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Improved from 55 to 56",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-26T14:00:39.746Z",
+      "changelog": "**Mutation**: Add an explicit Step 0 \"Parameter Gathering\" phase to Reverse-Engineer Mode to fix the Parameter Gathering failure in scenario 6 and improve Execution Completeness by ensuring all required inputs are confirmed before work begins.\n**Failures**: S5: Execution Completeness, S6: Parameter Gathering, S6: Execution Completeness, S9: Execution Completeness\n**Per-criteria**: Mode Detection: 10/10, Parameter Gathering: 9/10, Execution Completeness: 7/10, Vendor Detection: 10/10, Dependency Ordering: 10/10, Integration Awareness: 10/10\n**Decision**: Improved from 55 to 56"
+    },
+    {
+      "round": 7,
+      "score": 16,
+      "max": 60,
+      "status": "reverted",
+      "mutation": "Expand Step 6 Verification with an explicit completeness audit loop — scan for any remaining vendor imports/references, re-queue missed components, and block exit until all identified vendors are cleared.",
+      "cost": 0.05,
+      "criteria": [
+        8,
+        4,
+        0,
+        0,
+        4,
+        0
+      ],
+      "failures": [
+        {
+          "scenario": 1,
+          "criterion": "Parameter Gathering"
+        },
+        {
+          "scenario": 1,
+          "criterion": "Execution Completeness"
+        },
+        {
+          "scenario": 1,
+          "criterion": "Vendor Detection"
+        },
+        {
+          "scenario": 1,
+          "criterion": "Dependency Ordering"
+        },
+        {
+          "scenario": 1,
+          "criterion": "Integration Awareness"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Parameter Gathering"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Execution Completeness"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Vendor Detection"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Dependency Ordering"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Integration Awareness"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Execution Completeness"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Vendor Detection"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Integration Awareness"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Parameter Gathering"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Execution Completeness"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Vendor Detection"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Dependency Ordering"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Integration Awareness"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Mode Detection"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Parameter Gathering"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Execution Completeness"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Vendor Detection"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Dependency Ordering"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Integration Awareness"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Mode Detection"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Parameter Gathering"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Execution Completeness"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Vendor Detection"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Dependency Ordering"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Integration Awareness"
+        },
+        {
+          "scenario": 7,
+          "criterion": "Execution Completeness"
+        },
+        {
+          "scenario": 7,
+          "criterion": "Vendor Detection"
+        },
+        {
+          "scenario": 7,
+          "criterion": "Integration Awareness"
+        },
+        {
+          "scenario": 8,
+          "criterion": "Execution Completeness"
+        },
+        {
+          "scenario": 8,
+          "criterion": "Vendor Detection"
+        },
+        {
+          "scenario": 8,
+          "criterion": "Integration Awareness"
+        },
+        {
+          "scenario": 9,
+          "criterion": "Parameter Gathering"
+        },
+        {
+          "scenario": 9,
+          "criterion": "Execution Completeness"
+        },
+        {
+          "scenario": 9,
+          "criterion": "Vendor Detection"
+        },
+        {
+          "scenario": 9,
+          "criterion": "Dependency Ordering"
+        },
+        {
+          "scenario": 9,
+          "criterion": "Integration Awareness"
+        },
+        {
+          "scenario": 10,
+          "criterion": "Execution Completeness"
+        },
+        {
+          "scenario": 10,
+          "criterion": "Vendor Detection"
+        },
+        {
+          "scenario": 10,
+          "criterion": "Integration Awareness"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 16 did not exceed best 56 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-26T14:02:34.376Z",
+      "changelog": "**Mutation**: Expand Step 6 Verification with an explicit completeness audit loop — scan for any remaining vendor imports/references, re-queue missed components, and block exit until all identified vendors are cleared.\n**Failures**: S1: Parameter Gathering, S1: Execution Completeness, S1: Vendor Detection, S1: Dependency Ordering, S1: Integration Awareness, S2: Parameter Gathering, S2: Execution Completeness, S2: Vendor Detection, S2: Dependency Ordering, S2: Integration Awareness, S3: Execution Completeness, S3: Vendor Detection, S3: Integration Awareness, S4: Parameter Gathering, S4: Execution Completeness, S4: Vendor Detection, S4: Dependency Ordering, S4: Integration Awareness, S5: Mode Detection, S5: Parameter Gathering, S5: Execution Completeness, S5: Vendor Detection, S5: Dependency Ordering, S5: Integration Awareness, S6: Mode Detection, S6: Parameter Gathering, S6: Execution Completeness, S6: Vendor Detection, S6: Dependency Ordering, S6: Integration Awareness, S7: Execution Completeness, S7: Vendor Detection, S7: Integration Awareness, S8: Execution Completeness, S8: Vendor Detection, S8: Integration Awareness, S9: Parameter Gathering, S9: Execution Completeness, S9: Vendor Detection, S9: Dependency Ordering, S9: Integration Awareness, S10: Execution Completeness, S10: Vendor Detection, S10: Integration Awareness\n**Per-criteria**: Mode Detection: 8/10, Parameter Gathering: 4/10, Execution Completeness: 0/10, Vendor Detection: 0/10, Dependency Ordering: 4/10, Integration Awareness: 0/10\n**Decision**: Score 16 did not exceed best 56 — mutation produced worse or equal results"
+    },
+    {
+      "round": 8,
+      "score": 47,
+      "max": 60,
+      "status": "reverted",
+      "mutation": "Add a mandatory pre-execution checklist and dependency graph to Step 4 that forces ALL replacement steps to be attempted in order and explicitly tracks cross-component dependencies, fixing Execution Completeness failures in scenarios where partial replacements are silently skipped.",
+      "cost": 0.05,
+      "criteria": [
+        10,
+        6,
+        3,
+        10,
+        10,
+        8
+      ],
+      "failures": [
+        {
+          "scenario": 1,
+          "criterion": "Parameter Gathering"
+        },
+        {
+          "scenario": 1,
+          "criterion": "Execution Completeness"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Parameter Gathering"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Execution Completeness"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Integration Awareness"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Parameter Gathering"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Execution Completeness"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Execution Completeness"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Parameter Gathering"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Execution Completeness"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Integration Awareness"
+        },
+        {
+          "scenario": 9,
+          "criterion": "Execution Completeness"
+        },
+        {
+          "scenario": 10,
+          "criterion": "Execution Completeness"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 47 did not exceed best 56 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-26T14:04:46.747Z",
+      "changelog": "**Mutation**: Add a mandatory pre-execution checklist and dependency graph to Step 4 that forces ALL replacement steps to be attempted in order and explicitly tracks cross-component dependencies, fixing Execution Completeness failures in scenarios where partial replacements are silently skipped.\n**Failures**: S1: Parameter Gathering, S1: Execution Completeness, S2: Parameter Gathering, S2: Execution Completeness, S2: Integration Awareness, S4: Parameter Gathering, S4: Execution Completeness, S5: Execution Completeness, S6: Parameter Gathering, S6: Execution Completeness, S6: Integration Awareness, S9: Execution Completeness, S10: Execution Completeness\n**Per-criteria**: Mode Detection: 10/10, Parameter Gathering: 6/10, Execution Completeness: 3/10, Vendor Detection: 10/10, Dependency Ordering: 10/10, Integration Awareness: 8/10\n**Decision**: Score 47 did not exceed best 56 — mutation produced worse or equal results"
+    },
+    {
+      "round": 9,
+      "score": 24,
+      "max": 60,
+      "status": "reverted",
+      "mutation": "Add a mandatory global \"STEP 0: Parameter Gathering Gate\" at the top of the skill that runs BEFORE mode detection for ALL modes, with explicit \"DO NOT PROCEED\" language and per-mode question sets — fixing the 8 Parameter Gathering failures that occur even in Greenfield/Plan modes.",
+      "cost": 0.05,
+      "criteria": [
+        4,
+        2,
+        5,
+        4,
+        4,
+        5
+      ],
+      "failures": [
+        {
+          "scenario": 1,
+          "criterion": "Parameter Gathering"
+        },
+        {
+          "scenario": 1,
+          "criterion": "Execution Completeness"
+        },
+        {
+          "scenario": 1,
+          "criterion": "Vendor Detection"
+        },
+        {
+          "scenario": 1,
+          "criterion": "Dependency Ordering"
+        },
+        {
+          "scenario": 1,
+          "criterion": "Integration Awareness"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Parameter Gathering"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Execution Completeness"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Vendor Detection"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Dependency Ordering"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Integration Awareness"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Mode Detection"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Parameter Gathering"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Execution Completeness"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Vendor Detection"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Dependency Ordering"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Integration Awareness"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Mode Detection"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Parameter Gathering"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Execution Completeness"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Vendor Detection"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Dependency Ordering"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Integration Awareness"
+        },
+        {
+          "scenario": 7,
+          "criterion": "Mode Detection"
+        },
+        {
+          "scenario": 7,
+          "criterion": "Parameter Gathering"
+        },
+        {
+          "scenario": 8,
+          "criterion": "Mode Detection"
+        },
+        {
+          "scenario": 8,
+          "criterion": "Parameter Gathering"
+        },
+        {
+          "scenario": 9,
+          "criterion": "Mode Detection"
+        },
+        {
+          "scenario": 9,
+          "criterion": "Parameter Gathering"
+        },
+        {
+          "scenario": 9,
+          "criterion": "Execution Completeness"
+        },
+        {
+          "scenario": 9,
+          "criterion": "Vendor Detection"
+        },
+        {
+          "scenario": 9,
+          "criterion": "Dependency Ordering"
+        },
+        {
+          "scenario": 9,
+          "criterion": "Integration Awareness"
+        },
+        {
+          "scenario": 10,
+          "criterion": "Mode Detection"
+        },
+        {
+          "scenario": 10,
+          "criterion": "Parameter Gathering"
+        },
+        {
+          "scenario": 10,
+          "criterion": "Vendor Detection"
+        },
+        {
+          "scenario": 10,
+          "criterion": "Dependency Ordering"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 24 did not exceed best 56 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-26T14:07:17.466Z",
+      "changelog": "**Mutation**: Add a mandatory global \"STEP 0: Parameter Gathering Gate\" at the top of the skill that runs BEFORE mode detection for ALL modes, with explicit \"DO NOT PROCEED\" language and per-mode question sets — fixing the 8 Parameter Gathering failures that occur even in Greenfield/Plan modes.\n**Failures**: S1: Parameter Gathering, S1: Execution Completeness, S1: Vendor Detection, S1: Dependency Ordering, S1: Integration Awareness, S2: Parameter Gathering, S2: Execution Completeness, S2: Vendor Detection, S2: Dependency Ordering, S2: Integration Awareness, S5: Mode Detection, S5: Parameter Gathering, S5: Execution Completeness, S5: Vendor Detection, S5: Dependency Ordering, S5: Integration Awareness, S6: Mode Detection, S6: Parameter Gathering, S6: Execution Completeness, S6: Vendor Detection, S6: Dependency Ordering, S6: Integration Awareness, S7: Mode Detection, S7: Parameter Gathering, S8: Mode Detection, S8: Parameter Gathering, S9: Mode Detection, S9: Parameter Gathering, S9: Execution Completeness, S9: Vendor Detection, S9: Dependency Ordering, S9: Integration Awareness, S10: Mode Detection, S10: Parameter Gathering, S10: Vendor Detection, S10: Dependency Ordering\n**Per-criteria**: Mode Detection: 4/10, Parameter Gathering: 2/10, Execution Completeness: 5/10, Vendor Detection: 4/10, Dependency Ordering: 4/10, Integration Awareness: 5/10\n**Decision**: Score 24 did not exceed best 56 — mutation produced worse or equal results"
+    },
+    {
+      "round": 9,
+      "score": 24,
+      "max": 60,
+      "status": "escalation",
+      "mutation": "Stuck escalation: The skill is stuck in a local optimum due to a complexity death spiral. Each mutation has attempted to patch specific failures by adding more prescriptive rules, mandatory checklists, and rigid proced",
+      "cost": 0.03,
+      "criteria": [
+        4,
+        2,
+        5,
+        4,
+        4,
+        5
+      ],
+      "failures": [],
+      "decisionReason": "Stuck escalation triggered after 3+ rounds with no improvement",
+      "escalation": {
+        "diagnosis": "The skill is stuck in a local optimum due to a complexity death spiral. Each mutation has attempted to patch specific failures by adding more prescriptive rules, mandatory checklists, and rigid procedures (e.g., the global Step 0 gate, the 16-step mandatory execution table). This over-specification increases the cognitive load on the language model, forcing it to act like a simple script-follower—a task it is not well-suited for. This brittleness causes new, more severe failures when the model inevitably deviates from the complex, hard-to-follow instructions, leading to a sharp decline in performance. The core issue is that the skill's design fights the model's strengths (reasoning, goal-orientation) instead of leveraging them.",
+        "evalRedesignNeeded": true,
+        "strategy": "Shift from rigid, procedural micromanagement to goal-oriented, iterative guidance. Radically simplify the `Reverse-Engineer Mode` by replacing the monolithic 16-step checklist with a component-centric, iterative workflow. Instead of attempting to replace everything in one fragile pass, the model should be instructed to focus on replacing one system at a time (e.g., \"First, fully replace Auth, then fully replace the Database\"). This approach breaks the problem into manageable chunks, reduces cognitive load, and allows the model to use its reasoning abilities to ensure each component is fully purged before moving to the next, making the process more robust and less prone to the cascading failures of the current design.",
+        "suggestedMutation": "Replace the entire `Step 4: Surgical Replacement` section in `Reverse-Engineer Mode` with a new, simplified, component-centric workflow that emphasizes an iterative \"Isolate -> Execute -> Verify\" loop for each vendor component.\n\n```markdown\n### Step 4: Iterative, Component-Centric Replacement\n\nInstead of a single, monolithic pass, you will replace vendor dependencies one major component at a time. This ensures focus and completeness for each system before moving to the next. The typical order is **Auth -> Database -> Other Services**.\n\nFor each component you are replacing (e.g., Clerk Auth, Prisma DB):\n\n#### 4a: Isolate and Plan\n1.  **Identify all files** related to the target component (e.g., for Clerk: `clerk.ts`, middleware, components using `useUser`, API routes checking auth). Use `grep` extensively to find every single usage.\n2.  **Formulate a concise plan**. State which new packages will be added (`next-auth`, `pg`) and which old ones will be removed (`@clerk/nextjs`).\n3.  **State the key replacement patterns**: e.g., \"`useUser()` will be replaced with `useSession()`\", \"`clerkClient` calls will be replaced with direct database queries\".\n\n#### 4b: Execute Replacement\n1.  **Write the core replacement modules** (e.g., `src/lib/auth/config.ts`, `src/lib/db.ts`) based on the your-platform.example.com reference architecture.\n2.  **Surgically update consumer files.** Go through the list of files identified in 4a and replace all vendor-specific code with the new platform-agnostic implementation.\n    - **Principle: Leave no imports behind.** After editing a file, it should contain zero imports from the old vendor package.\n3.  **Update dependencies.** After all code changes for the component are done, edit `package.json` to remove the old vendor packages and add the new ones.\n\n#### 4c: Verify and Validate\n1.  **Run a targeted `grep`** across the entire codebase to confirm there are absolutely no remaining imports or references to the vendor package you just replaced (e.g., `grep -r \"@clerk/nextjs\" .`).\n2.  **If any references remain, return to 4b** and fix them. Do not proceed to the next component until the current one is fully purged.\n3.  **Summarize the changes** for this component before starting the next one. Example: \"✅ Auth replacement complete. Replaced Clerk with Next-Auth in 12 files. All `@clerk/nextjs` references have been removed.\"\n\n**Repeat this Isolate -> Execute -> Verify loop for every vendor component identified in Step 2.**\n```"
+      },
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-26T14:09:45.397Z"
+    },
+    {
+      "round": 10,
+      "score": 56,
+      "max": 60,
+      "status": "reverted",
+      "mutation": "Replace the monolithic 16-step Step 4 checklist with an iterative component-centric \"Isolate -> Execute -> Verify\" loop per the meta-analyst's strategy, reducing cognitive load and fixing Execution Completeness failures where partial replacements are silently skipped.",
+      "cost": 0.05,
+      "criteria": [
+        10,
+        8,
+        8,
+        10,
+        10,
+        10
+      ],
+      "failures": [
+        {
+          "scenario": 5,
+          "criterion": "Parameter Gathering"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Parameter Gathering"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Execution Completeness"
+        },
+        {
+          "scenario": 9,
+          "criterion": "Execution Completeness"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 56 did not exceed best 56 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-26T14:10:18.271Z",
+      "changelog": "**Mutation**: Replace the monolithic 16-step Step 4 checklist with an iterative component-centric \"Isolate -> Execute -> Verify\" loop per the meta-analyst's strategy, reducing cognitive load and fixing Execution Completeness failures where partial replacements are silently skipped.\n**Failures**: S5: Parameter Gathering, S6: Parameter Gathering, S6: Execution Completeness, S9: Execution Completeness\n**Per-criteria**: Mode Detection: 10/10, Parameter Gathering: 8/10, Execution Completeness: 8/10, Vendor Detection: 10/10, Dependency Ordering: 10/10, Integration Awareness: 10/10\n**Decision**: Score 56 did not exceed best 56 — mutation produced worse or equal results"
+    },
+    {
+      "round": 11,
+      "score": 52,
+      "max": 60,
+      "status": "reverted",
+      "mutation": "Add a dependency graph discovery step (Step 3b) before replacement begins that maps inter-component dependencies and sets the correct replacement order, plus strengthen Step 4c with integration validation to verify each replaced component uses new implementations (not vendor APIs) of already-replaced components — fixing Dependency Ordering (S8) and Integration Awareness (S9) failures.",
+      "cost": 0.05,
+      "criteria": [
+        10,
+        8,
+        6,
+        10,
+        9,
+        9
+      ],
+      "failures": [
+        {
+          "scenario": 1,
+          "criterion": "Execution Completeness"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Execution Completeness"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Parameter Gathering"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Parameter Gathering"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Execution Completeness"
+        },
+        {
+          "scenario": 8,
+          "criterion": "Dependency Ordering"
+        },
+        {
+          "scenario": 9,
+          "criterion": "Execution Completeness"
+        },
+        {
+          "scenario": 9,
+          "criterion": "Integration Awareness"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 52 did not exceed best 56 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-04-05T06:00:36.000Z",
+      "changelog": "**Mutation**: Add a dependency graph discovery step (Step 3b) before replacement begins that maps inter-component dependencies and sets the correct replacement order, plus strengthen Step 4c with integration validation to verify each replaced component uses new implementations (not vendor APIs) of already-replaced components — fixing Dependency Ordering (S8) and Integration Awareness (S9) failures.\n**Failures**: S1: Execution Completeness, S2: Execution Completeness, S5: Parameter Gathering, S6: Parameter Gathering, S6: Execution Completeness, S8: Dependency Ordering, S9: Execution Completeness, S9: Integration Awareness\n**Per-criteria**: Mode Detection: 10/10, Parameter Gathering: 8/10, Execution Completeness: 6/10, Vendor Detection: 10/10, Dependency Ordering: 9/10, Integration Awareness: 9/10\n**Decision**: Score 52 did not exceed best 56 — mutation produced worse or equal results"
+    },
+    {
+      "round": 12,
+      "score": 43,
+      "max": 60,
+      "status": "reverted",
+      "mutation": "Add a mandatory \"Integration Map\" artifact to Step 2 that must be written to a file and displayed before any replacement begins — making integration awareness an explicit, verifiable output rather than an implicit side effect of the dependency graph notes in Step 3b.",
+      "cost": 0.05,
+      "criteria": [
+        10,
+        8,
+        5,
+        10,
+        10,
+        0
+      ],
+      "failures": [
+        {
+          "scenario": 1,
+          "criterion": "Execution Completeness"
+        },
+        {
+          "scenario": 1,
+          "criterion": "Integration Awareness"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Execution Completeness"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Integration Awareness"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Integration Awareness"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Integration Awareness"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Parameter Gathering"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Integration Awareness"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Parameter Gathering"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Execution Completeness"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Integration Awareness"
+        },
+        {
+          "scenario": 7,
+          "criterion": "Integration Awareness"
+        },
+        {
+          "scenario": 8,
+          "criterion": "Integration Awareness"
+        },
+        {
+          "scenario": 9,
+          "criterion": "Execution Completeness"
+        },
+        {
+          "scenario": 9,
+          "criterion": "Integration Awareness"
+        },
+        {
+          "scenario": 10,
+          "criterion": "Execution Completeness"
+        },
+        {
+          "scenario": 10,
+          "criterion": "Integration Awareness"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 43 did not exceed best 56 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-04-05T06:03:34.747Z",
+      "changelog": "**Mutation**: Add a mandatory \"Integration Map\" artifact to Step 2 that must be written to a file and displayed before any replacement begins — making integration awareness an explicit, verifiable output rather than an implicit side effect of the dependency graph notes in Step 3b.\n**Failures**: S1: Execution Completeness, S1: Integration Awareness, S2: Execution Completeness, S2: Integration Awareness, S3: Integration Awareness, S4: Integration Awareness, S5: Parameter Gathering, S5: Integration Awareness, S6: Parameter Gathering, S6: Execution Completeness, S6: Integration Awareness, S7: Integration Awareness, S8: Integration Awareness, S9: Execution Completeness, S9: Integration Awareness, S10: Execution Completeness, S10: Integration Awareness\n**Per-criteria**: Mode Detection: 10/10, Parameter Gathering: 8/10, Execution Completeness: 5/10, Vendor Detection: 10/10, Dependency Ordering: 10/10, Integration Awareness: 0/10\n**Decision**: Score 43 did not exceed best 56 — mutation produced worse or equal results"
+    },
+    {
+      "round": 13,
+      "score": 48,
+      "max": 60,
+      "status": "reverted",
+      "mutation": "Make INTEGRATION_MAP.md Section D a live tracking document — Step 4c now requires writing back `[x]` for each passed check before moving to the next component, and each component loop starts with a mandatory display of the current Section D state, creating a visible completion gate that fixes both Integration Awareness and Execution Completeness failures.",
+      "cost": 0.05,
+      "criteria": [
+        10,
+        9,
+        4,
+        10,
+        10,
+        5
+      ],
+      "failures": [
+        {
+          "scenario": 1,
+          "criterion": "Execution Completeness"
+        },
+        {
+          "scenario": 1,
+          "criterion": "Integration Awareness"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Execution Completeness"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Integration Awareness"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Execution Completeness"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Integration Awareness"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Parameter Gathering"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Execution Completeness"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Integration Awareness"
+        },
+        {
+          "scenario": 9,
+          "criterion": "Execution Completeness"
+        },
+        {
+          "scenario": 9,
+          "criterion": "Integration Awareness"
+        },
+        {
+          "scenario": 10,
+          "criterion": "Execution Completeness"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 48 did not exceed best 56 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-04-05T06:06:22.577Z",
+      "changelog": "**Mutation**: Make INTEGRATION_MAP.md Section D a live tracking document — Step 4c now requires writing back `[x]` for each passed check before moving to the next component, and each component loop starts with a mandatory display of the current Section D state, creating a visible completion gate that fixes both Integration Awareness and Execution Completeness failures.\n**Failures**: S1: Execution Completeness, S1: Integration Awareness, S2: Execution Completeness, S2: Integration Awareness, S5: Execution Completeness, S5: Integration Awareness, S6: Parameter Gathering, S6: Execution Completeness, S6: Integration Awareness, S9: Execution Completeness, S9: Integration Awareness, S10: Execution Completeness\n**Per-criteria**: Mode Detection: 10/10, Parameter Gathering: 9/10, Execution Completeness: 4/10, Vendor Detection: 10/10, Dependency Ordering: 10/10, Integration Awareness: 5/10\n**Decision**: Score 48 did not exceed best 56 — mutation produced worse or equal results"
+    },
+    {
+      "round": 13,
+      "score": 48,
+      "max": 60,
+      "status": "escalation",
+      "mutation": "Stuck escalation: The skill is stuck in a local optimum caused by a \"complexity death spiral.\" Each mutation has attempted to fix execution failures by adding more prescriptive rules, mandatory steps, and explicit chec",
+      "cost": 0.03,
+      "criteria": [
+        10,
+        9,
+        4,
+        10,
+        10,
+        5
+      ],
+      "failures": [],
+      "decisionReason": "Stuck escalation triggered after 3+ rounds with no improvement",
+      "escalation": {
+        "diagnosis": "The skill is stuck in a local optimum caused by a \"complexity death spiral.\" Each mutation has attempted to fix execution failures by adding more prescriptive rules, mandatory steps, and explicit checklists (e.g., the `INTEGRATION_MAP.md` and its live-tracking). While well-intentioned, this has bloated the `Reverse-Engineer Mode` into a hyper-rigid procedure that is too complex for the AI to follow reliably. The cognitive load of tracking the state of the `INTEGRATION_MAP.md`, cross-referencing multiple sections (2B, 2C, 2D, 3b, 4c), and adhering to a multi-part loop-within-a-loop structure is causing the model to fail at following the procedure itself. The mutations are adding more process instead of simplifying the goal, leading to diminishing or negative returns.",
+        "evalRedesignNeeded": false,
+        "strategy": "Shift from a **process-centric** to an **artifact-centric** approach. The `INTEGRATION_MAP.md` is a strong concept, but it has been bolted onto an already complex process. The new strategy is to make the map the *central driver* of the entire operation, not just a tracking document. We will simplify the prompt by removing redundant confirmation steps and consolidating all planning and dependency logic *into the creation of the map itself*. The execution phase (Step 4) will be radically simplified to a single directive: \"Execute the plan in the map.\" This reduces cognitive load by making the AI's goal \"fill out and complete this artifact\" rather than \"follow this 12-part procedure.\"",
+        "suggestedMutation": "**Consolidate all dependency analysis and planning into the `INTEGRATION_MAP.md` creation (Step 2) and radically simplify the execution loop (Step 4) to be driven solely by the map.**\n\n1.  **Eliminate Step 3b (`Dependency Graph and Replacement Order`) entirely.** This step is redundant. The dependency graph, replacement order, and verification checks are already required outputs of the `INTEGRATION_MAP.md` in Step 2. Forcing the model to re-confirm them in a separate step adds complexity and a potential point of failure. The creation of the map in Step 2 *is* the planning phase.\n\n2.  **Rewrite Step 4 (`Iterative, Component-Centric Replacement`) to be much simpler.** Replace the current multi-part (4a, 4b, 4c, Part 1, Part 2, Part 3, Part 4) loop with a single, goal-oriented instruction.\n\n    *   **Current (Complex) Step 4 Logic:**\n        *   BEFORE starting, display Section D.\n        *   For each component:\n            *   4a: Isolate and Plan (identify files, state plan).\n            *   4b: Execute Replacement (write modules, update consumers).\n            *   4c: Verify, Validate, Update (Part 1: Vendor Purge, Part 2: Integration Validation, Part 3: Update Map, Part 4: Summarize).\n        *   Repeat.\n\n    *   **Proposed (Simplified) Step 4 Logic:**\n        *   \"You will now execute the plan defined in `INTEGRATION_MAP.md`.\n        *   Process the components in the exact order specified in **Section C — Replacement Order**.\n        *   For each component:\n            1.  Perform the code replacement.\n            2.  Run the verification `grep` commands for that component from **Section D**.\n            3.  If a check fails, fix the code and re-run it until it passes.\n            4.  Once all checks for the component pass, **update `INTEGRATION_MAP.md` on disk**, changing the `[ ]` to `[x]` and adding a brief note of completion.\n            5.  Display a summary of the component just completed and show the newly updated Section D from the file.\n        *   Do not proceed to the next component until the current one's checks are marked as complete in the map file.\"\n\nThis change reframes the task from following a complex procedure to completing a checklist defined in an external artifact, significantly reducing the prompt's internal complexity and the AI's cognitive load."
+      },
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-04-05T06:09:20.031Z"
+    },
+    {
+      "round": 14,
+      "score": 43,
+      "max": 60,
+      "status": "reverted",
+      "mutation": "Eliminate redundant Step 3b and rewrite Step 4 as a simple map-driven execution loop, making INTEGRATION_MAP.md the sole driver of ordering/verification instead of a complex 12-part procedure — directly implementing the meta-analyst's artifact-centric strategy to fix Integration Awareness and Execution Completeness failures.",
+      "cost": 0.05,
+      "criteria": [
+        10,
+        9,
+        4,
+        10,
+        10,
+        0
+      ],
+      "failures": [
+        {
+          "scenario": 1,
+          "criterion": "Execution Completeness"
+        },
+        {
+          "scenario": 1,
+          "criterion": "Integration Awareness"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Execution Completeness"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Integration Awareness"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Integration Awareness"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Integration Awareness"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Execution Completeness"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Integration Awareness"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Parameter Gathering"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Execution Completeness"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Integration Awareness"
+        },
+        {
+          "scenario": 7,
+          "criterion": "Integration Awareness"
+        },
+        {
+          "scenario": 8,
+          "criterion": "Integration Awareness"
+        },
+        {
+          "scenario": 9,
+          "criterion": "Execution Completeness"
+        },
+        {
+          "scenario": 9,
+          "criterion": "Integration Awareness"
+        },
+        {
+          "scenario": 10,
+          "criterion": "Execution Completeness"
+        },
+        {
+          "scenario": 10,
+          "criterion": "Integration Awareness"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 43 did not exceed best 56 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-04-05T06:09:53.603Z",
+      "changelog": "**Mutation**: Eliminate redundant Step 3b and rewrite Step 4 as a simple map-driven execution loop, making INTEGRATION_MAP.md the sole driver of ordering/verification instead of a complex 12-part procedure — directly implementing the meta-analyst's artifact-centric strategy to fix Integration Awareness and Execution Completeness failures.\n**Failures**: S1: Execution Completeness, S1: Integration Awareness, S2: Execution Completeness, S2: Integration Awareness, S3: Integration Awareness, S4: Integration Awareness, S5: Execution Completeness, S5: Integration Awareness, S6: Parameter Gathering, S6: Execution Completeness, S6: Integration Awareness, S7: Integration Awareness, S8: Integration Awareness, S9: Execution Completeness, S9: Integration Awareness, S10: Execution Completeness, S10: Integration Awareness\n**Per-criteria**: Mode Detection: 10/10, Parameter Gathering: 9/10, Execution Completeness: 4/10, Vendor Detection: 10/10, Dependency Ordering: 10/10, Integration Awareness: 0/10\n**Decision**: Score 43 did not exceed best 56 — mutation produced worse or equal results"
+    },
+    {
+      "round": 15,
+      "score": 41,
+      "max": 60,
+      "status": "reverted",
+      "mutation": "Add a mandatory \"Integration Pre-Check\" sub-step at the top of each component's Step 4 loop that reads Section B from INTEGRATION_MAP.md, identifies which already-replaced components this component depends on, and requires the agent to confirm it will call the NEW implementations (not the old vendor APIs) — directly fixing Integration Awareness failures across all 10 scenarios by making the map a live execution guide, not just a planning document.",
+      "cost": 0.05,
+      "criteria": [
+        10,
+        8,
+        3,
+        10,
+        10,
+        0
+      ],
+      "failures": [
+        {
+          "scenario": 1,
+          "criterion": "Execution Completeness"
+        },
+        {
+          "scenario": 1,
+          "criterion": "Integration Awareness"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Execution Completeness"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Integration Awareness"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Integration Awareness"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Execution Completeness"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Integration Awareness"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Parameter Gathering"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Execution Completeness"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Integration Awareness"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Parameter Gathering"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Execution Completeness"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Integration Awareness"
+        },
+        {
+          "scenario": 7,
+          "criterion": "Integration Awareness"
+        },
+        {
+          "scenario": 8,
+          "criterion": "Integration Awareness"
+        },
+        {
+          "scenario": 9,
+          "criterion": "Execution Completeness"
+        },
+        {
+          "scenario": 9,
+          "criterion": "Integration Awareness"
+        },
+        {
+          "scenario": 10,
+          "criterion": "Execution Completeness"
+        },
+        {
+          "scenario": 10,
+          "criterion": "Integration Awareness"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 41 did not exceed best 56 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-04-05T06:12:12.612Z",
+      "changelog": "**Mutation**: Add a mandatory \"Integration Pre-Check\" sub-step at the top of each component's Step 4 loop that reads Section B from INTEGRATION_MAP.md, identifies which already-replaced components this component depends on, and requires the agent to confirm it will call the NEW implementations (not the old vendor APIs) — directly fixing Integration Awareness failures across all 10 scenarios by making the map a live execution guide, not just a planning document.\n**Failures**: S1: Execution Completeness, S1: Integration Awareness, S2: Execution Completeness, S2: Integration Awareness, S3: Integration Awareness, S4: Execution Completeness, S4: Integration Awareness, S5: Parameter Gathering, S5: Execution Completeness, S5: Integration Awareness, S6: Parameter Gathering, S6: Execution Completeness, S6: Integration Awareness, S7: Integration Awareness, S8: Integration Awareness, S9: Execution Completeness, S9: Integration Awareness, S10: Execution Completeness, S10: Integration Awareness\n**Per-criteria**: Mode Detection: 10/10, Parameter Gathering: 8/10, Execution Completeness: 3/10, Vendor Detection: 10/10, Dependency Ordering: 10/10, Integration Awareness: 0/10\n**Decision**: Score 41 did not exceed best 56 — mutation produced worse or equal results"
+    }
+  ]
+}

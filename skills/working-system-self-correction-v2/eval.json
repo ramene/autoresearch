@@ -1,0 +1,92 @@
+{
+  "scenarios": [
+    {
+      "id": 1,
+      "type": "assumption-violation",
+      "title": "Build Command Wrong",
+      "event": "Agent discovers npm run build fails, but CLAUDE-patterns.md says use npm run build. Actual command is npm run build:prod.",
+      "expectedAction": "update",
+      "expectedType": "assumption-violation"
+    },
+    {
+      "id": 2,
+      "type": "assumption-violation",
+      "title": "API Response Format Changed",
+      "event": "Agent assumes API returns {data: [...]} per CLAUDE-patterns.md, but actual response is {results: [...], pagination: {...}}.",
+      "expectedAction": "update",
+      "expectedType": "assumption-violation"
+    },
+    {
+      "id": 3,
+      "type": "pattern-discovery",
+      "title": "Error Handling Convention",
+      "event": "Agent notices across 3 files, errors are handled with try/catch wrapping logger.error(context, err).",
+      "expectedAction": "update",
+      "expectedType": "pattern-discovery"
+    },
+    {
+      "id": 4,
+      "type": "pattern-discovery",
+      "title": "Test Naming Convention",
+      "event": "Agent observes all tests use describe(ComponentName) with it(should [verb]).",
+      "expectedAction": "update",
+      "expectedType": "pattern-discovery"
+    },
+    {
+      "id": 5,
+      "type": "error-resolution",
+      "title": "Docker Port Conflict",
+      "event": "Agent encounters port 3000 already in use, discovers stale container, stops it.",
+      "expectedAction": "update",
+      "expectedType": "error-resolution"
+    },
+    {
+      "id": 6,
+      "type": "error-resolution",
+      "title": "Module Import Path Alias",
+      "event": "Agent gets Cannot find module @/utils/auth. Root cause: tsconfig paths changed.",
+      "expectedAction": "update",
+      "expectedType": "error-resolution"
+    },
+    {
+      "id": 7,
+      "type": "config-finding",
+      "title": "SSL Mode Required",
+      "event": "Agent discovers DATABASE_URL must include ?sslmode=require for production.",
+      "expectedAction": "update",
+      "expectedType": "config-finding"
+    },
+    {
+      "id": 8,
+      "type": "config-finding",
+      "title": "Feature Flag Discovery",
+      "event": "Agent finds ENABLE_NEW_AUTH=true needed in .env.",
+      "expectedAction": "update",
+      "expectedType": "config-finding"
+    },
+    {
+      "id": 9,
+      "type": "duplicate",
+      "title": "Already Documented Solution",
+      "event": "Agent discovers Docker --no-cache for CI. But CLAUDE-troubleshooting.md already has this.",
+      "expectedAction": "defer",
+      "expectedType": "error-resolution"
+    },
+    {
+      "id": 10,
+      "type": "one-time",
+      "title": "One-Time Typo Fix",
+      "event": "GitHub API rate limit from CI workflow typo. Typo was fixed.",
+      "expectedAction": "defer",
+      "expectedType": "error-resolution"
+    }
+  ],
+  "criteria": [
+    "Signal Detection: Do instructions clearly guide detecting this type of learning signal?",
+    "Classification: Do instructions provide enough guidance to classify the signal type?",
+    "Quality Gate: Do gate instructions adequately handle this scenario?",
+    "Generalizability: Do instructions help assess whether the learning is generalizable?",
+    "No Duplication: Do instructions guide checking for existing documentation?",
+    "Correct Action: Do instructions lead to the correct action (update/defer)?"
+  ]
+}

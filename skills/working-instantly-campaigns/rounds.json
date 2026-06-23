@@ -1,0 +1,1045 @@
+[
+  {
+    "round": 0,
+    "score": 27,
+    "max": 36,
+    "status": "baseline",
+    "mutation": "Added Step 4 (Verify & Confirm) to the Process section with explicit completion criteria, so the agent knows what \"done\" looks like and doesn't stop prematurely after script execution.",
+    "cost": 0.05,
+    "criteria": [
+      5,
+      5,
+      4,
+      6,
+      5,
+      2
+    ],
+    "failures": [
+      {
+        "scenario": 2,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Completeness"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Completeness"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Completeness"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Completeness"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Initial baseline evaluation",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-20T21:00:48.731Z",
+    "changelog": "**Mutation**: Added Step 4 (Verify & Confirm) to the Process section with explicit completion criteria, so the agent knows what \"done\" looks like and doesn't stop prematurely after script execution.\n**Failures**: S2: Instructions Clarity, S3: Error Handling, S3: Completeness, S4: Task Completion, S4: Output Quality, S4: Completeness, S5: Output Quality, S5: Completeness, S6: Completeness\n**Per-criteria**: Task Completion: 5/6, Error Handling: 5/6, Output Quality: 4/6, Tool Usage: 6/6, Instructions Clarity: 5/6, Completeness: 2/6\n**Decision**: Initial baseline evaluation"
+  },
+  {
+    "round": 1,
+    "score": 14,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Replaced the passive \"Edge Cases\" section with an active \"Error Recovery Protocol\" that gives the agent step-by-step tool actions (not just script behavior descriptions) when errors occur, including how to diagnose failures and what to do next.",
+    "cost": 0.05,
+    "criteria": [
+      2,
+      2,
+      2,
+      3,
+      3,
+      2
+    ],
+    "failures": [
+      {
+        "scenario": 2,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Tool Usage"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Completeness"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Completeness"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Tool Usage"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Completeness"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Tool Usage"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Completeness"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 14 did not exceed best 27 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-20T21:01:59.790Z",
+    "changelog": "**Mutation**: Replaced the passive \"Edge Cases\" section with an active \"Error Recovery Protocol\" that gives the agent step-by-step tool actions (not just script behavior descriptions) when errors occur, including how to diagnose failures and what to do next.\n**Failures**: S2: Task Completion, S2: Error Handling, S2: Output Quality, S2: Tool Usage, S2: Instructions Clarity, S2: Completeness, S3: Task Completion, S3: Error Handling, S3: Output Quality, S3: Completeness, S4: Task Completion, S4: Error Handling, S4: Output Quality, S4: Tool Usage, S4: Instructions Clarity, S4: Completeness, S6: Task Completion, S6: Error Handling, S6: Output Quality, S6: Tool Usage, S6: Instructions Clarity, S6: Completeness\n**Per-criteria**: Task Completion: 2/6, Error Handling: 2/6, Output Quality: 2/6, Tool Usage: 3/6, Instructions Clarity: 3/6, Completeness: 2/6\n**Decision**: Score 14 did not exceed best 27 — mutation produced worse or equal results"
+  },
+  {
+    "round": 2,
+    "score": 22,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Rewrote \"Review Output\" (Step 3) to explicitly capture script stdout into a variable, parse the JSON, and immediately trigger Error Recovery Protocol if status != \"success\" or campaigns_created != 3 — eliminating blind success reporting.",
+    "cost": 0.05,
+    "criteria": [
+      2,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "failures": [
+      {
+        "scenario": 3,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Tool Usage"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Completeness"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Tool Usage"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Completeness"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 22 did not exceed best 27 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-20T21:03:27.530Z",
+    "changelog": "**Mutation**: Rewrote \"Review Output\" (Step 3) to explicitly capture script stdout into a variable, parse the JSON, and immediately trigger Error Recovery Protocol if status != \"success\" or campaigns_created != 3 — eliminating blind success reporting.\n**Failures**: S3: Task Completion, S3: Error Handling, S3: Output Quality, S3: Tool Usage, S3: Instructions Clarity, S3: Completeness, S4: Task Completion, S5: Task Completion, S6: Task Completion, S6: Error Handling, S6: Output Quality, S6: Tool Usage, S6: Instructions Clarity, S6: Completeness\n**Per-criteria**: Task Completion: 2/6, Error Handling: 4/6, Output Quality: 4/6, Tool Usage: 4/6, Instructions Clarity: 4/6, Completeness: 4/6\n**Decision**: Score 22 did not exceed best 27 — mutation produced worse or equal results"
+  },
+  {
+    "round": 3,
+    "score": 29,
+    "max": 36,
+    "status": "kept",
+    "mutation": "Moved offer generation from Error Recovery Step 5 into the main Process as Step 2 (pre-flight), so the agent always generates offers before running the script when none are provided — preventing incomplete runs from missing inputs.",
+    "cost": 0.05,
+    "criteria": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      4
+    ],
+    "failures": [
+      {
+        "scenario": 3,
+        "criterion": "Completeness"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Tool Usage"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Completeness"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Improved from 27 to 29",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-20T21:04:45.997Z",
+    "changelog": "**Mutation**: Moved offer generation from Error Recovery Step 5 into the main Process as Step 2 (pre-flight), so the agent always generates offers before running the script when none are provided — preventing incomplete runs from missing inputs.\n**Failures**: S3: Completeness, S6: Task Completion, S6: Error Handling, S6: Output Quality, S6: Tool Usage, S6: Instructions Clarity, S6: Completeness\n**Per-criteria**: Task Completion: 5/6, Error Handling: 5/6, Output Quality: 5/6, Tool Usage: 5/6, Instructions Clarity: 5/6, Completeness: 4/6\n**Decision**: Improved from 27 to 29"
+  },
+  {
+    "round": 4,
+    "score": 29,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Merged Steps 3 and 4 into a single \"Run & Capture Output\" step that executes the script exactly once with stderr captured, eliminating the duplicate execution that caused confusion about which run's output to inspect.",
+    "cost": 0.05,
+    "criteria": [
+      4,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "failures": [
+      {
+        "scenario": 4,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Tool Usage"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Completeness"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 29 did not exceed best 29 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-20T21:06:28.909Z",
+    "changelog": "**Mutation**: Merged Steps 3 and 4 into a single \"Run & Capture Output\" step that executes the script exactly once with stderr captured, eliminating the duplicate execution that caused confusion about which run's output to inspect.\n**Failures**: S4: Task Completion, S6: Task Completion, S6: Error Handling, S6: Output Quality, S6: Tool Usage, S6: Instructions Clarity, S6: Completeness\n**Per-criteria**: Task Completion: 4/6, Error Handling: 5/6, Output Quality: 5/6, Tool Usage: 5/6, Instructions Clarity: 5/6, Completeness: 5/6\n**Decision**: Score 29 did not exceed best 29 — mutation produced worse or equal results"
+  },
+  {
+    "round": 5,
+    "score": 26,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Added a pre-flight working directory check as Step 0 that verifies the scripts directory exists before proceeding, so relative path failures are caught immediately with a clear error message instead of cascading silently.",
+    "cost": 0.05,
+    "criteria": [
+      4,
+      4,
+      5,
+      5,
+      5,
+      3
+    ],
+    "failures": [
+      {
+        "scenario": 2,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Tool Usage"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Completeness"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Completeness"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Completeness"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 26 did not exceed best 29 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-25T22:00:40.566Z",
+    "changelog": "**Mutation**: Added a pre-flight working directory check as Step 0 that verifies the scripts directory exists before proceeding, so relative path failures are caught immediately with a clear error message instead of cascading silently.\n**Failures**: S2: Task Completion, S2: Error Handling, S2: Output Quality, S2: Tool Usage, S2: Instructions Clarity, S2: Completeness, S3: Error Handling, S3: Completeness, S4: Task Completion, S6: Completeness\n**Per-criteria**: Task Completion: 4/6, Error Handling: 4/6, Output Quality: 5/6, Tool Usage: 5/6, Instructions Clarity: 5/6, Completeness: 3/6\n**Decision**: Score 26 did not exceed best 29 — mutation produced worse or equal results"
+  },
+  {
+    "round": 6,
+    "score": 34,
+    "max": 36,
+    "status": "kept",
+    "mutation": "Added explicit total failure (0/3 campaigns) reporting template to Error Recovery Protocol Step 4, mirroring the partial success template so the agent has a clear output format for complete script failures instead of producing incomplete/inconsistent output.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      5,
+      6,
+      6,
+      6,
+      5
+    ],
+    "failures": [
+      {
+        "scenario": 3,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Completeness"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Improved from 29 to 34",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-25T22:02:06.139Z",
+    "changelog": "**Mutation**: Added explicit total failure (0/3 campaigns) reporting template to Error Recovery Protocol Step 4, mirroring the partial success template so the agent has a clear output format for complete script failures instead of producing incomplete/inconsistent output.\n**Failures**: S3: Error Handling, S3: Completeness\n**Per-criteria**: Task Completion: 6/6, Error Handling: 5/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 6/6, Completeness: 5/6\n**Decision**: Improved from 29 to 34"
+  },
+  {
+    "round": 7,
+    "score": 34,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Made Step 3's script command explicitly reference the offers prepared in Step 2 by replacing the generic placeholder with a note that the EXACT offer text from Step 2 must be substituted — preventing the agent from passing literal \"Offer 1|Offer 2|Offer 3\" strings to the script.",
+    "cost": 0.05,
+    "criteria": [
+      4,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [
+      {
+        "scenario": 3,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Task Completion"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 34 did not exceed best 34 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-25T22:03:37.681Z",
+    "changelog": "**Mutation**: Made Step 3's script command explicitly reference the offers prepared in Step 2 by replacing the generic placeholder with a note that the EXACT offer text from Step 2 must be substituted — preventing the agent from passing literal \"Offer 1|Offer 2|Offer 3\" strings to the script.\n**Failures**: S3: Task Completion, S4: Task Completion\n**Per-criteria**: Task Completion: 4/6, Error Handling: 6/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 6/6, Completeness: 6/6\n**Decision**: Score 34 did not exceed best 34 — mutation produced worse or equal results"
+  },
+  {
+    "round": 8,
+    "score": 32,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Fixed Error Recovery Step 3 to explicitly use the actual offer text from Step 2 (not placeholder strings), mirroring the same fix applied to the main Step 3 in Round 8.",
+    "cost": 0.05,
+    "criteria": [
+      5,
+      5,
+      6,
+      6,
+      5,
+      5
+    ],
+    "failures": [
+      {
+        "scenario": 3,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Completeness"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 32 did not exceed best 34 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-25T22:05:27.887Z",
+    "changelog": "**Mutation**: Fixed Error Recovery Step 3 to explicitly use the actual offer text from Step 2 (not placeholder strings), mirroring the same fix applied to the main Step 3 in Round 8.\n**Failures**: S3: Task Completion, S3: Error Handling, S3: Instructions Clarity, S3: Completeness\n**Per-criteria**: Task Completion: 5/6, Error Handling: 5/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 5/6, Completeness: 5/6\n**Decision**: Score 32 did not exceed best 34 — mutation produced worse or equal results"
+  },
+  {
+    "round": 9,
+    "score": 18,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Rename Error Recovery Protocol numbered steps to lettered stages (A, B, C, D) to eliminate namespace collision with the main Process's Step 0–4 numbering, preventing agents from conflating \"Step 2\" in error recovery with \"Step 2\" in the main flow.",
+    "cost": 0.05,
+    "criteria": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "failures": [
+      {
+        "scenario": 2,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Tool Usage"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Completeness"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Tool Usage"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Completeness"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Tool Usage"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Completeness"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 18 did not exceed best 34 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-25T22:07:00.372Z",
+    "changelog": "**Mutation**: Rename Error Recovery Protocol numbered steps to lettered stages (A, B, C, D) to eliminate namespace collision with the main Process's Step 0–4 numbering, preventing agents from conflating \"Step 2\" in error recovery with \"Step 2\" in the main flow.\n**Failures**: S2: Task Completion, S2: Error Handling, S2: Output Quality, S2: Tool Usage, S2: Instructions Clarity, S2: Completeness, S3: Task Completion, S3: Error Handling, S3: Output Quality, S3: Tool Usage, S3: Instructions Clarity, S3: Completeness, S6: Task Completion, S6: Error Handling, S6: Output Quality, S6: Tool Usage, S6: Instructions Clarity, S6: Completeness\n**Per-criteria**: Task Completion: 3/6, Error Handling: 3/6, Output Quality: 3/6, Tool Usage: 3/6, Instructions Clarity: 3/6, Completeness: 3/6\n**Decision**: Score 18 did not exceed best 34 — mutation produced worse or equal results"
+  },
+  {
+    "round": 9,
+    "score": 18,
+    "max": 36,
+    "status": "escalation",
+    "mutation": "Stuck escalation: The optimization process is stuck in a local optimum of \"instructional over-engineering.\" Initial mutations were beneficial, adding explicit checks and error handling which improved the score to a pea",
+    "cost": 0.03,
+    "criteria": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "failures": [],
+    "decisionReason": "Stuck escalation triggered after 3+ rounds with no improvement",
+    "escalation": {
+      "diagnosis": "The optimization process is stuck in a local optimum of \"instructional over-engineering.\" Initial mutations were beneficial, adding explicit checks and error handling which improved the score to a peak of 34/36. However, subsequent mutations continued to add more granular rules, warnings, and formatting changes (e.g., renaming steps to stages). This has resulted in instruction creep, making the prompt excessively long and complex. The agent is now likely suffering from cognitive overload, failing to parse the convoluted flow control between the main `Process` and the separate `Error Recovery Protocol`. The catastrophic score drop to 18/36 after a seemingly innocuous change (renaming steps) indicates the skill's structure has become brittle; any modification, even a helpful one, now risks breaking the agent's fragile understanding of the overall task.",
+      "evalRedesignNeeded": false,
+      "strategy": "Shift from adding more specific instructions to **simplifying and consolidating the control flow**. The current model of a linear process that \"jumps\" to a separate, multi-stage error protocol is proving fragile and confusing for the agent. The new strategy is to refactor the skill by **integrating error handling directly within the primary process steps**. Each step that can fail should contain its own `if-success/then-proceed` and `if-failure/then-diagnose-and-report` logic. This eliminates the need for a separate protocol, creates a more linear and predictable execution path, and reduces the cognitive load on the agent.",
+      "suggestedMutation": "**Action**: Remove the `Error Recovery Protocol` section entirely and merge its logic directly into Step 3. This refactors the most critical part of the skill into a self-contained, conditional block.\n\n**Replace the current \"Step 3. Run Script & Capture Output\" and the entire \"Error Recovery Protocol\" with this new, consolidated Step 3:**\n\n```markdown\n### 3. Run Script, Verify, and Report\nThis is the final action step. Run the script and handle the outcome based on its output.\n\n**A. Execute the Script**\nRun the script **exactly once**, substituting the **actual offer text from Step 2** into the `--offers` argument (pipe-separated).\n\n```bash\npython3 ./scripts/instantly_create_campaigns.py \\\n  --client_name \"ClientName\" \\\n  --client_description \"Description of the client...\" \\\n  --offers \"Offer text 1|Offer text 2|Offer text 3\" \\\n  --target_audience \"Who we're emailing\" \\\n  --social_proof \"Credentials/results to mention\" \\\n  2>&1\n```\n\n**B. Analyze the Output**\nImmediately after the script finishes, check its output.\n\n*   **If the output contains `\"status\": \"success\"` and `\"campaigns_created\": 3`:** The script succeeded. Proceed to Step 4 to format the final report.\n\n*   **If the output shows an error, `\"status\": \"failure\"`, or fewer than 3 campaigns were created:** The script failed. Do NOT proceed to Step 4. Instead, perform the following diagnosis and report the failure.\n    1.  **Diagnose Root Cause:** Check for missing API keys.\n        ```bash\n        grep -E \"INSTANTLY_API_KEY|ANTHROPIC_API_KEY\" .env\n        ```\n    2.  **Report the Failure Clearly:** Use the script's error message and your diagnosis to inform the user.\n        *   **For a total failure (0 campaigns):**\n            ```\n            ❌ Campaign creation failed: Created 0/3 campaigns\n\n            Error from script:\n            [Paste the full error message or stack trace from the script output here]\n\n            Diagnosis:\n            - API key status: [valid / missing / placeholder]\n            - Action required: [e.g. \"Check INSTANTLY_API_KEY in .env\", \"Verify network connectivity\"]\n            ```\n        *   **For a partial failure (1 or 2 campaigns):**\n            ```\n            ⚠️ Partial completion: Created [1 or 2]/3 campaigns.\n\n            Error from script:\n            [Paste the full error message or stack trace from the script output here]\n\n            Diagnosis:\n            - The script failed after creating some campaigns. This could be a rate limit or intermittent API issue.\n            - Action required: Review the created campaigns in Instantly and re-run for the failed offer.\n            ```\n    3.  **STOP.** Do not continue after reporting a failure.\n\n### 4. Confirm Completion (Success Path Only)\nIf and only if Step 3 was a full success, report the results to the user in this format:\n```\n✅ Created 3 campaigns successfully:\n- Campaign 1: [name] (ID: ...)\n- Campaign 2: [name] (ID: ...)\n- Campaign 3: [name] (ID: ...)\n\nOffers used:\n- Offer 1: [text]\n- Offer 2: [text]\n- Offer 3: [text]\n\nEach campaign includes:\n- Email 1 with 2 A/B variants\n- Email 2 follow-up\n- Email 3 breakup\n```\n```"
+    },
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-25T22:09:00.385Z"
+  },
+  {
+    "round": 10,
+    "score": 26,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Add an input validation step before Step 0 that stops and asks for the required client description if missing (fixes edge-empty) and truncates oversized description/offers to safe lengths (fixes edge-large), preventing the script from being called with empty or malformed arguments.",
+    "cost": 0.05,
+    "criteria": [
+      4,
+      4,
+      6,
+      4,
+      4,
+      4
+    ],
+    "failures": [
+      {
+        "scenario": 2,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Tool Usage"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Completeness"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Tool Usage"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Completeness"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 26 did not exceed best 34 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-26T06:00:35.792Z",
+    "changelog": "**Mutation**: Add an input validation step before Step 0 that stops and asks for the required client description if missing (fixes edge-empty) and truncates oversized description/offers to safe lengths (fixes edge-large), preventing the script from being called with empty or malformed arguments.\n**Failures**: S2: Task Completion, S2: Error Handling, S2: Tool Usage, S2: Instructions Clarity, S2: Completeness, S3: Task Completion, S3: Error Handling, S3: Tool Usage, S3: Instructions Clarity, S3: Completeness\n**Per-criteria**: Task Completion: 4/6, Error Handling: 4/6, Output Quality: 6/6, Tool Usage: 4/6, Instructions Clarity: 4/6, Completeness: 4/6\n**Decision**: Score 26 did not exceed best 34 — mutation produced worse or equal results"
+  },
+  {
+    "round": 11,
+    "score": 36,
+    "max": 36,
+    "status": "kept",
+    "mutation": "Added a brief clarifying note to the Process section header distinguishing the two pre-flight steps (-1 and 0) from the main 3-step workflow, reducing any potential confusion about the unusual negative step numbering.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Improved from 34 to 36",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-26T06:03:28.926Z",
+    "changelog": "**Mutation**: Added a brief clarifying note to the Process section header distinguishing the two pre-flight steps (-1 and 0) from the main 3-step workflow, reducing any potential confusion about the unusual negative step numbering.\n**Failures**: none\n**Per-criteria**: Task Completion: 6/6, Error Handling: 6/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 6/6, Completeness: 6/6\n**Decision**: Improved from 34 to 36"
+  },
+  {
+    "round": 12,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Added explicit note to Step -1 header clarifying it involves no API calls or script execution — pure input validation only — to eliminate any ambiguity about what operations are permitted before environment checks pass.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-26T06:05:15.274Z",
+    "changelog": "**Mutation**: Added explicit note to Step -1 header clarifying it involves no API calls or script execution — pure input validation only — to eliminate any ambiguity about what operations are permitted before environment checks pass.\n**Failures**: none\n**Per-criteria**: Task Completion: 6/6, Error Handling: 6/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 6/6, Completeness: 6/6\n**Decision**: Score 36 did not exceed best 36 — mutation produced worse or equal results"
+  },
+  {
+    "round": 13,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Added explicit guidance in Step 3 to derive --target_audience and --social_proof from the client description when the user hasn't provided them, preventing blank/empty arguments from reaching the script.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-26T06:06:59.120Z",
+    "changelog": "**Mutation**: Added explicit guidance in Step 3 to derive --target_audience and --social_proof from the client description when the user hasn't provided them, preventing blank/empty arguments from reaching the script.\n**Failures**: none\n**Per-criteria**: Task Completion: 6/6, Error Handling: 6/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 6/6, Completeness: 6/6\n**Decision**: Score 36 did not exceed best 36 — mutation produced worse or equal results"
+  },
+  {
+    "round": 14,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "All criteria scored 36/36 with zero failures — no mutation needed. Returning the skill unchanged to preserve its perfect score.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-26T06:08:33.878Z",
+    "changelog": "**Mutation**: All criteria scored 36/36 with zero failures — no mutation needed. Returning the skill unchanged to preserve its perfect score.\n**Failures**: none\n**Per-criteria**: Task Completion: 6/6, Error Handling: 6/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 6/6, Completeness: 6/6\n**Decision**: Score 36 did not exceed best 36 — mutation produced worse or equal results"
+  },
+  {
+    "round": 14,
+    "score": 36,
+    "max": 36,
+    "status": "escalation",
+    "mutation": "Stuck escalation: The optimization loop is stuck because the skill has achieved a perfect score (36/36) against the current evaluation suite. The problem is not a local optimum in skill quality, but a global maximum re",
+    "cost": 0.03,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "decisionReason": "Stuck escalation triggered after 3+ rounds with no improvement",
+    "escalation": {
+      "diagnosis": "The optimization loop is stuck because the skill has achieved a perfect score (36/36) against the current evaluation suite. The problem is not a local optimum in skill quality, but a global maximum relative to the existing tests. The system's imperative to \"always improve\" is causing it to apply minor, superfluous mutations (e.g., adding extra clarifying sentences) to a skill that is already performing flawlessly on all measured criteria. This process of adding redundant instructions leads to \"instructional bloat\" without providing any performance benefit, as there are no failed test cases left to solve. The core issue is the evaluation suite's inability to challenge the skill further, not a deficiency in the skill itself.",
+      "evalRedesignNeeded": true,
+      "strategy": "The current strategy of incremental refinement and adding more explicit instructions has hit its limit. The new strategy should be **Structural Simplification and Consolidation**. Instead of adding more guardrails, we will test if the skill is robust enough to perform with more concise, consolidated instructions. This approach aims to reduce cognitive load on the agent and eliminate potentially redundant steps that were added during previous optimization rounds. By merging related steps and removing verbose explanations, we can test whether the skill's high performance is dependent on the current level of over-specification or if it can be maintained with a more streamlined and efficient prompt. This will break the cycle of adding unnecessary clarifications and push the skill towards a more elegant and less brittle structure.",
+      "suggestedMutation": "Consolidate the fragmented input validation and argument preparation logic. Currently, input validation happens in Step -1, while argument derivation for `--target_audience` and `--social_proof` happens much later in Step 3. This separation can be confusing. Merge all input validation, normalization, and argument derivation into a single, comprehensive pre-flight step. This simplifies the agent's workflow by preparing all script arguments in one place before any other actions are taken.\n\n**Replace the current `### -1. Validate Inputs` and parts of `### 3. Run Script & Capture Output` with the following consolidated step:**\n\n```markdown\n### -1. Prepare & Validate All Script Arguments (REQUIRED FIRST STEP)\nBefore running any commands, prepare and validate all arguments for the script. This step is for data preparation only—do not run the main script here.\n\n1.  **Validate `client_description`**:\n    - If missing or blank, **STOP and ask the user**: \"Please provide a client description (company name, industry, target audience, and value proposition) before I can create campaigns.\"\n    - If it exceeds 800 characters, truncate it to the nearest sentence boundary under 800 characters.\n\n2.  **Resolve All Arguments**:\n    - `--client_name`: If not provided by the user, derive a short name from the client description (e.g., the company name).\n    - `--client_description`: Use the validated (and possibly truncated) description from above.\n    - `--target_audience`: Use the value provided by the user. If not provided, derive a concise description (≤300 chars) from the client description. Truncate if over 300 characters.\n    - `--social_proof`: Use the value provided by the user. If not provided, derive a short credibility statement (≤300 chars) from the client description. Truncate if over 300 characters.\n    - `--offers`: Check if the user provided 3 offers. If so, use them. If not, you will generate them in Step 2. Truncate any single offer that exceeds 200 characters.\n\n**Do not proceed to Step 0 if `client_description` is missing.**\n```\n*(Note: This change would also require updating Step 3 to simply use the arguments prepared in this new Step -1, removing the argument derivation logic from its instructions.)*"
+    },
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-26T06:09:55.355Z"
+  },
+  {
+    "round": 15,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-instantly-campaigns/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n",
+    "cost": 0.03,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-04-25T14:04:04.915Z",
+    "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-instantly-campaigns/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n\n**Failures**: none"
+  },
+  {
+    "round": 16,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-instantly-campaigns/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n",
+    "cost": 0.03,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-04-25T22:00:50.128Z",
+    "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-instantly-campaigns/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n\n**Failures**: none"
+  },
+  {
+    "round": 17,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-instantly-campaigns/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n",
+    "cost": 0.03,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-04-25T22:01:15.419Z",
+    "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-instantly-campaigns/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n\n**Failures**: none"
+  },
+  {
+    "round": 18,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-instantly-campaigns/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n",
+    "cost": 0.03,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-04-25T22:01:39.171Z",
+    "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-instantly-campaigns/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n\n**Failures**: none"
+  },
+  {
+    "round": 18,
+    "score": 36,
+    "max": 36,
+    "status": "escalation",
+    "mutation": "Stuck escalation: The optimization loop is stuck for two primary reasons. First, the skill has achieved a perfect score (36/36) against the current evaluation suite, meaning there are no remaining failures for the opti",
+    "cost": 0.03,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "decisionReason": "Stuck escalation triggered after 3+ rounds with no improvement",
+    "escalation": {
+      "diagnosis": "The optimization loop is stuck for two primary reasons. First, the skill has achieved a perfect score (36/36) against the current evaluation suite, meaning there are no remaining failures for the optimizer to reactively fix. The skill is at a global maximum for the given tests. Second, a persistent infrastructure failure (`claude: No such file or directory`) in recent rounds (15-18) indicates the mutation generation mechanism itself is broken, preventing any new strategies from even being attempted. The core problem is that the evaluation suite is no longer challenging enough to reveal weaknesses or guide further improvement.",
+      "evalRedesignNeeded": true,
+      "strategy": "The current strategy of incremental refinement and bug-fixing is obsolete because there are no bugs to fix according to the tests. The new strategy must shift from **reactive improvement** to **proactive capability expansion**. We will introduce a new feature that the current skill does not support, thereby making the skill more powerful and simultaneously requiring an expanded evaluation suite to test this new functionality. The goal is to add flexibility, moving away from hardcoded constraints that, while passing current tests, limit real-world utility.",
+      "suggestedMutation": "Introduce flexibility in the number of campaigns created. The current skill is hardcoded to create exactly three campaigns. The mutation will add an optional `num_campaigns` input that defaults to 3. This requires updating the logic in Step 2 (Offer Preparation), Step 3 (Script Execution), and Step 4 (Verification) to handle a variable number of campaigns instead of a fixed value of 3.\n\n**Specific Changes:**\n\n1.  **Update Inputs Section:** Add a new optional input: `num_campaigns` (integer, defaults to 3).\n2.  **Update Step 2 (Prepare Offers):** Change the condition from \"If the user did NOT provide 3 offers\" to \"If the user did not provide a number of offers matching `num_campaigns`...\".\n3.  **Update Step 3 & 4 (Run & Verify):** Change the success checks from `\"campaigns_created\": 3` to check that `campaigns_created` matches the target `num_campaigns`.\n4.  **Update Error Reporting:** Modify the partial/total failure reports to be dynamic, e.g., \"Created 2/[num_campaigns] campaigns\"."
+    },
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-04-25T22:02:01.991Z"
+  },
+  {
+    "round": 19,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-instantly-campaigns/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n",
+    "cost": 0.03,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-04-25T22:02:29.945Z",
+    "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-instantly-campaigns/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n\n**Failures**: none"
+  },
+  {
+    "round": 20,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-instantly-campaigns/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n",
+    "cost": 0.03,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-04-25T22:02:55.325Z",
+    "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-instantly-campaigns/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n\n**Failures**: none"
+  }
+]

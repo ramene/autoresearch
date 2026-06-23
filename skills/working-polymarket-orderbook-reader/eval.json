@@ -1,0 +1,60 @@
+{
+  "scenarios": [
+    {
+      "id": 1,
+      "type": "happy",
+      "title": "Fetch full orderbook for a token and display bid/ask depth",
+      "event": "User asks for the orderbook on a specific prediction market",
+      "expectedAction": "Fetch orderbook via CLOB API, display top levels with total liquidity",
+      "expectedType": "action"
+    },
+    {
+      "id": 2,
+      "type": "happy",
+      "title": "Calculate spread and midpoint for a market",
+      "event": "User asks what the current spread is on a token",
+      "expectedAction": "Fetch bid/ask, calculate spread value and percentage, report midpoint",
+      "expectedType": "action"
+    },
+    {
+      "id": 3,
+      "type": "happy",
+      "title": "Estimate fill price for a $500 market buy",
+      "event": "User asks how much slippage they'd get buying $500 worth",
+      "expectedAction": "Walk orderbook, calculate average fill price and slippage from mid",
+      "expectedType": "action"
+    },
+    {
+      "id": 4,
+      "type": "happy",
+      "title": "Batch query prices for 10 tokens",
+      "event": "User asks for current prices across multiple markets",
+      "expectedAction": "Use batch POST endpoint, return prices for all tokens efficiently",
+      "expectedType": "action"
+    },
+    {
+      "id": 5,
+      "type": "diagnostic",
+      "title": "Token ID has no active orderbook",
+      "event": "User queries a token that has been resolved or has no orders",
+      "expectedAction": "Report empty orderbook with explanation that market may be resolved",
+      "expectedType": "action"
+    },
+    {
+      "id": 6,
+      "type": "edge",
+      "title": "Spread exceeds $0.10 threshold",
+      "event": "User queries a low-liquidity market with wide spread",
+      "expectedAction": "Report spread with warning that Polymarket UI shows last trade price instead of mid when spread > $0.10",
+      "expectedType": "action"
+    }
+  ],
+  "criteria": [
+    "Orderbook correctly parsed with price/size levels: Does the skill fetch and parse bid/ask data accurately?",
+    "Spread and midpoint calculated correctly: Does the skill compute spread value and percentage accurately?",
+    "Fill estimation walks orderbook for accurate slippage: Does the skill simulate order execution through the book?",
+    "Batch queries handle multiple tokens efficiently: Does the skill use batch endpoints for multi-token queries?",
+    "Price history returns data at correct intervals: Does the skill query and parse historical price points?",
+    "Output includes sufficient data for downstream analysis: Does the output feed into analyzer and strategy skills?"
+  ]
+}

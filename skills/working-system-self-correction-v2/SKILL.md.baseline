@@ -1,0 +1,145 @@
+---
+name: system-self-correction-v2
+description: Learning loop pattern with quality gates, stuck detection, and retrospective integration. Extends system self-correction with pre-update validation, iterative correction loops, and compounding learning maintenance.
+allowed-tools:
+  - Read
+  - Edit
+  - Write
+  - Grep
+  - Glob
+---
+
+# Skill: System Self-Correction v2
+
+> Learning loop pattern with quality gates, stuck detection, and retrospective integration
+
+## Purpose
+
+Extends System Self-Correction with:
+1. **Learning Loop** — Iterate on corrections with validation, not just fire-and-forget updates
+2. **Stuck Detection** — Recognize when learning signals are low-quality or contradictory
+3. **Retrospective Integration** — Structured session-end capture that feeds back into future work
+
+## When to Use
+
+Same triggers as original System Self-Correction, plus:
+- After any multi-step task that took longer than expected
+- When the same type of problem recurs across sessions
+- When a workaround was used and should be either documented or properly fixed
+
+## Extended Workflow
+
+### Learning Signal Quality Gate (NEW — before applying any update)
+
+Not every "learning" deserves to be persisted. Before updating memory bank files, assess:
+
+```markdown
+## Learning Signal Assessment
+
+| Check | Status | Notes |
+|-------|--------|-------|
+| **Verified correct** | / | Is this definitely true, or just suspected? Did you test it? |
+| **Generalizable** | / | Will this apply in future sessions, or was it a one-time situation? |
+| **Not already documented** | / | Does this already exist in memory bank files? |
+| **Actionable** | / | Can a future agent act on this information? |
+| **Not contradictory** | / | Does this conflict with existing documented information? |
+
+### Decision
+- All pass: Apply the update
+- Any warnings: Apply with caveats or qualifiers
+- Any critical: Investigate further before applying
+```
+
+### Learning Loop Design (NEW)
+
+When a correction involves changing behavior (not just documenting a fact), use a loop:
+
+```markdown
+## Learning Loop: [what's being corrected]
+
+### Iteration Cycle
+1. **Identify**: What was wrong? What's the corrected understanding?
+2. **Update**: Apply the correction to the appropriate memory bank file
+3. **Verify**: Does the update make sense in context of other documentation?
+4. **Test**: Can the next action use this corrected information successfully?
+5. **Validate**: Did the correction actually improve outcomes?
+
+### Exit Condition
+- Correction is verified, documented, and produces better outcomes
+- OR: Correction is uncertain and documented with confidence qualifier
+
+### Stuck Detection
+Learning is stuck when:
+- The "correct" information keeps changing (contradictory signals)
+- The same issue resurfaces despite being documented (documentation isn't helping)
+- The learning doesn't fit any existing memory bank category
+
+### Stuck Protocol
+1. Document the ambiguity explicitly: "This behavior is inconsistent — observed X on [date] and Y on [date]"
+2. Flag for human review rather than persisting uncertain information
+3. Create a CLAUDE-temp.md entry for investigation rather than updating permanent docs
+```
+
+### Retrospective Integration (NEW)
+
+At the end of significant tasks, structured learning capture:
+
+```markdown
+## Session Retrospective
+
+### Learnings by Category
+
+**Assumptions Violated** (update: CLAUDE-troubleshooting.md or CLAUDE-patterns.md)
+- [ ] [What was assumed] -> [What's actually true] -> [Signal quality: high/medium/low]
+
+**Patterns Discovered** (update: CLAUDE-patterns.md)
+- [ ] [Pattern name] -> [When to use] -> [Signal quality: high/medium/low]
+
+**Errors Resolved** (update: CLAUDE-troubleshooting.md)
+- [ ] [Error] -> [Root cause] -> [Solution] -> [Signal quality: high/medium/low]
+
+**Configuration Found** (update: CLAUDE-config-variables.md)
+- [ ] [Variable/setting] -> [Purpose] -> [Signal quality: high/medium/low]
+
+### Quality Summary
+- Total learnings captured: [N]
+- High confidence: [N] (apply immediately)
+- Medium confidence: [N] (apply with caveats)
+- Low confidence: [N] (defer to CLAUDE-temp.md for investigation)
+
+### Cross-Session Patterns
+- [Pattern that has appeared in multiple sessions — consider promoting to CLAUDE-patterns.md]
+- [Issue that keeps recurring — root cause may not be what we documented]
+```
+
+### Compounding Learning (NEW)
+
+Track learning effectiveness over time:
+
+```markdown
+## Learning Effectiveness Check
+
+Ask periodically:
+1. Are documented troubleshooting entries actually preventing repeat issues?
+2. Are documented patterns being followed by agents in new sessions?
+3. Are any memory bank entries stale, wrong, or contradicted by recent experience?
+4. Should any CLAUDE-temp.md entries be promoted to permanent docs or deleted?
+
+### Maintenance Actions
+- **Promote**: Temporary entries that proved consistently correct -> permanent docs
+- **Revise**: Permanent entries that recent evidence contradicts
+- **Archive**: Entries that no longer apply (codebase changed, tool upgraded, etc.)
+- **Delete**: Entries that were wrong or never useful
+```
+
+---
+
+## Relationship to Original Skill
+
+This v2 **wraps** the original System Self-Correction with pre-update quality gates, learning loop design for behavioral corrections, structured retrospective integration, and compounding learning maintenance. The original's trigger detection, self-correction process, and update templates are unchanged.
+
+---
+
+*Skill Version: 2.0*
+*Last Updated: February 2026*
+*Methodology: Adapted from "The Six Weeks That Changed Software" companion prompts*

@@ -1,0 +1,486 @@
+[
+  {
+    "round": 0,
+    "score": 8,
+    "max": 36,
+    "status": "baseline",
+    "mutation": "Added \"Prerequisites & Error Handling\" section to address the 6/6 Completeness and 6/6 Error Handling failures — the skill had no setup verification steps or guidance on what to do when scripts fail.",
+    "cost": 0.05,
+    "criteria": [
+      1,
+      0,
+      1,
+      5,
+      1,
+      0
+    ],
+    "failures": [
+      {
+        "scenario": 1,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 1,
+        "criterion": "Completeness"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Completeness"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Completeness"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Completeness"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Completeness"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Tool Usage"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Completeness"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Initial baseline evaluation",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-20T23:07:11.795Z",
+    "changelog": "**Mutation**: Added \"Prerequisites & Error Handling\" section to address the 6/6 Completeness and 6/6 Error Handling failures — the skill had no setup verification steps or guidance on what to do when scripts fail.\n**Failures**: S1: Error Handling, S1: Completeness, S2: Task Completion, S2: Error Handling, S2: Output Quality, S2: Instructions Clarity, S2: Completeness, S3: Task Completion, S3: Error Handling, S3: Output Quality, S3: Instructions Clarity, S3: Completeness, S4: Task Completion, S4: Error Handling, S4: Output Quality, S4: Instructions Clarity, S4: Completeness, S5: Task Completion, S5: Error Handling, S5: Output Quality, S5: Instructions Clarity, S5: Completeness, S6: Task Completion, S6: Error Handling, S6: Output Quality, S6: Tool Usage, S6: Instructions Clarity, S6: Completeness\n**Per-criteria**: Task Completion: 1/6, Error Handling: 0/6, Output Quality: 1/6, Tool Usage: 5/6, Instructions Clarity: 1/6, Completeness: 0/6\n**Decision**: Initial baseline evaluation"
+  },
+  {
+    "round": 1,
+    "score": 36,
+    "max": 36,
+    "status": "kept",
+    "mutation": "No failures detected — all criteria pass at 0 failures. Making a minor clarification to the `--min_score` parameter description to help users understand what the outlier score threshold means in practice.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Improved from 8 to 36",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-20T23:08:02.256Z",
+    "changelog": "**Mutation**: No failures detected — all criteria pass at 0 failures. Making a minor clarification to the `--min_score` parameter description to help users understand what the outlier score threshold means in practice.\n**Failures**: none\n**Per-criteria**: Task Completion: 6/6, Error Handling: 6/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 6/6, Completeness: 6/6\n**Decision**: Improved from 8 to 36"
+  },
+  {
+    "round": 2,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "No failures detected — all criteria pass at 0 failures. Making a minor clarification to the `--days` parameter description to reinforce the recommended value and when to adjust it.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-20T23:09:01.368Z",
+    "changelog": "**Mutation**: No failures detected — all criteria pass at 0 failures. Making a minor clarification to the `--days` parameter description to reinforce the recommended value and when to adjust it.\n**Failures**: none\n**Per-criteria**: Task Completion: 6/6, Error Handling: 6/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 6/6, Completeness: 6/6\n**Decision**: Score 36 did not exceed best 36 — mutation produced worse or equal results"
+  },
+  {
+    "round": 3,
+    "score": 30,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Added usage instructions for `update_transcripts.py` — the script is listed under Scripts but has no documented usage, causing task completion and completeness failures when users try to update transcripts for existing outliers.",
+    "cost": 0.05,
+    "criteria": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "failures": [
+      {
+        "scenario": 6,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Tool Usage"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Completeness"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 30 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-20T23:09:52.636Z",
+    "changelog": "**Mutation**: Added usage instructions for `update_transcripts.py` — the script is listed under Scripts but has no documented usage, causing task completion and completeness failures when users try to update transcripts for existing outliers.\n**Failures**: S6: Task Completion, S6: Error Handling, S6: Output Quality, S6: Tool Usage, S6: Instructions Clarity, S6: Completeness\n**Per-criteria**: Task Completion: 5/6, Error Handling: 5/6, Output Quality: 5/6, Tool Usage: 5/6, Instructions Clarity: 5/6, Completeness: 5/6\n**Decision**: Score 30 did not exceed best 36 — mutation produced worse or equal results"
+  },
+  {
+    "round": 4,
+    "score": 33,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Added a \"Verify Results\" section explaining how to confirm a successful run and access the Google Sheet output, addressing the Completeness and Instructions Clarity failures in scenario 3.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      6,
+      6,
+      5,
+      5,
+      5
+    ],
+    "failures": [
+      {
+        "scenario": 3,
+        "criterion": "Tool Usage"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Completeness"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 33 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-20T23:11:02.734Z",
+    "changelog": "**Mutation**: Added a \"Verify Results\" section explaining how to confirm a successful run and access the Google Sheet output, addressing the Completeness and Instructions Clarity failures in scenario 3.\n**Failures**: S3: Tool Usage, S3: Instructions Clarity, S3: Completeness\n**Per-criteria**: Task Completion: 6/6, Error Handling: 6/6, Output Quality: 6/6, Tool Usage: 5/6, Instructions Clarity: 5/6, Completeness: 5/6\n**Decision**: Score 33 did not exceed best 36 — mutation produced worse or equal results"
+  },
+  {
+    "round": 4,
+    "score": 33,
+    "max": 36,
+    "status": "escalation",
+    "mutation": "Stuck escalation: The optimization process is stuck in a local optimum because it's making incremental, additive changes to a structure that has reached its limit. The initial leap from 8/36 to 36/36 was achieved by ad",
+    "cost": 0.03,
+    "criteria": [
+      6,
+      6,
+      6,
+      5,
+      5,
+      5
+    ],
+    "failures": [],
+    "decisionReason": "Stuck escalation triggered after 3+ rounds with no improvement",
+    "escalation": {
+      "diagnosis": "The optimization process is stuck in a local optimum because it's making incremental, additive changes to a structure that has reached its limit. The initial leap from 8/36 to 36/36 was achieved by adding foundational \"how-to\" documentation (Prerequisites, Error Handling). However, documenting the `update_transcripts.py` script in Round 4 introduced more complex, multi-step test scenarios (e.g., \"scrape, encounter a partial failure, then recover\"). The subsequent mutations are patching symptoms (e.g., \"how to verify results\") but are failing to address the core issue: the skill documents the *tools* but not the *workflow*. It presents two separate commands without explaining the strategic relationship between them, specifically how `update_transcripts.py` is used to recover from common partial failures of `scrape_youtube_outliers.py`.",
+      "evalRedesignNeeded": false,
+      "strategy": "Shift from an \"additive\" strategy (adding new, separate sections) to an \"integrative\" one. The goal is to explicitly connect the two scripts into a coherent workflow. Instead of just documenting what each script does in isolation, the skill must guide the agent on *when* and *why* to use the second script in relation to the first. This involves reframing the documentation from a simple command reference into a strategic playbook for achieving the overall goal, including recovery from partial failures.",
+      "suggestedMutation": "Integrate the recovery workflow directly into the \"Verify Results\" section. This is the logical point where a user or agent would identify a partial failure (e.g., missing transcripts) and need guidance on the next step.\n\nModify the \"Verify Results\" section by adding a subsection on handling partial failures.\n\n**Current \"Verify Results\" snippet:**\n```markdown\nIf rows appear but Summary or Transcript columns are empty, run `update_transcripts.py` to backfill them.\n```\n\n**Proposed Change:**\nMake this connection more explicit and prominent by creating a dedicated sub-header for this common recovery path.\n\n```markdown\n## Verify Results\n\nAfter running, confirm the script completed successfully:\n\n```bash\n# The script prints a summary on completion — look for output like:\n# \"Saved N outliers to Google Sheet\"\n# \"Sheet URL: https://docs.google.com/spreadsheets/d/...\"\n```\n\n**How to access results:**\n1. Open the Google Sheet URL printed at the end of the run (or open the sheet directly using `GOOGLE_SHEET_ID`)\n2. Results appear in the first tab — sorted by Outlier Score descending by default\n3. If the sheet URL wasn't printed, check `GOOGLE_SHEET_ID` is set and the service account has editor access to the sheet\n\n**What a successful run looks like:**\n- Script exits with code `0`\n- Prints count of videos saved (e.g. `Saved 12 outliers`)\n- New rows appear in the Google Sheet with Outlier Score, Views, Title, and Summary filled in\n\n### Handling Partial Failures (Missing Transcripts)\n\nIt is common for the main scraping script to succeed in finding outliers but fail to fetch a few transcripts due to network issues or timing. You can identify this if new rows appear in your Google Sheet, but their `Transcript` or `Summary` columns are empty.\n\n**To fix this, run the `update_transcripts.py` script.** This script is designed specifically to find and fill in these missing values.\n\n```bash\n# This will scan your sheet and fetch any missing transcripts\npython3 ./scripts/update_transcripts.py\n```\n```"
+    },
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-20T23:12:13.234Z"
+  },
+  {
+    "round": 5,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "No failures detected — all criteria pass at 0 failures. Adding a note clarifying when to use `update_transcripts.py` vs re-running the full scrape, to make the workflow decision more explicit for users.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-04-04T22:00:54.382Z",
+    "changelog": "**Mutation**: No failures detected — all criteria pass at 0 failures. Adding a note clarifying when to use `update_transcripts.py` vs re-running the full scrape, to make the workflow decision more explicit for users.\n**Failures**: none\n**Per-criteria**: Task Completion: 6/6, Error Handling: 6/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 6/6, Completeness: 6/6\n**Decision**: Score 36 did not exceed best 36 — mutation produced worse or equal results"
+  },
+  {
+    "round": 6,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-youtube-outliers/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n",
+    "cost": 0.03,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-05-11T06:00:29.757Z",
+    "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-youtube-outliers/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n\n**Failures**: none"
+  },
+  {
+    "round": 7,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-youtube-outliers/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n",
+    "cost": 0.03,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-05-11T06:01:00.595Z",
+    "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-youtube-outliers/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n\n**Failures**: none"
+  },
+  {
+    "round": 8,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-youtube-outliers/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n",
+    "cost": 0.03,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-05-11T06:01:26.857Z",
+    "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-youtube-outliers/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n\n**Failures**: none"
+  },
+  {
+    "round": 8,
+    "score": 36,
+    "max": 36,
+    "status": "escalation",
+    "mutation": "Stuck escalation: The optimization loop is stuck in a local optimum because the skill has achieved a perfect score against the current evaluation suite. The skill is a highly structured, procedural \"cookbook\" that perf",
+    "cost": 0.03,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "decisionReason": "Stuck escalation triggered after 3+ rounds with no improvement",
+    "escalation": {
+      "diagnosis": "The optimization loop is stuck in a local optimum because the skill has achieved a perfect score against the current evaluation suite. The skill is a highly structured, procedural \"cookbook\" that perfectly guides the AI through a fixed set of tasks, and the tests confirm it can follow these instructions flawlessly. Subsequent mutations are minor, safe clarifications (e.g., explaining parameters) that don't introduce new capabilities, and therefore cannot improve upon a perfect score. The system is essentially trying to \"improve\" a skill that already fully solves the problems it's being tested against.",
+      "evalRedesignNeeded": true,
+      "strategy": "The current mutation strategy of adding incremental clarifications has reached its limit. The new strategy must shift from **procedural documentation** to **analytical guidance**. Instead of just explaining *how* to run the scripts, the skill must evolve to teach the AI *how to think* about the results and adapt its strategy based on the output. This involves adding a new \"playbook\" or \"strategy\" section that outlines common analytical scenarios and the corresponding actions, moving the skill's focus from mere execution to interpretation and decision-making. This will necessitate new, more complex evaluation scenarios that test for analytical reasoning rather than just procedural adherence.",
+      "suggestedMutation": "Add a new section titled `## Analysis & Strategy Playbook` that provides guidance on how to interpret the script's output and refine the search. This introduces a new strategic layer that the current skill lacks.\n\n```markdown\n## Analysis & Strategy Playbook\n\nThe goal isn't just to generate a list, but to derive insights. Use this guide to analyze the results and plan your next steps.\n\n| If you see this... | It might mean... | Your next action should be... |\n| :--- | :--- | :--- |\n| **Too many irrelevant videos** | Your keywords are too broad. | Refine your `--keywords` to be more specific. Increase `--min_score` to `2.0` to filter for only exceptional outliers. |\n| **Too few (or zero) videos** | Your keywords are too narrow, or the niche is slow-moving. | Broaden your keywords. Increase the lookback window with `--days 90`. Check your Apify quota. |\n| **A competitor appears frequently** | They have a repeatable, successful format. | Deep-dive into their outlier videos. Analyze their titles, thumbnails, and the first 30 seconds of their content for patterns. |\n| **An unexpected topic is an outlier** | An emerging trend or a new angle is gaining traction. | Consider this a content opportunity. Run a new search focused on keywords related to that specific topic to validate the trend. |\n| **Outliers have low absolute views** | You're monitoring a very small or new niche. | This is valuable! It shows you what's working even with a small audience. The outlier score is more important than raw view count here. |\n\nAfter the initial run, use this playbook to perform a second, more targeted run to zero in on the most valuable insights.\n```"
+    },
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-05-11T06:01:51.305Z"
+  },
+  {
+    "round": 9,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-youtube-outliers/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n",
+    "cost": 0.03,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-05-11T06:02:16.468Z",
+    "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-youtube-outliers/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n\n**Failures**: none"
+  },
+  {
+    "round": 10,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-youtube-outliers/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n",
+    "cost": 0.03,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-05-11T06:02:42.240Z",
+    "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-youtube-outliers/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n\n**Failures**: none"
+  }
+]

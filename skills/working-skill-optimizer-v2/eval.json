@@ -1,0 +1,60 @@
+{
+  "scenarios": [
+    {
+      "id": 1,
+      "type": "happy",
+      "title": "Optimize 'classify-leads' which is failing on 'Task Completion'",
+      "event": "Optimize 'classify-leads' which is failing on 'Task Completion'.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 2,
+      "type": "happy",
+      "title": "Optimize 'context-drift-detector' which is stuck and failing on 'Skill Integrati",
+      "event": "Optimize 'context-drift-detector' which is stuck and failing on 'Skill Integration'.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 3,
+      "type": "happy",
+      "title": "Attempt to optimize a skill that is already at a perfect score (1.0)",
+      "event": "Attempt to optimize a skill that is already at a perfect score (1.0).",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 4,
+      "type": "diagnostic",
+      "title": "Optimize a skill where the proposed change results in a lower score, and verify ",
+      "event": "Optimize a skill where the proposed change results in a lower score, and verify the revert.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 5,
+      "type": "edge",
+      "title": "Given a skill failing due to a syntax error, propose a code fix",
+      "event": "Given a skill failing due to a syntax error, propose a code fix.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 6,
+      "type": "edge",
+      "title": "Given a skill failing due to ambiguous instructions, propose a prompt clarificat",
+      "event": "Given a skill failing due to ambiguous instructions, propose a prompt clarification.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    }
+  ],
+  "criteria": [
+    "Identify the weakest criterion from the target skill's logs: Does the skill correctly identify the weakest criterion from the target skill's logs?",
+    "Is the proposed modification a specific, concrete change to a prompt or code file: Is the proposed modification a specific, concrete change to a prompt or code file?",
+    "Does the proposed modification directly address a documented failure mode: Does the proposed modification directly address a documented failure mode?",
+    "Apply the change to the skill's definition files: Does the skill successfully apply the change to the skill's definition files?",
+    "Trigger a new evaluation round for the modified skill: Does the skill trigger a new evaluation round for the modified skill?",
+    "Revert the change if the new score is not an improvement: Does the skill correctly revert the change if the new score is not an improvement?"
+  ]
+}

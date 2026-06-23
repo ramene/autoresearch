@@ -1,0 +1,16 @@
+{
+  "scenarios": [
+    {"id": 1, "type": "happy", "title": "Split $100 USDC.e into YES/NO token pair", "event": "User wants to create outcome tokens from USDC.e", "expectedAction": "Approve USDC.e, call splitPosition, verify 100 YES + 100 NO tokens received", "expectedType": "action"},
+    {"id": 2, "type": "happy", "title": "Merge 50 YES + 50 NO tokens back to USDC.e", "event": "User wants to convert token pair back to collateral", "expectedAction": "Call mergePositions with equal amounts, verify $50 USDC.e returned", "expectedType": "action"},
+    {"id": 3, "type": "happy", "title": "Redeem winning YES tokens after market resolves YES", "event": "Market resolved YES, user holds 100 YES tokens", "expectedAction": "Call redeemPositions, verify $100 USDC.e received, NO tokens burned at $0", "expectedType": "action"},
+    {"id": 4, "type": "diagnostic", "title": "Attempt to redeem before market resolution", "event": "User tries to redeem tokens on unresolved market", "expectedAction": "Detect market not resolved, reject operation with explanation", "expectedType": "action"},
+    {"id": 5, "type": "edge", "title": "Negative risk conversion between multi-outcome markets", "event": "User holds NO on one outcome in a 3-way market", "expectedAction": "Use Neg Risk Adapter to convert NO into YES across other outcomes", "expectedType": "action"}
+  ],
+  "criteria": [
+    "Split produces correct token amounts: Does the skill create equal YES/NO tokens from USDC.e?",
+    "Merge returns correct USDC.e: Does the skill convert equal token pairs back to collateral?",
+    "Redeem only works on resolved markets: Does the skill validate market resolution before redemption?",
+    "Correct contracts used for neg risk vs standard: Does the skill use the right exchange contracts?",
+    "Approvals set for correct contracts: Does the skill approve the right spender for each operation?"
+  ]
+}

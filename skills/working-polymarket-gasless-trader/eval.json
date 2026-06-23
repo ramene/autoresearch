@@ -1,0 +1,16 @@
+{
+  "scenarios": [
+    {"id": 1, "type": "happy", "title": "Deploy Safe wallet for new user", "event": "First-time user needs wallet deployment", "expectedAction": "Call relayer deploy, wait for proxy address, confirm deployment", "expectedType": "action"},
+    {"id": 2, "type": "happy", "title": "Approve USDC.e spending for CTF contract gaslessly", "event": "User needs to approve token spending without paying gas", "expectedAction": "Encode approve call, submit via relayer, confirm STATE_CONFIRMED", "expectedType": "action"},
+    {"id": 3, "type": "happy", "title": "Execute batch approve + transfer atomically", "event": "User needs multiple operations in single transaction", "expectedAction": "Package both ops, execute via relayer batch, confirm all succeed", "expectedType": "action"},
+    {"id": 4, "type": "diagnostic", "title": "Builder credentials are invalid", "event": "HMAC authentication fails with relayer", "expectedAction": "Report authentication failure, suggest checking builder credentials", "expectedType": "action"},
+    {"id": 5, "type": "edge", "title": "Transaction reaches STATE_FAILED", "event": "Relayer transaction fails on-chain", "expectedAction": "Report failure with reason, do not retry automatically", "expectedType": "action"}
+  ],
+  "criteria": [
+    "Builder HMAC authentication works: Does the skill correctly sign requests with builder credentials?",
+    "Safe wallet deployment succeeds: Does the skill deploy and return the proxy address?",
+    "Transactions reach confirmed state: Does the skill track tx through STATE_NEW to STATE_CONFIRMED?",
+    "Batch operations are atomic: Does the skill execute multiple ops in single relayer call?",
+    "No POL gas required: Does the skill operate without native token balance?"
+  ]
+}

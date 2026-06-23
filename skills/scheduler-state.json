@@ -1,0 +1,386 @@
+{
+  "lastRunTimestamp": "2026-06-20T14:01:35.498Z",
+  "lastSkill": "content-strategy-optimizer",
+  "skillStats": {
+    "skill-improver": {
+      "lastRun": "2026-03-28T15:12:28.303Z",
+      "lastScore": 30,
+      "maxScore": 36,
+      "totalCost": 0.22000000000000003,
+      "runsCompleted": 2
+    },
+    "content-strategy-optimizer": {
+      "lastRun": "2026-06-20T14:01:35.495Z",
+      "lastScore": 0,
+      "maxScore": 48,
+      "totalCost": 4.770000000000001,
+      "runsCompleted": 29
+    },
+    "classify-leads": {
+      "lastRun": "2026-04-15T06:01:20.969Z",
+      "lastScore": 36,
+      "maxScore": 36,
+      "totalCost": 0.8800000000000001,
+      "runsCompleted": 15
+    },
+    "create-proposal": {
+      "lastRun": "2026-04-19T14:06:50.708Z",
+      "lastScore": 36,
+      "maxScore": 36,
+      "totalCost": 0.81,
+      "runsCompleted": 3
+    },
+    "cross-niche-outliers": {
+      "lastRun": "2026-03-25T14:08:54.168Z",
+      "lastScore": 36,
+      "maxScore": 36,
+      "totalCost": 0.71,
+      "runsCompleted": 3
+    },
+    "gmail": {
+      "lastRun": "2026-04-22T06:03:37.891Z",
+      "lastScore": 33,
+      "maxScore": 36,
+      "totalCost": 0.74,
+      "runsCompleted": 3
+    },
+    "gmail-inbox": {
+      "lastRun": "2026-04-22T14:03:43.011Z",
+      "lastScore": 36,
+      "maxScore": 36,
+      "totalCost": 0.71,
+      "runsCompleted": 3
+    },
+    "gmail-label": {
+      "lastRun": "2026-04-23T14:03:18.924Z",
+      "lastScore": 36,
+      "maxScore": 36,
+      "totalCost": 0.6699999999999999,
+      "runsCompleted": 6
+    },
+    "eaas-payment-linker": {
+      "lastRun": "2026-04-21T22:03:19.192Z",
+      "lastScore": 27,
+      "maxScore": 36,
+      "totalCost": 0.46,
+      "runsCompleted": 4
+    },
+    "failure-log-analyzer": {
+      "lastRun": "2026-03-28T00:04:52.569Z",
+      "lastScore": 30,
+      "maxScore": 36,
+      "totalCost": 0.31000000000000005,
+      "runsCompleted": 2
+    },
+    "inbox-cleaner": {
+      "lastRun": "2026-04-24T22:03:16.909Z",
+      "lastScore": 36,
+      "maxScore": 36,
+      "totalCost": 0.71,
+      "runsCompleted": 4
+    },
+    "instantly-autoreply": {
+      "lastRun": "2026-04-25T06:03:39.308Z",
+      "lastScore": 0,
+      "maxScore": 36,
+      "totalCost": 0.69,
+      "runsCompleted": 3
+    },
+    "container-security-auditor": {
+      "lastRun": "2026-03-30T06:14:01.085Z",
+      "lastScore": 37,
+      "maxScore": 42,
+      "totalCost": 0.56,
+      "runsCompleted": 2
+    },
+    "defi-arbitrage-executor": {
+      "lastRun": "2026-04-20T22:17:12.711Z",
+      "lastScore": 36,
+      "maxScore": 36,
+      "totalCost": 0.56,
+      "runsCompleted": 2
+    },
+    "instantly-campaigns": {
+      "lastRun": "2026-04-25T22:02:55.450Z",
+      "lastScore": 36,
+      "maxScore": 36,
+      "totalCost": 1.02,
+      "runsCompleted": 5
+    },
+    "k8s-deployment-manager": {
+      "lastRun": "2026-04-26T22:03:16.136Z",
+      "lastScore": 17,
+      "maxScore": 36,
+      "totalCost": 0.46,
+      "runsCompleted": 2
+    },
+    "linkedin-response": {
+      "lastRun": "2026-04-27T14:03:34.594Z",
+      "lastScore": 36,
+      "maxScore": 36,
+      "totalCost": 0.61,
+      "runsCompleted": 3
+    },
+    "onboarding-kickoff": {
+      "lastRun": "2026-04-28T06:02:26.624Z",
+      "lastScore": 36,
+      "maxScore": 36,
+      "totalCost": 0.8599999999999999,
+      "runsCompleted": 5
+    },
+    "prompt-refiner-for-robustness": {
+      "lastRun": "2026-05-05T06:03:08.703Z",
+      "lastScore": 36,
+      "maxScore": 36,
+      "totalCost": 0.46,
+      "runsCompleted": 2
+    },
+    "scrape-leads": {
+      "lastRun": "2026-05-05T14:03:17.363Z",
+      "lastScore": 36,
+      "maxScore": 36,
+      "totalCost": 0.46,
+      "runsCompleted": 2
+    },
+    "skill-optimizer-v2": {
+      "lastRun": "2026-05-05T22:02:15.333Z",
+      "lastScore": 36,
+      "maxScore": 36,
+      "totalCost": 0.46,
+      "runsCompleted": 2
+    },
+    "skill-test-generator": {
+      "lastRun": "2026-05-06T06:02:15.096Z",
+      "lastScore": 36,
+      "maxScore": 36,
+      "totalCost": 0.46,
+      "runsCompleted": 2
+    },
+    "stuck-skill-diagnoser": {
+      "lastRun": "2026-05-07T06:02:17.057Z",
+      "lastScore": 42,
+      "maxScore": 42,
+      "totalCost": 0.46,
+      "runsCompleted": 2
+    },
+    "system-dashboard-generator": {
+      "lastRun": "2026-04-08T06:11:19.324Z",
+      "lastScore": 33,
+      "maxScore": 36,
+      "totalCost": 0.81,
+      "runsCompleted": 6
+    },
+    "system-status-reporter": {
+      "lastRun": "2026-04-04T06:06:38.784Z",
+      "lastScore": 23,
+      "maxScore": 36,
+      "totalCost": 1.1200000000000003,
+      "runsCompleted": 15
+    },
+    "title-variants": {
+      "lastRun": "2026-03-29T07:07:55.553Z",
+      "lastScore": 34,
+      "maxScore": 36,
+      "totalCost": 0.81,
+      "runsCompleted": 3
+    },
+    "video-to-action": {
+      "lastRun": "2026-04-08T22:06:40.056Z",
+      "lastScore": 36,
+      "maxScore": 36,
+      "totalCost": 0.7100000000000001,
+      "runsCompleted": 3
+    },
+    "welcome-email": {
+      "lastRun": "2026-05-08T14:03:05.028Z",
+      "lastScore": 36,
+      "maxScore": 36,
+      "totalCost": 0.46,
+      "runsCompleted": 2
+    },
+    "youtube-channel-analysis": {
+      "lastRun": "2026-05-10T22:03:57.416Z",
+      "lastScore": 36,
+      "maxScore": 36,
+      "totalCost": 0.55,
+      "runsCompleted": 8
+    },
+    "youtube-outliers": {
+      "lastRun": "2026-05-11T06:02:42.326Z",
+      "lastScore": 36,
+      "maxScore": 36,
+      "totalCost": 0.51,
+      "runsCompleted": 4
+    },
+    "polymarket-5min-strategy": {
+      "lastRun": "2026-03-21T09:17:47.285Z",
+      "lastScore": 25,
+      "maxScore": 25,
+      "totalCost": 0.28,
+      "runsCompleted": 4
+    },
+    "polymarket-bridge": {
+      "lastRun": "2026-04-28T14:03:03.463Z",
+      "lastScore": 25,
+      "maxScore": 25,
+      "totalCost": 0.46,
+      "runsCompleted": 2
+    },
+    "polymarket-clob-trader": {
+      "lastRun": "2026-04-28T22:00:29.401Z",
+      "lastScore": 64,
+      "maxScore": 64,
+      "totalCost": 0.06,
+      "runsCompleted": 2
+    },
+    "polymarket-ctf-operations": {
+      "lastRun": "2026-04-29T14:02:12.879Z",
+      "lastScore": 25,
+      "maxScore": 25,
+      "totalCost": 0.61,
+      "runsCompleted": 3
+    },
+    "polymarket-flash-crash-detector": {
+      "lastRun": "2026-04-29T22:02:45.621Z",
+      "lastScore": 36,
+      "maxScore": 36,
+      "totalCost": 0.46,
+      "runsCompleted": 2
+    },
+    "polymarket-gasless-trader": {
+      "lastRun": "2026-04-30T22:03:16.333Z",
+      "lastScore": 21,
+      "maxScore": 25,
+      "totalCost": 0.64,
+      "runsCompleted": 4
+    },
+    "polymarket-market-analyzer": {
+      "lastRun": "2026-05-03T14:01:57.300Z",
+      "lastScore": 25,
+      "maxScore": 25,
+      "totalCost": 0.61,
+      "runsCompleted": 9
+    },
+    "polymarket-market-discovery": {
+      "lastRun": "2026-03-21T14:11:04.392Z",
+      "lastScore": 36,
+      "maxScore": 36,
+      "totalCost": 0.56,
+      "runsCompleted": 2
+    },
+    "polymarket-orderbook-reader": {
+      "lastRun": "2026-05-04T06:02:29.385Z",
+      "lastScore": 36,
+      "maxScore": 36,
+      "totalCost": 0.86,
+      "runsCompleted": 4
+    },
+    "polymarket-portfolio-tracker": {
+      "lastRun": "2026-04-11T06:07:35.751Z",
+      "lastScore": 21,
+      "maxScore": 25,
+      "totalCost": 0.78,
+      "runsCompleted": 8
+    },
+    "polymarket-position-manager": {
+      "lastRun": "2026-05-04T14:03:32.380Z",
+      "lastScore": 25,
+      "maxScore": 25,
+      "totalCost": 0.6299999999999999,
+      "runsCompleted": 2
+    },
+    "polymarket-websocket-monitor": {
+      "lastRun": "2026-05-04T22:02:26.865Z",
+      "lastScore": 25,
+      "maxScore": 25,
+      "totalCost": 0.46,
+      "runsCompleted": 2
+    },
+    "the-real-scrumness": {
+      "lastRun": "2026-05-07T14:03:26.838Z",
+      "lastScore": 36,
+      "maxScore": 36,
+      "totalCost": 0.46,
+      "runsCompleted": 2
+    },
+    "scaffold": {
+      "lastRun": "2026-04-05T06:14:21.863Z",
+      "lastScore": 41,
+      "maxScore": 60,
+      "totalCost": 0.56,
+      "runsCompleted": 2
+    },
+    "context-drift-detector": {
+      "lastRun": "2026-03-27T14:10:45.918Z",
+      "lastScore": 28,
+      "maxScore": 60,
+      "totalCost": 0.56,
+      "runsCompleted": 2
+    },
+    "mae-trading-report": {
+      "lastRun": "2026-03-29T22:22:09.693Z",
+      "lastScore": 40,
+      "maxScore": 48,
+      "totalCost": 0.56,
+      "runsCompleted": 2
+    },
+    "gmaps-leads": {
+      "lastRun": "2026-04-23T22:02:47.628Z",
+      "lastScore": 36,
+      "maxScore": 36,
+      "totalCost": 0.46,
+      "runsCompleted": 2
+    },
+    "interactive-skill-refiner": {
+      "lastRun": "2026-03-31T07:55:38.213Z",
+      "lastScore": 42,
+      "maxScore": 48,
+      "totalCost": 0.28,
+      "runsCompleted": 2
+    },
+    "context-loader": {
+      "lastRun": "2026-04-18T22:00:36.349Z",
+      "lastScore": 223,
+      "maxScore": 224,
+      "totalCost": 0.30000000000000004,
+      "runsCompleted": 11
+    },
+    "cross-model-intelligence-pipeline": {
+      "lastRun": "2026-04-20T14:13:43.563Z",
+      "lastScore": 48,
+      "maxScore": 48,
+      "totalCost": 0.56,
+      "runsCompleted": 3
+    },
+    "goal-to-skill-executor": {
+      "lastRun": "2026-04-24T14:02:30.268Z",
+      "lastScore": 48,
+      "maxScore": 48,
+      "totalCost": 0.36,
+      "runsCompleted": 2
+    },
+    "intent-clarifier": {
+      "lastRun": "2026-04-26T14:03:02.526Z",
+      "lastScore": 48,
+      "maxScore": 48,
+      "totalCost": 0.36,
+      "runsCompleted": 2
+    },
+    "skill-test-runner": {
+      "lastRun": "2026-05-06T22:01:53.810Z",
+      "lastScore": 36,
+      "maxScore": 36,
+      "totalCost": 0.18,
+      "runsCompleted": 2
+    },
+    "tradfi-market-analyzer": {
+      "lastRun": "2026-05-08T06:02:46.593Z",
+      "lastScore": 21,
+      "maxScore": 48,
+      "totalCost": 0.36,
+      "runsCompleted": 2
+    }
+  },
+  "cumulativeCost": 34.430000000000035,
+  "totalRuns": 225
+}

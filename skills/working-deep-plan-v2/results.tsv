@@ -1,0 +1,8 @@
+round	score	max	status	mutation
+0	58	60	baseline	See changelog
+1	57	60	reverted	Reverted — no improvement
+2	57	60	reverted	Reverted — no improvement
+3	59	60	kept	See changelog
+4	53	60	reverted	Reverted — no improvement
+5	56	60	reverted	Reverted — no improvement
+6	60	60	kept	See changelog

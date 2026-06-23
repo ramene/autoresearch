@@ -1,0 +1,60 @@
+{
+  "scenarios": [
+    {
+      "id": 1,
+      "type": "happy",
+      "title": "User asks to scan for arbitrage opportunities on BASE chain between Aerodrome an",
+      "event": "User asks to scan for arbitrage opportunities on BASE chain between Aerodrome and Uniswap",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 2,
+      "type": "happy",
+      "title": "A profitable opportunity exists but gas costs would exceed the profit — skill sh",
+      "event": "A profitable opportunity exists but gas costs would exceed the profit — skill should skip it",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 3,
+      "type": "happy",
+      "title": "User sets a budget of $5 and an opportunity worth $3 profit appears — skill shou",
+      "event": "User sets a budget of $5 and an opportunity worth $3 profit appears — skill should execute",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 4,
+      "type": "diagnostic",
+      "title": "No price discrepancies exist across any monitored pools — skill should report cl",
+      "event": "No price discrepancies exist across any monitored pools — skill should report cleanly",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 5,
+      "type": "edge",
+      "title": "RPC provider returns an error mid-scan — skill should retry or report gracefully",
+      "event": "RPC provider returns an error mid-scan — skill should retry or report gracefully",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 6,
+      "type": "edge",
+      "title": "User asks to run on testnet first before mainnet — skill should switch chain con",
+      "event": "User asks to run on testnet first before mainnet — skill should switch chain config",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    }
+  ],
+  "criteria": [
+    "Identify price discrepancies across at least 2 DEXes: Does the skill correctly identify price discrepancies across at least 2 DEXes?",
+    "Calculate net profit after gas costs before recommending execution: Does the skill calculate net profit after gas costs before recommending execution?",
+    "Enforce the configured budget limit before any on-chain transaction: Does the skill enforce the configured budget limit before any on-chain transaction?",
+    "Handle failed transactions gracefully without losing funds: Does the skill handle failed transactions gracefully without losing funds?",
+    "Provide a clear, actionable summary of opportunities found: Does the skill provide a clear, actionable summary of opportunities found?",
+    "Work on both testnet (BASE Sepolia) and mainnet (BASE) configurations: Does the skill work on both testnet (BASE Sepolia) and mainnet (BASE) configurations?"
+  ]
+}

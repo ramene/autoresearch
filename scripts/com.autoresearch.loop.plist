@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.autoresearch.loop</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>/Users/ramene/.remote/@autoresearch/scripts/autonomous-loop.sh</string>
+    </array>
+    <!-- StartCalendarInterval catches up after Mac sleep (StartInterval does NOT) -->
+    <!-- Every 8 hours (changed from 2h on 2026-03-21) -->
+    <key>StartCalendarInterval</key>
+    <array>
+        <dict><key>Hour</key><integer>0</integer><key>Minute</key><integer>0</integer></dict>
+        <dict><key>Hour</key><integer>8</integer><key>Minute</key><integer>0</integer></dict>
+        <dict><key>Hour</key><integer>16</integer><key>Minute</key><integer>0</integer></dict>
+    </array>
+    <key>StandardOutPath</key>
+    <string>/Users/ramene/.local/share/tmux-logs/autoresearch/launchd-stdout.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/ramene/.local/share/tmux-logs/autoresearch/launchd-stderr.log</string>
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>/usr/local/bin:/usr/bin:/bin:/opt/homebrew/bin:/Users/ramene/.local/bin:/Users/ramene/.nvm/versions/node/v23.11.1/bin</string>
+        <key>HOME</key>
+        <string>/Users/ramene</string>
+    </dict>
+</dict>
+</plist>

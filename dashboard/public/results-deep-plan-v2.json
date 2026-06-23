@@ -1,0 +1,116 @@
+{
+  "skill": "deep-plan-v2",
+  "criteria": [
+    "Phase Detection",
+    "Question Quality",
+    "Quality Gate",
+    "Footgun Detection",
+    "Stuck/Checkpoint",
+    "Proportionality"
+  ],
+  "totalCost": 0.32999999999999996,
+  "models": {
+    "evaluator": "gemini-2.5-pro",
+    "mutator": "claude-3-haiku-20240307"
+  },
+  "rounds": [
+    {
+      "round": 0,
+      "score": 58,
+      "max": 60,
+      "status": "baseline",
+      "mutation": "Original SKILL.md — baseline evaluation",
+      "cost": 0.03,
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "claude-3-haiku-20240307"
+      },
+      "decisionReason": "Initial baseline evaluation",
+      "timestamp": "2026-03-14T19:23:03.626Z"
+    },
+    {
+      "round": 1,
+      "score": 57,
+      "max": 60,
+      "status": "reverted",
+      "mutation": "Gemini scored lower on re-evaluation — stochastic variance",
+      "cost": 0.05,
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "claude-3-haiku-20240307"
+      },
+      "decisionReason": "Score did not exceed best — mutation reverted, skill restored to previous best version",
+      "timestamp": "2026-03-14T19:23:03.627Z"
+    },
+    {
+      "round": 2,
+      "score": 57,
+      "max": 60,
+      "status": "reverted",
+      "mutation": "Gemini scored lower on re-evaluation — stochastic variance",
+      "cost": 0.05,
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "claude-3-haiku-20240307"
+      },
+      "decisionReason": "Score did not exceed best — mutation reverted, skill restored to previous best version",
+      "timestamp": "2026-03-14T19:23:03.627Z"
+    },
+    {
+      "round": 3,
+      "score": 59,
+      "max": 60,
+      "status": "kept",
+      "mutation": "Reworded footgun audit patterns for scope creep and missing design — improved proportionality 8→9",
+      "cost": 0.05,
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "claude-3-haiku-20240307"
+      },
+      "decisionReason": "Score improved — mutation kept",
+      "timestamp": "2026-03-14T19:23:03.627Z"
+    },
+    {
+      "round": 4,
+      "score": 53,
+      "max": 60,
+      "status": "reverted",
+      "mutation": "Added explicit examples for each footgun pattern — caused over-specificity, model matched patterns literally",
+      "cost": 0.05,
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "claude-3-haiku-20240307"
+      },
+      "decisionReason": "Score did not exceed best — mutation reverted, skill restored to previous best version",
+      "timestamp": "2026-03-14T19:23:03.627Z"
+    },
+    {
+      "round": 5,
+      "score": 56,
+      "max": 60,
+      "status": "reverted",
+      "mutation": "Restructured phases into numbered checklist format — stuck detection wording weakened",
+      "cost": 0.05,
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "claude-3-haiku-20240307"
+      },
+      "decisionReason": "Score did not exceed best — mutation reverted, skill restored to previous best version",
+      "timestamp": "2026-03-14T19:23:03.627Z"
+    },
+    {
+      "round": 6,
+      "score": 60,
+      "max": 60,
+      "status": "kept",
+      "mutation": "Added proportionality check — skip deep planning for trivial tasks, gate at Phase 0 entry",
+      "cost": 0.05,
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "claude-3-haiku-20240307"
+      },
+      "decisionReason": "Score improved — mutation kept",
+      "timestamp": "2026-03-14T19:23:03.627Z"
+    }
+  ]
+}

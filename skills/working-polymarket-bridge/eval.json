@@ -1,0 +1,16 @@
+{
+  "scenarios": [
+    {"id": 1, "type": "happy", "title": "Create deposit addresses for Ethereum USDC", "event": "User wants to deposit USDC from Ethereum mainnet", "expectedAction": "Call /deposit, return EVM deposit address, verify chain support", "expectedType": "action"},
+    {"id": 2, "type": "happy", "title": "Withdraw USDC to Arbitrum", "event": "User wants to withdraw funds to Arbitrum", "expectedAction": "Check supported assets, get quote, create withdrawal address, track status", "expectedType": "action"},
+    {"id": 3, "type": "happy", "title": "Track deposit status from PROCESSING to COMPLETED", "event": "User deposited and wants to track progress", "expectedAction": "Poll /status endpoint, report state changes until COMPLETED", "expectedType": "action"},
+    {"id": 4, "type": "diagnostic", "title": "Deposit below minimum threshold", "event": "User tries to deposit $1 from Ethereum (min $7)", "expectedAction": "Warn that deposit is below $7 minimum and will not be processed", "expectedType": "action"},
+    {"id": 5, "type": "edge", "title": "Large withdrawal exceeds $50,000", "event": "User tries to withdraw $100,000 at once", "expectedAction": "Warn about slippage, suggest breaking into smaller amounts", "expectedType": "action"}
+  ],
+  "criteria": [
+    "Deposit addresses generated for correct chain: Does the skill return the right address type (EVM/SVM/BTC/TVM)?",
+    "Supported assets verified before operations: Does the skill check /supported-assets first?",
+    "Status polling tracks to terminal state: Does the skill correctly poll and report COMPLETED/FAILED?",
+    "Minimum deposits enforced: Does the skill validate against chain-specific minimums?",
+    "Withdrawal quotes include accurate fees: Does the skill preview the withdrawal cost?"
+  ]
+}

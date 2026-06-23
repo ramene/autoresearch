@@ -1,0 +1,135 @@
+You are executing a skill chain step. Use the skill instructions below to process the input.
+
+SKILL INSTRUCTIONS:
+# SKILL: polymarket-market-discovery
+Search, filter, and discover Polymarket prediction markets via the Gamma API — trending markets, category browsing, closing-soon alerts, and 5-minute market auto-discovery for rapid trading.
+
+## Purpose
+This skill provides market discovery and filtering for Polymarket's prediction markets. It uses the Gamma API (no auth required) to search by text/slug/keywords, get trending markets by volume, filter by category/tag, find markets closing soon, discover sports and crypto markets, and auto-discover 5-minute markets for rapid trading strategies. This is the primary market intelligence gathering skill that feeds into analysis and trading skills.
+
+## Trigger Conditions
+1. **Slash Command:** `/skill polymarket-market-discovery [flags]`
+   - `--search=<query>`: Search markets by text, slug, or keywords
+   - `--trending`: Get markets with highest trading volume
+   - `--timeframe=<24h|7d|30d>`: Volume calculation period (default: 24h)
+   - `--category=<tag>`: Filter by category (Politics, Sports, Crypto, etc.)
+   - `--closing-soon=<hours>`: Markets closing within N hours (default: 24)
+   - `--sports[=<type>]`: Sports markets, optionally filtered by sport (NFL, NBA, Soccer)
+   - `--crypto[=<symbol>]`: Crypto markets, optionally filtered by symbol (BTC, ETH)
+   - `--5min`: Auto-discover 5-minute resolution markets for rapid trading
+   - `--event=<slug|id>`: Get all markets for a specific event
+   - `--featured`: Get featured/promoted markets
+   - `--limit=<n>`: Max results (default: 20, max: 500)
+   - `--active-only`: Only active, non-closed markets (default: true)
+
+2. **Keywords:** "find polymarket markets", "trending prediction markets", "what markets are closing soon", "polymarket crypto markets", "5 minute markets polymarket"
+
+## Prerequisites
+1. **Working Directory:** `~/.remote/@autoresearch/skills/working-polymarket-market-discovery/`
+2. **Network:** Access to `https://gamma-api.polymarket.com` (no authentication required)
+
+## API Configuration
+
+| API | Base URL | Auth | Purpose |
+|-----|----------|------|---------|
+| Gamma API | `https://gamma-api.polymarket.com` | None | Events, markets, search, tags |
+| Data API | `https://data-api.polymarket.com` | None | Trades, positions, user data |
+
+## Execution Steps
+
+1. **Parse Request & Initialize Pipeline:**
+   - Parse all provided flags (`--category`, `--trending`, `--closing-soon`, `--search`, `--5min`, `--sports`, `--crypto`, etc.).
+   - Initialize a base API query to `GET /markets` with default parameters (`active=true`, `closed=false`, `limit=500` to ensure a large enough initial dataset for local filtering).
+
+2. **Build API Query (API-side Filtering):**
+   - If flags correspond to direct API query parameters, append them to the base request.
+   - **Supported API-side filters:** `tag` (for `--category`, `--sports`, `--crypto`), `query` (for `--search`).
+   - Example: If `--category=Crypto` is used, the query becomes `GET /markets?active=true&closed=false&limit=500&tag=Crypto`.
+   - If `--sports` is used, set `tag=Sports`. If `--crypto` is used, set `tag=Crypto`.
+
+3. **Fetch Initial Market Dataset:**
+   - Execute the constructed API query.
+   - **If `--search` is present:** Also execute `GET /events?query=<text>&active=true&closed=false&limit=<n>` and `GET /events?slug=<text>` in parallel. Extract all nested markets from each event's `markets` array. Deduplicate the combined results by `conditionID`. This dual-search approach is critical: some markets are only discoverable through their parent event.
+   - **For all other modes:** Fetch from the `/markets` endpoint only.
+   - Handle pagination using `limit` and `offset` parameters; continue fetching while `has_more: true` and combine all pages before proceeding.
+
+4. **Apply Post-Fetch Filtering & Sorting (Client-side Pipeline):**
+   - Process the fetched dataset through a series of filters based on the remaining flags. Each filter is applied sequentially to the output of the previous one, enabling complex composite queries.
+   - **`--closing-soon` filter:** If the flag is present, parse the market's end date using this field priority order: `end_date_iso` → `endDate` → `end_date`. Convert the value to a UTC timestamp for comparison. Keep only markets where the resolved end date is ≤ now + N hours.
+   - **`--5min` filter:** If the flag is present, apply all of the following:
+     - Keep only markets where `question` or `slug` contains any of: `"5 min"`, `"5-min"`, `"5min"`, `"15 min"`, `"15-min"`. (Also run parallel searches for `query=5+minute`, `query=15+minute`, `query=5-minute`, `query=5min` if the base dataset seems sparse, then deduplicate by `conditionID`.)
+     - Further filter to crypto coins: BTC, ETH, SOL, XRP (match against `question`/`slug`).
+     - Keep only markets where the resolved end date (using priority `end_date_iso` → `endDate` → `end_date` as UTC timestamp) is within the next 30 minutes.
+     - Extract `tokens` array from each result to get both YES and NO token IDs for downstream use.
+   - **`--sports=<type>` sub-filter:** If a specific sport type is provided (e.g., `--sports=NFL`), filter the dataset to markets where `question` or `slug` contains the sport type string.
+   - **`--crypto=<symbol>` sub-filter:** If a specific symbol is provided (e.g., `--crypto=BTC`), filter the dataset to markets where `question` or `slug` contains the symbol string.
+   - **`--trending` sort:** If the flag is present, sort the *already filtered* dataset by the volume field corresponding to `--timeframe`: `volume24hr` (24h, default), `volume7d` (7d), or `volume30d` (30d). Also filter out markets with an end date in the past.
+
+5. **Handle Special Modes (non-pipeline):**
+   - **`--event=<slug|id>`:** Bypass the pipeline. Call `GET /events?slug=<slug>` or `GET /events/<id>` directly and extract all markets from the event response. Return with condition IDs, token IDs, and current prices.
+   - **`--featured`:** Bypass the pipeline. Call `GET /markets?active=true&closed=false&limit=<n>` with a featured filter if the API supports it, otherwise return the top markets by liquidity.
+
+6. **Finalize Results:**
+   - Apply the final `--limit` (default: 20) to the processed dataset.
+   - Save full results to `markets.json` in the working directory.
+   - Print summary table to console with: question, price (YES/NO), volume_24h, liquidity, end_date.
+
+*This pipeline architecture allows for complex composite queries like `/skill polymarket-market-discovery --category=Sports --trending --closing-soon=48`, which fetches all active sports markets, locally filters them to those closing within 48 hours, then sorts the result by 24h volume.*
+
+## Key Market Fields
+
+| Field | Description |
+|-------|-------------|
+| `tokenID` / `asset_id` | ERC1155 token ID for an outcome |
+| `conditionID` | Condition ID — identifies the market |
+| `slug` | URL-friendly identifier |
+| `minimum_tick_size` | Price increment precision |
+| `neg_risk` | true for multi-outcome events |
+| `tokens` | Array of {token_id, outcome} for both outcomes |
+| `volume24hr` | 24-hour trading volume |
+| `liquidity` | Available market liquidity |
+
+## Sort Parameters
+
+| Parameter | Values |
+|-----------|--------|
+| `order` | `volume_24hr`, `volume`, `liquidity`, `start_date`, `end_date`, `competitive` |
+| `ascending` | `true` / `false` |
+| `active` | `true` / `false` |
+| `closed` | `true` / `false` |
+| `limit` | 1–500 |
+| `offset` | Pagination offset |
+
+## Output Format
+- **Console:** Markdown table of discovered markets with key metrics
+- **`markets.json`:** Full market data including token IDs, condition IDs, and metadata
+
+## Quality Gates
+1. Search returns relevant markets matching the query (both markets and events endpoints searched, results deduplicated by conditionID)
+2. Trending markets sorted correctly by specified timeframe volume field (volume24hr / volume7d / volume30d)
+3. Category filtering uses the correct `tag` query parameter for the API request
+4. Closing-soon correctly identifies markets within the time window using UTC timestamp comparison with field priority `end_date_iso` → `endDate` → `end_date`
+5. 5-minute market discovery finds short-resolution crypto markets with token IDs for both YES and NO outcomes
+6. Composite flag combinations (e.g., --category + --trending + --closing-soon) are supported via the sequential pipeline
+7. Pagination handles large result sets without missing markets
+8. Output includes all necessary IDs (conditionID, tokenIDs) for downstream trading skills
+
+## Integration Points
+- **Upstream:** User request or autoresearch want-engine triggers discovery
+- **Downstream:** `polymarket-market-analyzer` analyzes discovered markets, `polymarket-clob-trader` executes trades on selected markets
+- **Cross-skill:** `polymarket-flash-crash-detector` and `polymarket-5min-strategy` consume 5-minute market discoveries
+
+CHAIN STEP INPUT:
+{
+  "action": "find_active_5min_markets",
+  "coins": [
+    "BTC",
+    "ETH",
+    "SOL"
+  ],
+  "market_type": "crypto_updown",
+  "timeframe": "5min"
+}
+
+Execute the skill against this input. Return structured output as JSON where possible.
+If the skill requires external tools/APIs that aren't available, describe what you WOULD do and return mock structured data showing the expected output format.

@@ -1,0 +1,68 @@
+{
+  "scenarios": [
+    {
+      "id": 1,
+      "type": "happy",
+      "title": "Diagnose the 'context-drift-detector' skill",
+      "event": "Diagnose the 'context-drift-detector' skill.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 2,
+      "type": "happy",
+      "title": "Diagnose the 'failure-log-analyzer' skill",
+      "event": "Diagnose the 'failure-log-analyzer' skill.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 3,
+      "type": "happy",
+      "title": "Diagnose the 'skill-improver' skill",
+      "event": "Diagnose the 'skill-improver' skill.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 4,
+      "type": "happy",
+      "title": "Run on a high-performing skill like 'context-loader' and confirm it reports no s",
+      "event": "Run on a high-performing skill like 'context-loader' and confirm it reports no stuck condition.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 5,
+      "type": "diagnostic",
+      "title": "Provide a skill whose failures are clearly due to a faulty tool and see if it id",
+      "event": "Provide a skill whose failures are clearly due to a faulty tool and see if it identifies the tool as the root cause.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 6,
+      "type": "edge",
+      "title": "Provide a skill whose prompt is ambiguous and see if it suggests clarifying the ",
+      "event": "Provide a skill whose prompt is ambiguous and see if it suggests clarifying the prompt.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 7,
+      "type": "edge",
+      "title": "Provide a skill with overly strict evaluation criteria and see if it suggests re",
+      "event": "Provide a skill with overly strict evaluation criteria and see if it suggests relaxing the criteria.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    }
+  ],
+  "criteria": [
+    "Identify the target skill's performance plateau from logs: Does the skill correctly identify the target skill's performance plateau from logs?",
+    "Does the analysis pinpoint the specific evaluation criteria that are consistently failing: Does the analysis pinpoint the specific evaluation criteria that are consistently failing?",
+    "Correlate failing criteria with specific test scenarios: Does the skill correlate failing criteria with specific test scenarios?",
+    "Does the hypothesis distinguish between prompt, code, or evaluation flaws: Does the hypothesis distinguish between prompt, code, or evaluation flaws?",
+    "Is the proposed remediation strategy concrete and actionable (e.g., 'rewrite prompt X', 'add test case Y', 'refine criterion Z'): Is the proposed remediation strategy concrete and actionable (e.g., 'rewrite prompt X', 'add test case Y', 'refine criterion Z')?",
+    "Analyze the 'skill-improver' skill itself recursively: Does the skill analyze the 'skill-improver' skill itself recursively?"
+  ]
+}

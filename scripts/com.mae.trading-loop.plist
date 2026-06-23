@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.mae.trading-loop</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>/Users/ramene/.remote/@plans/mae-trading-paper-sprint/run-trading-loop.sh</string>
+    </array>
+    <!-- Every 2 hours: 7200 seconds -->
+    <key>StartInterval</key>
+    <integer>7200</integer>
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>HOME</key>
+        <string>/Users/ramene</string>
+        <key>PATH</key>
+        <string>/Users/ramene/.nvm/versions/node/v23.11.1/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
+        <key>OLLAMA_INFERENCE_HOST</key>
+        <string>http://tunafish:11434</string>
+    </dict>
+    <key>StandardOutPath</key>
+    <string>/Users/ramene/.local/share/tmux-logs/trading/loop-stdout.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/ramene/.local/share/tmux-logs/trading/loop-stderr.log</string>
+    <key>WorkingDirectory</key>
+    <string>/Users/ramene/.remote/@plans/mae-trading-paper-sprint</string>
+</dict>
+</plist>

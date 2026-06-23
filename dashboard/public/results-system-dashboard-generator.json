@@ -1,0 +1,838 @@
+{
+  "skill": "system-dashboard-generator",
+  "criteria": [
+    "Does the dashboard include the overall skill score ratio",
+    "Does the dashboard list the top 3 lowest-scoring skills",
+    "Does the dashboard show the number of stuck and untested skills",
+    "Does the dashboard include recent high-frequency user intent signals",
+    "Can the output format be specified (e.g., 'text', 'html', 'json')",
+    "Execute successfully and produce a coherent report"
+  ],
+  "totalCost": 0.8100000000000003,
+  "models": {
+    "mutator": "sonnet",
+    "evaluator": "gemini-2.5-pro"
+  },
+  "rounds": [
+    {
+      "round": 0,
+      "score": 32,
+      "max": 36,
+      "status": "baseline",
+      "mutation": "Added \"Required Fields Contract\" to the Render Output step mandating that all 4 key metrics (overall score ratio, lowest-scoring skills, stuck/untested counts, high-frequency intents) MUST appear in every output with \"N/A\" fallbacks rather than being silently omitted when data is partial or missing.",
+      "cost": 0.05,
+      "criteria": [
+        5,
+        5,
+        5,
+        5,
+        6,
+        6
+      ],
+      "failures": [
+        {
+          "scenario": 4,
+          "criterion": "Does the dashboard include recent high-frequency user intent signals"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Does the dashboard include the overall skill score ratio"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Does the dashboard list the top 3 lowest-scoring skills"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Does the dashboard show the number of stuck and untested skills"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Initial baseline evaluation",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-20T22:16:02.780Z",
+      "changelog": "**Mutation**: Added \"Required Fields Contract\" to the Render Output step mandating that all 4 key metrics (overall score ratio, lowest-scoring skills, stuck/untested counts, high-frequency intents) MUST appear in every output with \"N/A\" fallbacks rather than being silently omitted when data is partial or missing.\n**Failures**: S4: Does the dashboard include recent high-frequency user intent signals, S5: Does the dashboard include the overall skill score ratio, S5: Does the dashboard list the top 3 lowest-scoring skills, S5: Does the dashboard show the number of stuck and untested skills\n**Per-criteria**: Does the dashboard include the overall skill score ratio: 5/6, Does the dashboard list the top 3 lowest-scoring skills: 5/6, Does the dashboard show the number of stuck and untested skills: 5/6, Does the dashboard include recent high-frequency user intent signals: 5/6, Can the output format be specified (e.g., 'text', 'html', 'json'): 6/6, Execute successfully and produce a coherent report: 6/6\n**Decision**: Initial baseline evaluation"
+    },
+    {
+      "round": 1,
+      "score": 32,
+      "max": 36,
+      "status": "reverted",
+      "mutation": "Added explicit default initialization to Step 5 (Assemble Data Structure) so all required fields have fallback values before data population, ensuring the Required Fields Contract in Step 6 can always be satisfied even when source files are missing or empty.",
+      "cost": 0.05,
+      "criteria": [
+        5,
+        5,
+        5,
+        5,
+        6,
+        6
+      ],
+      "failures": [
+        {
+          "scenario": 4,
+          "criterion": "Does the dashboard include recent high-frequency user intent signals"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Does the dashboard include the overall skill score ratio"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Does the dashboard list the top 3 lowest-scoring skills"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Does the dashboard show the number of stuck and untested skills"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 32 did not exceed best 32 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-20T22:17:49.704Z",
+      "changelog": "**Mutation**: Added explicit default initialization to Step 5 (Assemble Data Structure) so all required fields have fallback values before data population, ensuring the Required Fields Contract in Step 6 can always be satisfied even when source files are missing or empty.\n**Failures**: S4: Does the dashboard include recent high-frequency user intent signals, S5: Does the dashboard include the overall skill score ratio, S5: Does the dashboard list the top 3 lowest-scoring skills, S5: Does the dashboard show the number of stuck and untested skills\n**Per-criteria**: Does the dashboard include the overall skill score ratio: 5/6, Does the dashboard list the top 3 lowest-scoring skills: 5/6, Does the dashboard show the number of stuck and untested skills: 5/6, Does the dashboard include recent high-frequency user intent signals: 5/6, Can the output format be specified (e.g., 'text', 'html', 'json'): 6/6, Execute successfully and produce a coherent report: 6/6\n**Decision**: Score 32 did not exceed best 32 — mutation produced worse or equal results"
+    },
+    {
+      "round": 2,
+      "score": 30,
+      "max": 36,
+      "status": "reverted",
+      "mutation": "Embed explicit \"NEVER ABORT — use defaults and continue\" guards directly inside Steps 2 and 4 (data gathering), so missing files cause immediate fallback rather than halting execution before Step 5 is reached.",
+      "cost": 0.05,
+      "criteria": [
+        5,
+        5,
+        5,
+        5,
+        6,
+        4
+      ],
+      "failures": [
+        {
+          "scenario": 4,
+          "criterion": "Does the dashboard include recent high-frequency user intent signals"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Execute successfully and produce a coherent report"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Does the dashboard include the overall skill score ratio"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Does the dashboard list the top 3 lowest-scoring skills"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Does the dashboard show the number of stuck and untested skills"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Execute successfully and produce a coherent report"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 30 did not exceed best 32 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-20T22:19:36.385Z",
+      "changelog": "**Mutation**: Embed explicit \"NEVER ABORT — use defaults and continue\" guards directly inside Steps 2 and 4 (data gathering), so missing files cause immediate fallback rather than halting execution before Step 5 is reached.\n**Failures**: S4: Does the dashboard include recent high-frequency user intent signals, S4: Execute successfully and produce a coherent report, S5: Does the dashboard include the overall skill score ratio, S5: Does the dashboard list the top 3 lowest-scoring skills, S5: Does the dashboard show the number of stuck and untested skills, S5: Execute successfully and produce a coherent report\n**Per-criteria**: Does the dashboard include the overall skill score ratio: 5/6, Does the dashboard list the top 3 lowest-scoring skills: 5/6, Does the dashboard show the number of stuck and untested skills: 5/6, Does the dashboard include recent high-frequency user intent signals: 5/6, Can the output format be specified (e.g., 'text', 'html', 'json'): 6/6, Execute successfully and produce a coherent report: 4/6\n**Decision**: Score 30 did not exceed best 32 — mutation produced worse or equal results"
+    },
+    {
+      "round": 3,
+      "score": 30,
+      "max": 36,
+      "status": "reverted",
+      "mutation": "Add a \"Step 0: Pre-Initialize All Variables\" that sets every variable to its safe fallback value before any file reading, replacing the complex \"skip to Step X\" branching with simple \"attempt to overwrite defaults\" logic so execution always reaches Step 7.",
+      "cost": 0.05,
+      "criteria": [
+        5,
+        5,
+        5,
+        5,
+        6,
+        4
+      ],
+      "failures": [
+        {
+          "scenario": 4,
+          "criterion": "Does the dashboard include recent high-frequency user intent signals"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Execute successfully and produce a coherent report"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Does the dashboard include the overall skill score ratio"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Does the dashboard list the top 3 lowest-scoring skills"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Does the dashboard show the number of stuck and untested skills"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Execute successfully and produce a coherent report"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 30 did not exceed best 32 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-20T22:21:21.434Z",
+      "changelog": "**Mutation**: Add a \"Step 0: Pre-Initialize All Variables\" that sets every variable to its safe fallback value before any file reading, replacing the complex \"skip to Step X\" branching with simple \"attempt to overwrite defaults\" logic so execution always reaches Step 7.\n**Failures**: S4: Does the dashboard include recent high-frequency user intent signals, S4: Execute successfully and produce a coherent report, S5: Does the dashboard include the overall skill score ratio, S5: Does the dashboard list the top 3 lowest-scoring skills, S5: Does the dashboard show the number of stuck and untested skills, S5: Execute successfully and produce a coherent report\n**Per-criteria**: Does the dashboard include the overall skill score ratio: 5/6, Does the dashboard list the top 3 lowest-scoring skills: 5/6, Does the dashboard show the number of stuck and untested skills: 5/6, Does the dashboard include recent high-frequency user intent signals: 5/6, Can the output format be specified (e.g., 'text', 'html', 'json'): 6/6, Execute successfully and produce a coherent report: 4/6\n**Decision**: Score 30 did not exceed best 32 — mutation produced worse or equal results"
+    },
+    {
+      "round": 3,
+      "score": 30,
+      "max": 36,
+      "status": "escalation",
+      "mutation": "Stuck escalation: The optimization is stuck because all recent mutations have focused on the same strategy: adding increasingly prescriptive and complex procedural rules for error handling, specifically for missing dat",
+      "cost": 0.03,
+      "criteria": [
+        5,
+        5,
+        5,
+        5,
+        6,
+        4
+      ],
+      "failures": [],
+      "decisionReason": "Stuck escalation triggered after 3+ rounds with no improvement",
+      "escalation": {
+        "diagnosis": "The optimization is stuck because all recent mutations have focused on the same strategy: adding increasingly prescriptive and complex procedural rules for error handling, specifically for missing data. This has created a brittle, multi-step process of pre-initialization, conditional resets, and data overwriting (Steps 0, 2b, 3, 4). This logical complexity, intended to solve the \"missing data\" scenarios, has likely caused regressions in the \"happy path\" scenarios where data *is* present, as evidenced by the score dropping from 32/36 to 30/36 after these changes were introduced. The model is now over-fitting to the error-handling logic at the expense of correctly processing available data. The core problem is not a lack of error handling instructions, but an overly complex and fragile implementation of them.",
+        "evalRedesignNeeded": false,
+        "strategy": "Shift from a single, long, stateful procedure to a more robust, functional, and declarative approach. Instead of micromanaging a dozen global variables across multiple steps, the skill should define two independent, self-contained \"data gathering functions.\" Each function will be responsible for a single section of the dashboard (e.g., \"Skill Performance\"). It will encapsulate its own error handling and will return either a complete data object on success or a structured error object on failure. The main execution flow will then simply call these functions and assemble the final report from their results, drastically simplifying the logic and reducing the chance of state management errors.",
+        "suggestedMutation": "Replace the current `Execution Steps` 0 through 5 with a new, refactored structure that embodies the functional strategy. This change removes the brittle global pre-initialization step and encapsulates the logic for each data source.\n\n**REPLACE** the content from `## Execution Steps` down to (but not including) `## Output Format` with the following:\n\n```markdown\n## Execution Steps\n\n1.  **Parse Arguments:**\n    -   Identify the user's requested output format (`text`, `html`, `json`). Default to `text`.\n    -   Identify the user's requested output file path. Default to `null` (stdout).\n\n2.  **Generate Skill Performance Section:**\n    -   **This is a self-contained sub-task.**\n    -   **Goal:** Produce a data object for the `skill_performance` section of the dashboard.\n    -   **On Success:** The function must return an object like:\n        ```json\n        {\n          \"status\": \"success\",\n          \"data\": {\n            \"overall_score_ratio\": \"85/100 (85.0%)\",\n            \"total_skills\": 50,\n            \"untested_skills\": 5,\n            \"stuck_skills\": 2,\n            \"lowest_scoring_skills\": [\n              {\"name\": \"skill-a\", \"score\": 1, \"total\": 10},\n              ...\n            ]\n          }\n        }\n        ```\n    -   **On Failure:** If no `eval.json` files are found, or they are unreadable, the function must return an error object:\n        ```json\n        {\n          \"status\": \"error\",\n          \"reason\": \"No eval.json files found\"\n        }\n        ```\n    -   **Action:**\n        a. Use `Glob` to find all `~/.remote/@autoresearch/skills/*/eval.json` files.\n        b. If no files are found, immediately return the failure object above.\n        c. If files are found, initialize local counters (`total_score`, `total_possible`, etc.) to zero and an empty `skill_list`.\n        d. Iterate through each file, parsing it with `jq`. Skip any unreadable or malformed files. Accumulate scores and skill details.\n        e. Calculate the final metrics (`overall_ratio`, sort for `lowest_scoring`, etc.).\n        f. Assemble and return the success object with the calculated data.\n\n3.  **Generate User Demands Section:**\n    -   **This is a self-contained sub-task.**\n    -   **Goal:** Produce a data object for the `user_demands` section of the dashboard.\n    -   **On Success:** The function must return an object like:\n        ```json\n        {\n          \"status\": \"success\",\n          \"data\": {\n            \"high_frequency_intents\": [\n              {\"intent\": \"dashboard\", \"frequency\": 419},\n              ...\n            ]\n          }\n        }\n        ```\n    -   **On Failure:** If `wants.json` is missing or unparseable, the function must return an error object:\n        ```json\n        {\n          \"status\": \"error\",\n          \"reason\": \"wants.json not found or is unparseable\"\n        }\n        ```\n    -   **Action:**\n        a. Use `Read` to load `~/.remote/@autoresearch/wants.json`.\n        b. If the read fails, return the failure object.\n        c. Use `jq` to parse the JSON and extract the top 5 intents by frequency.\n        d. If parsing fails, return the failure object.\n        e. If successful, assemble and return the success object.\n\n4.  **Assemble Final Data Structure:**\n    -   Call the functions from Step 2 and Step 3 to get their results.\n    -   Construct the final output object, populating it based on the `status` of each result.\n    -   **Example logic:**\n        -   `skill_performance_result = call_step_2()`\n        -   `user_demands_result = call_step_3()`\n        -   `final_json.timestamp = <current_time>`\n        -   `if skill_performance_result.status == 'success'`:\n            -   `final_json.skill_performance = skill_performance_result.data`\n        -   `else`:\n            -   `final_json.skill_performance = { overall_score_ratio: \"N/A\", total_skills: 0, ..., \"_data_note\": skill_performance_result.reason }`\n        -   `if user_demands_result.status == 'success'`:\n            -   `final_json.user_demands = user_demands_result.data`\n        -   `else`:\n            -   `final_json.user_demands = { high_frequency_intents: [], \"_data_note\": user_demands_result.reason }`\n\n5.  **Render Output:**\n    -   **REQUIRED FIELDS CONTRACT — these MUST appear in every output regardless of format or data availability:**\n        -   **Overall skill score ratio** (e.g., \"85/100 (85.0%)\" or \"N/A — No skill eval.json files found\")\n        -   **Top 3 lowest-scoring skills** (list by name with score/total, or \"No skill data available\")\n        -   **Count of stuck skills and untested skills** (e.g., \"Stuck: 2, Untested: 5\" — use 0 if no data)\n        -   **High-frequency user intent signals** (top entries, or \"No intent data available: <reason>\")\n    -   Based on the `output_format` from Step 1, render the assembled data from Step 4 into the chosen format (`text`, `html`, or `json`).\n\n6.  **Finalize Output:**\n    -   If an `output_file` was specified, write the rendered content to that file.\n    -   Otherwise, print the rendered content to standard output.\n    -   Report success to the user.\n```"
+      },
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-20T22:23:15.913Z"
+    },
+    {
+      "round": 4,
+      "score": 34,
+      "max": 36,
+      "status": "kept",
+      "mutation": "Replace brittle stateful execution steps 0-5 with self-contained functional sub-tasks per meta-analyst recommendation, eliminating global state management errors that cause execution failures in scenarios 4 and 5.",
+      "cost": 0.05,
+      "criteria": [
+        6,
+        6,
+        6,
+        6,
+        6,
+        4
+      ],
+      "failures": [
+        {
+          "scenario": 4,
+          "criterion": "Execute successfully and produce a coherent report"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Execute successfully and produce a coherent report"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Improved from 32 to 34",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-20T22:23:45.590Z",
+      "changelog": "**Mutation**: Replace brittle stateful execution steps 0-5 with self-contained functional sub-tasks per meta-analyst recommendation, eliminating global state management errors that cause execution failures in scenarios 4 and 5.\n**Failures**: S4: Execute successfully and produce a coherent report, S5: Execute successfully and produce a coherent report\n**Per-criteria**: Does the dashboard include the overall skill score ratio: 6/6, Does the dashboard list the top 3 lowest-scoring skills: 6/6, Does the dashboard show the number of stuck and untested skills: 6/6, Does the dashboard include recent high-frequency user intent signals: 6/6, Can the output format be specified (e.g., 'text', 'html', 'json'): 6/6, Execute successfully and produce a coherent report: 4/6\n**Decision**: Improved from 32 to 34"
+    },
+    {
+      "round": 5,
+      "score": 30,
+      "max": 36,
+      "status": "reverted",
+      "mutation": "Add a top-level RESILIENCE RULE to Execution Steps that explicitly states any tool error (Glob, Read, Bash/jq failure) must be treated identically to \"file not found\" — use the pre-initialized defaults and continue — preventing tool-level failures from aborting execution before output is produced.",
+      "cost": 0.05,
+      "criteria": [
+        5,
+        5,
+        5,
+        5,
+        6,
+        4
+      ],
+      "failures": [
+        {
+          "scenario": 4,
+          "criterion": "Does the dashboard include recent high-frequency user intent signals"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Execute successfully and produce a coherent report"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Does the dashboard include the overall skill score ratio"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Does the dashboard list the top 3 lowest-scoring skills"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Does the dashboard show the number of stuck and untested skills"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Execute successfully and produce a coherent report"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 30 did not exceed best 34 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-04-06T22:00:43.983Z",
+      "changelog": "**Mutation**: Add a top-level RESILIENCE RULE to Execution Steps that explicitly states any tool error (Glob, Read, Bash/jq failure) must be treated identically to \"file not found\" — use the pre-initialized defaults and continue — preventing tool-level failures from aborting execution before output is produced.\n**Failures**: S4: Does the dashboard include recent high-frequency user intent signals, S4: Execute successfully and produce a coherent report, S5: Does the dashboard include the overall skill score ratio, S5: Does the dashboard list the top 3 lowest-scoring skills, S5: Does the dashboard show the number of stuck and untested skills, S5: Execute successfully and produce a coherent report\n**Per-criteria**: Does the dashboard include the overall skill score ratio: 5/6, Does the dashboard list the top 3 lowest-scoring skills: 5/6, Does the dashboard show the number of stuck and untested skills: 5/6, Does the dashboard include recent high-frequency user intent signals: 5/6, Can the output format be specified (e.g., 'text', 'html', 'json'): 6/6, Execute successfully and produce a coherent report: 4/6\n**Decision**: Score 30 did not exceed best 34 — mutation produced worse or equal results"
+    },
+    {
+      "round": 6,
+      "score": 30,
+      "max": 36,
+      "status": "reverted",
+      "mutation": "Add a MINIMUM VIABLE OUTPUT section as a final safety net — if the agent reaches Step 6 without having produced output (due to any failure), it MUST render a hardcoded fallback template with N/A values rather than aborting, eliminating the \"execute successfully\" failures in missing-data scenarios.",
+      "cost": 0.05,
+      "criteria": [
+        5,
+        5,
+        5,
+        5,
+        6,
+        4
+      ],
+      "failures": [
+        {
+          "scenario": 4,
+          "criterion": "Does the dashboard include recent high-frequency user intent signals"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Execute successfully and produce a coherent report"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Does the dashboard include the overall skill score ratio"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Does the dashboard list the top 3 lowest-scoring skills"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Does the dashboard show the number of stuck and untested skills"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Execute successfully and produce a coherent report"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 30 did not exceed best 34 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-04-06T22:02:40.109Z",
+      "changelog": "**Mutation**: Add a MINIMUM VIABLE OUTPUT section as a final safety net — if the agent reaches Step 6 without having produced output (due to any failure), it MUST render a hardcoded fallback template with N/A values rather than aborting, eliminating the \"execute successfully\" failures in missing-data scenarios.\n**Failures**: S4: Does the dashboard include recent high-frequency user intent signals, S4: Execute successfully and produce a coherent report, S5: Does the dashboard include the overall skill score ratio, S5: Does the dashboard list the top 3 lowest-scoring skills, S5: Does the dashboard show the number of stuck and untested skills, S5: Execute successfully and produce a coherent report\n**Per-criteria**: Does the dashboard include the overall skill score ratio: 5/6, Does the dashboard list the top 3 lowest-scoring skills: 5/6, Does the dashboard show the number of stuck and untested skills: 5/6, Does the dashboard include recent high-frequency user intent signals: 5/6, Can the output format be specified (e.g., 'text', 'html', 'json'): 6/6, Execute successfully and produce a coherent report: 4/6\n**Decision**: Score 30 did not exceed best 34 — mutation produced worse or equal results"
+    },
+    {
+      "round": 7,
+      "score": 30,
+      "max": 36,
+      "status": "reverted",
+      "mutation": "Add \"Step 0: Initialize All Output Variables\" that explicitly pre-defines every dashboard variable with concrete N/A fallback values before any data gathering, making the RESILIENCE RULE's \"use pre-initialized fallback values\" instruction actually executable when sub-tasks fail.",
+      "cost": 0.05,
+      "criteria": [
+        5,
+        5,
+        5,
+        5,
+        6,
+        4
+      ],
+      "failures": [
+        {
+          "scenario": 4,
+          "criterion": "Does the dashboard include recent high-frequency user intent signals"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Execute successfully and produce a coherent report"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Does the dashboard include the overall skill score ratio"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Does the dashboard list the top 3 lowest-scoring skills"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Does the dashboard show the number of stuck and untested skills"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Execute successfully and produce a coherent report"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 30 did not exceed best 34 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-04-07T06:04:12.364Z",
+      "changelog": "**Mutation**: Add \"Step 0: Initialize All Output Variables\" that explicitly pre-defines every dashboard variable with concrete N/A fallback values before any data gathering, making the RESILIENCE RULE's \"use pre-initialized fallback values\" instruction actually executable when sub-tasks fail.\n**Failures**: S4: Does the dashboard include recent high-frequency user intent signals, S4: Execute successfully and produce a coherent report, S5: Does the dashboard include the overall skill score ratio, S5: Does the dashboard list the top 3 lowest-scoring skills, S5: Does the dashboard show the number of stuck and untested skills, S5: Execute successfully and produce a coherent report\n**Per-criteria**: Does the dashboard include the overall skill score ratio: 5/6, Does the dashboard list the top 3 lowest-scoring skills: 5/6, Does the dashboard show the number of stuck and untested skills: 5/6, Does the dashboard include recent high-frequency user intent signals: 5/6, Can the output format be specified (e.g., 'text', 'html', 'json'): 6/6, Execute successfully and produce a coherent report: 4/6\n**Decision**: Score 30 did not exceed best 34 — mutation produced worse or equal results"
+    },
+    {
+      "round": 8,
+      "score": 34,
+      "max": 36,
+      "status": "reverted",
+      "mutation": "Collapse Steps 4, 5, and 6 into a single \"RENDER AND OUTPUT (MANDATORY)\" step that unconditionally renders current variable values with no conditional branching, eliminating the intermediate decision points that allow the agent to abort before producing output.",
+      "cost": 0.05,
+      "criteria": [
+        6,
+        6,
+        6,
+        6,
+        6,
+        4
+      ],
+      "failures": [
+        {
+          "scenario": 4,
+          "criterion": "Execute successfully and produce a coherent report"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Execute successfully and produce a coherent report"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 34 did not exceed best 34 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-04-07T14:00:34.467Z",
+      "changelog": "**Mutation**: Collapse Steps 4, 5, and 6 into a single \"RENDER AND OUTPUT (MANDATORY)\" step that unconditionally renders current variable values with no conditional branching, eliminating the intermediate decision points that allow the agent to abort before producing output.\n**Failures**: S4: Execute successfully and produce a coherent report, S5: Execute successfully and produce a coherent report\n**Per-criteria**: Does the dashboard include the overall skill score ratio: 6/6, Does the dashboard list the top 3 lowest-scoring skills: 6/6, Does the dashboard show the number of stuck and untested skills: 6/6, Does the dashboard include recent high-frequency user intent signals: 6/6, Can the output format be specified (e.g., 'text', 'html', 'json'): 6/6, Execute successfully and produce a coherent report: 4/6\n**Decision**: Score 34 did not exceed best 34 — mutation produced worse or equal results"
+    },
+    {
+      "round": 9,
+      "score": 28,
+      "max": 36,
+      "status": "reverted",
+      "mutation": "Replace all jq-based JSON parsing with native Read+agent parsing, since jq unavailability causes tool errors that cascade into complete execution failures despite the resilience rules.",
+      "cost": 0.05,
+      "criteria": [
+        5,
+        5,
+        5,
+        5,
+        5,
+        3
+      ],
+      "failures": [
+        {
+          "scenario": 4,
+          "criterion": "Execute successfully and produce a coherent report"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Execute successfully and produce a coherent report"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Does the dashboard include the overall skill score ratio"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Does the dashboard list the top 3 lowest-scoring skills"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Does the dashboard show the number of stuck and untested skills"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Does the dashboard include recent high-frequency user intent signals"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Can the output format be specified (e.g., 'text', 'html', 'json')"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Execute successfully and produce a coherent report"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 28 did not exceed best 34 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-04-07T22:00:39.458Z",
+      "changelog": "**Mutation**: Replace all jq-based JSON parsing with native Read+agent parsing, since jq unavailability causes tool errors that cascade into complete execution failures despite the resilience rules.\n**Failures**: S4: Execute successfully and produce a coherent report, S5: Execute successfully and produce a coherent report, S6: Does the dashboard include the overall skill score ratio, S6: Does the dashboard list the top 3 lowest-scoring skills, S6: Does the dashboard show the number of stuck and untested skills, S6: Does the dashboard include recent high-frequency user intent signals, S6: Can the output format be specified (e.g., 'text', 'html', 'json'), S6: Execute successfully and produce a coherent report\n**Per-criteria**: Does the dashboard include the overall skill score ratio: 5/6, Does the dashboard list the top 3 lowest-scoring skills: 5/6, Does the dashboard show the number of stuck and untested skills: 5/6, Does the dashboard include recent high-frequency user intent signals: 5/6, Can the output format be specified (e.g., 'text', 'html', 'json'): 5/6, Execute successfully and produce a coherent report: 3/6\n**Decision**: Score 28 did not exceed best 34 — mutation produced worse or equal results"
+    },
+    {
+      "round": 10,
+      "score": 28,
+      "max": 36,
+      "status": "reverted",
+      "mutation": "Reframe execution as a two-phase model (Phase 1: data gathering always completes, Phase 2: render always executes) to eliminate agent mental off-ramps that allow aborting before output is produced.",
+      "cost": 0.05,
+      "criteria": [
+        5,
+        5,
+        5,
+        5,
+        5,
+        3
+      ],
+      "failures": [
+        {
+          "scenario": 4,
+          "criterion": "Execute successfully and produce a coherent report"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Execute successfully and produce a coherent report"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Does the dashboard include the overall skill score ratio"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Does the dashboard list the top 3 lowest-scoring skills"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Does the dashboard show the number of stuck and untested skills"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Does the dashboard include recent high-frequency user intent signals"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Can the output format be specified (e.g., 'text', 'html', 'json')"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Execute successfully and produce a coherent report"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 28 did not exceed best 34 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-04-08T06:00:37.322Z",
+      "changelog": "**Mutation**: Reframe execution as a two-phase model (Phase 1: data gathering always completes, Phase 2: render always executes) to eliminate agent mental off-ramps that allow aborting before output is produced.\n**Failures**: S4: Execute successfully and produce a coherent report, S5: Execute successfully and produce a coherent report, S6: Does the dashboard include the overall skill score ratio, S6: Does the dashboard list the top 3 lowest-scoring skills, S6: Does the dashboard show the number of stuck and untested skills, S6: Does the dashboard include recent high-frequency user intent signals, S6: Can the output format be specified (e.g., 'text', 'html', 'json'), S6: Execute successfully and produce a coherent report\n**Per-criteria**: Does the dashboard include the overall skill score ratio: 5/6, Does the dashboard list the top 3 lowest-scoring skills: 5/6, Does the dashboard show the number of stuck and untested skills: 5/6, Does the dashboard include recent high-frequency user intent signals: 5/6, Can the output format be specified (e.g., 'text', 'html', 'json'): 5/6, Execute successfully and produce a coherent report: 3/6\n**Decision**: Score 28 did not exceed best 34 — mutation produced worse or equal results"
+    },
+    {
+      "round": 11,
+      "score": 33,
+      "max": 36,
+      "status": "reverted",
+      "mutation": "Replace Step 4's dual-path rendering (primary + conditional fallback) with a single mandatory fill-in-the-blank template that the agent always completes, removing any branch where the agent can decide \"rendering cannot proceed.\"",
+      "cost": 0.05,
+      "criteria": [
+        6,
+        6,
+        6,
+        6,
+        6,
+        3
+      ],
+      "failures": [
+        {
+          "scenario": 3,
+          "criterion": "Execute successfully and produce a coherent report"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Execute successfully and produce a coherent report"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Execute successfully and produce a coherent report"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 33 did not exceed best 34 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-04-08T06:03:16.978Z",
+      "changelog": "**Mutation**: Replace Step 4's dual-path rendering (primary + conditional fallback) with a single mandatory fill-in-the-blank template that the agent always completes, removing any branch where the agent can decide \"rendering cannot proceed.\"\n**Failures**: S3: Execute successfully and produce a coherent report, S4: Execute successfully and produce a coherent report, S5: Execute successfully and produce a coherent report\n**Per-criteria**: Does the dashboard include the overall skill score ratio: 6/6, Does the dashboard list the top 3 lowest-scoring skills: 6/6, Does the dashboard show the number of stuck and untested skills: 6/6, Does the dashboard include recent high-frequency user intent signals: 6/6, Can the output format be specified (e.g., 'text', 'html', 'json'): 6/6, Execute successfully and produce a coherent report: 3/6\n**Decision**: Score 33 did not exceed best 34 — mutation produced worse or equal results"
+    },
+    {
+      "round": 12,
+      "score": 27,
+      "max": 36,
+      "status": "reverted",
+      "mutation": "Reorder execution so the placeholder dashboard is rendered to output BEFORE any data gathering begins, guaranteeing output exists regardless of what happens during Steps 1–3.",
+      "cost": 0.05,
+      "criteria": [
+        5,
+        5,
+        5,
+        5,
+        6,
+        1
+      ],
+      "failures": [
+        {
+          "scenario": 2,
+          "criterion": "Execute successfully and produce a coherent report"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Execute successfully and produce a coherent report"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Does the dashboard include recent high-frequency user intent signals"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Execute successfully and produce a coherent report"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Does the dashboard include the overall skill score ratio"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Does the dashboard list the top 3 lowest-scoring skills"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Does the dashboard show the number of stuck and untested skills"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Execute successfully and produce a coherent report"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Execute successfully and produce a coherent report"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 27 did not exceed best 34 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-04-08T06:05:40.587Z",
+      "changelog": "**Mutation**: Reorder execution so the placeholder dashboard is rendered to output BEFORE any data gathering begins, guaranteeing output exists regardless of what happens during Steps 1–3.\n**Failures**: S2: Execute successfully and produce a coherent report, S3: Execute successfully and produce a coherent report, S4: Does the dashboard include recent high-frequency user intent signals, S4: Execute successfully and produce a coherent report, S5: Does the dashboard include the overall skill score ratio, S5: Does the dashboard list the top 3 lowest-scoring skills, S5: Does the dashboard show the number of stuck and untested skills, S5: Execute successfully and produce a coherent report, S6: Execute successfully and produce a coherent report\n**Per-criteria**: Does the dashboard include the overall skill score ratio: 5/6, Does the dashboard list the top 3 lowest-scoring skills: 5/6, Does the dashboard show the number of stuck and untested skills: 5/6, Does the dashboard include recent high-frequency user intent signals: 5/6, Can the output format be specified (e.g., 'text', 'html', 'json'): 6/6, Execute successfully and produce a coherent report: 1/6\n**Decision**: Score 27 did not exceed best 34 — mutation produced worse or equal results"
+    },
+    {
+      "round": 12,
+      "score": 27,
+      "max": 36,
+      "status": "escalation",
+      "mutation": "Stuck escalation: The optimization is stuck in a local optimum because all recent mutations have been reinforcing a fundamentally flawed and overly complex \"render-then-replace\" execution model. This two-phase process,",
+      "cost": 0.03,
+      "criteria": [
+        5,
+        5,
+        5,
+        5,
+        6,
+        1
+      ],
+      "failures": [],
+      "decisionReason": "Stuck escalation triggered after 3+ rounds with no improvement",
+      "escalation": {
+        "diagnosis": "The optimization is stuck in a local optimum because all recent mutations have been reinforcing a fundamentally flawed and overly complex \"render-then-replace\" execution model. This two-phase process, which instructs the agent to output a complete dashboard and then later \"update\" or \"replace\" it, is counter-intuitive for a generative model. It leads to failures on the \"produce a coherent report\" criterion, likely by causing the agent to halt in confusion over the impossible \"replace\" instruction or by producing duplicate, incoherent output. The mutations have been adding more procedural guardrails to this brittle architecture instead of simplifying it, thereby increasing cognitive load and exacerbating the root problem.",
+        "evalRedesignNeeded": false,
+        "strategy": "**Abandon the \"Render-Then-Replace\" model and adopt a \"Gather-Then-Render-Once\" strategy.** This involves a radical simplification of the execution flow into a single, linear process. The agent will first initialize all variables with fallback values, then attempt all data gathering steps in a \"best-effort\" manner, and finally, render the complete dashboard exactly once at the very end. This eliminates the confusing intermediate output and the impossible \"replace\" instruction, aligning the skill's logic with a more natural generative process. Resilience will be achieved through clear error-handling instructions within each data-gathering step, not through a convoluted multi-phase workflow.",
+        "suggestedMutation": "**Restructure the entire `Execution Steps` section to follow a simple, linear \"Initialize -> Gather -> Render\" flow, removing the two-phase model entirely.**\n\n1.  **Remove the `Execution Model — Read This First` section.** It describes the confusing two-phase logic that is being eliminated.\n2.  **Rewrite `Execution Steps` as a single, linear sequence:**\n    *   **Step 1: Initialize Variables.** This is the same as the old Step 0. It sets up all the fallback values.\n    *   **Step 2: Gather Skill Performance Data (Best Effort).** This is the old Step 2. The instructions remain the same: on any failure, simply move on. The key change is that it no longer happens *after* an output has been generated.\n    *   **Step 3: Gather User Demands Data (Best Effort).** This is the old Step 3. Same logic as above.\n    *   **Step 4: Render Final Dashboard (Mandatory).** This is a new, consolidated final step. It takes the place of the old Step 1 and Step 4. It instructs the agent to render the dashboard template *once* at the very end, using the final state of the variables (which will be either the fallbacks from Step 1 or the enriched data from Steps 2-3). This ensures a single, coherent output is always produced.\n3.  **Remove all language about \"phases\", \"enrichment\", \"updating output\", or \"the skill has already succeeded\".** The new prompt should present a straightforward task that concludes with a single, final output."
+      },
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-04-08T06:07:35.273Z"
+    },
+    {
+      "round": 13,
+      "score": 16,
+      "max": 36,
+      "status": "reverted",
+      "mutation": "Restructure Execution Steps to a linear \"Initialize -> Gather -> Render\" flow, removing the two-phase model entirely — gathering all data first before rendering once at the end, eliminating the confusing \"render-then-replace\" pattern that causes agents to abort before producing final output.",
+      "cost": 0.05,
+      "criteria": [
+        3,
+        3,
+        3,
+        2,
+        3,
+        2
+      ],
+      "failures": [
+        {
+          "scenario": 3,
+          "criterion": "Does the dashboard include recent high-frequency user intent signals"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Execute successfully and produce a coherent report"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Does the dashboard include the overall skill score ratio"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Does the dashboard list the top 3 lowest-scoring skills"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Does the dashboard show the number of stuck and untested skills"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Does the dashboard include recent high-frequency user intent signals"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Can the output format be specified (e.g., 'text', 'html', 'json')"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Execute successfully and produce a coherent report"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Does the dashboard include the overall skill score ratio"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Does the dashboard list the top 3 lowest-scoring skills"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Does the dashboard show the number of stuck and untested skills"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Does the dashboard include recent high-frequency user intent signals"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Can the output format be specified (e.g., 'text', 'html', 'json')"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Execute successfully and produce a coherent report"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Does the dashboard include the overall skill score ratio"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Does the dashboard list the top 3 lowest-scoring skills"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Does the dashboard show the number of stuck and untested skills"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Does the dashboard include recent high-frequency user intent signals"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Can the output format be specified (e.g., 'text', 'html', 'json')"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Execute successfully and produce a coherent report"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 16 did not exceed best 34 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-04-08T06:08:01.282Z",
+      "changelog": "**Mutation**: Restructure Execution Steps to a linear \"Initialize -> Gather -> Render\" flow, removing the two-phase model entirely — gathering all data first before rendering once at the end, eliminating the confusing \"render-then-replace\" pattern that causes agents to abort before producing final output.\n**Failures**: S3: Does the dashboard include recent high-frequency user intent signals, S3: Execute successfully and produce a coherent report, S4: Does the dashboard include the overall skill score ratio, S4: Does the dashboard list the top 3 lowest-scoring skills, S4: Does the dashboard show the number of stuck and untested skills, S4: Does the dashboard include recent high-frequency user intent signals, S4: Can the output format be specified (e.g., 'text', 'html', 'json'), S4: Execute successfully and produce a coherent report, S5: Does the dashboard include the overall skill score ratio, S5: Does the dashboard list the top 3 lowest-scoring skills, S5: Does the dashboard show the number of stuck and untested skills, S5: Does the dashboard include recent high-frequency user intent signals, S5: Can the output format be specified (e.g., 'text', 'html', 'json'), S5: Execute successfully and produce a coherent report, S6: Does the dashboard include the overall skill score ratio, S6: Does the dashboard list the top 3 lowest-scoring skills, S6: Does the dashboard show the number of stuck and untested skills, S6: Does the dashboard include recent high-frequency user intent signals, S6: Can the output format be specified (e.g., 'text', 'html', 'json'), S6: Execute successfully and produce a coherent report\n**Per-criteria**: Does the dashboard include the overall skill score ratio: 3/6, Does the dashboard list the top 3 lowest-scoring skills: 3/6, Does the dashboard show the number of stuck and untested skills: 3/6, Does the dashboard include recent high-frequency user intent signals: 2/6, Can the output format be specified (e.g., 'text', 'html', 'json'): 3/6, Execute successfully and produce a coherent report: 2/6\n**Decision**: Score 16 did not exceed best 34 — mutation produced worse or equal results"
+    },
+    {
+      "round": 14,
+      "score": 33,
+      "max": 36,
+      "status": "reverted",
+      "mutation": "Add an explicit \"CANNOT FAIL\" declaration and a verbatim copy-paste fallback output at the start of Step 4 so agents have zero ambiguity about what to do when all data gathering fails — eliminating the mental off-ramp where accumulated errors cause premature abort.",
+      "cost": 0.05,
+      "criteria": [
+        6,
+        6,
+        6,
+        6,
+        6,
+        3
+      ],
+      "failures": [
+        {
+          "scenario": 4,
+          "criterion": "Execute successfully and produce a coherent report"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Execute successfully and produce a coherent report"
+        },
+        {
+          "scenario": 6,
+          "criterion": "Execute successfully and produce a coherent report"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 33 did not exceed best 34 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-04-08T06:09:42.339Z",
+      "changelog": "**Mutation**: Add an explicit \"CANNOT FAIL\" declaration and a verbatim copy-paste fallback output at the start of Step 4 so agents have zero ambiguity about what to do when all data gathering fails — eliminating the mental off-ramp where accumulated errors cause premature abort.\n**Failures**: S4: Execute successfully and produce a coherent report, S5: Execute successfully and produce a coherent report, S6: Execute successfully and produce a coherent report\n**Per-criteria**: Does the dashboard include the overall skill score ratio: 6/6, Does the dashboard list the top 3 lowest-scoring skills: 6/6, Does the dashboard show the number of stuck and untested skills: 6/6, Does the dashboard include recent high-frequency user intent signals: 6/6, Can the output format be specified (e.g., 'text', 'html', 'json'): 6/6, Execute successfully and produce a coherent report: 3/6\n**Decision**: Score 33 did not exceed best 34 — mutation produced worse or equal results"
+    }
+  ]
+}

@@ -1,0 +1,656 @@
+{
+  "skill": "polymarket-portfolio-tracker",
+  "criteria": [
+    "Positions accurately reflect on-chain state",
+    "FIFO P&L calculation is mathematically correct",
+    "Risk score reflects portfolio concentration and exposure",
+    "Safety limit utilization reported accurately",
+    "Export format is structured and complete"
+  ],
+  "totalCost": 0.7800000000000001,
+  "models": {
+    "mutator": "sonnet",
+    "evaluator": "gemini-2.5-pro"
+  },
+  "rounds": [
+    {
+      "round": 0,
+      "score": 20,
+      "max": 25,
+      "status": "baseline",
+      "mutation": "Added explicit API endpoint URLs, query parameters, and response field mappings to Step 1 — the position fetch is the foundation all other calculations depend on, and vague \"query Data API\" instructions are the most likely cause of uniform failures across all criteria.",
+      "cost": 0.05,
+      "criteria": [
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "failures": [
+        {
+          "scenario": 5,
+          "criterion": "Positions accurately reflect on-chain state"
+        },
+        {
+          "scenario": 5,
+          "criterion": "FIFO P&L calculation is mathematically correct"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Risk score reflects portfolio concentration and exposure"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Safety limit utilization reported accurately"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Export format is structured and complete"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Initial baseline evaluation",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-21T09:51:57.567Z",
+      "changelog": "**Mutation**: Added explicit API endpoint URLs, query parameters, and response field mappings to Step 1 — the position fetch is the foundation all other calculations depend on, and vague \"query Data API\" instructions are the most likely cause of uniform failures across all criteria.\n**Failures**: S5: Positions accurately reflect on-chain state, S5: FIFO P&L calculation is mathematically correct, S5: Risk score reflects portfolio concentration and exposure, S5: Safety limit utilization reported accurately, S5: Export format is structured and complete\n**Per-criteria**: Positions accurately reflect on-chain state: 4/5, FIFO P&L calculation is mathematically correct: 4/5, Risk score reflects portfolio concentration and exposure: 4/5, Safety limit utilization reported accurately: 4/5, Export format is structured and complete: 4/5\n**Decision**: Initial baseline evaluation"
+    },
+    {
+      "round": 1,
+      "score": 16,
+      "max": 25,
+      "status": "reverted",
+      "mutation": "Fixed Step 2 FIFO P&L calculation — the current logic incorrectly ignores `cashPnl` on partially-closed positions (only counting it when `size == 0`), causing mathematically wrong totals in all scenarios with mixed open/partial-close positions.",
+      "cost": 0.05,
+      "criteria": [
+        4,
+        0,
+        4,
+        4,
+        4
+      ],
+      "failures": [
+        {
+          "scenario": 1,
+          "criterion": "FIFO P&L calculation is mathematically correct"
+        },
+        {
+          "scenario": 2,
+          "criterion": "FIFO P&L calculation is mathematically correct"
+        },
+        {
+          "scenario": 3,
+          "criterion": "FIFO P&L calculation is mathematically correct"
+        },
+        {
+          "scenario": 4,
+          "criterion": "FIFO P&L calculation is mathematically correct"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Positions accurately reflect on-chain state"
+        },
+        {
+          "scenario": 5,
+          "criterion": "FIFO P&L calculation is mathematically correct"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Risk score reflects portfolio concentration and exposure"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Safety limit utilization reported accurately"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Export format is structured and complete"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 16 did not exceed best 20 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-21T09:53:08.389Z",
+      "changelog": "**Mutation**: Fixed Step 2 FIFO P&L calculation — the current logic incorrectly ignores `cashPnl` on partially-closed positions (only counting it when `size == 0`), causing mathematically wrong totals in all scenarios with mixed open/partial-close positions.\n**Failures**: S1: FIFO P&L calculation is mathematically correct, S2: FIFO P&L calculation is mathematically correct, S3: FIFO P&L calculation is mathematically correct, S4: FIFO P&L calculation is mathematically correct, S5: Positions accurately reflect on-chain state, S5: FIFO P&L calculation is mathematically correct, S5: Risk score reflects portfolio concentration and exposure, S5: Safety limit utilization reported accurately, S5: Export format is structured and complete\n**Per-criteria**: Positions accurately reflect on-chain state: 4/5, FIFO P&L calculation is mathematically correct: 0/5, Risk score reflects portfolio concentration and exposure: 4/5, Safety limit utilization reported accurately: 4/5, Export format is structured and complete: 4/5\n**Decision**: Score 16 did not exceed best 20 — mutation produced worse or equal results"
+    },
+    {
+      "round": 2,
+      "score": 23,
+      "max": 25,
+      "status": "kept",
+      "mutation": "Changed sizeThreshold from 0.01 to 0 in the positions API query and added explicit instructions to include ALL positions (including closed ones) in P&L totals and export, while limiting the display table to active positions (size > 0.01).",
+      "cost": 0.05,
+      "criteria": [
+        4,
+        5,
+        5,
+        5,
+        4
+      ],
+      "failures": [
+        {
+          "scenario": 5,
+          "criterion": "Positions accurately reflect on-chain state"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Export format is structured and complete"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Improved from 20 to 23",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-21T09:54:37.981Z",
+      "changelog": "**Mutation**: Changed sizeThreshold from 0.01 to 0 in the positions API query and added explicit instructions to include ALL positions (including closed ones) in P&L totals and export, while limiting the display table to active positions (size > 0.01).\n**Failures**: S5: Positions accurately reflect on-chain state, S5: Export format is structured and complete\n**Per-criteria**: Positions accurately reflect on-chain state: 4/5, FIFO P&L calculation is mathematically correct: 5/5, Risk score reflects portfolio concentration and exposure: 5/5, Safety limit utilization reported accurately: 5/5, Export format is structured and complete: 4/5\n**Decision**: Improved from 20 to 23"
+    },
+    {
+      "round": 3,
+      "score": 19,
+      "max": 25,
+      "status": "reverted",
+      "mutation": "Added explicit closed-position handling — when `size == 0`, skip the CLOB midpoint query and set `current_price=0`, `current_value=0`, `unrealized_pnl=0`, `unrealized_pnl_pct=0` in the export, preventing division-by-zero and ensuring the export is structurally complete for all position states.",
+      "cost": 0.05,
+      "criteria": [
+        4,
+        4,
+        3,
+        4,
+        4
+      ],
+      "failures": [
+        {
+          "scenario": 4,
+          "criterion": "Risk score reflects portfolio concentration and exposure"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Positions accurately reflect on-chain state"
+        },
+        {
+          "scenario": 5,
+          "criterion": "FIFO P&L calculation is mathematically correct"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Risk score reflects portfolio concentration and exposure"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Safety limit utilization reported accurately"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Export format is structured and complete"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 19 did not exceed best 23 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-21T09:56:27.726Z",
+      "changelog": "**Mutation**: Added explicit closed-position handling — when `size == 0`, skip the CLOB midpoint query and set `current_price=0`, `current_value=0`, `unrealized_pnl=0`, `unrealized_pnl_pct=0` in the export, preventing division-by-zero and ensuring the export is structurally complete for all position states.\n**Failures**: S4: Risk score reflects portfolio concentration and exposure, S5: Positions accurately reflect on-chain state, S5: FIFO P&L calculation is mathematically correct, S5: Risk score reflects portfolio concentration and exposure, S5: Safety limit utilization reported accurately, S5: Export format is structured and complete\n**Per-criteria**: Positions accurately reflect on-chain state: 4/5, FIFO P&L calculation is mathematically correct: 4/5, Risk score reflects portfolio concentration and exposure: 3/5, Safety limit utilization reported accurately: 4/5, Export format is structured and complete: 4/5\n**Decision**: Score 19 did not exceed best 23 — mutation produced worse or equal results"
+    },
+    {
+      "round": 4,
+      "score": 24,
+      "max": 25,
+      "status": "kept",
+      "mutation": "Expanded the `summary` object in the JSON export schema to include explicit value mappings for each field (matching the same annotation style used in the `positions` array), eliminating ambiguity about ratio vs. percentage formatting and ensuring completeness.",
+      "cost": 0.05,
+      "criteria": [
+        5,
+        5,
+        5,
+        5,
+        4
+      ],
+      "failures": [
+        {
+          "scenario": 5,
+          "criterion": "Export format is structured and complete"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Improved from 23 to 24",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-21T09:58:01.394Z",
+      "changelog": "**Mutation**: Expanded the `summary` object in the JSON export schema to include explicit value mappings for each field (matching the same annotation style used in the `positions` array), eliminating ambiguity about ratio vs. percentage formatting and ensuring completeness.\n**Failures**: S5: Export format is structured and complete\n**Per-criteria**: Positions accurately reflect on-chain state: 5/5, FIFO P&L calculation is mathematically correct: 5/5, Risk score reflects portfolio concentration and exposure: 5/5, Safety limit utilization reported accurately: 5/5, Export format is structured and complete: 4/5\n**Decision**: Improved from 23 to 24"
+    },
+    {
+      "round": 5,
+      "score": 20,
+      "max": 25,
+      "status": "reverted",
+      "mutation": "Add a concrete worked example of portfolio.json output with actual numeric values (not string placeholders) to clarify that numeric fields must be JSON numbers, not strings.",
+      "cost": 0.05,
+      "criteria": [
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "failures": [
+        {
+          "scenario": 5,
+          "criterion": "Positions accurately reflect on-chain state"
+        },
+        {
+          "scenario": 5,
+          "criterion": "FIFO P&L calculation is mathematically correct"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Risk score reflects portfolio concentration and exposure"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Safety limit utilization reported accurately"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Export format is structured and complete"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 20 did not exceed best 24 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-04-09T06:00:32.903Z",
+      "changelog": "**Mutation**: Add a concrete worked example of portfolio.json output with actual numeric values (not string placeholders) to clarify that numeric fields must be JSON numbers, not strings.\n**Failures**: S5: Positions accurately reflect on-chain state, S5: FIFO P&L calculation is mathematically correct, S5: Risk score reflects portfolio concentration and exposure, S5: Safety limit utilization reported accurately, S5: Export format is structured and complete\n**Per-criteria**: Positions accurately reflect on-chain state: 4/5, FIFO P&L calculation is mathematically correct: 4/5, Risk score reflects portfolio concentration and exposure: 4/5, Safety limit utilization reported accurately: 4/5, Export format is structured and complete: 4/5\n**Decision**: Score 20 did not exceed best 24 — mutation produced worse or equal results"
+    },
+    {
+      "round": 6,
+      "score": 24,
+      "max": 25,
+      "status": "reverted",
+      "mutation": "Clarify that portfolio.json is always written on every execution regardless of which flags are used, not only when --export is passed — the --export flag only controls whether the path is printed to stdout.",
+      "cost": 0.05,
+      "criteria": [
+        5,
+        5,
+        5,
+        5,
+        4
+      ],
+      "failures": [
+        {
+          "scenario": 5,
+          "criterion": "Export format is structured and complete"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 24 did not exceed best 24 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-04-09T06:02:26.450Z",
+      "changelog": "**Mutation**: Clarify that portfolio.json is always written on every execution regardless of which flags are used, not only when --export is passed — the --export flag only controls whether the path is printed to stdout.\n**Failures**: S5: Export format is structured and complete\n**Per-criteria**: Positions accurately reflect on-chain state: 5/5, FIFO P&L calculation is mathematically correct: 5/5, Risk score reflects portfolio concentration and exposure: 5/5, Safety limit utilization reported accurately: 5/5, Export format is structured and complete: 4/5\n**Decision**: Score 24 did not exceed best 24 — mutation produced worse or equal results"
+    },
+    {
+      "round": 7,
+      "score": 21,
+      "max": 25,
+      "status": "reverted",
+      "mutation": "Add explicit zero-guard for `total_exposure == 0` in Step 3's concentration_risk calculation to prevent division-by-zero when all positions are closed, which likely causes all 4 criteria to fail in the all-closed-positions scenario.",
+      "cost": 0.05,
+      "criteria": [
+        4,
+        4,
+        4,
+        4,
+        5
+      ],
+      "failures": [
+        {
+          "scenario": 5,
+          "criterion": "Positions accurately reflect on-chain state"
+        },
+        {
+          "scenario": 5,
+          "criterion": "FIFO P&L calculation is mathematically correct"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Risk score reflects portfolio concentration and exposure"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Safety limit utilization reported accurately"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 21 did not exceed best 24 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-04-10T06:00:52.767Z",
+      "changelog": "**Mutation**: Add explicit zero-guard for `total_exposure == 0` in Step 3's concentration_risk calculation to prevent division-by-zero when all positions are closed, which likely causes all 4 criteria to fail in the all-closed-positions scenario.\n**Failures**: S5: Positions accurately reflect on-chain state, S5: FIFO P&L calculation is mathematically correct, S5: Risk score reflects portfolio concentration and exposure, S5: Safety limit utilization reported accurately\n**Per-criteria**: Positions accurately reflect on-chain state: 4/5, FIFO P&L calculation is mathematically correct: 4/5, Risk score reflects portfolio concentration and exposure: 4/5, Safety limit utilization reported accurately: 4/5, Export format is structured and complete: 5/5\n**Decision**: Score 21 did not exceed best 24 — mutation produced worse or equal results"
+    },
+    {
+      "round": 8,
+      "score": 20,
+      "max": 25,
+      "status": "reverted",
+      "mutation": "Add explicit zero-guard for drawdown when `total_exposure == 0` (all positions closed/resolved), since \"portfolio drawn to zero via exits\" ≠ \"portfolio drawdown\" — the formula otherwise computes 100% drawdown for any fully-exited portfolio, contradicting the all-closed example that shows 0.0.",
+      "cost": 0.05,
+      "criteria": [
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "failures": [
+        {
+          "scenario": 5,
+          "criterion": "Positions accurately reflect on-chain state"
+        },
+        {
+          "scenario": 5,
+          "criterion": "FIFO P&L calculation is mathematically correct"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Risk score reflects portfolio concentration and exposure"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Safety limit utilization reported accurately"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Export format is structured and complete"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 20 did not exceed best 24 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-04-10T06:03:35.283Z",
+      "changelog": "**Mutation**: Add explicit zero-guard for drawdown when `total_exposure == 0` (all positions closed/resolved), since \"portfolio drawn to zero via exits\" ≠ \"portfolio drawdown\" — the formula otherwise computes 100% drawdown for any fully-exited portfolio, contradicting the all-closed example that shows 0.0.\n**Failures**: S5: Positions accurately reflect on-chain state, S5: FIFO P&L calculation is mathematically correct, S5: Risk score reflects portfolio concentration and exposure, S5: Safety limit utilization reported accurately, S5: Export format is structured and complete\n**Per-criteria**: Positions accurately reflect on-chain state: 4/5, FIFO P&L calculation is mathematically correct: 4/5, Risk score reflects portfolio concentration and exposure: 4/5, Safety limit utilization reported accurately: 4/5, Export format is structured and complete: 4/5\n**Decision**: Score 20 did not exceed best 24 — mutation produced worse or equal results"
+    },
+    {
+      "round": 9,
+      "score": 24,
+      "max": 25,
+      "status": "reverted",
+      "mutation": "Add explicit rule to zero out `avg_price` for closed positions (`size == 0`) in Step 2 instructions and Quality Gate 3, matching the closed-position example which already shows `avg_price: 0` but whose rationale was never stated.",
+      "cost": 0.05,
+      "criteria": [
+        5,
+        5,
+        5,
+        5,
+        4
+      ],
+      "failures": [
+        {
+          "scenario": 5,
+          "criterion": "Export format is structured and complete"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 24 did not exceed best 24 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-04-10T06:06:34.077Z",
+      "changelog": "**Mutation**: Add explicit rule to zero out `avg_price` for closed positions (`size == 0`) in Step 2 instructions and Quality Gate 3, matching the closed-position example which already shows `avg_price: 0` but whose rationale was never stated.\n**Failures**: S5: Export format is structured and complete\n**Per-criteria**: Positions accurately reflect on-chain state: 5/5, FIFO P&L calculation is mathematically correct: 5/5, Risk score reflects portfolio concentration and exposure: 5/5, Safety limit utilization reported accurately: 5/5, Export format is structured and complete: 4/5\n**Decision**: Score 24 did not exceed best 24 — mutation produced worse or equal results"
+    },
+    {
+      "round": 9,
+      "score": 24,
+      "max": 25,
+      "status": "escalation",
+      "mutation": "Stuck escalation: The optimization loop is stuck in a local optimum due to \"mutation thrashing\" around the wrong problem. The persistent failure is in \"S5: Export format is structured and complete,\" indicating a consis",
+      "cost": 0.03,
+      "criteria": [
+        5,
+        5,
+        5,
+        5,
+        4
+      ],
+      "failures": [],
+      "decisionReason": "Stuck escalation triggered after 3+ rounds with no improvement",
+      "escalation": {
+        "diagnosis": "The optimization loop is stuck in a local optimum due to \"mutation thrashing\" around the wrong problem. The persistent failure is in \"S5: Export format is structured and complete,\" indicating a consistent, specific flaw in the generated `portfolio.json`. The mutations from rounds 5-10 have focused on refining calculation logic (zero-guards for concentration/drawdown, `avg_price` for closed positions) and clarifying existing examples. However, the P&L and Risk criteria are already passing (5/5), meaning the *calculations* are correct. The root cause is a subtle ambiguity in the prompt: the `safety_limits` object in the example JSON schema contains four fields, but the instructions only explicitly mention the calculation for *one* of them (`exposure_used_pct`). The prompt defines the other three (`max_order_size_usd`, etc.) as constants in a separate section but never explicitly instructs the AI to include these hardcoded constants in the final JSON output. The AI is likely interpreting them as internal variables for risk calculation, omitting them from the export, and thus failing the \"completeness\" check of the S5 criterion.",
+        "evalRedesignNeeded": false,
+        "strategy": "Shift from refining calculation logic to ensuring explicit output construction. The core logic is sound, but the instructions for assembling the final JSON are incomplete. The new strategy is to explicitly command the inclusion of all fields shown in the example schemas, especially hardcoded constants, leaving no room for interpretation. We must bridge the gap where an example *implies* a field should be present, but the instructional text does not explicitly *mandate* its inclusion.",
+        "suggestedMutation": "In Step 4, under the `portfolio.json` schema, add a new bullet point or sentence that explicitly instructs the AI to populate the `safety_limits` object with the hardcoded constants defined elsewhere in the skill.\n\n**Modify the end of Step 4, right after the `Field computation reference` block, to add the following instruction:**\n\n```markdown\n   **Field computation reference:**\n   - `total_exposure` = sum of `current_value` across all positions where `size > 0`\n   ...\n   - `drawdown_pct` = drawdown ratio * 100, as float; **0 if `total_exposure == 0` OR if peak == 0**\n   - `exposure_used_pct` (in `safety_limits`) = same value as `summary.exposure_utilization_pct`\n\n   **`safety_limits` object construction:** The `safety_limits` object in the JSON export must be fully populated. It includes the calculated `exposure_used_pct` field and the three hardcoded constants defined in the \"Safety Limits\" section: `max_order_size_usd`, `max_total_exposure_usd`, and `max_position_per_market_usd`.\n```"
+      },
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-04-10T06:08:44.404Z"
+    },
+    {
+      "round": 10,
+      "score": 20,
+      "max": 25,
+      "status": "reverted",
+      "mutation": "Add explicit instruction in Step 4 mandating that the `safety_limits` object must be fully populated with both the calculated `exposure_used_pct` and the three hardcoded constants from the Safety Limits section.",
+      "cost": 0.05,
+      "criteria": [
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "failures": [
+        {
+          "scenario": 5,
+          "criterion": "Positions accurately reflect on-chain state"
+        },
+        {
+          "scenario": 5,
+          "criterion": "FIFO P&L calculation is mathematically correct"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Risk score reflects portfolio concentration and exposure"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Safety limit utilization reported accurately"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Export format is structured and complete"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 20 did not exceed best 24 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-04-10T06:09:13.481Z",
+      "changelog": "**Mutation**: Add explicit instruction in Step 4 mandating that the `safety_limits` object must be fully populated with both the calculated `exposure_used_pct` and the three hardcoded constants from the Safety Limits section.\n**Failures**: S5: Positions accurately reflect on-chain state, S5: FIFO P&L calculation is mathematically correct, S5: Risk score reflects portfolio concentration and exposure, S5: Safety limit utilization reported accurately, S5: Export format is structured and complete\n**Per-criteria**: Positions accurately reflect on-chain state: 4/5, FIFO P&L calculation is mathematically correct: 4/5, Risk score reflects portfolio concentration and exposure: 4/5, Safety limit utilization reported accurately: 4/5, Export format is structured and complete: 4/5\n**Decision**: Score 20 did not exceed best 24 — mutation produced worse or equal results"
+    },
+    {
+      "round": 11,
+      "score": 20,
+      "max": 25,
+      "status": "reverted",
+      "mutation": "Restrict `peak` in the drawdown calculation to only open positions (`size > 0`), preventing closed positions' `initialValue` from inflating peak and producing incorrect drawdown/risk_score in mixed open+closed portfolios.",
+      "cost": 0.05,
+      "criteria": [
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "failures": [
+        {
+          "scenario": 5,
+          "criterion": "Positions accurately reflect on-chain state"
+        },
+        {
+          "scenario": 5,
+          "criterion": "FIFO P&L calculation is mathematically correct"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Risk score reflects portfolio concentration and exposure"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Safety limit utilization reported accurately"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Export format is structured and complete"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 20 did not exceed best 24 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-04-10T06:11:07.627Z",
+      "changelog": "**Mutation**: Restrict `peak` in the drawdown calculation to only open positions (`size > 0`), preventing closed positions' `initialValue` from inflating peak and producing incorrect drawdown/risk_score in mixed open+closed portfolios.\n**Failures**: S5: Positions accurately reflect on-chain state, S5: FIFO P&L calculation is mathematically correct, S5: Risk score reflects portfolio concentration and exposure, S5: Safety limit utilization reported accurately, S5: Export format is structured and complete\n**Per-criteria**: Positions accurately reflect on-chain state: 4/5, FIFO P&L calculation is mathematically correct: 4/5, Risk score reflects portfolio concentration and exposure: 4/5, Safety limit utilization reported accurately: 4/5, Export format is structured and complete: 4/5\n**Decision**: Score 20 did not exceed best 24 — mutation produced worse or equal results"
+    },
+    {
+      "round": 12,
+      "score": 20,
+      "max": 25,
+      "status": "reverted",
+      "mutation": "Add explicit instruction to parse the CLOB `mid` field as a float before using it in calculations, since the API returns it as a JSON string — this would corrupt all numeric computations and cause all 5 criteria to fail in any scenario with open positions.",
+      "cost": 0.05,
+      "criteria": [
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "failures": [
+        {
+          "scenario": 5,
+          "criterion": "Positions accurately reflect on-chain state"
+        },
+        {
+          "scenario": 5,
+          "criterion": "FIFO P&L calculation is mathematically correct"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Risk score reflects portfolio concentration and exposure"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Safety limit utilization reported accurately"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Export format is structured and complete"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 20 did not exceed best 24 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-04-10T22:00:30.577Z",
+      "changelog": "**Mutation**: Add explicit instruction to parse the CLOB `mid` field as a float before using it in calculations, since the API returns it as a JSON string — this would corrupt all numeric computations and cause all 5 criteria to fail in any scenario with open positions.\n**Failures**: S5: Positions accurately reflect on-chain state, S5: FIFO P&L calculation is mathematically correct, S5: Risk score reflects portfolio concentration and exposure, S5: Safety limit utilization reported accurately, S5: Export format is structured and complete\n**Per-criteria**: Positions accurately reflect on-chain state: 4/5, FIFO P&L calculation is mathematically correct: 4/5, Risk score reflects portfolio concentration and exposure: 4/5, Safety limit utilization reported accurately: 4/5, Export format is structured and complete: 4/5\n**Decision**: Score 20 did not exceed best 24 — mutation produced worse or equal results"
+    },
+    {
+      "round": 13,
+      "score": 24,
+      "max": 25,
+      "status": "reverted",
+      "mutation": "Fix Quality Gate 10 which erroneously lists `timestamp` among `summary` fields — `timestamp` is a top-level JSON field, not inside `summary` — and add an explicit instruction in Step 4 to include `timestamp` at the top level of `portfolio.json`.",
+      "cost": 0.05,
+      "criteria": [
+        5,
+        5,
+        5,
+        5,
+        4
+      ],
+      "failures": [
+        {
+          "scenario": 5,
+          "criterion": "Export format is structured and complete"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 24 did not exceed best 24 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-04-11T06:00:32.946Z",
+      "changelog": "**Mutation**: Fix Quality Gate 10 which erroneously lists `timestamp` among `summary` fields — `timestamp` is a top-level JSON field, not inside `summary` — and add an explicit instruction in Step 4 to include `timestamp` at the top level of `portfolio.json`.\n**Failures**: S5: Export format is structured and complete\n**Per-criteria**: Positions accurately reflect on-chain state: 5/5, FIFO P&L calculation is mathematically correct: 5/5, Risk score reflects portfolio concentration and exposure: 5/5, Safety limit utilization reported accurately: 5/5, Export format is structured and complete: 4/5\n**Decision**: Score 24 did not exceed best 24 — mutation produced worse or equal results"
+    },
+    {
+      "round": 14,
+      "score": 21,
+      "max": 25,
+      "status": "reverted",
+      "mutation": "Always compute current_value = current_price * size from the CLOB midpoint instead of preferring Data API's currentValue, eliminating price-source inconsistency that corrupts unrealized_pnl, total_exposure, risk scores, and the export.",
+      "cost": 0.05,
+      "criteria": [
+        4,
+        4,
+        4,
+        5,
+        4
+      ],
+      "failures": [
+        {
+          "scenario": 5,
+          "criterion": "Positions accurately reflect on-chain state"
+        },
+        {
+          "scenario": 5,
+          "criterion": "FIFO P&L calculation is mathematically correct"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Risk score reflects portfolio concentration and exposure"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Export format is structured and complete"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 21 did not exceed best 24 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-04-11T06:05:04.533Z",
+      "changelog": "**Mutation**: Always compute current_value = current_price * size from the CLOB midpoint instead of preferring Data API's currentValue, eliminating price-source inconsistency that corrupts unrealized_pnl, total_exposure, risk scores, and the export.\n**Failures**: S5: Positions accurately reflect on-chain state, S5: FIFO P&L calculation is mathematically correct, S5: Risk score reflects portfolio concentration and exposure, S5: Export format is structured and complete\n**Per-criteria**: Positions accurately reflect on-chain state: 4/5, FIFO P&L calculation is mathematically correct: 4/5, Risk score reflects portfolio concentration and exposure: 4/5, Safety limit utilization reported accurately: 5/5, Export format is structured and complete: 4/5\n**Decision**: Score 21 did not exceed best 24 — mutation produced worse or equal results"
+    }
+  ]
+}

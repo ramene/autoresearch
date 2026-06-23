@@ -1,0 +1,16 @@
+{
+  "scenarios": [
+    {"id": 1, "type": "happy", "title": "List all active positions with current P&L", "event": "User asks for current portfolio status", "expectedAction": "Fetch positions, calculate unrealized P&L for each, display summary table", "expectedType": "action"},
+    {"id": 2, "type": "happy", "title": "Calculate FIFO P&L across multiple trades", "event": "User has bought and sold the same token multiple times", "expectedAction": "Apply FIFO accounting to calculate accurate realized P&L", "expectedType": "action"},
+    {"id": 3, "type": "happy", "title": "Generate risk score showing overconcentration", "event": "User has 80% of portfolio in one market", "expectedAction": "Calculate high risk score, warn about concentration risk", "expectedType": "action"},
+    {"id": 4, "type": "diagnostic", "title": "No open positions", "event": "User checks portfolio but has no active positions", "expectedAction": "Report zero positions with historical P&L if available", "expectedType": "action"},
+    {"id": 5, "type": "edge", "title": "Position in resolved market still shows", "event": "Market has resolved but tokens haven't been redeemed", "expectedAction": "Flag position as redeemable, show redemption value vs current book value", "expectedType": "action"}
+  ],
+  "criteria": [
+    "Positions accurately reflect on-chain state: Does the skill correctly fetch and display all active positions?",
+    "FIFO P&L calculation is mathematically correct: Does the skill apply FIFO cost basis properly?",
+    "Risk score reflects portfolio concentration and exposure: Does the risk scoring capture real portfolio risk?",
+    "Safety limit utilization reported accurately: Does the skill show how close to limits the portfolio is?",
+    "Export format is structured and complete: Does the JSON export include all necessary data?"
+  ]
+}

@@ -1,0 +1,855 @@
+{
+  "timestamp": "2026-06-20T14:02:47.627Z",
+  "version": "1.0",
+  "self_model_timestamp": "2026-06-20T14:01:40.528Z",
+  "world_model_timestamp": "2026-06-20T14:01:41.198Z",
+  "wants": [
+    {
+      "id": "want-034",
+      "type": "domain_coverage_gap",
+      "hypothesis": "The system has access to a rich 'traditional_finance' data stream via the 'tradfi-tools' MCP, including 36 tools and multiple subdomains (price_feeds, arbitrage_scanning), but possesses no skills to analyze or act on this data. This represents a significant untapped capability.",
+      "evidence": [
+        "CONNECTED MCP DOMAINS: tradfi-tools: traditional_finance (36 tools, data=false, NO skills)",
+        "Capability map shows no skills specifically categorized under 'traditional_finance', though 'tradfi-market-analyzer' exists, its connection to this specific MCP is not established and it may be underutilized."
+      ],
+      "severity": 0.9,
+      "frequency": 1,
+      "feasibility": 0.8,
+      "proposed_skill": {
+        "name": "tradfi-market-summary-generator",
+        "description": "Generates a concise summary of a given financial instrument using the 'tradfi-tools' price feeds and macro analysis tools.",
+        "criteria": [
+          "Does the summary correctly identify the instrument's current price?",
+          "Does the output include a recent price trend (e.g., 24h change)?",
+          "Does the summary reference at least one relevant macroeconomic indicator from the available tools?",
+          "Is the output free of hallucinations and grounded in the tool outputs?",
+          "Does the skill successfully handle requests for invalid or unsupported tickers?",
+          "Is the final summary under 150 words?"
+        ],
+        "scenarios": [
+          "Generate a summary for the ticker 'AAPL'.",
+          "Provide a market summary for the S&P 500 index.",
+          "Summarize the current state of the 'EUR/USD' forex pair.",
+          "Generate a report for a commodity like 'Gold (XAU)'.",
+          "Attempt to get a summary for a non-existent ticker 'XYZFAKE'.",
+          "Request a summary for a cryptocurrency like 'BTC' to test domain handling.",
+          "Generate summaries for three different tickers in a single request.",
+          "Ask for a summary but specify that macroeconomic data should be excluded."
+        ]
+      },
+      "proposed_goal": null,
+      "_preference_boost": 2,
+      "_preference_note": "Boosted by user preference (×2.0)",
+      "score": 1,
+      "status": "actionable"
+    },
+    {
+      "id": "want-035",
+      "type": "cross_skill_pattern",
+      "hypothesis": "A systemic failure in the self-improvement loop causes 20 skills (over 35% of total) to be 'stuck'. The existing 'stuck-skill-diagnoser' is effective, but there is no automated orchestrator to apply its diagnoses and trigger fixes, leading to persistent stagnation.",
+      "evidence": [
+        "Cross-skill patterns: '20 skills are currently stuck (3+ consecutive reverts) (affects: ... severity: high)'",
+        "SELF-MODEL: 'system-self-correction-v2: score=0/0 (0), trajectory=untested, stuck=0'",
+        "stuck-skill-diagnoser: score=42/42 (1), trajectory=stuck"
+      ],
+      "severity": 1,
+      "frequency": 1,
+      "feasibility": 0.7,
+      "proposed_skill": {
+        "name": "self-correction-orchestrator",
+        "description": "Automates the end-to-end process of identifying, diagnosing, and attempting to fix stuck or underperforming skills.",
+        "criteria": [
+          "Does the skill correctly identify the top stuck skill using 'system-status-reporter'?",
+          "Does the skill successfully invoke 'stuck-skill-diagnoser' on the identified target skill?",
+          "Does the skill parse the diagnosis to identify a concrete failure mode (e.g., bad prompt, failing tool)?",
+          "Does the skill invoke 'skill-improver' or 'prompt-refiner-for-robustness' with a modification proposal based on the diagnosis?",
+          "Does the skill trigger 'skill-test-runner' to validate the proposed fix?",
+          "Does the skill correctly revert the change if the validation run score does not improve?"
+        ],
+        "scenarios": [
+          "Run a full self-correction loop on 'container-security-auditor'.",
+          "Execute the orchestration on 'context-drift-detector', which has known improvement difficulties.",
+          "Trigger the process on a skill that is stuck at a perfect score, like 'classify-leads'.",
+          "Simulate a scenario where 'skill-improver' proposes a change that lowers the score, and verify it reverts.",
+          "Run the orchestrator when no skills are currently stuck.",
+          "Provide a diagnosis manually and have the orchestrator proceed from the 'fix' step.",
+          "Run the orchestrator on a skill with insufficient test coverage.",
+          "Test the orchestrator's ability to time out if a sub-skill hangs."
+        ]
+      },
+      "proposed_goal": "Activate and refine the 'system-improvement' strategic goal by deploying an autonomous self-correction orchestrator.",
+      "_preference_boost": 2,
+      "_preference_note": "Boosted by user preference (×2.0)",
+      "score": 1,
+      "status": "actionable"
+    },
+    {
+      "id": "want-036",
+      "type": "gemini_insight",
+      "hypothesis": "Skills that reach a perfect score stagnate because their evaluation suites become obsolete and fail to challenge them. A mechanism is needed to evolve test criteria for high-performing skills to uncover subtle weaknesses and guide further improvement.",
+      "evidence": [
+        "'context-loader' has a perfect score (224/224) but its weakest criteria include 'Targeted Scans(0.133)' and 'Output Specification(0.133)'.",
+        "'cross-model-intelligence-pipeline' has a perfect score (48/48) but a critical weakness in 'Citation Accuracy(0.067)'.",
+        "14 skills fail on 'Completeness' and 14 on 'Instructions Clarity', yet many of these have perfect or near-perfect overall scores."
+      ],
+      "severity": 0.8,
+      "frequency": 0.9,
+      "feasibility": 0.75,
+      "proposed_skill": {
+        "name": "eval-suite-evolver",
+        "description": "Analyzes high-performing skills and their historical failure logs to generate new, more challenging evaluation criteria and test scenarios.",
+        "criteria": [
+          "Does the skill correctly identify a skill with a score >95% as a target?",
+          "Does the skill analyze failure logs to find patterns in low-scoring criteria (e.g., 'Completeness')?",
+          "Does the skill propose at least two new, specific, binary evaluation criteria that target an identified weakness?",
+          "Does the skill generate at least three new test scenarios designed to stress-test these new criteria?",
+          "Are the proposed criteria and scenarios distinct from the existing ones?",
+          "Does the skill present the proposed changes for user approval before applying them?"
+        ],
+        "scenarios": [
+          "Evolve the eval suite for 'context-loader', focusing on its 'Targeted Scans' weakness.",
+          "Evolve the suite for 'cross-model-intelligence-pipeline' to better test 'Citation Accuracy'.",
+          "Run on 'gmaps-leads' to address its extremely low scores (0.056) on core criteria despite a perfect overall score.",
+          "Attempt to evolve the suite for a low-scoring skill like 'content-strategy-optimizer' to ensure it doesn't act.",
+          "Run on a skill with no recorded failures to see how it handles the lack of data.",
+          "Evolve the suite for 'k8s-deployment-manager' to add tests for edge cases like network partitions or invalid image names.",
+          "Generate new tests for 'gmail-inbox' that focus on handling malformed emails or attachments.",
+          "Propose new criteria for 'polymarket-portfolio-tracker' based on its 'FIFO P&L calculation' weakness."
+        ]
+      },
+      "proposed_goal": null,
+      "_preference_boost": 2,
+      "_preference_note": "Boosted by user preference (×2.0)",
+      "score": 1,
+      "status": "actionable"
+    },
+    {
+      "id": "want-037",
+      "type": "unmet_demand",
+      "hypothesis": "The system fails to autonomously execute its strategic and tactical security goals, despite possessing a relevant skill. A high-level security goal has been proposed 12 times without execution, and a specific tactical audit request is pending.",
+      "evidence": [
+        "[security-posture] Goal 'security-posture' proposed 12 times but not auto-executed (low confidence pattern) (freq: 12)",
+        "[security-posture] Pending tactical goal: ... Run a security audit on the OpenClaw production container.",
+        "container-security-auditor skill exists but is imperfect (37/42) and stuck.",
+        "goal-to-skill-executor skill is perfect (48/48), indicating the failure is in the decision-making layer above it."
+      ],
+      "severity": 0.95,
+      "frequency": 0.7,
+      "feasibility": 0.8,
+      "proposed_skill": {
+        "name": "strategic-goal-decomposer",
+        "description": "Breaks down high-level, abstract strategic goals into a sequence of concrete, executable tasks for the 'goal-to-skill-executor'.",
+        "criteria": [
+          "Does the skill correctly parse a strategic goal like 'security-posture'?",
+          "Does it identify relevant skills from the capability map (e.g., 'container-security-auditor')?",
+          "Does it decompose the goal into at least one specific, actionable step (e.g., 'Run container-security-auditor on image X')?",
+          "Does the output specify the exact skill and parameters for 'goal-to-skill-executor' to run?",
+          "Can the skill create a recurring schedule for periodic goals (e.g., 'Run audit weekly')?",
+          "Does the skill handle goals for which no relevant skills exist by flagging a capability gap?"
+        ],
+        "scenarios": [
+          "Decompose the strategic goal: 'security-posture'.",
+          "Decompose the strategic goal: 'research-advancement'.",
+          "Decompose the strategic goal: 'system-improvement'.",
+          "Decompose a tactical goal: 'Run a security audit on the OpenClaw production container'.",
+          "Decompose a novel goal: 'Ensure all customer data is backed up daily'.",
+          "Decompose a goal with no matching skills: 'Create a marketing video for the new feature'.",
+          "Decompose a goal with multiple steps: 'Audit the container, patch vulnerabilities, and redeploy'.",
+          "Provide an ambiguous goal and verify it asks for clarification."
+        ]
+      },
+      "proposed_goal": "Prioritize the 'security-posture' strategic goal and use it as the primary test case for the new 'strategic-goal-decomposer' skill.",
+      "_preference_boost": 2,
+      "_preference_note": "Boosted by user preference (×2.0)",
+      "score": 1,
+      "status": "actionable"
+    },
+    {
+      "id": "want-038",
+      "type": "user_intent",
+      "hypothesis": "The high-frequency user intent 'error debugging' (71 occurrences) is not adequately met. The existing 'failure-log-analyzer' skill is stuck and underperforming (30/36), indicating a gap between the user's need for comprehensive debugging and the system's current capability.",
+      "evidence": [
+        "User intent pattern: 'error debugging' detected across tmux transcripts (freq: 71)",
+        "failure-log-analyzer: score=30/36 (0.833), trajectory=stuck, stuck=3",
+        "Weakest criteria for 'failure-log-analyzer' are fundamental tasks like parsing logs and identifying the error source (all score 0.857)."
+      ],
+      "severity": 0.8,
+      "frequency": 0.8,
+      "feasibility": 0.85,
+      "proposed_skill": {
+        "name": "interactive-debugger",
+        "description": "Provides an interactive debugging session to diagnose failures by analyzing logs, inspecting state, and suggesting concrete code or prompt fixes.",
+        "criteria": [
+          "Can the skill ingest a raw failure log and identify the point of failure?",
+          "Does the skill propose a root cause hypothesis (e.g., API error, logic flaw, bad data)?",
+          "Does the skill suggest a concrete code or prompt modification to fix the issue?",
+          "Can the skill answer user questions about the execution context at the time of failure?",
+          "Does the skill successfully use 'skill-test-runner' to validate its proposed fix?",
+          "Does the skill offer to search for similar, previously resolved errors?"
+        ],
+        "scenarios": [
+          "Debug a failure log from 'k8s-deployment-manager' involving an authentication error.",
+          "Debug a traceback from a Python tool that failed due to a 'KeyError'.",
+          "Analyze a 'content-strategy-optimizer' failure where the output was malformed.",
+          "Debug a transient API timeout error from the 'gmail' skill.",
+          "Given a failure log, ask the skill 'What was the value of variable X?'",
+          "Provide a log and reject the first hypothesis to see if it can generate another.",
+          "Debug a complex failure involving multiple skill interactions.",
+          "Start a debugging session with no log, asking the skill to find the most recent system failure."
+        ]
+      },
+      "proposed_goal": null,
+      "_preference_boost": 2,
+      "_preference_note": "Boosted by user preference (×2.0)",
+      "score": 1,
+      "status": "actionable"
+    },
+    {
+      "id": "want-039",
+      "type": "gemini_insight",
+      "hypothesis": "Core system capabilities ('deep-plan-v2', 'system-self-correction-v2') are completely untested, preventing the system from performing complex planning and autonomous improvement. A bootstrapping mechanism is needed to generate initial test suites for these foundational skills.",
+      "evidence": [
+        "deep-plan-v2: score=0/0 (0), trajectory=untested",
+        "system-self-correction-v2: score=0/0 (0), trajectory=untested",
+        "The 'planning' and 'self_correction' capabilities are listed in the map but are effectively disabled."
+      ],
+      "severity": 1,
+      "frequency": 1,
+      "feasibility": 0.9,
+      "proposed_skill": {
+        "name": "untested-skill-bootstrapper",
+        "description": "Generates a baseline evaluation suite (criteria and scenarios) for a skill that has zero existing tests.",
+        "criteria": [
+          "Does the skill correctly identify skills with a trajectory of 'untested'?",
+          "Does the skill analyze the target skill's description and code/prompt to understand its purpose?",
+          "Does the skill invoke 'skill-test-generator' to create an initial set of tests?",
+          "Does the generated suite contain at least 4 criteria and 6 scenarios?",
+          "Are the generated criteria specific, binary, and relevant to the skill's stated purpose?",
+          "Does the skill automatically trigger an initial run using 'skill-test-runner' to establish a baseline score?"
+        ],
+        "scenarios": [
+          "Bootstrap the 'deep-plan-v2' skill.",
+          "Bootstrap the 'system-self-correction-v2' skill.",
+          "Bootstrap the 'backup' skill.",
+          "Run the bootstrapper on an already tested skill like 'gmail' to ensure it does not act.",
+          "Bootstrap a skill with a very abstract purpose.",
+          "Bootstrap a skill that relies on multiple external tools.",
+          "Review and approve the generated test suite before it is applied.",
+          "Review a generated suite and reject it, prompting the skill to try again."
+        ]
+      },
+      "proposed_goal": "Establish baseline performance for all untested skills, starting with the highest-impact ones: 'deep-plan-v2' and 'system-self-correction-v2'.",
+      "_preference_boost": 2,
+      "_preference_note": "Boosted by user preference (×2.0)",
+      "score": 1,
+      "status": "actionable"
+    },
+    {
+      "id": "want-019",
+      "type": "stuck_skill",
+      "hypothesis": "Skill \"system-status-reporter\" is stuck at 33/36 — eval criteria may need evolution",
+      "evidence": [
+        "stuck for 10 rounds",
+        "weakest criteria: \"Does the report correctly state the total number of skills, and their status (at target, stuck, untested)\" with fail_rate 0.958"
+      ],
+      "severity": 0.8,
+      "frequency": 10,
+      "feasibility": 0.6,
+      "proposed_skill": null,
+      "proposed_goal": "Evolve evaluation criteria for \"system-status-reporter\" or apply meta-analysis to break plateau",
+      "_preference_boost": 2,
+      "_preference_note": "Boosted by user preference (×2.0)",
+      "score": 0.96,
+      "status": "actionable"
+    },
+    {
+      "id": "want-031",
+      "type": "user_intent",
+      "hypothesis": "High-frequency user intent \"error debugging\" (frequency: 71) has no matching skill",
+      "evidence": [
+        "User intent pattern: \"error debugging\" detected across tmux transcripts",
+        "Source: tmux-logs transcripts (7 files scanned)",
+        "Frequency: 71"
+      ],
+      "severity": 0.7,
+      "frequency": 71,
+      "feasibility": 0.65,
+      "proposed_skill": null,
+      "proposed_goal": "Create skill addressing user intent: error debugging",
+      "_preference_boost": 2,
+      "_preference_note": "Boosted by user preference (×2.0)",
+      "score": 0.91,
+      "status": "actionable"
+    },
+    {
+      "id": "want-032",
+      "type": "user_intent",
+      "hypothesis": "High-frequency user intent \"dashboard\" (frequency: 206) has no matching skill",
+      "evidence": [
+        "User intent pattern: \"dashboard\" detected across tmux transcripts",
+        "Source: tmux-logs transcripts (7 files scanned)",
+        "Frequency: 206"
+      ],
+      "severity": 0.7,
+      "frequency": 206,
+      "feasibility": 0.65,
+      "proposed_skill": null,
+      "proposed_goal": "Create skill addressing user intent: dashboard",
+      "_preference_boost": 2,
+      "_preference_note": "Boosted by user preference (×2.0)",
+      "score": 0.91,
+      "status": "actionable"
+    },
+    {
+      "id": "want-033",
+      "type": "user_intent",
+      "hypothesis": "High-frequency user intent \"skill improvement\" (frequency: 82) has no matching skill",
+      "evidence": [
+        "User intent pattern: \"skill improvement\" detected across tmux transcripts",
+        "Source: tmux-logs transcripts (7 files scanned)",
+        "Frequency: 82"
+      ],
+      "severity": 0.7,
+      "frequency": 82,
+      "feasibility": 0.65,
+      "proposed_skill": null,
+      "proposed_goal": "Create skill addressing user intent: skill improvement",
+      "_preference_boost": 2,
+      "_preference_note": "Boosted by user preference (×2.0)",
+      "score": 0.91,
+      "status": "actionable"
+    },
+    {
+      "id": "want-021",
+      "type": "cross_skill_pattern",
+      "hypothesis": "Pattern: \"20 skills are currently stuck (3+ consecutive reverts)\" affects 20 skills — need a dedicated skill or systemic fix",
+      "evidence": [
+        "Affected skills: classify-leads, container-security-auditor, context-drift-detector, context-loader, defi-arbitrage-executor, failure-log-analyzer, gmaps-leads, k8s-deployment-manager, polymarket-5min-strategy, polymarket-flash-crash-detector, polymarket-market-discovery, polymarket-portfolio-tracker, prompt-refiner-for-robustness, scaffold, scrape-leads, skill-optimizer-v2, skill-test-runner, stuck-skill-diagnoser, system-status-reporter, the-real-scrumness",
+        "Frequency: 20",
+        "Severity: high"
+      ],
+      "severity": 0.9,
+      "frequency": 20,
+      "feasibility": 0.5,
+      "proposed_skill": null,
+      "proposed_goal": "Address cross-skill pattern: 20 skills are currently stuck (3+ consecutive reverts)",
+      "_preference_boost": 1.8,
+      "_preference_note": "Boosted by user preference (×1.8)",
+      "score": 0.81,
+      "status": "actionable"
+    },
+    {
+      "id": "want-030",
+      "type": "unmet_demand",
+      "hypothesis": "Unmet demand: Requested language \"fr\" not fully generated for baseline-march7",
+      "evidence": [
+        "Audio languages: en, es, de",
+        "Report languages: es, de",
+        "Requested: fr"
+      ],
+      "severity": 0.7,
+      "frequency": 1,
+      "feasibility": 0.6,
+      "proposed_skill": null,
+      "proposed_goal": "Build capability to address: Requested language \"fr\" not fully generated for baseline-march7",
+      "_preference_boost": 1.8,
+      "_preference_note": "Boosted by user preference (×1.8)",
+      "score": 0.756,
+      "status": "actionable"
+    },
+    {
+      "id": "want-004",
+      "type": "stuck_skill",
+      "hypothesis": "Skill \"context-loader\" is stuck at 224/224 — eval criteria may need evolution",
+      "evidence": [
+        "stuck for 10 rounds",
+        "weakest criteria: \"Argument Clarity\" with fail_rate 0.8"
+      ],
+      "severity": 0.8,
+      "frequency": 10,
+      "feasibility": 0.6,
+      "proposed_skill": null,
+      "proposed_goal": "Evolve evaluation criteria for \"context-loader\" or apply meta-analysis to break plateau",
+      "_preference_boost": 1.5,
+      "_preference_note": "Boosted by user preference (×1.5)",
+      "score": 0.72,
+      "status": "actionable"
+    },
+    {
+      "id": "want-024",
+      "type": "cross_skill_pattern",
+      "hypothesis": "Pattern: \"Criterion \"Completeness\" fails across 14 skills\" affects 14 skills — need a dedicated skill or systemic fix",
+      "evidence": [
+        "Affected skills: classify-leads, cross-niche-outliers, gmail, gmail-inbox, gmail-label, inbox-cleaner, instantly-campaigns, linkedin-response, scrape-leads, title-variants, video-to-action, welcome-email, youtube-channel-analysis, youtube-outliers",
+        "Frequency: 14",
+        "Severity: medium"
+      ],
+      "severity": 0.6,
+      "frequency": 14,
+      "feasibility": 0.5,
+      "proposed_skill": null,
+      "proposed_goal": "Address cross-skill pattern: Criterion \"Completeness\" fails across 14 skills",
+      "_preference_boost": 2,
+      "_preference_note": "Boosted by user preference (×2.0)",
+      "score": 0.6,
+      "status": "monitor"
+    },
+    {
+      "id": "want-025",
+      "type": "cross_skill_pattern",
+      "hypothesis": "Pattern: \"Criterion \"Instructions Clarity\" fails across 14 skills\" affects 14 skills — need a dedicated skill or systemic fix",
+      "evidence": [
+        "Affected skills: classify-leads, cross-niche-outliers, gmail, gmail-inbox, gmail-label, gmaps-leads, linkedin-response, onboarding-kickoff, scrape-leads, title-variants, video-to-action, welcome-email, youtube-channel-analysis, youtube-outliers",
+        "Frequency: 14",
+        "Severity: medium"
+      ],
+      "severity": 0.6,
+      "frequency": 14,
+      "feasibility": 0.5,
+      "proposed_skill": null,
+      "proposed_goal": "Address cross-skill pattern: Criterion \"Instructions Clarity\" fails across 14 skills",
+      "_preference_boost": 2,
+      "_preference_note": "Boosted by user preference (×2.0)",
+      "score": 0.6,
+      "status": "monitor"
+    },
+    {
+      "id": "want-003",
+      "type": "stuck_skill",
+      "hypothesis": "Skill \"context-drift-detector\" is stuck at 50/60 — eval criteria may need evolution",
+      "evidence": [
+        "stuck for 8 rounds",
+        "weakest criteria: \"Skill Integration\" with fail_rate 0.882"
+      ],
+      "severity": 0.8,
+      "frequency": 8,
+      "feasibility": 0.6,
+      "proposed_skill": null,
+      "proposed_goal": "Evolve evaluation criteria for \"context-drift-detector\" or apply meta-analysis to break plateau",
+      "_preference_boost": 1.5,
+      "_preference_note": "Boosted by user preference (×1.5)",
+      "score": 0.576,
+      "status": "monitor"
+    },
+    {
+      "id": "want-023",
+      "type": "cross_skill_pattern",
+      "hypothesis": "Pattern: \"52 skills have triggered stuck escalations\" affects 52 skills — need a dedicated skill or systemic fix",
+      "evidence": [
+        "Affected skills: classify-leads, container-security-auditor, content-strategy-optimizer, context-drift-detector, create-proposal, cross-model-intelligence-pipeline, cross-niche-outliers, defi-arbitrage-executor, eaas-payment-linker, failure-log-analyzer, gmail, gmail-inbox, gmail-label, gmaps-leads, goal-to-skill-executor, inbox-cleaner, instantly-autoreply, instantly-campaigns, intent-clarifier, interactive-skill-refiner, k8s-deployment-manager, linkedin-response, mae-trading-report, onboarding-kickoff, polymarket-5min-strategy, polymarket-bridge, polymarket-ctf-operations, polymarket-flash-crash-detector, polymarket-gasless-trader, polymarket-market-analyzer, polymarket-market-discovery, polymarket-orderbook-reader, polymarket-portfolio-tracker, polymarket-position-manager, polymarket-websocket-monitor, prompt-refiner-for-robustness, scaffold, scrape-leads, skill-improver, skill-optimizer-v2, skill-test-generator, skill-test-runner, stuck-skill-diagnoser, system-dashboard-generator, system-status-reporter, the-real-scrumness, title-variants, tradfi-market-analyzer, video-to-action, welcome-email, youtube-channel-analysis, youtube-outliers",
+        "Frequency: 52",
+        "Severity: medium"
+      ],
+      "severity": 0.6,
+      "frequency": 52,
+      "feasibility": 0.5,
+      "proposed_skill": null,
+      "proposed_goal": "Address cross-skill pattern: 52 skills have triggered stuck escalations",
+      "_preference_boost": 1.8,
+      "_preference_note": "Boosted by user preference (×1.8)",
+      "score": 0.54,
+      "status": "monitor"
+    },
+    {
+      "id": "want-026",
+      "type": "cross_skill_pattern",
+      "hypothesis": "Pattern: \"Criterion \"Task Completion\" fails across 9 skills\" affects 9 skills — need a dedicated skill or systemic fix",
+      "evidence": [
+        "Affected skills: classify-leads, create-proposal, gmaps-leads, inbox-cleaner, instantly-autoreply, instantly-campaigns, linkedin-response, onboarding-kickoff, scrape-leads",
+        "Frequency: 9",
+        "Severity: medium"
+      ],
+      "severity": 0.6,
+      "frequency": 9,
+      "feasibility": 0.5,
+      "proposed_skill": null,
+      "proposed_goal": "Address cross-skill pattern: Criterion \"Task Completion\" fails across 9 skills",
+      "_preference_boost": 2,
+      "_preference_note": "Boosted by user preference (×2.0)",
+      "score": 0.54,
+      "status": "monitor"
+    },
+    {
+      "id": "want-027",
+      "type": "cross_skill_pattern",
+      "hypothesis": "Pattern: \"Criterion \"Output Quality\" fails across 8 skills\" affects 8 skills — need a dedicated skill or systemic fix",
+      "evidence": [
+        "Affected skills: create-proposal, cross-niche-outliers, gmaps-leads, instantly-autoreply, onboarding-kickoff, title-variants, video-to-action, youtube-channel-analysis",
+        "Frequency: 8",
+        "Severity: medium"
+      ],
+      "severity": 0.6,
+      "frequency": 8,
+      "feasibility": 0.5,
+      "proposed_skill": null,
+      "proposed_goal": "Address cross-skill pattern: Criterion \"Output Quality\" fails across 8 skills",
+      "_preference_boost": 2,
+      "_preference_note": "Boosted by user preference (×2.0)",
+      "score": 0.48,
+      "status": "monitor"
+    },
+    {
+      "id": "want-012",
+      "type": "stuck_skill",
+      "hypothesis": "Skill \"polymarket-portfolio-tracker\" is stuck at 24/25 — eval criteria may need evolution",
+      "evidence": [
+        "stuck for 5 rounds",
+        "weakest criteria: \"Export format is structured and complete\" with fail_rate 0.875"
+      ],
+      "severity": 0.8,
+      "frequency": 5,
+      "feasibility": 0.6,
+      "proposed_skill": null,
+      "proposed_goal": "Evolve evaluation criteria for \"polymarket-portfolio-tracker\" or apply meta-analysis to break plateau",
+      "_preference_boost": 1.8,
+      "_preference_note": "Boosted by user preference (×1.8)",
+      "score": 0.432,
+      "status": "monitor"
+    },
+    {
+      "id": "want-028",
+      "type": "cross_skill_pattern",
+      "hypothesis": "Pattern: \"Criterion \"Error Handling\" fails across 7 skills\" affects 7 skills — need a dedicated skill or systemic fix",
+      "evidence": [
+        "Affected skills: create-proposal, gmail-inbox, gmail-label, inbox-cleaner, instantly-autoreply, instantly-campaigns, welcome-email",
+        "Frequency: 7",
+        "Severity: medium"
+      ],
+      "severity": 0.6,
+      "frequency": 7,
+      "feasibility": 0.5,
+      "proposed_skill": null,
+      "proposed_goal": "Address cross-skill pattern: Criterion \"Error Handling\" fails across 7 skills",
+      "_preference_boost": 2,
+      "_preference_note": "Boosted by user preference (×2.0)",
+      "score": 0.42,
+      "status": "monitor"
+    },
+    {
+      "id": "want-002",
+      "type": "stuck_skill",
+      "hypothesis": "Skill \"container-security-auditor\" is stuck at 37/42 — eval criteria may need evolution",
+      "evidence": [
+        "stuck for 4 rounds",
+        "weakest criteria: \"Scan the target container image\" with fail_rate 0.833"
+      ],
+      "severity": 0.8,
+      "frequency": 4,
+      "feasibility": 0.6,
+      "proposed_skill": null,
+      "proposed_goal": "Evolve evaluation criteria for \"container-security-auditor\" or apply meta-analysis to break plateau",
+      "_preference_boost": 2,
+      "_preference_note": "Boosted by user preference (×2.0)",
+      "score": 0.384,
+      "status": "dismiss"
+    },
+    {
+      "id": "want-001",
+      "type": "stuck_skill",
+      "hypothesis": "Skill \"classify-leads\" is stuck at 36/36 — eval criteria may need evolution",
+      "evidence": [
+        "stuck for 5 rounds",
+        "weakest criteria: \"Completeness\" with fail_rate 0.7"
+      ],
+      "severity": 0.8,
+      "frequency": 5,
+      "feasibility": 0.6,
+      "proposed_skill": null,
+      "proposed_goal": "Evolve evaluation criteria for \"classify-leads\" or apply meta-analysis to break plateau",
+      "_preference_boost": 1.5,
+      "_preference_note": "Boosted by user preference (×1.5)",
+      "score": 0.36,
+      "status": "dismiss"
+    },
+    {
+      "id": "want-007",
+      "type": "stuck_skill",
+      "hypothesis": "Skill \"gmaps-leads\" is stuck at 36/36 — eval criteria may need evolution",
+      "evidence": [
+        "stuck for 5 rounds",
+        "weakest criteria: \"Task Completion\" with fail_rate 0.056"
+      ],
+      "severity": 0.8,
+      "frequency": 5,
+      "feasibility": 0.6,
+      "proposed_skill": null,
+      "proposed_goal": "Evolve evaluation criteria for \"gmaps-leads\" or apply meta-analysis to break plateau",
+      "_preference_boost": 1.5,
+      "_preference_note": "Boosted by user preference (×1.5)",
+      "score": 0.36,
+      "status": "dismiss"
+    },
+    {
+      "id": "want-005",
+      "type": "stuck_skill",
+      "hypothesis": "Skill \"defi-arbitrage-executor\" is stuck at 36/36 — eval criteria may need evolution",
+      "evidence": [
+        "stuck for 4 rounds"
+      ],
+      "severity": 0.8,
+      "frequency": 4,
+      "feasibility": 0.6,
+      "proposed_skill": null,
+      "proposed_goal": "Evolve evaluation criteria for \"defi-arbitrage-executor\" or apply meta-analysis to break plateau",
+      "_preference_boost": 1.8,
+      "_preference_note": "Boosted by user preference (×1.8)",
+      "score": 0.3456,
+      "status": "dismiss"
+    },
+    {
+      "id": "want-011",
+      "type": "stuck_skill",
+      "hypothesis": "Skill \"polymarket-market-discovery\" is stuck at 36/36 — eval criteria may need evolution",
+      "evidence": [
+        "stuck for 4 rounds",
+        "weakest criteria: \"Search returns relevant markets matching text query\" with fail_rate 0.167"
+      ],
+      "severity": 0.8,
+      "frequency": 4,
+      "feasibility": 0.6,
+      "proposed_skill": null,
+      "proposed_goal": "Evolve evaluation criteria for \"polymarket-market-discovery\" or apply meta-analysis to break plateau",
+      "_preference_boost": 1.8,
+      "_preference_note": "Boosted by user preference (×1.8)",
+      "score": 0.3456,
+      "status": "dismiss"
+    },
+    {
+      "id": "want-008",
+      "type": "stuck_skill",
+      "hypothesis": "Skill \"k8s-deployment-manager\" is stuck at 36/36 — eval criteria may need evolution",
+      "evidence": [
+        "stuck for 4 rounds",
+        "weakest criteria: \"Can the skill list current deployments in a specified namespace\" with fail_rate 0.333"
+      ],
+      "severity": 0.8,
+      "frequency": 4,
+      "feasibility": 0.6,
+      "proposed_skill": null,
+      "proposed_goal": "Evolve evaluation criteria for \"k8s-deployment-manager\" or apply meta-analysis to break plateau",
+      "_preference_boost": 1.5,
+      "_preference_note": "Boosted by user preference (×1.5)",
+      "score": 0.288,
+      "status": "dismiss"
+    },
+    {
+      "id": "want-010",
+      "type": "stuck_skill",
+      "hypothesis": "Skill \"polymarket-flash-crash-detector\" is stuck at 36/36 — eval criteria may need evolution",
+      "evidence": [
+        "stuck for 4 rounds"
+      ],
+      "severity": 0.8,
+      "frequency": 4,
+      "feasibility": 0.6,
+      "proposed_skill": null,
+      "proposed_goal": "Evolve evaluation criteria for \"polymarket-flash-crash-detector\" or apply meta-analysis to break plateau",
+      "_preference_boost": 1.5,
+      "_preference_note": "Boosted by user preference (×1.5)",
+      "score": 0.288,
+      "status": "dismiss"
+    },
+    {
+      "id": "want-013",
+      "type": "stuck_skill",
+      "hypothesis": "Skill \"prompt-refiner-for-robustness\" is stuck at 36/36 — eval criteria may need evolution",
+      "evidence": [
+        "stuck for 4 rounds"
+      ],
+      "severity": 0.8,
+      "frequency": 4,
+      "feasibility": 0.6,
+      "proposed_skill": null,
+      "proposed_goal": "Evolve evaluation criteria for \"prompt-refiner-for-robustness\" or apply meta-analysis to break plateau",
+      "_preference_boost": 1.5,
+      "_preference_note": "Boosted by user preference (×1.5)",
+      "score": 0.288,
+      "status": "dismiss"
+    },
+    {
+      "id": "want-014",
+      "type": "stuck_skill",
+      "hypothesis": "Skill \"scaffold\" is stuck at 56/60 — eval criteria may need evolution",
+      "evidence": [
+        "stuck for 4 rounds",
+        "weakest criteria: \"Parameter Gathering\" with fail_rate 0.846"
+      ],
+      "severity": 0.8,
+      "frequency": 4,
+      "feasibility": 0.6,
+      "proposed_skill": null,
+      "proposed_goal": "Evolve evaluation criteria for \"scaffold\" or apply meta-analysis to break plateau",
+      "_preference_boost": 1.5,
+      "_preference_note": "Boosted by user preference (×1.5)",
+      "score": 0.288,
+      "status": "dismiss"
+    },
+    {
+      "id": "want-015",
+      "type": "stuck_skill",
+      "hypothesis": "Skill \"scrape-leads\" is stuck at 36/36 — eval criteria may need evolution",
+      "evidence": [
+        "stuck for 4 rounds",
+        "weakest criteria: \"Task Completion\" with fail_rate 0.167"
+      ],
+      "severity": 0.8,
+      "frequency": 4,
+      "feasibility": 0.6,
+      "proposed_skill": null,
+      "proposed_goal": "Evolve evaluation criteria for \"scrape-leads\" or apply meta-analysis to break plateau",
+      "_preference_boost": 1.5,
+      "_preference_note": "Boosted by user preference (×1.5)",
+      "score": 0.288,
+      "status": "dismiss"
+    },
+    {
+      "id": "want-016",
+      "type": "stuck_skill",
+      "hypothesis": "Skill \"skill-optimizer-v2\" is stuck at 36/36 — eval criteria may need evolution",
+      "evidence": [
+        "stuck for 4 rounds"
+      ],
+      "severity": 0.8,
+      "frequency": 4,
+      "feasibility": 0.6,
+      "proposed_skill": null,
+      "proposed_goal": "Evolve evaluation criteria for \"skill-optimizer-v2\" or apply meta-analysis to break plateau",
+      "_preference_boost": 1.5,
+      "_preference_note": "Boosted by user preference (×1.5)",
+      "score": 0.288,
+      "status": "dismiss"
+    },
+    {
+      "id": "want-017",
+      "type": "stuck_skill",
+      "hypothesis": "Skill \"skill-test-runner\" is stuck at 36/36 — eval criteria may need evolution",
+      "evidence": [
+        "stuck for 4 rounds"
+      ],
+      "severity": 0.8,
+      "frequency": 4,
+      "feasibility": 0.6,
+      "proposed_skill": null,
+      "proposed_goal": "Evolve evaluation criteria for \"skill-test-runner\" or apply meta-analysis to break plateau",
+      "_preference_boost": 1.5,
+      "_preference_note": "Boosted by user preference (×1.5)",
+      "score": 0.288,
+      "status": "dismiss"
+    },
+    {
+      "id": "want-018",
+      "type": "stuck_skill",
+      "hypothesis": "Skill \"stuck-skill-diagnoser\" is stuck at 42/42 — eval criteria may need evolution",
+      "evidence": [
+        "stuck for 4 rounds"
+      ],
+      "severity": 0.8,
+      "frequency": 4,
+      "feasibility": 0.6,
+      "proposed_skill": null,
+      "proposed_goal": "Evolve evaluation criteria for \"stuck-skill-diagnoser\" or apply meta-analysis to break plateau",
+      "_preference_boost": 1.5,
+      "_preference_note": "Boosted by user preference (×1.5)",
+      "score": 0.288,
+      "status": "dismiss"
+    },
+    {
+      "id": "want-020",
+      "type": "stuck_skill",
+      "hypothesis": "Skill \"the-real-scrumness\" is stuck at 36/36 — eval criteria may need evolution",
+      "evidence": [
+        "stuck for 4 rounds",
+        "weakest criteria: \"Card Richness\" with fail_rate 0.083"
+      ],
+      "severity": 0.8,
+      "frequency": 4,
+      "feasibility": 0.6,
+      "proposed_skill": null,
+      "proposed_goal": "Evolve evaluation criteria for \"the-real-scrumness\" or apply meta-analysis to break plateau",
+      "_preference_boost": 1.5,
+      "_preference_note": "Boosted by user preference (×1.5)",
+      "score": 0.288,
+      "status": "dismiss"
+    },
+    {
+      "id": "want-009",
+      "type": "stuck_skill",
+      "hypothesis": "Skill \"polymarket-5min-strategy\" is stuck at 25/25 — eval criteria may need evolution",
+      "evidence": [
+        "stuck for 3 rounds"
+      ],
+      "severity": 0.8,
+      "frequency": 3,
+      "feasibility": 0.6,
+      "proposed_skill": null,
+      "proposed_goal": "Evolve evaluation criteria for \"polymarket-5min-strategy\" or apply meta-analysis to break plateau",
+      "_preference_boost": 1.8,
+      "_preference_note": "Boosted by user preference (×1.8)",
+      "score": 0.2592,
+      "status": "dismiss"
+    },
+    {
+      "id": "want-006",
+      "type": "stuck_skill",
+      "hypothesis": "Skill \"failure-log-analyzer\" is stuck at 30/36 — eval criteria may need evolution",
+      "evidence": [
+        "stuck for 3 rounds",
+        "weakest criteria: \"Parse the structured log data\" with fail_rate 0.857"
+      ],
+      "severity": 0.8,
+      "frequency": 3,
+      "feasibility": 0.6,
+      "proposed_skill": null,
+      "proposed_goal": "Evolve evaluation criteria for \"failure-log-analyzer\" or apply meta-analysis to break plateau",
+      "_preference_boost": 1.5,
+      "_preference_note": "Boosted by user preference (×1.5)",
+      "score": 0.216,
+      "status": "dismiss"
+    },
+    {
+      "id": "want-022",
+      "type": "cross_skill_pattern",
+      "hypothesis": "Pattern: \"2 skills have had rounds but no kept improvements\" affects 2 skills — need a dedicated skill or systemic fix",
+      "evidence": [
+        "Affected skills: context-drift-detector, polymarket-5min-strategy",
+        "Frequency: 2",
+        "Severity: high"
+      ],
+      "severity": 0.9,
+      "frequency": 2,
+      "feasibility": 0.5,
+      "proposed_skill": null,
+      "proposed_goal": "Address cross-skill pattern: 2 skills have had rounds but no kept improvements",
+      "_preference_boost": 1.8,
+      "_preference_note": "Boosted by user preference (×1.8)",
+      "score": 0.162,
+      "status": "dismiss"
+    },
+    {
+      "id": "want-029",
+      "type": "cross_skill_pattern",
+      "hypothesis": "Pattern: \"Criterion \"Tool Usage\" fails across 2 skills\" affects 2 skills — need a dedicated skill or systemic fix",
+      "evidence": [
+        "Affected skills: gmail, youtube-outliers",
+        "Frequency: 2",
+        "Severity: medium"
+      ],
+      "severity": 0.6,
+      "frequency": 2,
+      "feasibility": 0.5,
+      "proposed_skill": null,
+      "proposed_goal": "Address cross-skill pattern: Criterion \"Tool Usage\" fails across 2 skills",
+      "_preference_boost": 2,
+      "_preference_note": "Boosted by user preference (×2.0)",
+      "score": 0.12,
+      "status": "dismiss"
+    }
+  ],
+  "summary": {
+    "total_wants": 39,
+    "actionable": 13,
+    "monitor": 8,
+    "dismissed": 18,
+    "top_want": "The system has access to a rich 'traditional_finance' data stream via the 'tradfi-tools' MCP, including 36 tools and multiple subdomains (price_feeds, arbitrage_scanning), but possesses no skills to analyze or act on this data. This represents a significant untapped capability."
+  }
+}

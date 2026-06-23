@@ -1,0 +1,240 @@
+{
+  "classify-leads": {
+    "score": 36,
+    "max": 36,
+    "baselineScore": 14,
+    "promotedAt": "2026-03-27T08:26:59Z",
+    "seedPath": "/Users/ramene/Journal/.seed/base/skills/classify-leads/SKILL.md"
+  },
+  "context-loader": {
+    "score": 224,
+    "max": 224,
+    "baselineScore": 191,
+    "promotedAt": "2026-03-27T08:26:59Z",
+    "seedPath": "/Users/ramene/Journal/.seed/base/skills/context-loader/SKILL.md"
+  },
+  "create-proposal": {
+    "score": 36,
+    "max": 36,
+    "baselineScore": 18,
+    "promotedAt": "2026-03-27T08:26:59Z",
+    "seedPath": "/Users/ramene/Journal/.seed/base/skills/create-proposal/SKILL.md"
+  },
+  "cross-model-intelligence-pipeline": {
+    "score": 48,
+    "max": 48,
+    "baselineScore": 48,
+    "promotedAt": "2026-03-27T08:26:59Z",
+    "seedPath": "/Users/ramene/Journal/.seed/base/skills/cross-model-intelligence-pipeline/SKILL.md"
+  },
+  "cross-niche-outliers": {
+    "score": 36,
+    "max": 36,
+    "baselineScore": 23,
+    "promotedAt": "2026-03-27T08:26:59Z",
+    "seedPath": "/Users/ramene/Journal/.seed/base/skills/cross-niche-outliers/SKILL.md"
+  },
+  "defi-arbitrage-executor": {
+    "score": 36,
+    "max": 36,
+    "baselineScore": 36,
+    "promotedAt": "2026-03-27T08:26:59Z",
+    "seedPath": "/Users/ramene/Journal/.seed/base/skills/defi-arbitrage-executor/SKILL.md"
+  },
+  "eaas-payment-linker": {
+    "score": 36,
+    "max": 36,
+    "baselineScore": 27,
+    "promotedAt": "2026-03-27T08:26:59Z",
+    "seedPath": "/Users/ramene/Journal/.seed/base/skills/eaas-payment-linker/SKILL.md"
+  },
+  "gmail": {
+    "score": 36,
+    "max": 36,
+    "baselineScore": 36,
+    "promotedAt": "2026-03-27T08:26:59Z",
+    "seedPath": "/Users/ramene/Journal/.seed/base/skills/gmail/SKILL.md"
+  },
+  "gmail-inbox": {
+    "score": 36,
+    "max": 36,
+    "baselineScore": 18,
+    "promotedAt": "2026-03-27T08:26:59Z",
+    "seedPath": "/Users/ramene/Journal/.seed/base/skills/gmail-inbox/SKILL.md"
+  },
+  "goal-to-skill-executor": {
+    "score": 48,
+    "max": 48,
+    "baselineScore": 48,
+    "promotedAt": "2026-03-27T08:26:59Z",
+    "seedPath": "/Users/ramene/Journal/.seed/base/skills/goal-to-skill-executor/SKILL.md"
+  },
+  "instantly-campaigns": {
+    "score": 36,
+    "max": 36,
+    "baselineScore": 27,
+    "promotedAt": "2026-03-27T08:26:59Z",
+    "seedPath": "/Users/ramene/Journal/.seed/base/skills/instantly-campaigns/SKILL.md"
+  },
+  "intent-clarifier": {
+    "score": 48,
+    "max": 48,
+    "baselineScore": 48,
+    "promotedAt": "2026-03-27T08:26:59Z",
+    "seedPath": "/Users/ramene/Journal/.seed/base/skills/intent-clarifier/SKILL.md"
+  },
+  "k8s-deployment-manager": {
+    "score": 36,
+    "max": 36,
+    "baselineScore": 36,
+    "promotedAt": "2026-03-27T08:26:59Z",
+    "seedPath": "/Users/ramene/Journal/.seed/base/skills/k8s-deployment-manager/SKILL.md"
+  },
+  "linkedin-response": {
+    "score": 36,
+    "max": 36,
+    "baselineScore": 28,
+    "promotedAt": "2026-03-27T08:26:59Z",
+    "seedPath": "/Users/ramene/Journal/.seed/base/skills/linkedin-response/SKILL.md"
+  },
+  "polymarket-5min-strategy": {
+    "score": 25,
+    "max": 25,
+    "baselineScore": 0,
+    "promotedAt": "2026-03-27T08:26:59Z",
+    "seedPath": "/Users/ramene/Journal/.seed/base/skills/polymarket-5min-strategy/SKILL.md"
+  },
+  "polymarket-bridge": {
+    "score": 25,
+    "max": 25,
+    "baselineScore": 19,
+    "promotedAt": "2026-03-27T08:26:59Z",
+    "seedPath": "/Users/ramene/Journal/.seed/base/skills/polymarket-bridge/SKILL.md"
+  },
+  "polymarket-clob-trader": {
+    "score": 64,
+    "max": 64,
+    "baselineScore": 64,
+    "promotedAt": "2026-03-27T08:26:59Z",
+    "seedPath": "/Users/ramene/Journal/.seed/base/skills/polymarket-clob-trader/SKILL.md"
+  },
+  "polymarket-ctf-operations": {
+    "score": 25,
+    "max": 25,
+    "baselineScore": 22,
+    "promotedAt": "2026-03-27T08:26:59Z",
+    "seedPath": "/Users/ramene/Journal/.seed/base/skills/polymarket-ctf-operations/SKILL.md"
+  },
+  "polymarket-flash-crash-detector": {
+    "score": 36,
+    "max": 36,
+    "baselineScore": 36,
+    "promotedAt": "2026-03-27T08:26:59Z",
+    "seedPath": "/Users/ramene/Journal/.seed/base/skills/polymarket-flash-crash-detector/SKILL.md"
+  },
+  "polymarket-gasless-trader": {
+    "score": 25,
+    "max": 25,
+    "baselineScore": 19,
+    "promotedAt": "2026-03-27T08:26:59Z",
+    "seedPath": "/Users/ramene/Journal/.seed/base/skills/polymarket-gasless-trader/SKILL.md"
+  },
+  "polymarket-market-analyzer": {
+    "score": 25,
+    "max": 25,
+    "baselineScore": 20,
+    "promotedAt": "2026-03-27T08:26:59Z",
+    "seedPath": "/Users/ramene/Journal/.seed/base/skills/polymarket-market-analyzer/SKILL.md"
+  },
+  "polymarket-market-discovery": {
+    "score": 36,
+    "max": 36,
+    "baselineScore": 36,
+    "promotedAt": "2026-03-27T08:26:59Z",
+    "seedPath": "/Users/ramene/Journal/.seed/base/skills/polymarket-market-discovery/SKILL.md"
+  },
+  "polymarket-position-manager": {
+    "score": 25,
+    "max": 25,
+    "baselineScore": 23,
+    "promotedAt": "2026-03-27T08:26:59Z",
+    "seedPath": "/Users/ramene/Journal/.seed/base/skills/polymarket-position-manager/SKILL.md"
+  },
+  "polymarket-websocket-monitor": {
+    "score": 25,
+    "max": 25,
+    "baselineScore": 23,
+    "promotedAt": "2026-03-27T08:26:59Z",
+    "seedPath": "/Users/ramene/Journal/.seed/base/skills/polymarket-websocket-monitor/SKILL.md"
+  },
+  "prompt-refiner-for-robustness": {
+    "score": 36,
+    "max": 36,
+    "baselineScore": 36,
+    "promotedAt": "2026-03-27T08:26:59Z",
+    "seedPath": "/Users/ramene/Journal/.seed/base/skills/prompt-refiner-for-robustness/SKILL.md"
+  },
+  "scrape-leads": {
+    "score": 36,
+    "max": 36,
+    "baselineScore": 36,
+    "promotedAt": "2026-03-27T08:26:59Z",
+    "seedPath": "/Users/ramene/Journal/.seed/base/skills/scrape-leads/SKILL.md"
+  },
+  "skill-optimizer-v2": {
+    "score": 36,
+    "max": 36,
+    "baselineScore": 36,
+    "promotedAt": "2026-03-27T08:26:59Z",
+    "seedPath": "/Users/ramene/Journal/.seed/base/skills/skill-optimizer-v2/SKILL.md"
+  },
+  "skill-test-generator": {
+    "score": 36,
+    "max": 36,
+    "baselineScore": 30,
+    "promotedAt": "2026-03-27T08:26:59Z",
+    "seedPath": "/Users/ramene/Journal/.seed/base/skills/skill-test-generator/SKILL.md"
+  },
+  "skill-test-runner": {
+    "score": 36,
+    "max": 36,
+    "baselineScore": 36,
+    "promotedAt": "2026-03-27T08:26:59Z",
+    "seedPath": "/Users/ramene/Journal/.seed/base/skills/skill-test-runner/SKILL.md"
+  },
+  "stuck-skill-diagnoser": {
+    "score": 42,
+    "max": 42,
+    "baselineScore": 42,
+    "promotedAt": "2026-03-27T08:26:59Z",
+    "seedPath": "/Users/ramene/Journal/.seed/base/skills/stuck-skill-diagnoser/SKILL.md"
+  },
+  "the-real-scrumness": {
+    "score": 36,
+    "max": 36,
+    "baselineScore": 36,
+    "promotedAt": "2026-03-27T08:26:59Z",
+    "seedPath": "/Users/ramene/Journal/.seed/base/skills/the-real-scrumness/SKILL.md"
+  },
+  "tradfi-market-analyzer": {
+    "score": 48,
+    "max": 48,
+    "baselineScore": 23,
+    "promotedAt": "2026-03-27T08:26:59Z",
+    "seedPath": "/Users/ramene/Journal/.seed/base/skills/tradfi-market-analyzer/SKILL.md"
+  },
+  "welcome-email": {
+    "score": 36,
+    "max": 36,
+    "baselineScore": 12,
+    "promotedAt": "2026-03-27T08:26:59Z",
+    "seedPath": "/Users/ramene/Journal/.seed/base/skills/welcome-email/SKILL.md"
+  },
+  "youtube-channel-analysis": {
+    "score": 36,
+    "max": 36,
+    "baselineScore": 25,
+    "promotedAt": "2026-03-27T08:26:59Z",
+    "seedPath": "/Users/ramene/Journal/.seed/base/skills/youtube-channel-analysis/SKILL.md"
+  }
+}

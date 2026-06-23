@@ -1,0 +1,163 @@
+You are executing a skill chain step. Use the skill instructions below to process the input.
+
+SKILL INSTRUCTIONS:
+# SKILL: polymarket-portfolio-tracker
+Track Polymarket positions, calculate FIFO P&L, monitor unrealized gains/losses, and generate risk scores across the portfolio.
+
+## Purpose
+This skill tracks all active positions on Polymarket, calculates profit/loss using FIFO accounting, monitors portfolio-wide risk metrics (exposure utilization, concentration, drawdown), and generates structured portfolio reports. It provides the intelligence layer between raw position data and strategic decision-making.
+
+## Trigger Conditions
+1. **Slash Command:** `/skill polymarket-portfolio-tracker [flags]`
+   - `--positions`: List all active positions with current P&L
+   - `--pnl`: Calculate realized + unrealized P&L summary
+   - `--risk`: Generate risk score and exposure analysis
+   - `--history`: Show trade history with FIFO cost basis
+   - `--market=<id>`: Filter to specific market
+   - `--export`: Export portfolio data to JSON
+
+2. **Keywords:** "polymarket positions", "prediction market P&L", "portfolio risk score", "what are my polymarket positions"
+
+## Prerequisites
+1. **Working Directory:** `~/.remote/@autoresearch/skills/working-polymarket-portfolio-tracker/`
+2. **Environment:** `POLY_PRIVATE_KEY`, `POLY_SAFE_ADDRESS`
+3. **Network:** Access to `https://data-api.polymarket.com` and `https://clob.polymarket.com`
+
+## Execution Steps
+
+1. **Fetch Positions:**
+   - Derive the funder address from `POLY_SAFE_ADDRESS` (use as-is; it is the ERC-1155 holder address)
+   - Query **all** positions (including fully closed ones) by using `sizeThreshold=0`:
+     ```
+     GET https://data-api.polymarket.com/positions?user=<POLY_SAFE_ADDRESS>&sizeThreshold=0&limit=500
+     ```
+     Response fields per position: `asset` (token_id), `size`, `avgPrice`, `initialValue`, `currentValue`, `cashPnl`, `percentPnl`, `market` (condition_id), `outcome`, `title`
+   - **Important:** Use `sizeThreshold=0` (not 0.01) so that fully closed positions (size == 0) are returned. Closed positions have `cashPnl` that must be counted in realized P&L totals and included in the export.
+   - For current prices, query the CLOB mid-price **only for positions where `size > 0`**:
+     ```
+     GET https://clob.polymarket.com/midpoint?token_id=<asset>
+     ```
+     Response: `{ "mid": "<price>" }`
+   - **Closed positions (`size == 0`):** Do NOT query the CLOB. Set `current_price = 0`, `current_value = 0` for these positions.
+   - For open positions (`size > 0`): if `currentValue` is available from Data API, use it directly; otherwise compute: `current_price * size`
+   - **Display filter:** Show only positions where `size > 0.01` in the console table (ignore dust). However, include ALL positions (including closed ones with `size == 0`) in P&L totals and the `portfolio.json` export.
+
+2. **Calculate P&L (FIFO):**
+
+   The Data API returns pre-computed FIFO fields. Use them directly:
+
+   **Per position:**
+   - `cost_basis` = `initialValue` (total USDC spent to acquire current + previously sold shares, as tracked by the API's FIFO ledger)
+   - `avg_price` = `avgPrice` (FIFO cost per share for currently-held shares)
+   - `unrealized_pnl`:
+     - If `size > 0`: `(current_price - avgPrice) * size`
+     - If `size == 0`: `0`
+   - `realized_pnl` = `cashPnl` — **always include this field regardless of whether `size > 0` or `size == 0`**. Partial closes generate `cashPnl` while leaving `size > 0`.
+   - `total_position_pnl` = `unrealized_pnl` + `realized_pnl` (= `cashPnl`)
+   - `unrealized_pnl_pct`:
+     - If `cost_basis > 0` and `size > 0`: `(unrealized_pnl / cost_basis) * 100`
+     - Otherwise: `0` (avoids division by zero for closed positions)
+
+   **Portfolio totals:**
+   - `total_unrealized_pnl` = sum of `unrealized_pnl` across all positions where `size > 0`
+   - `total_realized_pnl` = sum of `cashPnl` across **ALL** positions (open, partially-closed, and fully-closed)
+   - `total_pnl` = `total_unrealized_pnl` + `total_realized_pnl`
+   - `win_rate` = count(positions where `cashPnl > 0`) / count(positions where `cashPnl != 0`) — stored as a float between 0 and 1 (e.g., 0.6 means 60%)
+
+   **Important:** Do NOT restrict `cashPnl` summation to `size == 0`. A position with `size = 50` and `cashPnl = 30` has already locked in $30 realized profit from a partial exit — this must be counted.
+
+3. **Risk Scoring:**
+   - `exposure_utilization` (ratio) = total_exposure / MAX_TOTAL_EXPOSURE_USD ($5,000)
+   - `exposure_utilization_pct` (percentage) = `exposure_utilization * 100`
+   - `concentration_risk` (ratio) = largest_position_value / total_exposure
+   - `concentration_pct` (percentage) = `concentration_risk * 100`
+   - `drawdown` (ratio) = max portfolio value decline from peak / peak (use peak = sum of initialValue if no prior snapshot)
+   - `drawdown_pct` (percentage) = `drawdown * 100`
+   - Risk score: 0-100 composite (low=0-30, medium=31-60, high=61-100)
+     - exposure_score = min(exposure_utilization * 100, 100) * 0.4
+     - concentration_score = min(concentration_risk * 100, 100) * 0.4
+     - drawdown_score = min(drawdown * 100, 100) * 0.2
+     - risk_score = round(exposure_score + concentration_score + drawdown_score)
+
+4. **Generate Report:**
+   - Position summary table (active positions only, `size > 0.01`): market title, outcome, size, avgPrice, current_price, unrealized_pnl, realized_pnl (cashPnl), total_position_pnl, pnl_pct
+   - Portfolio metrics: total_exposure, total_unrealized_pnl, total_realized_pnl, total_pnl, win_rate, risk_score, exposure_utilization_pct
+   - Save to `portfolio.json` with schema — **include ALL positions (open, partial, and closed) in the `positions` array**:
+     ```json
+     {
+       "timestamp": "<ISO8601>",
+       "positions": [
+         {
+           "token_id": "<asset field from API>",
+           "title": "<title>",
+           "market": "<condition_id>",
+           "outcome": "<outcome>",
+           "size": "<float>",
+           "avg_price": "<avgPrice from API, or 0 if size==0>",
+           "current_price": "<mid from CLOB if size>0, else 0>",
+           "cost_basis": "<initialValue from API>",
+           "current_value": "<currentValue from API if size>0, else 0>",
+           "unrealized_pnl": "<(current_price - avg_price) * size if size>0, else 0>",
+           "realized_pnl": "<cashPnl from API — always set, regardless of size>",
+           "total_position_pnl": "<unrealized_pnl + realized_pnl>",
+           "unrealized_pnl_pct": "<unrealized_pnl / cost_basis * 100 if cost_basis>0 and size>0, else 0>"
+         }
+       ],
+       "summary": {
+         "total_exposure": "<sum of current_value across all positions where size>0, in USDC>",
+         "total_unrealized_pnl": "<sum of unrealized_pnl across all positions where size>0>",
+         "total_realized_pnl": "<sum of cashPnl across ALL positions regardless of size>",
+         "total_pnl": "<total_unrealized_pnl + total_realized_pnl>",
+         "win_rate": "<float 0-1: count(cashPnl>0) / count(cashPnl!=0)>",
+         "risk_score": "<integer 0-100 composite score>",
+         "exposure_utilization_pct": "<total_exposure / 5000 * 100, as float>",
+         "concentration_pct": "<largest_single_position_current_value / total_exposure * 100, as float>",
+         "drawdown_pct": "<max_drawdown_from_peak / peak_value * 100, as float>"
+       },
+       "safety_limits": {
+         "max_order_size_usd": 1000,
+         "max_total_exposure_usd": 5000,
+         "max_position_per_market_usd": 2000,
+         "exposure_used_pct": "<same as summary.exposure_utilization_pct>"
+       }
+     }
+     ```
+
+## Safety Limits
+- MAX_ORDER_SIZE_USD = $1,000
+- MAX_TOTAL_EXPOSURE_USD = $5,000
+- MAX_POSITION_SIZE_PER_MARKET = $2,000
+
+## Output Format
+- **Console:** Portfolio summary table (active positions only) and risk metrics
+- **`portfolio.json`:** Full position data including closed positions, with P&L calculations
+
+## Quality Gates
+1. All positions fetched with `sizeThreshold=0` — includes open, partial, and closed positions
+2. FIFO P&L calculation is mathematically correct; `cashPnl` summed across ALL positions regardless of `size`
+3. Closed positions (`size == 0`) have `current_price=0`, `current_value=0`, `unrealized_pnl=0`, `unrealized_pnl_pct=0` in export
+4. `unrealized_pnl_pct` never divides by zero — returns 0 when `cost_basis == 0` or `size == 0`
+5. Risk score reflects actual portfolio concentration and exposure
+6. Safety limit utilization reported accurately
+7. Export format compatible with downstream analysis — includes all positions and `title` field
+8. All `summary` fields are present in `portfolio.json` with correct types: `win_rate` as float 0-1, `*_pct` fields as floats, `risk_score` as integer
+
+## Integration Points
+- **Upstream:** `polymarket-clob-trader` creates positions tracked here
+- **Downstream:** `polymarket-position-manager` uses P&L data for TP/SL decisions
+- **Cross-skill:** `polymarket-market-analyzer` considers existing positions in recommendations
+
+CHAIN STEP INPUT:
+{
+  "positions": "[UNRESOLVED: manage.position_status]",
+  "compute": [
+    "realized_pnl",
+    "unrealized_pnl",
+    "win_rate",
+    "avg_return"
+  ],
+  "timeframe": "session"
+}
+
+Execute the skill against this input. Return structured output as JSON where possible.
+If the skill requires external tools/APIs that aren't available, describe what you WOULD do and return mock structured data showing the expected output format.

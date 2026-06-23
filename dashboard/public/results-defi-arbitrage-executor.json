@@ -1,0 +1,326 @@
+{
+  "skill": "defi-arbitrage-executor",
+  "criteria": [
+    "Identify price discrepancies across at least 2 DEXes",
+    "Calculate net profit after gas costs before recommending execution",
+    "Enforce the configured budget limit before any on-chain transaction",
+    "Handle failed transactions gracefully without losing funds",
+    "Provide a clear, actionable summary of opportunities found",
+    "Work on both testnet (BASE Sepolia) and mainnet (BASE) configurations"
+  ],
+  "totalCost": 0.56,
+  "models": {
+    "mutator": "sonnet",
+    "evaluator": "gemini-2.5-pro"
+  },
+  "rounds": [
+    {
+      "round": 0,
+      "score": 36,
+      "max": 36,
+      "status": "baseline",
+      "mutation": "Added explicit partial-failure handling in Step 3 — scanner must emit per-DEX error fields and the agent must warn+exclude failed DEXes rather than silently skipping them or propagating stale/zero prices into profit calculations.",
+      "cost": 0.05,
+      "criteria": [
+        6,
+        6,
+        6,
+        6,
+        6,
+        6
+      ],
+      "failures": [],
+      "geminiThoughts": null,
+      "decisionReason": "Initial baseline evaluation",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-20T20:48:48.976Z",
+      "changelog": "**Mutation**: Added explicit partial-failure handling in Step 3 — scanner must emit per-DEX error fields and the agent must warn+exclude failed DEXes rather than silently skipping them or propagating stale/zero prices into profit calculations.\n**Failures**: none\n**Per-criteria**: Identify price discrepancies across at least 2 DEXes: 6/6, Calculate net profit after gas costs before recommending execution: 6/6, Enforce the configured budget limit before any on-chain transaction: 6/6, Handle failed transactions gracefully without losing funds: 6/6, Provide a clear, actionable summary of opportunities found: 6/6, Work on both testnet (BASE Sepolia) and mainnet (BASE) configurations: 6/6\n**Decision**: Initial baseline evaluation"
+    },
+    {
+      "round": 1,
+      "score": 36,
+      "max": 36,
+      "status": "reverted",
+      "mutation": "Clarify that V3-style DEXes (UniswapV3, Aerodrome) require a Quoter contract address for price queries, not the router — routers don't expose getAmountsOut on V3; failing to distinguish these would cause all DEX queries to silently fail or revert.",
+      "cost": 0.05,
+      "criteria": [
+        6,
+        6,
+        6,
+        6,
+        6,
+        6
+      ],
+      "failures": [],
+      "geminiThoughts": null,
+      "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-20T20:50:41.332Z",
+      "changelog": "**Mutation**: Clarify that V3-style DEXes (UniswapV3, Aerodrome) require a Quoter contract address for price queries, not the router — routers don't expose getAmountsOut on V3; failing to distinguish these would cause all DEX queries to silently fail or revert.\n**Failures**: none\n**Per-criteria**: Identify price discrepancies across at least 2 DEXes: 6/6, Calculate net profit after gas costs before recommending execution: 6/6, Enforce the configured budget limit before any on-chain transaction: 6/6, Handle failed transactions gracefully without losing funds: 6/6, Provide a clear, actionable summary of opportunities found: 6/6, Work on both testnet (BASE Sepolia) and mainnet (BASE) configurations: 6/6\n**Decision**: Score 36 did not exceed best 36 — mutation produced worse or equal results"
+    },
+    {
+      "round": 2,
+      "score": 36,
+      "max": 36,
+      "status": "reverted",
+      "mutation": "Added slippage tolerance parameter (`--slippage=<bps>`, default 50 bps) to prevent executor transactions from reverting or executing at unfavorable prices due to price movement between quote and execution time.",
+      "cost": 0.05,
+      "criteria": [
+        6,
+        6,
+        6,
+        6,
+        6,
+        6
+      ],
+      "failures": [],
+      "geminiThoughts": null,
+      "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-20T20:52:43.400Z",
+      "changelog": "**Mutation**: Added slippage tolerance parameter (`--slippage=<bps>`, default 50 bps) to prevent executor transactions from reverting or executing at unfavorable prices due to price movement between quote and execution time.\n**Failures**: none\n**Per-criteria**: Identify price discrepancies across at least 2 DEXes: 6/6, Calculate net profit after gas costs before recommending execution: 6/6, Enforce the configured budget limit before any on-chain transaction: 6/6, Handle failed transactions gracefully without losing funds: 6/6, Provide a clear, actionable summary of opportunities found: 6/6, Work on both testnet (BASE Sepolia) and mainnet (BASE) configurations: 6/6\n**Decision**: Score 36 did not exceed best 36 — mutation produced worse or equal results"
+    },
+    {
+      "round": 3,
+      "score": 36,
+      "max": 36,
+      "status": "reverted",
+      "mutation": "Added approval transaction gas costs (~50k gas each, totaling ~100k extra) to the profitability calculation in Step 4c, so net profit reflects all 4 on-chain transactions (2 approvals + 2 swaps) rather than just the 2 swaps.",
+      "cost": 0.05,
+      "criteria": [
+        6,
+        6,
+        6,
+        6,
+        6,
+        6
+      ],
+      "failures": [],
+      "geminiThoughts": null,
+      "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-20T20:55:07.087Z",
+      "changelog": "**Mutation**: Added approval transaction gas costs (~50k gas each, totaling ~100k extra) to the profitability calculation in Step 4c, so net profit reflects all 4 on-chain transactions (2 approvals + 2 swaps) rather than just the 2 swaps.\n**Failures**: none\n**Per-criteria**: Identify price discrepancies across at least 2 DEXes: 6/6, Calculate net profit after gas costs before recommending execution: 6/6, Enforce the configured budget limit before any on-chain transaction: 6/6, Handle failed transactions gracefully without losing funds: 6/6, Provide a clear, actionable summary of opportunities found: 6/6, Work on both testnet (BASE Sepolia) and mainnet (BASE) configurations: 6/6\n**Decision**: Score 36 did not exceed best 36 — mutation produced worse or equal results"
+    },
+    {
+      "round": 3,
+      "score": 36,
+      "max": 36,
+      "status": "escalation",
+      "mutation": "Stuck escalation: The optimization loop is stuck because the skill has achieved a perfect score (36/36) against an evaluation suite that is no longer sufficiently challenging. The recent mutations have all been high-qu",
+      "cost": 0.03,
+      "criteria": [
+        6,
+        6,
+        6,
+        6,
+        6,
+        6
+      ],
+      "failures": [],
+      "decisionReason": "Stuck escalation triggered after 3+ rounds with no improvement",
+      "escalation": {
+        "diagnosis": "The optimization loop is stuck because the skill has achieved a perfect score (36/36) against an evaluation suite that is no longer sufficiently challenging. The recent mutations have all been high-quality, necessary improvements for real-world viability (distinguishing quoters/routers, accounting for slippage, including approval gas costs). However, the existing test scenarios are likely \"happy path\" tests that don't fail when these robustness features are absent. The skill is at a local optimum *relative to the evaluation criteria*, not in terms of its absolute quality. The optimizer is correctly identifying and fixing real-world flaws, but the test harness isn't rewarding these improvements, leading to a score plateau.",
+        "evalRedesignNeeded": true,
+        "strategy": "The current evaluation criteria must be expanded to create a new gradient for improvement. The strategy is to introduce \"Adversarial Scenarios\" that specifically target the real-world complexities and failure modes of DeFi execution. These new scenarios would have failed the skill *before* the recent mutations were applied, thus validating their necessity and creating room for the score to improve further. We must move beyond testing if the skill *can* work under ideal conditions and start testing if it *avoids failure* under realistic, adverse conditions. This includes scenarios with high gas volatility, MEV-prone environments, and inefficient transaction patterns.",
+        "suggestedMutation": "Introduce a gas-saving optimization by checking for existing token allowances before executing an `approve` transaction. The current skill wastes gas by sending an `approve` transaction for every single trade, even if the DEX router already has a sufficient allowance from a previous trade. A professional-grade execution script would avoid this redundancy.\n\n**Specific Change:**\nModify **Step 7: Create Executor Script** to include a pre-approval check.\n\n**Current Logic (Implicit in Step 7c & 7e):**\n- Always send an `approve` transaction for Token A to DEX 1.\n- Always send an `approve` transaction for Token B to DEX 2.\n\n**Proposed New Logic for Step 7:**\nAdd a new sub-step before each `approve` call:\n\n> b. **Check Allowance:** Before issuing an `approve` transaction, the script must first call the token's `allowance(owner, spender)` function to check the current approval for the DEX router.\n>    - If `current_allowance >= amount_to_swap`, the script should **skip** the `approve` transaction entirely and log \"Sufficient allowance already exists. Skipping approval.\"\n>    - If `current_allowance < amount_to_swap`, the script proceeds with the `approve` transaction as normal.\n> c. **Approve (Conditional):** For the first swap, if the allowance check in the previous step failed, generate and send an `approve` transaction...\n> ...\n> f. **Approve (Conditional):** For the second swap, perform the same allowance check for the second token and DEX. If needed, generate and send the `approve` transaction...\n\nThis mutation introduces a more sophisticated and gas-efficient execution model, directly improving the skill's profitability on subsequent trades with the same token pairs and breaking the current impasse by adding a feature whose value can be measured by a new, more advanced evaluation scenario (e.g., \"execute two identical trades back-to-back and verify only two `approve` transactions are sent in total, not four\")."
+      },
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-20T20:57:44.054Z"
+    },
+    {
+      "round": 4,
+      "score": 36,
+      "max": 36,
+      "status": "reverted",
+      "mutation": "Added pre-approval allowance check in Step 7 to skip redundant `approve` transactions when sufficient allowance already exists, saving gas on repeated trades with the same token pairs.",
+      "cost": 0.05,
+      "criteria": [
+        6,
+        6,
+        6,
+        6,
+        6,
+        6
+      ],
+      "failures": [],
+      "geminiThoughts": null,
+      "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-20T20:58:03.984Z",
+      "changelog": "**Mutation**: Added pre-approval allowance check in Step 7 to skip redundant `approve` transactions when sufficient allowance already exists, saving gas on repeated trades with the same token pairs.\n**Failures**: none\n**Per-criteria**: Identify price discrepancies across at least 2 DEXes: 6/6, Calculate net profit after gas costs before recommending execution: 6/6, Enforce the configured budget limit before any on-chain transaction: 6/6, Handle failed transactions gracefully without losing funds: 6/6, Provide a clear, actionable summary of opportunities found: 6/6, Work on both testnet (BASE Sepolia) and mainnet (BASE) configurations: 6/6\n**Decision**: Score 36 did not exceed best 36 — mutation produced worse or equal results"
+    },
+    {
+      "round": 5,
+      "score": 36,
+      "max": 36,
+      "status": "reverted",
+      "mutation": "Add `fee_tier` field to monitored_pairs config and pass it to `quoteExactInputSingle` in the scanner, since V3-style DEX quoters require a pool fee tier to route to the correct liquidity pool — omitting it causes all price queries to silently fail or return stale data.",
+      "cost": 0.05,
+      "criteria": [
+        6,
+        6,
+        6,
+        6,
+        6,
+        6
+      ],
+      "failures": [],
+      "geminiThoughts": null,
+      "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-04-20T22:00:24.443Z",
+      "changelog": "**Mutation**: Add `fee_tier` field to monitored_pairs config and pass it to `quoteExactInputSingle` in the scanner, since V3-style DEX quoters require a pool fee tier to route to the correct liquidity pool — omitting it causes all price queries to silently fail or return stale data.\n**Failures**: none\n**Per-criteria**: Identify price discrepancies across at least 2 DEXes: 6/6, Calculate net profit after gas costs before recommending execution: 6/6, Enforce the configured budget limit before any on-chain transaction: 6/6, Handle failed transactions gracefully without losing funds: 6/6, Provide a clear, actionable summary of opportunities found: 6/6, Work on both testnet (BASE Sepolia) and mainnet (BASE) configurations: 6/6\n**Decision**: Score 36 did not exceed best 36 — mutation produced worse or equal results"
+    },
+    {
+      "round": 6,
+      "score": 36,
+      "max": 36,
+      "status": "reverted",
+      "mutation": "Add explicit token decimal normalization to scanner.js — the script must call `decimals()` on each token contract and use `ethers.formatUnits` to convert raw BigInt quotes to human-readable prices before comparing across DEXes, preventing incorrect profit calculations due to decimal mismatch (e.g., WETH=18 vs USDC=6).",
+      "cost": 0.05,
+      "criteria": [
+        6,
+        6,
+        6,
+        6,
+        6,
+        6
+      ],
+      "failures": [],
+      "geminiThoughts": null,
+      "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-04-20T22:03:17.436Z",
+      "changelog": "**Mutation**: Add explicit token decimal normalization to scanner.js — the script must call `decimals()` on each token contract and use `ethers.formatUnits` to convert raw BigInt quotes to human-readable prices before comparing across DEXes, preventing incorrect profit calculations due to decimal mismatch (e.g., WETH=18 vs USDC=6).\n**Failures**: none\n**Per-criteria**: Identify price discrepancies across at least 2 DEXes: 6/6, Calculate net profit after gas costs before recommending execution: 6/6, Enforce the configured budget limit before any on-chain transaction: 6/6, Handle failed transactions gracefully without losing funds: 6/6, Provide a clear, actionable summary of opportunities found: 6/6, Work on both testnet (BASE Sepolia) and mainnet (BASE) configurations: 6/6\n**Decision**: Score 36 did not exceed best 36 — mutation produced worse or equal results"
+    },
+    {
+      "round": 7,
+      "score": 36,
+      "max": 36,
+      "status": "reverted",
+      "mutation": "Add receipt-based amount chaining in executor.js — parse the actual token transfer amount from Swap 1's receipt logs (ERC-20 Transfer event) and use that as Swap 2's exact input amount, replacing the pre-quoted value to prevent allowance mismatches and incorrect Swap 2 sizing.",
+      "cost": 0.05,
+      "criteria": [
+        6,
+        6,
+        6,
+        6,
+        6,
+        6
+      ],
+      "failures": [],
+      "geminiThoughts": null,
+      "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-04-20T22:06:36.655Z",
+      "changelog": "**Mutation**: Add receipt-based amount chaining in executor.js — parse the actual token transfer amount from Swap 1's receipt logs (ERC-20 Transfer event) and use that as Swap 2's exact input amount, replacing the pre-quoted value to prevent allowance mismatches and incorrect Swap 2 sizing.\n**Failures**: none\n**Per-criteria**: Identify price discrepancies across at least 2 DEXes: 6/6, Calculate net profit after gas costs before recommending execution: 6/6, Enforce the configured budget limit before any on-chain transaction: 6/6, Handle failed transactions gracefully without losing funds: 6/6, Provide a clear, actionable summary of opportunities found: 6/6, Work on both testnet (BASE Sepolia) and mainnet (BASE) configurations: 6/6\n**Decision**: Score 36 did not exceed best 36 — mutation produced worse or equal results"
+    },
+    {
+      "round": 7,
+      "score": 36,
+      "max": 36,
+      "status": "escalation",
+      "mutation": "Stuck escalation: The optimization loop is stuck in a \"success plateau\" because the skill's robustness and correctness have surpassed the complexity of the evaluation suite. The score of 36/36 indicates the skill passe",
+      "cost": 0.03,
+      "criteria": [
+        6,
+        6,
+        6,
+        6,
+        6,
+        6
+      ],
+      "failures": [],
+      "decisionReason": "Stuck escalation triggered after 3+ rounds with no improvement",
+      "escalation": {
+        "diagnosis": "The optimization loop is stuck in a \"success plateau\" because the skill's robustness and correctness have surpassed the complexity of the evaluation suite. The score of 36/36 indicates the skill passes all existing tests, but the recent mutations (adding slippage, fee tiers, decimal normalization, receipt parsing) have all been critical, real-world fixes that the test scenarios are not designed to validate. The evaluation suite is likely testing the \"happy path\" (a simple, profitable trade exists and works) but lacks negative test cases or complex scenarios that would fail a less robust version of the skill. Therefore, the mutations are genuinely improving the skill's quality and safety, but the score remains static because the evaluation criteria are saturated.",
+        "evalRedesignNeeded": true,
+        "strategy": "The current strategy of adding incremental robustness features has reached its limit. The new strategy must be to **expand the core capability** of the skill, which will necessitate the creation of new, more complex evaluation scenarios that the current skill cannot pass. Instead of just finding direct A->B arbitrage, the skill should be evolved to find and execute **multi-hop arbitrage** (e.g., WETH -> WBTC on Uniswap, then WBTC -> WETH on Aerodrome). This introduces a new dimension of complexity in pathfinding, profitability calculation, and execution logic, creating a new gradient for the optimizer to climb. This forces a move from a simple price comparison to a graph traversal problem, breaking the current local optimum by fundamentally changing the problem space.",
+        "suggestedMutation": "Evolve the skill from single-pair arbitrage to multi-hop arbitrage. This begins by modifying the configuration and the scanner script to identify these more complex opportunities.\n\n1.  **Modify the `config.json` structure:** Change `monitored_pairs` to `monitored_routes`. A route will be an array of token addresses and fee tiers.\n    *   A direct route: `{\"name\": \"WETH/USDC\", \"path\": [\"0xWETH_ADDR\", 500, \"0xUSDC_ADDR\"]}`\n    *   A multi-hop route: `{\"name\": \"WETH/WBTC/USDC\", \"path\": [\"0xWETH_ADDR\", 500, \"0xWBTC_ADDR\", 3000, \"0xUSDC_ADDR\"]}`\n\n2.  **Update the `scanner.js` script (Step 2):**\n    *   The script's logic must now handle routes of varying lengths.\n    *   For 3-element paths (direct swaps), it can continue to use the `quoteExactInputSingle` function on the quoter contract.\n    *   For paths with more than 3 elements (multi-hop), it must dynamically construct the `path` parameter (a `bytes` string encoding `tokenIn, fee, tokenMid, fee, tokenOut...`) required by the `quoteExactInput` function on the Uniswap V3 Quoter contract. This is a different, more complex on-chain call.\n    *   This change forces the scanner to discover opportunities the current skill is blind to, immediately creating a new set of testable outcomes and breaking the 36/36 plateau. Subsequent mutations will then need to update the executor to handle these multi-hop paths."
+      },
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-04-20T22:10:14.386Z"
+    },
+    {
+      "round": 8,
+      "score": 36,
+      "max": 36,
+      "status": "reverted",
+      "mutation": "Evolve from single-pair to multi-hop arbitrage by replacing `monitored_pairs` with `monitored_routes` (path arrays with alternating token addresses and fee tiers), and updating scanner.js to use `quoteExactInput` for multi-hop paths vs `quoteExactInputSingle` for direct swaps.",
+      "cost": 0.05,
+      "criteria": [
+        6,
+        6,
+        6,
+        6,
+        6,
+        6
+      ],
+      "failures": [],
+      "geminiThoughts": null,
+      "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-04-20T22:10:38.301Z",
+      "changelog": "**Mutation**: Evolve from single-pair to multi-hop arbitrage by replacing `monitored_pairs` with `monitored_routes` (path arrays with alternating token addresses and fee tiers), and updating scanner.js to use `quoteExactInput` for multi-hop paths vs `quoteExactInputSingle` for direct swaps.\n**Failures**: none\n**Per-criteria**: Identify price discrepancies across at least 2 DEXes: 6/6, Calculate net profit after gas costs before recommending execution: 6/6, Enforce the configured budget limit before any on-chain transaction: 6/6, Handle failed transactions gracefully without losing funds: 6/6, Provide a clear, actionable summary of opportunities found: 6/6, Work on both testnet (BASE Sepolia) and mainnet (BASE) configurations: 6/6\n**Decision**: Score 36 did not exceed best 36 — mutation produced worse or equal results"
+    },
+    {
+      "round": 9,
+      "score": 36,
+      "max": 36,
+      "status": "reverted",
+      "mutation": "Add explicit ETH price oracle call (via a simple RPC-based check or fallback constant) in Step 4c so gas costs are accurately denominated in USD when populating `net_profit_usd` in opportunities.json, preventing silent underestimation when ETH price is volatile.",
+      "cost": 0.05,
+      "criteria": [
+        6,
+        6,
+        6,
+        6,
+        6,
+        6
+      ],
+      "failures": [],
+      "geminiThoughts": null,
+      "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-04-20T22:14:02.217Z",
+      "changelog": "**Mutation**: Add explicit ETH price oracle call (via a simple RPC-based check or fallback constant) in Step 4c so gas costs are accurately denominated in USD when populating `net_profit_usd` in opportunities.json, preventing silent underestimation when ETH price is volatile.\n**Failures**: none\n**Per-criteria**: Identify price discrepancies across at least 2 DEXes: 6/6, Calculate net profit after gas costs before recommending execution: 6/6, Enforce the configured budget limit before any on-chain transaction: 6/6, Handle failed transactions gracefully without losing funds: 6/6, Provide a clear, actionable summary of opportunities found: 6/6, Work on both testnet (BASE Sepolia) and mainnet (BASE) configurations: 6/6\n**Decision**: Score 36 did not exceed best 36 — mutation produced worse or equal results"
+    }
+  ]
+}

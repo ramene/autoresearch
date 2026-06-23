@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.autoresearch.pre-cron-reminder</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>/Users/ramene/.remote/@autoresearch/scripts/pre-cron-reminder.sh</string>
+    </array>
+    <!-- Fire at 23:30, 07:30, 15:30 — exactly 30 min before 00:00, 08:00, 16:00 -->
+    <key>StartCalendarInterval</key>
+    <array>
+        <dict><key>Hour</key><integer>23</integer><key>Minute</key><integer>30</integer></dict>
+        <dict><key>Hour</key><integer>7</integer><key>Minute</key><integer>30</integer></dict>
+        <dict><key>Hour</key><integer>15</integer><key>Minute</key><integer>30</integer></dict>
+    </array>
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>HOME</key>
+        <string>/Users/ramene</string>
+    </dict>
+    <key>StandardOutPath</key>
+    <string>/Users/ramene/.local/share/tmux-logs/autoresearch/reminder-stdout.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/ramene/.local/share/tmux-logs/autoresearch/reminder-stderr.log</string>
+</dict>
+</plist>

@@ -1,0 +1,364 @@
+{
+  "skill": "polymarket-bridge",
+  "criteria": [
+    "Deposit addresses generated for correct chain",
+    "Supported assets verified before operations",
+    "Status polling tracks to terminal state",
+    "Minimum deposits enforced",
+    "Withdrawal quotes include accurate fees"
+  ],
+  "totalCost": 0.4600000000000002,
+  "models": {
+    "mutator": "sonnet",
+    "evaluator": "gemini-2.5-pro"
+  },
+  "rounds": [
+    {
+      "round": 0,
+      "score": 19,
+      "max": 25,
+      "status": "baseline",
+      "mutation": "Restructure Execution Steps to make checking /supported-assets and enforcing minimum deposit amounts explicit mandatory preconditions for the deposit flow (not just withdrawal), fixing scenarios 1 and 4 which fail both criteria simultaneously.",
+      "cost": 0.05,
+      "criteria": [
+        5,
+        3,
+        5,
+        3,
+        3
+      ],
+      "failures": [
+        {
+          "scenario": 1,
+          "criterion": "Supported assets verified before operations"
+        },
+        {
+          "scenario": 1,
+          "criterion": "Minimum deposits enforced"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Withdrawal quotes include accurate fees"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Supported assets verified before operations"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Minimum deposits enforced"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Withdrawal quotes include accurate fees"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Initial baseline evaluation",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-21T08:54:11.318Z",
+      "changelog": "**Mutation**: Restructure Execution Steps to make checking /supported-assets and enforcing minimum deposit amounts explicit mandatory preconditions for the deposit flow (not just withdrawal), fixing scenarios 1 and 4 which fail both criteria simultaneously.\n**Failures**: S1: Supported assets verified before operations, S1: Minimum deposits enforced, S2: Withdrawal quotes include accurate fees, S4: Supported assets verified before operations, S4: Minimum deposits enforced, S5: Withdrawal quotes include accurate fees\n**Per-criteria**: Deposit addresses generated for correct chain: 5/5, Supported assets verified before operations: 3/5, Status polling tracks to terminal state: 5/5, Minimum deposits enforced: 3/5, Withdrawal quotes include accurate fees: 3/5\n**Decision**: Initial baseline evaluation"
+    },
+    {
+      "round": 1,
+      "score": 25,
+      "max": 25,
+      "status": "kept",
+      "mutation": "Make the withdrawal quote step explicitly require displaying specific fee fields (estimated output, fee amount, fee breakdown) to prevent vague \"show fees\" interpretations that caused S2/S5 failures.",
+      "cost": 0.05,
+      "criteria": [
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "failures": [],
+      "geminiThoughts": null,
+      "decisionReason": "Improved from 19 to 25",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-21T08:55:48.526Z",
+      "changelog": "**Mutation**: Make the withdrawal quote step explicitly require displaying specific fee fields (estimated output, fee amount, fee breakdown) to prevent vague \"show fees\" interpretations that caused S2/S5 failures.\n**Failures**: none\n**Per-criteria**: Deposit addresses generated for correct chain: 5/5, Supported assets verified before operations: 5/5, Status polling tracks to terminal state: 5/5, Minimum deposits enforced: 5/5, Withdrawal quotes include accurate fees: 5/5\n**Decision**: Improved from 19 to 25"
+    },
+    {
+      "round": 2,
+      "score": 25,
+      "max": 25,
+      "status": "reverted",
+      "mutation": "No failures exist — all criteria pass 25/25. Apply a minor clarification to the withdrawal quote step to reinforce that user confirmation must be received before any withdrawal API call is made, preventing any edge case where the skill might proceed without explicit acknowledgment.",
+      "cost": 0.05,
+      "criteria": [
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "failures": [],
+      "geminiThoughts": null,
+      "decisionReason": "Score 25 did not exceed best 25 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-21T08:57:13.382Z",
+      "changelog": "**Mutation**: No failures exist — all criteria pass 25/25. Apply a minor clarification to the withdrawal quote step to reinforce that user confirmation must be received before any withdrawal API call is made, preventing any edge case where the skill might proceed without explicit acknowledgment.\n**Failures**: none\n**Per-criteria**: Deposit addresses generated for correct chain: 5/5, Supported assets verified before operations: 5/5, Status polling tracks to terminal state: 5/5, Minimum deposits enforced: 5/5, Withdrawal quotes include accurate fees: 5/5\n**Decision**: Score 25 did not exceed best 25 — mutation produced worse or equal results"
+    },
+    {
+      "round": 3,
+      "score": 20,
+      "max": 25,
+      "status": "reverted",
+      "mutation": "Remove the misleading \"Withdrawals are instant and free\" caveat that contradicts the mandatory quote step, replacing it with a note that quotes are still mandatory to display estimated output even when Polymarket subsidizes fees.",
+      "cost": 0.05,
+      "criteria": [
+        5,
+        5,
+        5,
+        5,
+        0
+      ],
+      "failures": [
+        {
+          "scenario": 1,
+          "criterion": "Withdrawal quotes include accurate fees"
+        },
+        {
+          "scenario": 2,
+          "criterion": "Withdrawal quotes include accurate fees"
+        },
+        {
+          "scenario": 3,
+          "criterion": "Withdrawal quotes include accurate fees"
+        },
+        {
+          "scenario": 4,
+          "criterion": "Withdrawal quotes include accurate fees"
+        },
+        {
+          "scenario": 5,
+          "criterion": "Withdrawal quotes include accurate fees"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 20 did not exceed best 25 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-21T08:58:22.609Z",
+      "changelog": "**Mutation**: Remove the misleading \"Withdrawals are instant and free\" caveat that contradicts the mandatory quote step, replacing it with a note that quotes are still mandatory to display estimated output even when Polymarket subsidizes fees.\n**Failures**: S1: Withdrawal quotes include accurate fees, S2: Withdrawal quotes include accurate fees, S3: Withdrawal quotes include accurate fees, S4: Withdrawal quotes include accurate fees, S5: Withdrawal quotes include accurate fees\n**Per-criteria**: Deposit addresses generated for correct chain: 5/5, Supported assets verified before operations: 5/5, Status polling tracks to terminal state: 5/5, Minimum deposits enforced: 5/5, Withdrawal quotes include accurate fees: 0/5\n**Decision**: Score 20 did not exceed best 25 — mutation produced worse or equal results"
+    },
+    {
+      "round": 4,
+      "score": 25,
+      "max": 25,
+      "status": "reverted",
+      "mutation": "Add a polling timeout guidance note to the Status Check section to handle the edge case where a transaction never reaches a terminal state, preventing infinite polling loops.",
+      "cost": 0.05,
+      "criteria": [
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "failures": [],
+      "geminiThoughts": null,
+      "decisionReason": "Score 25 did not exceed best 25 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-21T08:59:21.076Z",
+      "changelog": "**Mutation**: Add a polling timeout guidance note to the Status Check section to handle the edge case where a transaction never reaches a terminal state, preventing infinite polling loops.\n**Failures**: none\n**Per-criteria**: Deposit addresses generated for correct chain: 5/5, Supported assets verified before operations: 5/5, Status polling tracks to terminal state: 5/5, Minimum deposits enforced: 5/5, Withdrawal quotes include accurate fees: 5/5\n**Decision**: Score 25 did not exceed best 25 — mutation produced worse or equal results"
+    },
+    {
+      "round": 4,
+      "score": 25,
+      "max": 25,
+      "status": "escalation",
+      "mutation": "Stuck escalation: The optimization loop is stuck in a local optimum because the skill has perfectly satisfied the existing 25 test scenarios. The score cannot improve beyond 25/25. Subsequent mutations have been making",
+      "cost": 0.03,
+      "criteria": [
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "failures": [],
+      "decisionReason": "Stuck escalation triggered after 3+ rounds with no improvement",
+      "escalation": {
+        "diagnosis": "The optimization loop is stuck in a local optimum because the skill has perfectly satisfied the existing 25 test scenarios. The score cannot improve beyond 25/25. Subsequent mutations have been making valid and useful improvements to the skill's robustness and clarity (e.g., adding polling timeouts, clarifying user confirmation steps), but these enhancements address edge cases that are not currently covered by the evaluation suite. The root cause is not a flaw in the skill, but rather an evaluation suite that has been fully \"solved\" and is no longer capable of identifying new areas for improvement. The criteria are too narrow, focusing on the \"happy path\" and basic preconditions, while ignoring critical real-world failure modes like API errors or invalid user inputs.",
+        "evalRedesignNeeded": true,
+        "strategy": "The current strategy of incrementally refining existing logic is exhausted. The new strategy must be to **introduce and define \"unhappy path\" handling**. We will expand the skill's responsibilities to include explicit, testable instructions for how to behave when external systems fail or user input is invalid. This will force the model to develop resilience and error-handling capabilities, which can then be targeted by a new, more challenging set of evaluation scenarios designed to simulate these failures. We will move from perfecting the ideal workflow to building a robust tool that can handle adversity.",
+        "suggestedMutation": "Add a new, high-level section titled \"Error Handling & Input Validation\" to define behavior for non-ideal conditions. This makes error handling a primary concern, not an afterthought.\n\n```markdown\n## Error Handling & Input Validation\nThis section defines mandatory behavior for handling API errors and invalid user-provided data.\n\n1.  **API Error Handling (MANDATORY):** If any API call to `bridge.polymarket.com` results in a non-2xx HTTP status code (e.g., 400, 404, 503):\n    - **Abort:** Immediately terminate the current flow (deposit or withdrawal).\n    - **Report:** Clearly inform the user about the failure, including the specific HTTP status code and any error message in the response body.\n    - **Do Not Retry:** Do not automatically retry the request. Advise the user to try again later or check the system status.\n    - **Do Not Proceed:** Do not move to the next step in the sequence (e.g., do not ask the user to send funds if `/deposit` fails).\n\n2.  **Input Validation:** Before making any API calls, perform basic validation on user-provided flags:\n    - `--recipient`: Check if the address format appears valid for the given `--to-chain` (e.g., starts with `0x` for EVM, has a valid length for Solana/Bitcoin). If invalid, abort and notify the user.\n    - `--amount`: Ensure the amount is a positive number. If not, abort and notify the user.\n```"
+      },
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-03-21T09:00:18.687Z"
+    },
+    {
+      "round": 5,
+      "score": 25,
+      "max": 25,
+      "status": "reverted",
+      "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-polymarket-bridge/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n",
+      "cost": 0.03,
+      "criteria": [
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "failures": [],
+      "geminiThoughts": null,
+      "decisionReason": "Score 25 did not exceed best 25 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-04-28T14:00:33.175Z",
+      "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-polymarket-bridge/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n\n**Failures**: none"
+    },
+    {
+      "round": 6,
+      "score": 25,
+      "max": 25,
+      "status": "reverted",
+      "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-polymarket-bridge/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n",
+      "cost": 0.03,
+      "criteria": [
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "failures": [],
+      "geminiThoughts": null,
+      "decisionReason": "Score 25 did not exceed best 25 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-04-28T14:00:56.514Z",
+      "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-polymarket-bridge/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n\n**Failures**: none"
+    },
+    {
+      "round": 7,
+      "score": 24,
+      "max": 25,
+      "status": "reverted",
+      "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-polymarket-bridge/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n",
+      "cost": 0.03,
+      "criteria": [
+        5,
+        5,
+        5,
+        5,
+        4
+      ],
+      "failures": [
+        {
+          "scenario": 5,
+          "criterion": "Withdrawal quotes include accurate fees"
+        }
+      ],
+      "geminiThoughts": null,
+      "decisionReason": "Score 24 did not exceed best 25 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-04-28T14:01:40.672Z",
+      "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-polymarket-bridge/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n\n**Failures**: S5: Withdrawal quotes include accurate fees"
+    },
+    {
+      "round": 7,
+      "score": 24,
+      "max": 25,
+      "status": "escalation",
+      "mutation": "Stuck escalation: The optimization loop is stuck in a local optimum because the skill has been perfected against the existing 25 test scenarios, achieving a score of 25/25. Subsequent mutations are minor clarifications",
+      "cost": 0.03,
+      "criteria": [
+        5,
+        5,
+        5,
+        5,
+        4
+      ],
+      "failures": [],
+      "decisionReason": "Stuck escalation triggered after 3+ rounds with no improvement",
+      "escalation": {
+        "diagnosis": "The optimization loop is stuck in a local optimum because the skill has been perfected against the existing 25 test scenarios, achieving a score of 25/25. Subsequent mutations are minor clarifications or robustness tweaks (e.g., timeout handling, user confirmation emphasis) that cannot improve a perfect score. The system is attempting to refine a solution that already fully satisfies its evaluation criteria. The occasional score drop to 24/25 on a reverted mutation indicates that these minor tweaks can sometimes introduce just enough ambiguity to confuse the model on one edge case, proving that the current prompt is highly tuned and sensitive. The root cause is not a flaw in the skill, but a test suite that is no longer challenging enough to drive meaningful improvement.",
+        "evalRedesignNeeded": true,
+        "strategy": "Shift from incremental refinement of existing execution flows to introducing a new, explicit capability for handling failures and ambiguity. The current prompt excels at the \"happy path\" but is underspecified on how to handle API errors, invalid user input, or ambiguous requests. By adding a dedicated \"Error Handling & Disambiguation\" section, we create a new dimension for the skill's behavior that can be tested, forcing the model to develop more robust, interactive error-recovery logic instead of just following a perfect script. This will break the current performance plateau by expanding the scope of what the skill is expected to do.",
+        "suggestedMutation": "Add a new `## Error Handling & Disambiguation` section after the `Execution Steps` to provide explicit instructions for off-nominal conditions.\n\n```markdown\n## Error Handling & Disambiguation\n\n- **API Errors:** If any API call to `bridge.polymarket.com` returns a non-200 HTTP status code (e.g., 400, 401, 500), immediately abort the current flow. Report the exact error code and any message from the API response to the user. Do not attempt to retry or proceed.\n- **Invalid or Missing Parameters:** Before making any API calls, validate that all required flags for the user's intent are present.\n  - For `--withdraw`, if `--amount`, `--to-chain`, or `--recipient` are missing, do not proceed. Inform the user which specific parameters are missing and ask them to provide the information.\n  - For `--status`, if the address is missing or malformed, inform the user.\n- **Ambiguous User Input:** If a user's request is ambiguous (e.g., \"send USDC to Ethereum\" when multiple USDC versions are supported on the destination), do not guess. First, call GET `/supported-assets` to find the valid options for that chain, then present the user with a numbered list of choices and ask them to clarify which specific token they want to use.\n```"
+      },
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-04-28T14:02:07.521Z"
+    },
+    {
+      "round": 8,
+      "score": 25,
+      "max": 25,
+      "status": "reverted",
+      "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-polymarket-bridge/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n",
+      "cost": 0.03,
+      "criteria": [
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "failures": [],
+      "geminiThoughts": null,
+      "decisionReason": "Score 25 did not exceed best 25 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-04-28T14:02:36.172Z",
+      "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-polymarket-bridge/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n\n**Failures**: none"
+    },
+    {
+      "round": 9,
+      "score": 25,
+      "max": 25,
+      "status": "reverted",
+      "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-polymarket-bridge/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n",
+      "cost": 0.03,
+      "criteria": [
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "failures": [],
+      "geminiThoughts": null,
+      "decisionReason": "Score 25 did not exceed best 25 — mutation produced worse or equal results",
+      "models": {
+        "evaluator": "gemini-2.5-pro",
+        "mutator": "sonnet"
+      },
+      "timestamp": "2026-04-28T14:03:03.436Z",
+      "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-polymarket-bridge/.autoresearch-prompt.tmp\" | /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude --print --model sonnet\n/bin/sh: /Users/ramene/.nvm/versions/node/v23.11.1/bin/claude: No such file or directory\n\n**Failures**: none"
+    }
+  ]
+}

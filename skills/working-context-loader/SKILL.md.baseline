@@ -1,0 +1,249 @@
+---
+name: context-loader
+description: "Load full ecosystem context into any session — portable equivalent of /scaffold's cross-project awareness. Scans all sibling projects, reads memory banks, synthesizes cross-cutting patterns, and persists the result to CLAUDE-ecosystem.md so future sessions inherit it automatically."
+argument-hint: "[--depth shallow|deep] [--refresh] [--target <workspace>]"
+allowed-tools: Bash, Read, Write, Edit, Glob, Grep, Agent
+---
+
+# Skill: Context Loader
+
+> Collective, cumulative, curated context across ALL sessions. Any session running this skill gets the same holistic ecosystem awareness that `/scaffold` bakes into new sessions — plus live state from memory banks.
+
+## Purpose
+
+Make any running session ecosystem-aware on demand. This is the portable, self-updating version of the static `CLAUDE-ecosystem.md` that `/scaffold` generates at creation time. Unlike the scaffold snapshot, this skill:
+
+1. **Reads live state** — active context, decisions, and patterns from every sibling project
+2. **Persists results** — writes updated `CLAUDE-ecosystem.md` to the current project so future sessions inherit it
+3. **Synthesizes cross-cutting concerns** — shared auth, DB, deployment patterns, active intersections
+4. **Runs anywhere** — installed by scaffold into every project via `.seed/base/skills/`
+
+## When to Use
+
+- Starting work in a session that wasn't freshly scaffolded
+- After `/clear` or context compression when ecosystem awareness is lost
+- When you need to understand how this project relates to siblings
+- Periodically (via `/loop`) to keep ecosystem context fresh
+- Before cross-project work (shared patterns, migrations, deployments)
+
+## Arguments
+
+- `--depth shallow` — Registry only: names, paths, descriptions, skill counts. Fast (~10s).
+- `--depth deep` — Registry + active context + decisions + patterns from each sibling. Comprehensive (~60-90s).
+- `--refresh` — Force re-scan even if `CLAUDE-ecosystem.md` was updated today.
+- `--target <workspace>` — Load context FROM a specific workspace into this session (e.g., `--target ~/.remote/github.com/@your-org/mdox`).
+- No arguments = `--depth deep` by default.
+
+## Execution
+
+### Phase 1: Current Project Context
+
+1. Identify current workspace and project name from `.claude` symlink chain
+2. Read `CLAUDE.md` from workspace root — project purpose, architecture, build commands
+3. Read all `.claude/CLAUDE-*.md` memory bank files:
+   - `CLAUDE-activeContext.md` — current session state and goals
+   - `CLAUDE-patterns.md` — established code patterns
+   - `CLAUDE-decisions.md` — architecture decisions and rationale
+   - `CLAUDE-troubleshooting.md` — known issues and solutions
+4. Scan project structure: `package.json`, `pyproject.toml`, `tsconfig.json`, `docker-compose.yml`, etc.
+5. Check `git log --oneline -5` and `git status` for recent activity
+
+### Phase 2: Ecosystem Registry
+
+6. Scan `~/Journal/.claude-projects/` for ALL sibling project directories (skip dotfiles)
+7. For each sibling:
+   a. **Resolve workspace**: Scan `~/.remote/` for entries whose `.claude` symlink resolves to that project dir
+   b. **Description**: Read first `> ` blockquote line from workspace `CLAUDE.md` (fallback: project dir `CLAUDE.md`)
+   c. **Skill count**: Count `SKILL.md` files under `skills/`
+   d. **Status** (deep mode): Read `CLAUDE-activeContext.md` to determine active work and completion state
+
+### Phase 3: Deep Scan (when `--depth deep`)
+
+8. For each sibling with a resolved workspace, use an Agent (subagent_type=Explore) to read in parallel:
+   - `CLAUDE-activeContext.md` — what's currently being worked on
+   - `CLAUDE-decisions.md` — architectural decisions (especially cross-cutting ADRs)
+   - `CLAUDE-patterns.md` — established patterns that may be reusable
+   - First 30 lines of `CLAUDE.md` — project purpose and tech stack
+9. Extract cross-cutting concerns:
+   - Shared authentication patterns (Auth.js, sessions, providers)
+   - Shared database patterns (ORMs, raw SQL, migrations)
+   - Shared deployment patterns (Docker, Cloud Run, CI/CD)
+   - Active work that intersects with this project
+   - Security decisions that apply broadly
+
+### Phase 4: Session Intelligence (tmux-logs mining)
+
+**This is what closes the loop.** tmux-logs capture verbatim everything across all sessions. This phase mines them for actionable cross-session intelligence.
+
+**Log sources** (at `~/.local/share/tmux-logs/`):
+
+| Source | Path pattern | What it contains | How to mine |
+|--------|-------------|------------------|-------------|
+| **Term logs** | `YYYY/MM/DD/term/{session}-{window}-{pane}.log` | Full terminal output — every tool call, output, conversation | Grep for commits, errors, decisions, architectural discussions |
+| **Hooks logs** | `YYYY/MM/DD/hooks/{session}_{conversation-id}.log` | Structured tool calls with timestamps: `=== TIMESTAMP \| TOOL_TYPE ===` followed by args + stdout/stderr | Parse structured entries for tool patterns, file changes, commands run |
+| **Transcripts** | `YYYY/MM/DD/transcripts/{session}_{conversation-id}.log` | JSONL conversation exports | Parse JSON for user messages, assistant responses, decisions made |
+
+**Extraction algorithm:**
+
+10. **Discover recent logs**: Scan today's and yesterday's `term/` directories for all session logs. Map session names to projects via `~/Journal/.claude-projects/` naming.
+
+11. **Extract signals** using targeted grep patterns across all session term logs:
+
+    ```bash
+    # Git activity (what was shipped)
+    rg "git commit|git push|\[main " term/
+
+    # Errors and blockers (what went wrong)
+    rg -i "error|failed|broken|root cause|fix" term/
+
+    # Decisions (what was decided)
+    rg -i "decided|the approach|instead of|switched to|ADR|architecture" term/
+
+    # Cross-project references (what projects are talking to each other)
+    rg "@builds|@openclaw|@research|@zero-vendor|@mdox|@util" term/
+
+    # New files/features created
+    rg "Write\(|Created|new-session" term/
+
+    # Active processes (what's running)
+    rg "background|PID|monitor|extraction|pipeline" term/
+    ```
+
+12. **Extract from hooks logs** (structured, most efficient):
+    - Parse `=== TIMESTAMP | TOOL_TYPE ===` headers
+    - Count tool usage patterns per session (which tools used most = what kind of work)
+    - Extract file paths from Read/Write/Edit tool calls = active files
+    - Extract git operations = deployment activity
+
+13. **Synthesize into session intelligence briefing**:
+    - **Last 24h activity by project**: What each session worked on (from commits + tool patterns)
+    - **Cross-session references**: Which sessions referenced other projects' code/context
+    - **Active processes**: Background tasks, monitors, extractions still running
+    - **Errors & resolutions**: Problems encountered and how they were fixed (learning for future sessions)
+    - **Decisions made**: Architectural or technical decisions from conversation context
+
+14. **Write `CLAUDE-session-intelligence.md`** in `.claude/` with the distilled briefing. This is the file that future sessions read to understand "what happened recently across the ecosystem."
+
+### Phase 5: Persist & Synthesize
+
+15. **Update `CLAUDE-ecosystem.md`** in the current project's `.claude/` directory with:
+    - Full sibling registry table (name, workspace, description, active work, status)
+    - Cross-project patterns section with concrete decisions
+    - Key sibling decisions table (decision, project, impact)
+    - Session intelligence summary (from Phase 4)
+    - Resources section (skills, prompts, shared scripts, session logs)
+    - Timestamp for staleness detection
+
+16. **Output briefing** to the conversation:
+    - This project summary
+    - Ecosystem table
+    - Cross-cutting patterns
+    - Session intelligence highlights (last 24h)
+    - Any active sibling work that may intersect
+
+## Output Format
+
+```markdown
+## Project: {name}
+{purpose from CLAUDE.md}
+
+## Active Context
+{from CLAUDE-activeContext.md or "No active context"}
+
+## Ecosystem ({N} sibling projects)
+| Project | Workspace | Description | Active Work | Status |
+|---------|-----------|-------------|-------------|--------|
+
+## Cross-Project Patterns
+- **Auth**: {pattern and which project established it}
+- **DB**: {pattern}
+- **Deploy**: {pattern}
+- **Security**: {key decisions}
+
+## Key Sibling Decisions
+| Decision | Project | Impact |
+|----------|---------|--------|
+
+## Session Intelligence (last 24h)
+### Activity by Project
+| Project | Commits | Key Work | Errors |
+|---------|---------|----------|--------|
+
+### Cross-Session References
+- {session A} referenced {project B}'s {what} for {why}
+
+### Active Processes
+- {PID/name}: {what it's doing}, started {when}
+
+### Decisions Made
+- {decision}: {rationale} (from {session})
+
+### Errors & Resolutions
+- {error}: {how it was fixed} (applicable to: {which projects})
+
+## Resources
+- Skills: {count}
+- Prompts: linked/not linked
+- Shared scripts: @util.sh/scripts/
+- Session logs: ~/.local/share/tmux-logs/
+```
+
+## Output Files
+
+| File | Location | Purpose | Read by |
+|------|----------|---------|---------|
+| `CLAUDE-ecosystem.md` | `.claude/` | Sibling registry + cross-project patterns | Next session startup (auto-loaded) |
+| `CLAUDE-session-intelligence.md` | `.claude/` | Distilled 24h activity from tmux-logs | Next session startup (auto-loaded) |
+
+## Autonomous Freshness
+
+### Staleness Detection
+
+Before scanning, check `CLAUDE-ecosystem.md` last-modified date:
+- **< 1 hour old**: Skip scan, read from file (unless `--refresh`)
+- **1-24 hours old**: Shallow refresh (registry only, skip deep scan)
+- **> 24 hours old**: Full deep scan
+
+### Pairing with /loop
+
+For continuously fresh context across long sessions:
+```
+/loop 30m /context-loader --depth shallow
+```
+
+This refreshes the ecosystem registry every 30 minutes, keeping `CLAUDE-ecosystem.md` current without burning tokens on deep scans.
+
+### Write-Back Pattern
+
+Every run writes back to `CLAUDE-ecosystem.md`. This means:
+- Next session in this project reads the file automatically (it's in `.claude/`)
+- No re-scan needed if the file is fresh
+- Cross-project state accumulates over time
+- `/scaffold` snapshots are replaced by live-updated versions
+
+## Integration
+
+- **With /scaffold**: Scaffold installs this skill. The static `_create_ecosystem_registry()` in `scaffold.py` creates the initial snapshot. This skill keeps it alive.
+- **With /sc:load**: The global `/sc:load` command can delegate to this skill for ecosystem awareness. They are complementary — `/sc:load` handles project-specific context loading, this skill handles ecosystem-wide awareness.
+- **With context-drift-detector**: Run drift detection first to validate memory bank accuracy, then this skill to refresh ecosystem context.
+- **With memory-bank-synchronizer**: This skill reads memory banks; the synchronizer writes them. Use both to maintain full accuracy.
+
+## The Closed Loop
+
+```
+tmux-logs (capture everything)
+    ↓
+context-loader Phase 4 (mine signals from logs)
+    ↓
+CLAUDE-session-intelligence.md (distilled briefing)
+    ↓
+CLAUDE-ecosystem.md (sibling registry + patterns + session intel)
+    ↓
+Next session reads both files on startup (auto-loaded from .claude/)
+    ↓
+Session has full ecosystem + recent activity awareness
+    ↓
+Session's work is captured by tmux-logs → loop closes
+```
+
+**The ecosystem file is a living document, not a scaffold artifact.** Every session that runs this skill improves the collective context for all future sessions. Decisions discovered in one project propagate to siblings. Errors fixed in one session become knowledge for others. The tmux-logs capture the raw truth; this skill distills it into actionable intelligence. `/loop` keeps it fresh. That's cumulative, curated context across the entire workspace ecosystem.

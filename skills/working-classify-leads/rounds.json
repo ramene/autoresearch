@@ -1,0 +1,1180 @@
+[
+  {
+    "round": 0,
+    "score": 14,
+    "max": 36,
+    "status": "baseline",
+    "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-classify-leads/.autoresearch-prompt.tmp\" | claude --print --model sonnet\n/bin/sh: claude: command not found\n",
+    "cost": 0.03,
+    "criteria": [
+      4,
+      2,
+      3,
+      3,
+      1,
+      1
+    ],
+    "failures": [
+      {
+        "scenario": 2,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Completeness"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Completeness"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Tool Usage"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Completeness"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Tool Usage"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Completeness"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Tool Usage"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Completeness"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Initial baseline evaluation",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-20T03:20:23.599Z",
+    "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-classify-leads/.autoresearch-prompt.tmp\" | claude --print --model sonnet\n/bin/sh: claude: command not found\n\n**Failures**: S2: Error Handling, S2: Output Quality, S2: Instructions Clarity, S2: Completeness, S3: Error Handling, S3: Instructions Clarity, S3: Completeness, S4: Task Completion, S4: Error Handling, S4: Output Quality, S4: Tool Usage, S4: Instructions Clarity, S4: Completeness, S5: Tool Usage, S5: Instructions Clarity, S5: Completeness, S6: Task Completion, S6: Error Handling, S6: Output Quality, S6: Tool Usage, S6: Instructions Clarity, S6: Completeness"
+  },
+  {
+    "round": 1,
+    "score": 17,
+    "max": 36,
+    "status": "kept",
+    "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-classify-leads/.autoresearch-prompt.tmp\" | claude --print --model sonnet\n/bin/sh: claude: command not found\n",
+    "cost": 0.03,
+    "criteria": [
+      4,
+      2,
+      3,
+      4,
+      2,
+      2
+    ],
+    "failures": [
+      {
+        "scenario": 2,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Completeness"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Completeness"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Tool Usage"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Completeness"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Tool Usage"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Completeness"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Improved from 14 to 17",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-20T03:21:06.389Z",
+    "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-classify-leads/.autoresearch-prompt.tmp\" | claude --print --model sonnet\n/bin/sh: claude: command not found\n\n**Failures**: S2: Error Handling, S2: Output Quality, S2: Instructions Clarity, S2: Completeness, S3: Error Handling, S3: Instructions Clarity, S3: Completeness, S4: Task Completion, S4: Error Handling, S4: Output Quality, S4: Tool Usage, S4: Instructions Clarity, S4: Completeness, S6: Task Completion, S6: Error Handling, S6: Output Quality, S6: Tool Usage, S6: Instructions Clarity, S6: Completeness"
+  },
+  {
+    "round": 2,
+    "score": 19,
+    "max": 36,
+    "status": "kept",
+    "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-classify-leads/.autoresearch-prompt.tmp\" | claude --print --model sonnet\n/bin/sh: claude: command not found\n",
+    "cost": 0.03,
+    "criteria": [
+      4,
+      2,
+      3,
+      4,
+      3,
+      3
+    ],
+    "failures": [
+      {
+        "scenario": 2,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Completeness"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Tool Usage"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Completeness"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Tool Usage"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Completeness"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Improved from 17 to 19",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-20T03:21:47.638Z",
+    "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-classify-leads/.autoresearch-prompt.tmp\" | claude --print --model sonnet\n/bin/sh: claude: command not found\n\n**Failures**: S2: Error Handling, S2: Output Quality, S2: Instructions Clarity, S2: Completeness, S3: Error Handling, S4: Task Completion, S4: Error Handling, S4: Output Quality, S4: Tool Usage, S4: Instructions Clarity, S4: Completeness, S6: Task Completion, S6: Error Handling, S6: Output Quality, S6: Tool Usage, S6: Instructions Clarity, S6: Completeness"
+  },
+  {
+    "round": 3,
+    "score": 17,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-classify-leads/.autoresearch-prompt.tmp\" | claude --print --model sonnet\n/bin/sh: claude: command not found\n",
+    "cost": 0.03,
+    "criteria": [
+      3,
+      2,
+      3,
+      3,
+      3,
+      3
+    ],
+    "failures": [
+      {
+        "scenario": 2,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Tool Usage"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Completeness"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Tool Usage"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Completeness"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Tool Usage"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Completeness"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 17 did not exceed best 19 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-20T03:22:15.809Z",
+    "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-classify-leads/.autoresearch-prompt.tmp\" | claude --print --model sonnet\n/bin/sh: claude: command not found\n\n**Failures**: S2: Task Completion, S2: Error Handling, S2: Output Quality, S2: Tool Usage, S2: Instructions Clarity, S2: Completeness, S3: Error Handling, S4: Task Completion, S4: Error Handling, S4: Output Quality, S4: Tool Usage, S4: Instructions Clarity, S4: Completeness, S6: Task Completion, S6: Error Handling, S6: Output Quality, S6: Tool Usage, S6: Instructions Clarity, S6: Completeness"
+  },
+  {
+    "round": 4,
+    "score": 14,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Mutation failed: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-classify-leads/.autoresearch-prompt.tmp\" | claude --print --model sonnet\n/bin/sh: claude: command not found\n",
+    "cost": 0.03,
+    "criteria": [
+      3,
+      0,
+      3,
+      5,
+      2,
+      1
+    ],
+    "failures": [
+      {
+        "scenario": 1,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Completeness"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Completeness"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Completeness"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Tool Usage"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Completeness"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Completeness"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 14 did not exceed best 19 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-20T03:22:50.006Z",
+    "changelog": "**Mutation failed**: Command failed: cat \"/Users/ramene/.remote/@autoresearch/skills/working-classify-leads/.autoresearch-prompt.tmp\" | claude --print --model sonnet\n/bin/sh: claude: command not found\n\n**Failures**: S1: Error Handling, S2: Task Completion, S2: Error Handling, S2: Output Quality, S2: Instructions Clarity, S2: Completeness, S3: Error Handling, S3: Completeness, S4: Task Completion, S4: Error Handling, S4: Output Quality, S4: Instructions Clarity, S4: Completeness, S5: Task Completion, S5: Error Handling, S5: Output Quality, S5: Tool Usage, S5: Instructions Clarity, S5: Completeness, S6: Error Handling, S6: Instructions Clarity, S6: Completeness"
+  },
+  {
+    "round": 5,
+    "score": 15,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Added Error Handling section with explicit failure modes and recovery steps — the skill had no error handling guidance, causing 5/6 scenario failures on that criterion.",
+    "cost": 0.05,
+    "criteria": [
+      2,
+      1,
+      3,
+      5,
+      2,
+      2
+    ],
+    "failures": [
+      {
+        "scenario": 1,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Completeness"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Completeness"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 4,
+        "criterion": "Completeness"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Tool Usage"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Completeness"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 15 did not exceed best 19 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-21T00:00:42.734Z",
+    "changelog": "**Mutation**: Added Error Handling section with explicit failure modes and recovery steps — the skill had no error handling guidance, causing 5/6 scenario failures on that criterion.\n**Failures**: S1: Error Handling, S2: Task Completion, S2: Error Handling, S2: Output Quality, S2: Instructions Clarity, S2: Completeness, S3: Task Completion, S3: Error Handling, S3: Instructions Clarity, S3: Completeness, S4: Task Completion, S4: Error Handling, S4: Output Quality, S4: Instructions Clarity, S4: Completeness, S6: Task Completion, S6: Error Handling, S6: Output Quality, S6: Tool Usage, S6: Instructions Clarity, S6: Completeness\n**Per-criteria**: Task Completion: 2/6, Error Handling: 1/6, Output Quality: 3/6, Tool Usage: 5/6, Instructions Clarity: 2/6, Completeness: 2/6\n**Decision**: Score 15 did not exceed best 19 — mutation produced worse or equal results"
+  },
+  {
+    "round": 6,
+    "score": 30,
+    "max": 36,
+    "status": "kept",
+    "mutation": "Added explicit Step-by-Step Workflow section showing the complete end-to-end process (export → verify → classify → review → update sheet), fixing Instructions Clarity and Completeness failures caused by agents not knowing the full prerequisite chain.",
+    "cost": 0.05,
+    "criteria": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "failures": [
+      {
+        "scenario": 6,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Tool Usage"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Completeness"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Improved from 19 to 30",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-21T00:01:42.603Z",
+    "changelog": "**Mutation**: Added explicit Step-by-Step Workflow section showing the complete end-to-end process (export → verify → classify → review → update sheet), fixing Instructions Clarity and Completeness failures caused by agents not knowing the full prerequisite chain.\n**Failures**: S6: Task Completion, S6: Error Handling, S6: Output Quality, S6: Tool Usage, S6: Instructions Clarity, S6: Completeness\n**Per-criteria**: Task Completion: 5/6, Error Handling: 5/6, Output Quality: 5/6, Tool Usage: 5/6, Instructions Clarity: 5/6, Completeness: 5/6\n**Decision**: Improved from 19 to 30"
+  },
+  {
+    "round": 7,
+    "score": 27,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Clarified that Step 1 (read_sheet.py) is optional when leads are already in a local JSON file, and added a \"Direct File Classification\" shortcut path — fixing scenario 6's complete failure where agents couldn't handle non-sheet input sources.",
+    "cost": 0.05,
+    "criteria": [
+      4,
+      5,
+      6,
+      6,
+      3,
+      3
+    ],
+    "failures": [
+      {
+        "scenario": 2,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Completeness"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Completeness"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Completeness"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 27 did not exceed best 30 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-21T00:02:52.373Z",
+    "changelog": "**Mutation**: Clarified that Step 1 (read_sheet.py) is optional when leads are already in a local JSON file, and added a \"Direct File Classification\" shortcut path — fixing scenario 6's complete failure where agents couldn't handle non-sheet input sources.\n**Failures**: S2: Instructions Clarity, S2: Completeness, S3: Task Completion, S3: Error Handling, S3: Instructions Clarity, S3: Completeness, S6: Task Completion, S6: Instructions Clarity, S6: Completeness\n**Per-criteria**: Task Completion: 4/6, Error Handling: 5/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 3/6, Completeness: 3/6\n**Decision**: Score 27 did not exceed best 30 — mutation produced worse or equal results"
+  },
+  {
+    "round": 8,
+    "score": 31,
+    "max": 36,
+    "status": "kept",
+    "mutation": "Expanded Classification Types section with concrete `--classification_type` values and validation steps for each use case listed in \"When to Use\", so agents have explicit strings to pass for high-ticket and subscription scenarios instead of guessing.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      5,
+      6,
+      6,
+      4,
+      4
+    ],
+    "failures": [
+      {
+        "scenario": 3,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Completeness"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 5,
+        "criterion": "Completeness"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Improved from 30 to 31",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-21T00:04:18.926Z",
+    "changelog": "**Mutation**: Expanded Classification Types section with concrete `--classification_type` values and validation steps for each use case listed in \"When to Use\", so agents have explicit strings to pass for high-ticket and subscription scenarios instead of guessing.\n**Failures**: S3: Instructions Clarity, S3: Completeness, S5: Error Handling, S5: Instructions Clarity, S5: Completeness\n**Per-criteria**: Task Completion: 6/6, Error Handling: 5/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 4/6, Completeness: 4/6\n**Decision**: Improved from 30 to 31"
+  },
+  {
+    "round": 9,
+    "score": 36,
+    "max": 36,
+    "status": "kept",
+    "mutation": "Added `mkdir -p .tmp` as an explicit prerequisite before Steps 1/2b to prevent silent FileNotFoundError failures when the `.tmp/` directory doesn't yet exist — a common edge case that produces confusing errors not covered by current error handling.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Improved from 31 to 36",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-03-21T00:05:45.989Z",
+    "changelog": "**Mutation**: Added `mkdir -p .tmp` as an explicit prerequisite before Steps 1/2b to prevent silent FileNotFoundError failures when the `.tmp/` directory doesn't yet exist — a common edge case that produces confusing errors not covered by current error handling.\n**Failures**: none\n**Per-criteria**: Task Completion: 6/6, Error Handling: 6/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 6/6, Completeness: 6/6\n**Decision**: Improved from 31 to 36"
+  },
+  {
+    "round": 10,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "No failures detected (36/36 score) — keeping the skill as-is since all criteria pass perfectly.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-04-12T06:00:39.198Z",
+    "changelog": "**Mutation**: No failures detected (36/36 score) — keeping the skill as-is since all criteria pass perfectly.\n**Failures**: none\n**Per-criteria**: Task Completion: 6/6, Error Handling: 6/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 6/6, Completeness: 6/6\n**Decision**: Score 36 did not exceed best 36 — mutation produced worse or equal results"
+  },
+  {
+    "round": 11,
+    "score": 29,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Added explicit decision criteria to Step 5 clarifying when to run update_sheet.py (Sheet input path only) vs skip it (local file path), preventing agents from either skipping it when needed or running it inappropriately.",
+    "cost": 0.05,
+    "criteria": [
+      5,
+      5,
+      5,
+      6,
+      4,
+      4
+    ],
+    "failures": [
+      {
+        "scenario": 2,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 2,
+        "criterion": "Completeness"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Completeness"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 29 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-04-12T14:00:43.087Z",
+    "changelog": "**Mutation**: Added explicit decision criteria to Step 5 clarifying when to run update_sheet.py (Sheet input path only) vs skip it (local file path), preventing agents from either skipping it when needed or running it inappropriately.\n**Failures**: S2: Instructions Clarity, S2: Completeness, S3: Task Completion, S3: Error Handling, S3: Output Quality, S3: Instructions Clarity, S3: Completeness\n**Per-criteria**: Task Completion: 5/6, Error Handling: 5/6, Output Quality: 5/6, Tool Usage: 6/6, Instructions Clarity: 4/6, Completeness: 4/6\n**Decision**: Score 29 did not exceed best 36 — mutation produced worse or equal results"
+  },
+  {
+    "round": 12,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "No failures detected (36/36 score) — keeping the skill as-is since all criteria pass perfectly.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-04-12T22:00:50.695Z",
+    "changelog": "**Mutation**: No failures detected (36/36 score) — keeping the skill as-is since all criteria pass perfectly.\n**Failures**: none\n**Per-criteria**: Task Completion: 6/6, Error Handling: 6/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 6/6, Completeness: 6/6\n**Decision**: Score 36 did not exceed best 36 — mutation produced worse or equal results"
+  },
+  {
+    "round": 13,
+    "score": 35,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Added an explicit \"Option B Quick Reference\" checklist at the top of the workflow section summarizing all steps for local file input in order, so agents following the non-sheet path have a complete, scannable workflow without having to parse conditional logic throughout.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      5
+    ],
+    "failures": [
+      {
+        "scenario": 6,
+        "criterion": "Completeness"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 35 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-04-12T22:02:02.315Z",
+    "changelog": "**Mutation**: Added an explicit \"Option B Quick Reference\" checklist at the top of the workflow section summarizing all steps for local file input in order, so agents following the non-sheet path have a complete, scannable workflow without having to parse conditional logic throughout.\n**Failures**: S6: Completeness\n**Per-criteria**: Task Completion: 6/6, Error Handling: 6/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 6/6, Completeness: 5/6\n**Decision**: Score 35 did not exceed best 36 — mutation produced worse or equal results"
+  },
+  {
+    "round": 14,
+    "score": 30,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Added an explicit \"choose your classification_type\" decision block inside Step 3 that maps user intent phrases directly to the correct flag value, so agents don't default to product_saas when the user asked for high-ticket or subscription classification.",
+    "cost": 0.05,
+    "criteria": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "failures": [
+      {
+        "scenario": 6,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Error Handling"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Tool Usage"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Completeness"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 30 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-04-12T22:03:27.413Z",
+    "changelog": "**Mutation**: Added an explicit \"choose your classification_type\" decision block inside Step 3 that maps user intent phrases directly to the correct flag value, so agents don't default to product_saas when the user asked for high-ticket or subscription classification.\n**Failures**: S6: Task Completion, S6: Error Handling, S6: Output Quality, S6: Tool Usage, S6: Instructions Clarity, S6: Completeness\n**Per-criteria**: Task Completion: 5/6, Error Handling: 5/6, Output Quality: 5/6, Tool Usage: 5/6, Instructions Clarity: 5/6, Completeness: 5/6\n**Decision**: Score 30 did not exceed best 36 — mutation produced worse or equal results"
+  },
+  {
+    "round": 14,
+    "score": 30,
+    "max": 36,
+    "status": "escalation",
+    "mutation": "Stuck escalation: The skill is stuck in a local optimum because mutations are addressing symptoms (ambiguity in specific steps) rather than the root cause: **cognitive overload due to a complex, branching workflow pres",
+    "cost": 0.03,
+    "criteria": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "failures": [],
+    "decisionReason": "Stuck escalation triggered after 3+ rounds with no improvement",
+    "escalation": {
+      "diagnosis": "The skill is stuck in a local optimum because mutations are addressing symptoms (ambiguity in specific steps) rather than the root cause: **cognitive overload due to a complex, branching workflow presented as a single linear document.** The skill attempts to guide the agent through two distinct paths (Google Sheets vs. local file) using conditional logic (`if you have X, do Y, but skip Z`). Each mutation has added more text, tables, and reference blocks to clarify these conditions, paradoxically increasing the document's length and complexity. The agent fails not because the information is missing, but because it struggles to reliably parse the branching logic and maintain the correct state, leading it to mix up steps from the two paths. The intermittent high scores (36/36) indicate the instructions are technically complete, but their structure is brittle and not resilient to minor variations in interpretation.",
+      "evalRedesignNeeded": false,
+      "strategy": "Shift from incremental clarification to **structural simplification**. The current approach of adding more explanatory text has failed. The new strategy is to refactor the core workflow from a single, conditional procedure into two distinct, self-contained, and mutually exclusive procedures. This will eliminate the need for the agent to parse complex conditional logic (\"if-then-skip\") and instead present it with a simple, upfront choice followed by a linear, non-branching set of instructions. By separating the two workflows, we drastically reduce the cognitive load and the probability of procedural errors.",
+      "suggestedMutation": "Replace the entire `## Input Options` and `## Step-by-Step Workflow` sections with a new, clearer structure that forces an upfront decision and provides two separate, linear command sequences.\n\n**DELETE** the existing `## Input Options` and `## Step-by-Step Workflow` sections entirely.\n\n**REPLACE** them with the following new section:\n\n```markdown\n## Core Workflows\n\nFirst, determine the user's input source, then follow the corresponding path below. **Do not mix steps from different paths.**\n\n---\n\n### **Path A: Leads are in Google Sheets**\n\nFollow these steps if the user's leads are in a Google Sheet and need to be exported first.\n\n**Step 1: Create a working directory**\n```bash\nmkdir -p .tmp\n```\n\n**Step 2: Export leads from the sheet to a local file**\n```bash\npython3 ./scripts/read_sheet.py --output .tmp/leads.json\n```\n\n**Step 3: Verify the exported file**\n```bash\npython3 -c \"import json; data=json.load(open('.tmp/leads.json')); print(f'Loaded {len(data)} leads')\"\n```\n\n**Step 4: Run classification**\n> **Important:** Choose the `--classification_type` based on the user's request (`product_saas`, `high_ticket`, `subscription_model`). Default to `product_saas` if unsure.\n```bash\npython3 ./scripts/classify_leads_llm.py .tmp/leads.json \\\n  --classification_type product_saas \\\n  --output .tmp/classified_leads.json\n```\n\n**Step 5: Review and report results**\n```bash\npython3 -c \"\nimport json\nfrom collections import Counter\ndata = json.load(open('.tmp/classified_leads.json'))\nlabels = Counter(d.get('classification') for d in data)\nprint(f'Total leads processed: {len(data)}')\nprint('Classification breakdown:')\nfor label, count in labels.items():\n    print(f'  - {label}: {count}')\n\"\n```\n\n**Step 6: Update the original sheet with the results**\n```bash\npython3 ./scripts/update_sheet.py --input .tmp/classified_leads.json\n```\n\n---\n\n### **Path B: Leads are in a Local File (JSON/CSV)**\n\nFollow these steps if the user provides a direct path to a local file.\n\n**Step 1: Create a working directory**\n```bash\nmkdir -p .tmp\n```\n\n**Step 2: Prepare the input file**\n*   **If the file is JSON:** Copy it into the working directory for consistency.\n    ```bash\n    cp PATH_TO_FILE .tmp/leads.json\n    ```\n*   **If the file is CSV:** Convert it to the required JSON format.\n    ```bash\n    python3 -c \"\n    import csv, json\n    with open('PATH_TO_FILE') as f:\n        rows = list(csv.DictReader(f))\n    json.dump(rows, open('.tmp/leads.json','w'))\n    print(f'Converted {len(rows)} CSV rows to .tmp/leads.json')\n    \"\n    ```\n\n**Step 3: Run classification**\n> **Important:** Choose the `--classification_type` based on the user's request (`product_saas`, `high_ticket`, `subscription_model`). Default to `product_saas` if unsure.\n```bash\npython3 ./scripts/classify_leads_llm.py .tmp/leads.json \\\n  --classification_type product_saas \\\n  --output .tmp/classified_leads.json\n```\n\n**Step 4: Review and report results**\nReport the counts and the final file path to the user. **Do not run `update_sheet.py`**.\n```bash\necho \"Classification complete. The results are in .tmp/classified_leads.json\"\npython3 -c \"\nimport json\nfrom collections import Counter\ndata = json.load(open('.tmp/classified_leads.json'))\nlabels = Counter(d.get('classification') for d in data)\nprint(f'Total leads processed: {len(data)}')\nprint('Classification breakdown:')\nfor label, count in labels.items():\n    print(f'  - {label}: {count}')\n\"\n```\n```"
+    },
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-04-12T22:04:59.051Z"
+  },
+  {
+    "round": 15,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Replaced the conditional `## Input Options` and `## Step-by-Step Workflow` sections with two distinct, self-contained Path A and Path B workflows to eliminate conditional logic parsing and reduce procedural errors.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-04-12T22:05:34.417Z",
+    "changelog": "**Mutation**: Replaced the conditional `## Input Options` and `## Step-by-Step Workflow` sections with two distinct, self-contained Path A and Path B workflows to eliminate conditional logic parsing and reduce procedural errors.\n**Failures**: none\n**Per-criteria**: Task Completion: 6/6, Error Handling: 6/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 6/6, Completeness: 6/6\n**Decision**: Score 36 did not exceed best 36 — mutation produced worse or equal results"
+  },
+  {
+    "round": 16,
+    "score": 29,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Added an explicit \"Path Selection Decision Block\" at the top of Core Workflows with clear, deterministic criteria for choosing Path A vs Path B before any steps execute, eliminating ambiguous path detection that causes cascading failures across Task Completion, Output Quality, Tool Usage, Instructions Clarity, and Completeness.",
+    "cost": 0.05,
+    "criteria": [
+      5,
+      6,
+      5,
+      5,
+      4,
+      4
+    ],
+    "failures": [
+      {
+        "scenario": 3,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 3,
+        "criterion": "Completeness"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Output Quality"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Tool Usage"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Completeness"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 29 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-04-12T22:06:40.091Z",
+    "changelog": "**Mutation**: Added an explicit \"Path Selection Decision Block\" at the top of Core Workflows with clear, deterministic criteria for choosing Path A vs Path B before any steps execute, eliminating ambiguous path detection that causes cascading failures across Task Completion, Output Quality, Tool Usage, Instructions Clarity, and Completeness.\n**Failures**: S3: Instructions Clarity, S3: Completeness, S6: Task Completion, S6: Output Quality, S6: Tool Usage, S6: Instructions Clarity, S6: Completeness\n**Per-criteria**: Task Completion: 5/6, Error Handling: 6/6, Output Quality: 5/6, Tool Usage: 5/6, Instructions Clarity: 4/6, Completeness: 4/6\n**Decision**: Score 29 did not exceed best 36 — mutation produced worse or equal results"
+  },
+  {
+    "round": 17,
+    "score": 32,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "Added explicit \"then proceed with Path A/B\" directives to the two clarification rows in the Step 0 decision table, so agents don't stall after gathering the user's answer.",
+    "cost": 0.05,
+    "criteria": [
+      5,
+      6,
+      6,
+      5,
+      5,
+      5
+    ],
+    "failures": [
+      {
+        "scenario": 6,
+        "criterion": "Task Completion"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Tool Usage"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Instructions Clarity"
+      },
+      {
+        "scenario": 6,
+        "criterion": "Completeness"
+      }
+    ],
+    "geminiThoughts": null,
+    "decisionReason": "Score 32 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-04-13T14:00:42.226Z",
+    "changelog": "**Mutation**: Added explicit \"then proceed with Path A/B\" directives to the two clarification rows in the Step 0 decision table, so agents don't stall after gathering the user's answer.\n**Failures**: S6: Task Completion, S6: Tool Usage, S6: Instructions Clarity, S6: Completeness\n**Per-criteria**: Task Completion: 5/6, Error Handling: 6/6, Output Quality: 6/6, Tool Usage: 5/6, Instructions Clarity: 5/6, Completeness: 5/6\n**Decision**: Score 32 did not exceed best 36 — mutation produced worse or equal results"
+  },
+  {
+    "round": 18,
+    "score": 36,
+    "max": 36,
+    "status": "reverted",
+    "mutation": "All criteria pass with 0 failures — keeping the skill as-is since no mutations are needed.",
+    "cost": 0.05,
+    "criteria": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "failures": [],
+    "geminiThoughts": null,
+    "decisionReason": "Score 36 did not exceed best 36 — mutation produced worse or equal results",
+    "models": {
+      "evaluator": "gemini-2.5-pro",
+      "mutator": "sonnet"
+    },
+    "timestamp": "2026-04-15T06:00:48.393Z",
+    "changelog": "**Mutation**: All criteria pass with 0 failures — keeping the skill as-is since no mutations are needed.\n**Failures**: none\n**Per-criteria**: Task Completion: 6/6, Error Handling: 6/6, Output Quality: 6/6, Tool Usage: 6/6, Instructions Clarity: 6/6, Completeness: 6/6\n**Decision**: Score 36 did not exceed best 36 — mutation produced worse or equal results"
+  }
+]

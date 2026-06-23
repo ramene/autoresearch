@@ -1,0 +1,115 @@
+{
+  "name": "polymarket-paper-trading",
+  "description": "End-to-end: discover active 5-min markets → scan orderbook → detect flash crash opportunities → analyze market quality → execute paper trade → track position with TP/SL → report P&L",
+  "schedule": "continuous",
+  "domain": "prediction_markets",
+  "steps": [
+    {
+      "id": "discover",
+      "skill": "polymarket-market-discovery",
+      "input": {
+        "action": "find_active_5min_markets",
+        "coins": ["BTC", "ETH", "SOL"],
+        "market_type": "crypto_updown",
+        "timeframe": "5min"
+      },
+      "output_key": "active_markets"
+    },
+    {
+      "id": "orderbook",
+      "skill": "polymarket-orderbook-reader",
+      "input": {
+        "markets": "{{discover.active_markets}}",
+        "depth": 5,
+        "compute": ["spread", "mid_price", "liquidity", "imbalance"]
+      },
+      "output_key": "orderbook_state",
+      "depends_on": "discover"
+    },
+    {
+      "id": "flash-scan",
+      "skill": "polymarket-flash-crash-detector",
+      "input": {
+        "orderbook_state": "{{orderbook.orderbook_state}}",
+        "lookback_seconds": 10,
+        "drop_threshold": 0.30,
+        "markets": "{{discover.active_markets}}"
+      },
+      "output_key": "crash_events",
+      "depends_on": "orderbook"
+    },
+    {
+      "id": "analyze",
+      "skill": "polymarket-market-analyzer",
+      "input": {
+        "markets": "{{discover.active_markets}}",
+        "crash_events": "{{flash-scan.crash_events}}",
+        "min_liquidity": 10000,
+        "max_spread": 0.05,
+        "strategy": "flash_crash_entry"
+      },
+      "output_key": "opportunities",
+      "depends_on": "flash-scan"
+    },
+    {
+      "id": "trade",
+      "skill": "polymarket-5min-strategy",
+      "input": {
+        "opportunities": "{{analyze.opportunities}}",
+        "mode": "paper",
+        "entry_strategy": "discount_limit_bid",
+        "discount_pct": 0.10,
+        "bet_size_usd": 10,
+        "signals": {
+          "cvd": "check HyperLiquid cumulative volume delta",
+          "liquidations": "check Binance liquidation feed"
+        }
+      },
+      "output_key": "trade_result",
+      "depends_on": "analyze",
+      "filter": "opportunities_exist"
+    },
+    {
+      "id": "manage",
+      "skill": "polymarket-position-manager",
+      "input": {
+        "trade": "{{trade.trade_result}}",
+        "tp_delta": 0.10,
+        "sl_delta": 0.05,
+        "max_positions": 1,
+        "auto_exit_on_resolution": true
+      },
+      "output_key": "position_status",
+      "depends_on": "trade"
+    },
+    {
+      "id": "pnl",
+      "skill": "polymarket-portfolio-tracker",
+      "input": {
+        "positions": "{{manage.position_status}}",
+        "compute": ["realized_pnl", "unrealized_pnl", "win_rate", "avg_return"],
+        "timeframe": "session"
+      },
+      "output_key": "pnl_report",
+      "depends_on": "manage"
+    }
+  ],
+  "success_criteria": {
+    "markets_discovered": true,
+    "orderbook_read": true,
+    "analysis_completed": true,
+    "paper_trade_executed": true,
+    "pnl_reported": true
+  },
+  "notifications": {
+    "on_complete": "ramene.anthony@gmail.com",
+    "on_error": "ramene.anthony@gmail.com",
+    "summary_format": "Markets: {{discover.count}} → Opportunities: {{analyze.count}} → Trades: {{trade.count}} → P&L: {{pnl.total}}"
+  },
+  "budget": {
+    "mode": "paper",
+    "max_per_trade": 10,
+    "max_session": 100,
+    "note": "Paper trading only — no real funds"
+  }
+}

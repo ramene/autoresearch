@@ -1,0 +1,60 @@
+{
+  "scenarios": [
+    {
+      "id": 1,
+      "type": "happy",
+      "title": "Generate a standard daily status report",
+      "event": "Generate a standard daily status report.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 2,
+      "type": "happy",
+      "title": "Generate a report focusing only on skills with a score below 0.7",
+      "event": "Generate a report focusing only on skills with a score below 0.7.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 3,
+      "type": "happy",
+      "title": "Generate a report that includes a summary of recent user intent patterns",
+      "event": "Generate a report that includes a summary of recent user intent patterns.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 4,
+      "type": "diagnostic",
+      "title": "Generate a report during a period with no stuck skills",
+      "event": "Generate a report during a period with no stuck skills.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 5,
+      "type": "edge",
+      "title": "Generate a report and output it as a JSON object instead of Markdown",
+      "event": "Generate a report and output it as a JSON object instead of Markdown.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    },
+    {
+      "id": 6,
+      "type": "edge",
+      "title": "Generate a report that compares the number of stuck skills to the previous day's",
+      "event": "Generate a report that compares the number of stuck skills to the previous day's report.",
+      "expectedAction": "The skill should successfully handle this scenario and produce correct results.",
+      "expectedType": "action"
+    }
+  ],
+  "criteria": [
+    "Does the report correctly state the total number of skills, and their status (at target, stuck, untested): Does the report correctly state the total number of skills, and their status (at target, stuck, untested)?",
+    "Does the report list the top 3 skills with the most unresolved failures: Does the report list the top 3 skills with the most unresolved failures?",
+    "Does the report include the number of open unmet demands: Does the report include the number of open unmet demands?",
+    "Does the report highlight any skills that have recently become 'stuck' or 'plateauing': Does the report highlight any skills that have recently become 'stuck' or 'plateauing'?",
+    "Is the output formatted in clean, human-readable Markdown: Is the output formatted in clean, human-readable Markdown?",
+    "Complete its report generation in under 10 seconds: Does the skill complete its report generation in under 10 seconds?"
+  ]
+}

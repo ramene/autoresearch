@@ -1,0 +1,3014 @@
+{
+  "timestamp": "2026-06-20T14:01:40.528Z",
+  "version": "1.0",
+  "skills": {
+    "backup": {
+      "score": 0,
+      "max": 0,
+      "ratio": 0,
+      "trajectory": "untested",
+      "weakest_criteria": [],
+      "strongest_criteria": [],
+      "rounds_completed": 0,
+      "rounds_kept": 0,
+      "cost_invested": 0,
+      "last_improvement": null,
+      "last_escalation": null,
+      "stuck_count": 0,
+      "criteria_names": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ],
+      "scenario_count": 6,
+      "eval_coverage": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ]
+    },
+    "classify-leads": {
+      "score": 36,
+      "max": 36,
+      "ratio": 1,
+      "trajectory": "stuck",
+      "weakest_criteria": [
+        {
+          "name": "Completeness",
+          "fail_rate": 0.7
+        },
+        {
+          "name": "Instructions Clarity",
+          "fail_rate": 0.65
+        },
+        {
+          "name": "Task Completion",
+          "fail_rate": 0.6
+        }
+      ],
+      "strongest_criteria": [],
+      "rounds_completed": 20,
+      "rounds_kept": 6,
+      "cost_invested": 0.88,
+      "last_improvement": "2026-03-21T00:05:45.989Z",
+      "last_escalation": {
+        "diagnosis": "The skill is stuck in a local optimum because mutations are addressing symptoms (ambiguity in specific steps) rather than the root cause: **cognitive overload due to a complex, branching workflow presented as a single linear document.** The skill attempts to guide the agent through two distinct paths (Google Sheets vs. local file) using conditional logic (`if you have X, do Y, but skip Z`). Each mutation has added more text, tables, and reference blocks to clarify these conditions, paradoxically increasing the document's length and complexity. The agent fails not because the information is missing, but because it struggles to reliably parse the branching logic and maintain the correct state, leading it to mix up steps from the two paths. The intermittent high scores (36/36) indicate the instructions are technically complete, but their structure is brittle and not resilient to minor variations in interpretation.",
+        "timestamp": "2026-04-12T22:04:59.051Z"
+      },
+      "stuck_count": 5,
+      "criteria_names": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ],
+      "scenario_count": 6,
+      "eval_coverage": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ]
+    },
+    "container-security-auditor": {
+      "score": 37,
+      "max": 42,
+      "ratio": 0.881,
+      "trajectory": "stuck",
+      "weakest_criteria": [
+        {
+          "name": "Scan the target container image",
+          "fail_rate": 0.833
+        },
+        {
+          "name": "Does the output list identified vulnerabilities with severity levels",
+          "fail_rate": 0.833
+        },
+        {
+          "name": "Check for common misconfigurations (e.g., running as root)",
+          "fail_rate": 0.833
+        }
+      ],
+      "strongest_criteria": [
+        {
+          "name": "Complete the scan without crashing or timing out",
+          "fail_rate": 0
+        }
+      ],
+      "rounds_completed": 12,
+      "rounds_kept": 1,
+      "cost_invested": 0.56,
+      "last_improvement": "2026-03-20T20:35:59.486Z",
+      "last_escalation": {
+        "diagnosis": "The optimization loop is stuck in a local optimum because all recent mutations have focused on hardening a fundamentally flawed architectural pattern. The core weakness is the **brittle interface between the AI's cognitive step (parsing) and the shell execution step (scanning)**. The current design requires the AI to \"remember\" a string from Step 0 and then perfectly write it into a bash script in Step 2. This \"memory-to-code\" transcription is inherently unreliable. The numerous patches (adding explicit instructions, forbidding placeholders, using absolute paths) have improved reliability but cannot eliminate the root failure mode where the AI misremembers, hallucinates, or incorrectly formats the `INPUT_TARGET` line, causing the entire scan to fail. We have reached the point of diminishing returns for prompt engineering this specific weak point.",
+        "timestamp": "2026-03-30T06:08:52.243Z"
+      },
+      "stuck_count": 4,
+      "criteria_names": [
+        "Scan the target container image",
+        "Does the output list identified vulnerabilities with severity levels",
+        "Check for common misconfigurations (e.g., running as root)",
+        "Is the final report structured in a machine-readable format (e.g., JSON)",
+        "Provide actionable remediation advice for high-severity findings",
+        "Complete the scan without crashing or timing out"
+      ],
+      "scenario_count": 7,
+      "eval_coverage": [
+        "Scan the target container image",
+        "Does the output list identified vulnerabilities with severity levels",
+        "Check for common misconfigurations (e.g., running as root)",
+        "Is the final report structured in a machine-readable format (e.g., JSON)",
+        "Provide actionable remediation advice for high-severity findings",
+        "Complete the scan without crashing or timing out"
+      ]
+    },
+    "content-strategy-optimizer": {
+      "score": 24,
+      "max": 48,
+      "ratio": 0.5,
+      "trajectory": "improving",
+      "weakest_criteria": [
+        {
+          "name": "Data Grounding",
+          "fail_rate": 0.868
+        },
+        {
+          "name": "Audience Awareness",
+          "fail_rate": 0.868
+        },
+        {
+          "name": "Tool Utilization",
+          "fail_rate": 0.868
+        }
+      ],
+      "strongest_criteria": [],
+      "rounds_completed": 136,
+      "rounds_kept": 8,
+      "cost_invested": 4.92,
+      "last_improvement": "2026-03-23T22:00:43.616Z",
+      "last_escalation": {
+        "diagnosis": "The optimization loop is stuck due to a persistent failure in the meta-level mutation engine, not the skill's content. For at least 10 consecutive rounds, the system has failed to generate a new version of the skill because the command `.../bin/claude` is not found at the specified path (`No such file or directory`). This is an environmental or configuration error within the optimization harness itself. The 0/48 score is not a reflection of the skill's performance; the skill is never even being evaluated because the mutation step, which precedes evaluation, is crashing. The changelog shows that previous mutations (Rounds 35-43) were logical and successfully simplified the prompt to its current, highly direct form. Further mutations to the prompt content are futile until the underlying mutation engine is repaired.",
+        "timestamp": "2026-06-20T14:01:07.570Z"
+      },
+      "stuck_count": 15,
+      "criteria_names": [
+        "Data Grounding",
+        "Actionability",
+        "Audience Awareness",
+        "Tool Utilization",
+        "Measurement",
+        "Adaptation"
+      ],
+      "scenario_count": 8,
+      "eval_coverage": [
+        "Data Grounding",
+        "Actionability",
+        "Audience Awareness",
+        "Tool Utilization",
+        "Measurement",
+        "Adaptation"
+      ]
+    },
+    "context-drift-detector": {
+      "score": 50,
+      "max": 60,
+      "ratio": 0.833,
+      "trajectory": "stuck",
+      "weakest_criteria": [
+        {
+          "name": "Skill Integration",
+          "fail_rate": 0.882
+        },
+        {
+          "name": "Detection Coverage",
+          "fail_rate": 0.353
+        },
+        {
+          "name": "Severity Classification",
+          "fail_rate": 0.353
+        }
+      ],
+      "strongest_criteria": [],
+      "rounds_completed": 17,
+      "rounds_kept": 0,
+      "cost_invested": 0.79,
+      "last_improvement": null,
+      "last_escalation": {
+        "diagnosis": "The optimization loop is stuck in a local optimum because it has been adding sophisticated secondary features (severity classification, git integration, fix generation) on top of a fundamentally flawed core logic. The mutations from rounds 14-16 successfully restored functionality that was lost in a major refactor (Round 13), but the score is now capped at 33/60. The root cause of the remaining failures is the initial path detection step. The `grep` regex is too specific and brittle; it fails to find many valid path formats, such as paths without file extensions (e.g., `Makefile`, `Dockerfile`), directory-only paths (`src/utils`), or files with extensions not in its hardcoded list. Since no paths are found, the downstream features (severity, git, etc.) never execute, causing cascading failures across multiple evaluation criteria.",
+        "timestamp": "2026-03-27T14:05:54.283Z"
+      },
+      "stuck_count": 8,
+      "criteria_names": [
+        "Detection Coverage",
+        "Severity Classification",
+        "Git Integration",
+        "Ignore File",
+        "Fix Generation",
+        "Skill Integration"
+      ],
+      "scenario_count": 10,
+      "eval_coverage": [
+        "Detection Coverage",
+        "Severity Classification",
+        "Git Integration",
+        "Ignore File",
+        "Fix Generation",
+        "Skill Integration"
+      ]
+    },
+    "context-loader": {
+      "score": 224,
+      "max": 224,
+      "ratio": 1,
+      "trajectory": "stuck",
+      "weakest_criteria": [
+        {
+          "name": "Argument Clarity",
+          "fail_rate": 0.8
+        },
+        {
+          "name": "Targeted Scans",
+          "fail_rate": 0.133
+        },
+        {
+          "name": "Output Specification",
+          "fail_rate": 0.133
+        }
+      ],
+      "strongest_criteria": [],
+      "rounds_completed": 15,
+      "rounds_kept": 3,
+      "cost_invested": 0.51,
+      "last_improvement": "2026-03-14T22:17:50.978Z",
+      "last_escalation": null,
+      "stuck_count": 10,
+      "criteria_names": [
+        "Default Behavior",
+        "Depth Differentiation",
+        "Refresh Logic",
+        "Targeted Scans",
+        "Output Specification",
+        "Implicit No-Op",
+        "Tool Requirements",
+        "Scope Definition",
+        "Error Handling (Permissions)",
+        "Error Handling (Invalid Target)",
+        "Argument Clarity",
+        "Conditional Execution",
+        "No-Op Gate Precedence",
+        "Input/Output Path Separation"
+      ],
+      "scenario_count": 16,
+      "eval_coverage": [
+        "Default Behavior",
+        "Depth Differentiation",
+        "Refresh Logic",
+        "Targeted Scans",
+        "Output Specification",
+        "Implicit No-Op",
+        "Tool Requirements",
+        "Scope Definition",
+        "Error Handling (Permissions)",
+        "Error Handling (Invalid Target)",
+        "Argument Clarity",
+        "Conditional Execution",
+        "No-Op Gate Precedence",
+        "Input/Output Path Separation"
+      ]
+    },
+    "create-proposal": {
+      "score": 36,
+      "max": 36,
+      "ratio": 1,
+      "trajectory": "improving",
+      "weakest_criteria": [
+        {
+          "name": "Task Completion",
+          "fail_rate": 0.353
+        },
+        {
+          "name": "Error Handling",
+          "fail_rate": 0.294
+        },
+        {
+          "name": "Output Quality",
+          "fail_rate": 0.294
+        }
+      ],
+      "strongest_criteria": [],
+      "rounds_completed": 17,
+      "rounds_kept": 3,
+      "cost_invested": 0.81,
+      "last_improvement": "2026-03-19T20:51:49.113Z",
+      "last_escalation": {
+        "diagnosis": "The optimization loop is stuck because the skill has achieved a perfect score against the current evaluation suite. It has reached the global optimum for the existing 36 test criteria. The mutations are not improving the score because there is no room for improvement; any change is either neutral or a regression against the mastered test cases. The problem is not with the skill's quality but with the evaluation suite's lack of new, more challenging scenarios to drive further development.",
+        "timestamp": "2026-04-19T14:04:13.388Z"
+      },
+      "stuck_count": 5,
+      "criteria_names": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ],
+      "scenario_count": 6,
+      "eval_coverage": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ]
+    },
+    "cross-model-intelligence-pipeline": {
+      "score": 48,
+      "max": 48,
+      "ratio": 1,
+      "trajectory": "plateauing",
+      "weakest_criteria": [
+        {
+          "name": "Citation Accuracy",
+          "fail_rate": 0.067
+        }
+      ],
+      "strongest_criteria": [
+        {
+          "name": "Synthesis Completeness",
+          "fail_rate": 0
+        },
+        {
+          "name": "Evidence Grounding",
+          "fail_rate": 0
+        },
+        {
+          "name": "Adversarial Rigor",
+          "fail_rate": 0
+        }
+      ],
+      "rounds_completed": 15,
+      "rounds_kept": 3,
+      "cost_invested": 0.71,
+      "last_improvement": "2026-03-15T22:12:05.675Z",
+      "last_escalation": {
+        "diagnosis": "The optimization loop is stuck in a \"local optimum of robustness.\" The skill has perfectly satisfied the evaluation criteria, which primarily measure structural integrity, completeness, and adherence to format. All recent mutations have been adding more guardrails (completeness checks, citation rules, length gates, variable checks) to an already over-engineered and structurally sound pipeline. While these changes make the skill less likely to fail, they do not improve the *quality* of the reasoning or the *depth* of the insights produced, which the current evaluation criteria are not sensitive enough to measure. The system is adding more armor to a tank that already can't be pierced by the test suite's ammunition, resulting in no score change.",
+        "timestamp": "2026-04-20T14:08:09.914Z"
+      },
+      "stuck_count": 5,
+      "criteria_names": [
+        "Synthesis Completeness",
+        "Evidence Grounding",
+        "Adversarial Rigor",
+        "Actionability",
+        "Cross-Stage Coherence",
+        "Citation Accuracy"
+      ],
+      "scenario_count": 8,
+      "eval_coverage": [
+        "Synthesis Completeness",
+        "Evidence Grounding",
+        "Adversarial Rigor",
+        "Actionability",
+        "Cross-Stage Coherence",
+        "Citation Accuracy"
+      ]
+    },
+    "cross-niche-outliers": {
+      "score": 36,
+      "max": 36,
+      "ratio": 1,
+      "trajectory": "improving",
+      "weakest_criteria": [
+        {
+          "name": "Instructions Clarity",
+          "fail_rate": 0.588
+        },
+        {
+          "name": "Output Quality",
+          "fail_rate": 0.529
+        },
+        {
+          "name": "Completeness",
+          "fail_rate": 0.529
+        }
+      ],
+      "strongest_criteria": [],
+      "rounds_completed": 17,
+      "rounds_kept": 4,
+      "cost_invested": 0.71,
+      "last_improvement": "2026-03-20T01:52:41.673Z",
+      "last_escalation": {
+        "diagnosis": "The skill is stuck in a local optimum of \"procedural perfection.\" Past mutations have successfully built an extremely clear, linear, and robust step-by-step guide for an AI agent. The skill now perfectly handles prerequisites, execution, and multiple layers of fallbacks, which is why it consistently scores 36/36 on the existing test suite. The optimization loop is now making micro-refinements to a process that already works flawlessly according to the tests. The root cause of the stagnation is that the skill has become a bloated, monolithic document trying to serve as both a concise agent-facing prompt and an exhaustive human-facing user manual. This dual identity prevents further meaningful improvement; any change to improve one aspect risks confusing the other, and the tests aren't sophisticated enough to reward the next level of improvement: agentic efficiency and conciseness.",
+        "timestamp": "2026-03-25T14:06:53.308Z"
+      },
+      "stuck_count": 5,
+      "criteria_names": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ],
+      "scenario_count": 6,
+      "eval_coverage": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ]
+    },
+    "deep-plan-v2": {
+      "score": 0,
+      "max": 0,
+      "ratio": 0,
+      "trajectory": "untested",
+      "weakest_criteria": [],
+      "strongest_criteria": [],
+      "rounds_completed": 0,
+      "rounds_kept": 0,
+      "cost_invested": 0,
+      "last_improvement": null,
+      "last_escalation": null,
+      "stuck_count": 0,
+      "criteria_names": [
+        "Phase Detection",
+        "Question Quality",
+        "Quality Gate",
+        "Footgun Detection",
+        "Stuck/Checkpoint",
+        "Proportionality"
+      ],
+      "scenario_count": 10,
+      "eval_coverage": [
+        "Phase Detection",
+        "Question Quality",
+        "Quality Gate",
+        "Footgun Detection",
+        "Stuck/Checkpoint",
+        "Proportionality"
+      ]
+    },
+    "defi-arbitrage-executor": {
+      "score": 36,
+      "max": 36,
+      "ratio": 1,
+      "trajectory": "stuck",
+      "weakest_criteria": [],
+      "strongest_criteria": [
+        {
+          "name": "Identify price discrepancies across at least 2 DEXes",
+          "fail_rate": 0
+        },
+        {
+          "name": "Calculate net profit after gas costs before recommending execution",
+          "fail_rate": 0
+        },
+        {
+          "name": "Enforce the configured budget limit before any on-chain transaction",
+          "fail_rate": 0
+        }
+      ],
+      "rounds_completed": 12,
+      "rounds_kept": 1,
+      "cost_invested": 0.56,
+      "last_improvement": "2026-03-20T20:48:48.976Z",
+      "last_escalation": {
+        "diagnosis": "The optimization loop is stuck in a \"success plateau\" because the skill's robustness and correctness have surpassed the complexity of the evaluation suite. The score of 36/36 indicates the skill passes all existing tests, but the recent mutations (adding slippage, fee tiers, decimal normalization, receipt parsing) have all been critical, real-world fixes that the test scenarios are not designed to validate. The evaluation suite is likely testing the \"happy path\" (a simple, profitable trade exists and works) but lacks negative test cases or complex scenarios that would fail a less robust version of the skill. Therefore, the mutations are genuinely improving the skill's quality and safety, but the score remains static because the evaluation criteria are saturated.",
+        "timestamp": "2026-04-20T22:10:14.386Z"
+      },
+      "stuck_count": 4,
+      "criteria_names": [
+        "Identify price discrepancies across at least 2 DEXes",
+        "Calculate net profit after gas costs before recommending execution",
+        "Enforce the configured budget limit before any on-chain transaction",
+        "Handle failed transactions gracefully without losing funds",
+        "Provide a clear, actionable summary of opportunities found",
+        "Work on both testnet (BASE Sepolia) and mainnet (BASE) configurations"
+      ],
+      "scenario_count": 6,
+      "eval_coverage": [
+        "Identify price discrepancies across at least 2 DEXes",
+        "Calculate net profit after gas costs before recommending execution",
+        "Enforce the configured budget limit before any on-chain transaction",
+        "Handle failed transactions gracefully without losing funds",
+        "Provide a clear, actionable summary of opportunities found",
+        "Work on both testnet (BASE Sepolia) and mainnet (BASE) configurations"
+      ]
+    },
+    "eaas-payment-linker": {
+      "score": 36,
+      "max": 36,
+      "ratio": 1,
+      "trajectory": "improving",
+      "weakest_criteria": [
+        {
+          "name": "Authenticate with the 'eaas' API",
+          "fail_rate": 0.667
+        },
+        {
+          "name": "Generate a valid, clickable payment URL",
+          "fail_rate": 0.667
+        },
+        {
+          "name": "Is the generated link associated with the correct service ID",
+          "fail_rate": 0.667
+        }
+      ],
+      "strongest_criteria": [
+        {
+          "name": "Handle API errors gracefully (e.g., invalid service ID)",
+          "fail_rate": 0
+        }
+      ],
+      "rounds_completed": 12,
+      "rounds_kept": 2,
+      "cost_invested": 0.46,
+      "last_improvement": "2026-03-20T18:02:12.291Z",
+      "last_escalation": {
+        "diagnosis": "The optimization loop is not stuck at a single score; it is thrashing. It achieved a perfect score (36/36) in Round 1 after a critical fix. Subsequent mutations, while intended to improve robustness (e.g., adding explicit `jq` parsing and null-checks), made the execution steps significantly more complex. These changes introduced multi-line shell scripts that the agent likely fails to execute correctly, causing the score to regress to 29/36. The optimizer correctly reverts these failing mutations but then attempts similar \"robustness\" changes, leading to an oscillation between a high-performing but simple prompt and a low-performing but complex one. The root cause is over-prescription; the complex, multi-step commands are more fragile in practice than the simpler, more abstract instructions they replaced.",
+        "timestamp": "2026-04-21T22:02:21.910Z"
+      },
+      "stuck_count": 3,
+      "criteria_names": [
+        "Authenticate with the 'eaas' API",
+        "Generate a valid, clickable payment URL",
+        "Is the generated link associated with the correct service ID",
+        "Is the generated link for the correct currency and amount",
+        "Handle API errors gracefully (e.g., invalid service ID)",
+        "Log the generated link and associated metadata for tracking"
+      ],
+      "scenario_count": 6,
+      "eval_coverage": [
+        "Authenticate with the 'eaas' API",
+        "Generate a valid, clickable payment URL",
+        "Is the generated link associated with the correct service ID",
+        "Is the generated link for the correct currency and amount",
+        "Handle API errors gracefully (e.g., invalid service ID)",
+        "Log the generated link and associated metadata for tracking"
+      ]
+    },
+    "failure-log-analyzer": {
+      "score": 30,
+      "max": 36,
+      "ratio": 0.833,
+      "trajectory": "stuck",
+      "weakest_criteria": [
+        {
+          "name": "Parse the structured log data",
+          "fail_rate": 0.857
+        },
+        {
+          "name": "Identify the specific tool call or code line that produced the error",
+          "fail_rate": 0.857
+        },
+        {
+          "name": "Does the hypothesis distinguish between transient (e.g., API timeout) and systemic (e.g., bad prompt) errors",
+          "fail_rate": 0.857
+        }
+      ],
+      "strongest_criteria": [],
+      "rounds_completed": 7,
+      "rounds_kept": 1,
+      "cost_invested": 0.31,
+      "last_improvement": "2026-03-20T20:00:39.597Z",
+      "last_escalation": {
+        "diagnosis": "The optimization process is stuck in a \"robustness plateau.\" All recent mutations have focused on improving the skill's resilience to edge cases in the input data: malformed log lines, non-standard round number fields, varied error event formats, and missing optional files. While these are valuable improvements, they only affect the initial data ingestion and failure identification steps (Steps 1-3). The consistent 30/36 score, with all failures occurring in the same scenario (S6), indicates that the core analytical and reasoning logic (Step 4: \"Analyze Failure Context and Hypothesize Cause\") is the actual weak point. The skill is successfully *finding* the failure event but is failing to correctly *interpret its cause* in a specific, complex scenario that the robustness tweaks do not address.",
+        "timestamp": "2026-03-20T20:11:37.777Z"
+      },
+      "stuck_count": 3,
+      "criteria_names": [
+        "Parse the structured log data",
+        "Identify the specific tool call or code line that produced the error",
+        "Does the hypothesis distinguish between transient (e.g., API timeout) and systemic (e.g., bad prompt) errors",
+        "Does the analysis pinpoint the specific evaluation criterion that failed",
+        "Is the output a concise summary of the likely cause",
+        "Suggest a next step for debugging (e.g., 'rerun with verbose logging', 'examine prompt for ambiguity')"
+      ],
+      "scenario_count": 6,
+      "eval_coverage": [
+        "Parse the structured log data",
+        "Identify the specific tool call or code line that produced the error",
+        "Does the hypothesis distinguish between transient (e.g., API timeout) and systemic (e.g., bad prompt) errors",
+        "Does the analysis pinpoint the specific evaluation criterion that failed",
+        "Is the output a concise summary of the likely cause",
+        "Suggest a next step for debugging (e.g., 'rerun with verbose logging', 'examine prompt for ambiguity')"
+      ]
+    },
+    "gmail": {
+      "score": 36,
+      "max": 36,
+      "ratio": 1,
+      "trajectory": "plateauing",
+      "weakest_criteria": [
+        {
+          "name": "Completeness",
+          "fail_rate": 0.556
+        },
+        {
+          "name": "Tool Usage",
+          "fail_rate": 0.5
+        },
+        {
+          "name": "Instructions Clarity",
+          "fail_rate": 0.5
+        }
+      ],
+      "strongest_criteria": [],
+      "rounds_completed": 18,
+      "rounds_kept": 2,
+      "cost_invested": 0.74,
+      "last_improvement": "2026-03-20T10:09:05.569Z",
+      "last_escalation": {
+        "diagnosis": "The optimization loop is stuck in a \"perfect score\" local optimum. The skill achieved a 36/36 baseline score, meaning the existing evaluation suite is saturated—it contains no test cases that the current skill fails. Subsequent mutations have been incremental clarifications or additions of examples (e.g., `--json` flag, account selection logic) which, while improving prompt quality, cannot raise a score that is already at its maximum. This creates a state of \"brittle perfection\" where any change risks a regression (like in Round 8) but offers no potential for reward. The recent `Command failed` errors are a separate infrastructure issue, but they obscure the core problem: the optimizer has no gradient to climb because the tests are too easy for the current skill.",
+        "timestamp": "2026-04-22T06:02:14.106Z"
+      },
+      "stuck_count": 4,
+      "criteria_names": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ],
+      "scenario_count": 6,
+      "eval_coverage": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ]
+    },
+    "gmail-inbox": {
+      "score": 36,
+      "max": 36,
+      "ratio": 1,
+      "trajectory": "improving",
+      "weakest_criteria": [
+        {
+          "name": "Completeness",
+          "fail_rate": 0.353
+        },
+        {
+          "name": "Instructions Clarity",
+          "fail_rate": 0.294
+        },
+        {
+          "name": "Error Handling",
+          "fail_rate": 0.235
+        }
+      ],
+      "strongest_criteria": [],
+      "rounds_completed": 17,
+      "rounds_kept": 3,
+      "cost_invested": 0.71,
+      "last_improvement": "2026-03-20T12:03:03.586Z",
+      "last_escalation": {
+        "diagnosis": "The optimization is stuck due to a combination of test suite exhaustion and flawed expansion attempts. The skill achieved a perfect score of 36/36 in Round 2, indicating it has mastered the existing test scenarios. Subsequent attempts to add new functionality (e.g., filter creation in Round 8) caused a score regression to 24/36, because the new instructions likely confused the agent on the core tasks the tests evaluate, or were incomplete. The system correctly reverted this change. The optimization loop is now oscillating between a \"perfect\" state where no mutations are needed and failed attempts to expand functionality that aren't supported by the test suite. The most recent rounds also show a systemic failure in the mutation engine itself (`claude: No such file or directory`), which is preventing any new changes from being tested and locking the skill in a regressed state.",
+        "timestamp": "2026-04-22T14:02:33.180Z"
+      },
+      "stuck_count": 5,
+      "criteria_names": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ],
+      "scenario_count": 6,
+      "eval_coverage": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ]
+    },
+    "gmail-label": {
+      "score": 36,
+      "max": 36,
+      "ratio": 1,
+      "trajectory": "improving",
+      "weakest_criteria": [
+        {
+          "name": "Instructions Clarity",
+          "fail_rate": 0.316
+        },
+        {
+          "name": "Completeness",
+          "fail_rate": 0.316
+        },
+        {
+          "name": "Error Handling",
+          "fail_rate": 0.263
+        }
+      ],
+      "strongest_criteria": [],
+      "rounds_completed": 19,
+      "rounds_kept": 5,
+      "cost_invested": 0.67,
+      "last_improvement": "2026-04-05T14:33:14.318Z",
+      "last_escalation": {
+        "diagnosis": "The optimization loop is not stuck due to a flaw in the skill's logic or hitting a true local optimum in terms of performance. The skill successfully reached a perfect score of 36/36 in Round 5. The subsequent 10 rounds have failed because the **mutation generation process itself is broken**, as evidenced by the repeated `Command failed: ... /bin/claude: No such file or directory` error. This is an external infrastructure or environment configuration issue with the optimization system, not a problem with the skill's content. The system cannot generate new skill variations to test, so it repeatedly fails, reverts, and gets stuck, regardless of the skill's content.",
+        "timestamp": "2026-04-23T14:02:20.563Z"
+      },
+      "stuck_count": 6,
+      "criteria_names": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ],
+      "scenario_count": 6,
+      "eval_coverage": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ]
+    },
+    "gmaps-leads": {
+      "score": 36,
+      "max": 36,
+      "ratio": 1,
+      "trajectory": "stuck",
+      "weakest_criteria": [
+        {
+          "name": "Task Completion",
+          "fail_rate": 0.056
+        },
+        {
+          "name": "Output Quality",
+          "fail_rate": 0.056
+        },
+        {
+          "name": "Instructions Clarity",
+          "fail_rate": 0.056
+        }
+      ],
+      "strongest_criteria": [
+        {
+          "name": "Error Handling",
+          "fail_rate": 0
+        },
+        {
+          "name": "Tool Usage",
+          "fail_rate": 0
+        }
+      ],
+      "rounds_completed": 18,
+      "rounds_kept": 1,
+      "cost_invested": 0.74,
+      "last_improvement": "2026-03-20T20:16:24.957Z",
+      "last_escalation": {
+        "diagnosis": "The optimization loop is stuck in a local optimum of \"perfect documentation.\" The skill has achieved a maximum score of 36/36, indicating it has saturated the existing evaluation suite. The evaluation criteria appear to focus on clarity, completeness, correctness of examples, and the presence of core features. Subsequent mutations are making valid but incremental improvements (e.g., adding examples, reorganizing sections, adding quality-of-life flags like `--min-rating`), but these changes cannot increase a score that is already maxed out. The system is trying to perfect a skill that already meets all defined quality bars, leading to zero-gain mutations.",
+        "timestamp": "2026-04-23T22:01:47.418Z"
+      },
+      "stuck_count": 5,
+      "criteria_names": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ],
+      "scenario_count": 6,
+      "eval_coverage": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ]
+    },
+    "goal-to-skill-executor": {
+      "score": 48,
+      "max": 48,
+      "ratio": 1,
+      "trajectory": "plateauing",
+      "weakest_criteria": [],
+      "strongest_criteria": [
+        {
+          "name": "Identify one or more relevant skills to achieve the given goal",
+          "fail_rate": 0
+        },
+        {
+          "name": "Generate a valid, ordered sequence of skill calls",
+          "fail_rate": 0
+        },
+        {
+          "name": "Can the skill extract or infer the necessary parameters for each skill call from the goal description",
+          "fail_rate": 0
+        }
+      ],
+      "rounds_completed": 13,
+      "rounds_kept": 2,
+      "cost_invested": 0.41,
+      "last_improvement": "2026-04-24T06:00:26.963Z",
+      "last_escalation": {
+        "diagnosis": "The optimization loop is stuck for two primary reasons. The most critical is **test suite saturation**: the skill has achieved a perfect score of 48/48, meaning the existing evaluation scenarios are no longer challenging enough to reveal weaknesses or create a gradient for improvement. Any mutation, even a beneficial one, is likely to also score 48/48, be registered as \"no improvement,\" and be reverted. The secondary issue, evident in the logs, is a recurring technical failure in the mutation generation command (`claude: No such file or directory`), which prevents any new logic from even being tested. However, the fundamental problem is that the skill has outgrown its tests.",
+        "timestamp": "2026-04-24T14:01:41.642Z"
+      },
+      "stuck_count": 4,
+      "criteria_names": [
+        "Identify one or more relevant skills to achieve the given goal",
+        "Generate a valid, ordered sequence of skill calls",
+        "Can the skill extract or infer the necessary parameters for each skill call from the goal description",
+        "Trigger the execution of the generated plan",
+        "Can the skill handle goals that require no immediate action (e.g., monitoring goals)",
+        "Recognize when no existing skill can satisfy the goal and flag it as a capability gap"
+      ],
+      "scenario_count": 8,
+      "eval_coverage": [
+        "Identify one or more relevant skills to achieve the given goal",
+        "Generate a valid, ordered sequence of skill calls",
+        "Can the skill extract or infer the necessary parameters for each skill call from the goal description",
+        "Trigger the execution of the generated plan",
+        "Can the skill handle goals that require no immediate action (e.g., monitoring goals)",
+        "Recognize when no existing skill can satisfy the goal and flag it as a capability gap"
+      ]
+    },
+    "inbox-cleaner": {
+      "score": 36,
+      "max": 36,
+      "ratio": 1,
+      "trajectory": "improving",
+      "weakest_criteria": [
+        {
+          "name": "Task Completion",
+          "fail_rate": 0.294
+        },
+        {
+          "name": "Completeness",
+          "fail_rate": 0.294
+        },
+        {
+          "name": "Error Handling",
+          "fail_rate": 0.235
+        }
+      ],
+      "strongest_criteria": [],
+      "rounds_completed": 17,
+      "rounds_kept": 3,
+      "cost_invested": 0.71,
+      "last_improvement": "2026-03-20T20:22:09.083Z",
+      "last_escalation": {
+        "diagnosis": "The optimization loop is stuck in a classic local optimum. The skill has been refined to a point of perfection (36/36) against its current evaluation suite. The optimizer's conservative strategy of reverting any mutation that doesn't yield a higher score makes improvement impossible, as there is no score higher than 36. The skill is a highly prescriptive, static runbook that perfectly handles the tested scenarios (single account, all three accounts, error handling). However, its rigidity and hardcoded values are a latent flaw that the current tests do not expose.",
+        "timestamp": "2026-04-24T22:02:10.777Z"
+      },
+      "stuck_count": 5,
+      "criteria_names": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ],
+      "scenario_count": 6,
+      "eval_coverage": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ]
+    },
+    "instantly-autoreply": {
+      "score": 36,
+      "max": 36,
+      "ratio": 1,
+      "trajectory": "improving",
+      "weakest_criteria": [
+        {
+          "name": "Task Completion",
+          "fail_rate": 0.353
+        },
+        {
+          "name": "Error Handling",
+          "fail_rate": 0.353
+        },
+        {
+          "name": "Output Quality",
+          "fail_rate": 0.353
+        }
+      ],
+      "strongest_criteria": [],
+      "rounds_completed": 17,
+      "rounds_kept": 3,
+      "cost_invested": 0.69,
+      "last_improvement": "2026-03-20T20:32:54.633Z",
+      "last_escalation": {
+        "diagnosis": "The optimization loop is stuck in a local optimum because the skill has achieved a perfect score against an insufficiently comprehensive evaluation suite. The existing test scenarios, including the one added in Round 9, only cover the \"happy path\" and the \"user needs help finding the ID\" path. All subsequent mutations are minor, defensive clarifications (e.g., adding help text for missing API keys or wrong directories) because there is no negative feedback (i.e., failing tests) to guide the optimizer toward more substantial functional improvements. The system is essentially \"polishing\" a skill that already solves the few problems it's being tested against, rather than expanding its core capabilities.",
+        "timestamp": "2026-04-25T06:02:19.577Z"
+      },
+      "stuck_count": 5,
+      "criteria_names": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ],
+      "scenario_count": 6,
+      "eval_coverage": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ]
+    },
+    "instantly-campaigns": {
+      "score": 36,
+      "max": 36,
+      "ratio": 1,
+      "trajectory": "improving",
+      "weakest_criteria": [
+        {
+          "name": "Task Completion",
+          "fail_rate": 0.417
+        },
+        {
+          "name": "Error Handling",
+          "fail_rate": 0.417
+        },
+        {
+          "name": "Completeness",
+          "fail_rate": 0.417
+        }
+      ],
+      "strongest_criteria": [],
+      "rounds_completed": 24,
+      "rounds_kept": 4,
+      "cost_invested": 1.02,
+      "last_improvement": "2026-03-26T06:03:28.926Z",
+      "last_escalation": {
+        "diagnosis": "The optimization loop is stuck for two primary reasons. First, the skill has achieved a perfect score (36/36) against the current evaluation suite, meaning there are no remaining failures for the optimizer to reactively fix. The skill is at a global maximum for the given tests. Second, a persistent infrastructure failure (`claude: No such file or directory`) in recent rounds (15-18) indicates the mutation generation mechanism itself is broken, preventing any new strategies from even being attempted. The core problem is that the evaluation suite is no longer challenging enough to reveal weaknesses or guide further improvement.",
+        "timestamp": "2026-04-25T22:02:01.991Z"
+      },
+      "stuck_count": 4,
+      "criteria_names": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ],
+      "scenario_count": 6,
+      "eval_coverage": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ]
+    },
+    "intent-clarifier": {
+      "score": 48,
+      "max": 48,
+      "ratio": 1,
+      "trajectory": "plateauing",
+      "weakest_criteria": [],
+      "strongest_criteria": [
+        {
+          "name": "Identify implicit assumptions in the user's request",
+          "fail_rate": 0
+        },
+        {
+          "name": "Generate specific, non-leading questions to resolve ambiguities",
+          "fail_rate": 0
+        },
+        {
+          "name": "Does the output provide a structured, confirmed plan of action",
+          "fail_rate": 0
+        }
+      ],
+      "rounds_completed": 13,
+      "rounds_kept": 2,
+      "cost_invested": 0.41,
+      "last_improvement": "2026-04-26T06:00:32.232Z",
+      "last_escalation": {
+        "diagnosis": "The optimization loop is stuck for two primary reasons. The most critical and immediate cause is a systemic failure in the mutation execution environment. The logs consistently show the error `claude: No such file or directory`, indicating that the script responsible for generating new skill variations cannot run. Consequently, no new mutations are ever created; the system repeatedly tests the original, perfect-scoring baseline skill. The second, more strategic reason for the plateau is that the skill has achieved a perfect score (48/48), suggesting the existing test scenarios are no longer sufficient to reveal weaknesses. The evaluation suite has created a local optimum where the skill is \"perfect\" relative to its tests, leaving no gradient for the optimizer to climb, even if the mutation engine were working.",
+        "timestamp": "2026-04-26T14:02:01.734Z"
+      },
+      "stuck_count": 4,
+      "criteria_names": [
+        "Identify implicit assumptions in the user's request",
+        "Generate specific, non-leading questions to resolve ambiguities",
+        "Does the output provide a structured, confirmed plan of action",
+        "Halt execution of a downstream skill if the user denies the clarified plan",
+        "Can the skill re-phrase the user's goal into a set of explicit, verifiable requirements",
+        "Parse and incorporate answers to its own questions into the final plan"
+      ],
+      "scenario_count": 8,
+      "eval_coverage": [
+        "Identify implicit assumptions in the user's request",
+        "Generate specific, non-leading questions to resolve ambiguities",
+        "Does the output provide a structured, confirmed plan of action",
+        "Halt execution of a downstream skill if the user denies the clarified plan",
+        "Can the skill re-phrase the user's goal into a set of explicit, verifiable requirements",
+        "Parse and incorporate answers to its own questions into the final plan"
+      ]
+    },
+    "interactive-skill-refiner": {
+      "score": 44,
+      "max": 48,
+      "ratio": 0.917,
+      "trajectory": "improving",
+      "weakest_criteria": [
+        {
+          "name": "Propose a specific, actionable modification based on the diagnosis",
+          "fail_rate": 0.9
+        },
+        {
+          "name": "Generate new, relevant tests using `skill-test-generator` to verify the fix",
+          "fail_rate": 0.9
+        },
+        {
+          "name": "Apply the user-approved modification to the skill's definition",
+          "fail_rate": 0.9
+        }
+      ],
+      "strongest_criteria": [],
+      "rounds_completed": 10,
+      "rounds_kept": 2,
+      "cost_invested": 0.48,
+      "last_improvement": "2026-03-25T23:15:06.963Z",
+      "last_escalation": {
+        "diagnosis": "The optimization is stuck in a local optimum because all recent mutations have been low-level, tactical fixes to individual steps (e.g., shell command syntax, input parsing) rather than addressing the core architectural flaw. The persistent failure across multiple criteria (proposing, generating tests, applying, and running tests) indicates a cascade failure originating from a single weak point: **fragile state management**. The skill relies on the agent to implicitly remember the content of `/tmp/skill_proposed.tmp` across multiple, complex steps (user confirmation, test generation, baseline test run). When it finally reaches Step 7 (\"Apply the Modification\"), any slight deviation or misinterpretation causes the agent to lose this state, breaking the rest of the chain. The mutations have fixed *how* to show a diff, but not *how to reliably apply what was diffed*.",
+        "timestamp": "2026-03-30T22:09:46.038Z"
+      },
+      "stuck_count": 5,
+      "criteria_names": [
+        "Identify the target skill from user input",
+        "Invoke `stuck-skill-diagnoser` or `failure-log-analyzer` to find root causes",
+        "Propose a specific, actionable modification based on the diagnosis",
+        "Generate new, relevant tests using `skill-test-generator` to verify the fix",
+        "Apply the user-approved modification to the skill's definition",
+        "Run the new tests using `skill-test-runner` and report the before/after scores"
+      ],
+      "scenario_count": 8,
+      "eval_coverage": [
+        "Identify the target skill from user input",
+        "Invoke `stuck-skill-diagnoser` or `failure-log-analyzer` to find root causes",
+        "Propose a specific, actionable modification based on the diagnosis",
+        "Generate new, relevant tests using `skill-test-generator` to verify the fix",
+        "Apply the user-approved modification to the skill's definition",
+        "Run the new tests using `skill-test-runner` and report the before/after scores"
+      ]
+    },
+    "k8s-deployment-manager": {
+      "score": 36,
+      "max": 36,
+      "ratio": 1,
+      "trajectory": "stuck",
+      "weakest_criteria": [
+        {
+          "name": "Can the skill list current deployments in a specified namespace",
+          "fail_rate": 0.333
+        },
+        {
+          "name": "Can the skill update the image for an existing deployment",
+          "fail_rate": 0.333
+        },
+        {
+          "name": "Can the skill report the status of a rollout successfully",
+          "fail_rate": 0.333
+        }
+      ],
+      "strongest_criteria": [
+        {
+          "name": "Handle authentication with the Kubernetes API correctly",
+          "fail_rate": 0
+        }
+      ],
+      "rounds_completed": 12,
+      "rounds_kept": 1,
+      "cost_invested": 0.46,
+      "last_improvement": "2026-03-20T21:08:03.161Z",
+      "last_escalation": {
+        "diagnosis": "The optimization loop is not stuck due to the skill's logic or the quality of mutations; it is stuck because of a fundamental tooling failure in the mutation generation process. The error logs from recent rounds (`/bin/sh: .../claude: No such file or directory`) clearly indicate that the system cannot execute the language model to generate a new version of the skill. Consequently, no intelligent mutations are being applied. The system is likely re-evaluating a corrupted or old version of the skill, causing the score to regress from a perfect 36/36 to 18/36 and remain there. The root cause is an environmental or configuration issue, not a flaw in the skill's design or a true local optimum.",
+        "timestamp": "2026-04-26T22:02:08.069Z"
+      },
+      "stuck_count": 4,
+      "criteria_names": [
+        "Can the skill list current deployments in a specified namespace",
+        "Can the skill update the image for an existing deployment",
+        "Can the skill report the status of a rollout successfully",
+        "Can the skill rollback a deployment to its previous version",
+        "Handle authentication with the Kubernetes API correctly",
+        "Gracefully report errors if a deployment fails"
+      ],
+      "scenario_count": 6,
+      "eval_coverage": [
+        "Can the skill list current deployments in a specified namespace",
+        "Can the skill update the image for an existing deployment",
+        "Can the skill report the status of a rollout successfully",
+        "Can the skill rollback a deployment to its previous version",
+        "Handle authentication with the Kubernetes API correctly",
+        "Gracefully report errors if a deployment fails"
+      ]
+    },
+    "linkedin-response": {
+      "score": 36,
+      "max": 36,
+      "ratio": 1,
+      "trajectory": "improving",
+      "weakest_criteria": [
+        {
+          "name": "Instructions Clarity",
+          "fail_rate": 0.294
+        },
+        {
+          "name": "Completeness",
+          "fail_rate": 0.235
+        },
+        {
+          "name": "Task Completion",
+          "fail_rate": 0.118
+        }
+      ],
+      "strongest_criteria": [],
+      "rounds_completed": 17,
+      "rounds_kept": 3,
+      "cost_invested": 0.61,
+      "last_improvement": "2026-03-20T21:18:58.774Z",
+      "last_escalation": {
+        "diagnosis": "The optimization loop is stuck in a \"perfect score\" local optimum, compounded by a system-level failure. The skill has achieved a perfect 36/36 score against the current test suite, meaning incremental refinements to existing logic cannot yield further improvement. Concurrently, the mutation generation process is failing with a `No such file or directory` error, preventing any new logic from being created or tested. The root cause is not a flaw in the skill, but rather that the skill has completely solved the problems posed by its evaluation environment.",
+        "timestamp": "2026-04-27T14:02:20.157Z"
+      },
+      "stuck_count": 5,
+      "criteria_names": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ],
+      "scenario_count": 6,
+      "eval_coverage": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ]
+    },
+    "mae-trading-report": {
+      "score": 46,
+      "max": 48,
+      "ratio": 0.958,
+      "trajectory": "improving",
+      "weakest_criteria": [
+        {
+          "name": "Single Formula",
+          "fail_rate": 0.9
+        },
+        {
+          "name": "P&L Consistency",
+          "fail_rate": 0.25
+        },
+        {
+          "name": "No Paper Mixing",
+          "fail_rate": 0.05
+        }
+      ],
+      "strongest_criteria": [],
+      "rounds_completed": 20,
+      "rounds_kept": 2,
+      "cost_invested": 0.96,
+      "last_improvement": "2026-03-29T13:42:01.701Z",
+      "last_escalation": {
+        "diagnosis": "The optimization is stuck in a local optimum of \"instructional refinement.\" All recent mutations have focused on reinforcing a single, complex negative constraint (the \"Single Formula Law\") by adding more warnings, more examples of what *not* to do, more reminders, and more verification steps. The skill has reached peak instruction density; adding more text is increasing cognitive load without improving compliance. The AI understands the rule but fails to apply it perfectly across a complex, multi-file refactoring task. The mutations are treating the symptom (the AI makes an error) rather than the root cause (the task is structured as a high-stakes, multi-step derivation from a complex rule, which invites error).",
+        "timestamp": "2026-03-29T22:12:58.151Z"
+      },
+      "stuck_count": 9,
+      "criteria_names": [
+        "P&L Consistency",
+        "No Paper Mixing",
+        "Log Integrity",
+        "Single Formula",
+        "Data Freshness",
+        "Error Handling"
+      ],
+      "scenario_count": 8,
+      "eval_coverage": [
+        "P&L Consistency",
+        "No Paper Mixing",
+        "Log Integrity",
+        "Single Formula",
+        "Data Freshness",
+        "Error Handling"
+      ]
+    },
+    "onboarding-kickoff": {
+      "score": 36,
+      "max": 36,
+      "ratio": 1,
+      "trajectory": "improving",
+      "weakest_criteria": [
+        {
+          "name": "Task Completion",
+          "fail_rate": 0.5
+        },
+        {
+          "name": "Output Quality",
+          "fail_rate": 0.5
+        },
+        {
+          "name": "Instructions Clarity",
+          "fail_rate": 0.5
+        }
+      ],
+      "strongest_criteria": [],
+      "rounds_completed": 22,
+      "rounds_kept": 5,
+      "cost_invested": 0.86,
+      "last_improvement": "2026-04-06T06:03:28.717Z",
+      "last_escalation": {
+        "diagnosis": "The optimization loop is not stuck in a local optimum of prompt quality; the skill has reached the global optimum (36/36) for the existing test suite. The \"stuck\" state is due to two factors: 1) A recurring technical failure in the mutation generation environment (`/bin/claude: No such file or directory`), which prevents any new mutation from being created, and 2) The optimization system is attempting to \"improve\" a skill that is already performing perfectly against its tests. The problem is not the prompt's quality but the exhaustion of the test suite's ability to provide a signal for improvement, combined with an infrastructure failure.",
+        "timestamp": "2026-04-28T06:01:33.174Z"
+      },
+      "stuck_count": 5,
+      "criteria_names": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ],
+      "scenario_count": 6,
+      "eval_coverage": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ]
+    },
+    "polymarket-5min-strategy": {
+      "score": 25,
+      "max": 25,
+      "ratio": 1,
+      "trajectory": "stuck",
+      "weakest_criteria": [],
+      "strongest_criteria": [
+        {
+          "name": "CVD calculation is correct",
+          "fail_rate": 0
+        },
+        {
+          "name": "Liquidation signals parsed correctly",
+          "fail_rate": 0
+        },
+        {
+          "name": "Signal combination produces valid directional trades",
+          "fail_rate": 0
+        }
+      ],
+      "rounds_completed": 6,
+      "rounds_kept": 0,
+      "cost_invested": 0.28,
+      "last_improvement": null,
+      "last_escalation": {
+        "diagnosis": "The optimization loop is stuck in a local optimum of \"functional correctness.\" The skill has perfectly implemented the logic described in its prompt, achieving a maximum score on an evaluation suite that only tests for implementation fidelity (i.e., \"does the code do what the markdown says?\"). The current quality gates validate calculation correctness, parsing, and rule application, but they do not measure the *effectiveness* or *profitability* of the trading strategy itself. Since there are no failures, the system has no error signal to guide further mutations and correctly assumes it has reached the peak for the given evaluation criteria. The problem is not the skill; it's the evaluation's limited scope.",
+        "timestamp": "2026-03-21T09:15:18.845Z"
+      },
+      "stuck_count": 3,
+      "criteria_names": [
+        "CVD calculation is correct",
+        "Liquidation signals parsed correctly",
+        "Signal combination produces valid directional trades",
+        "Position size limited to $10 default",
+        "Strategy metrics tracked accurately"
+      ],
+      "scenario_count": 5,
+      "eval_coverage": [
+        "CVD calculation is correct",
+        "Liquidation signals parsed correctly",
+        "Signal combination produces valid directional trades",
+        "Position size limited to $10 default",
+        "Strategy metrics tracked accurately"
+      ]
+    },
+    "polymarket-bridge": {
+      "score": 25,
+      "max": 25,
+      "ratio": 1,
+      "trajectory": "improving",
+      "weakest_criteria": [
+        {
+          "name": "Withdrawal quotes include accurate fees",
+          "fail_rate": 0.25
+        },
+        {
+          "name": "Supported assets verified before operations",
+          "fail_rate": 0.083
+        },
+        {
+          "name": "Minimum deposits enforced",
+          "fail_rate": 0.083
+        }
+      ],
+      "strongest_criteria": [
+        {
+          "name": "Deposit addresses generated for correct chain",
+          "fail_rate": 0
+        },
+        {
+          "name": "Status polling tracks to terminal state",
+          "fail_rate": 0
+        }
+      ],
+      "rounds_completed": 12,
+      "rounds_kept": 2,
+      "cost_invested": 0.46,
+      "last_improvement": "2026-03-21T08:55:48.526Z",
+      "last_escalation": {
+        "diagnosis": "The optimization loop is stuck in a local optimum because the skill has been perfected against the existing 25 test scenarios, achieving a score of 25/25. Subsequent mutations are minor clarifications or robustness tweaks (e.g., timeout handling, user confirmation emphasis) that cannot improve a perfect score. The system is attempting to refine a solution that already fully satisfies its evaluation criteria. The occasional score drop to 24/25 on a reverted mutation indicates that these minor tweaks can sometimes introduce just enough ambiguity to confuse the model on one edge case, proving that the current prompt is highly tuned and sensitive. The root cause is not a flaw in the skill, but a test suite that is no longer challenging enough to drive meaningful improvement.",
+        "timestamp": "2026-04-28T14:02:07.521Z"
+      },
+      "stuck_count": 3,
+      "criteria_names": [
+        "Deposit addresses generated for correct chain",
+        "Supported assets verified before operations",
+        "Status polling tracks to terminal state",
+        "Minimum deposits enforced",
+        "Withdrawal quotes include accurate fees"
+      ],
+      "scenario_count": 5,
+      "eval_coverage": [
+        "Deposit addresses generated for correct chain",
+        "Supported assets verified before operations",
+        "Status polling tracks to terminal state",
+        "Minimum deposits enforced",
+        "Withdrawal quotes include accurate fees"
+      ]
+    },
+    "polymarket-clob-trader": {
+      "score": 64,
+      "max": 64,
+      "ratio": 1,
+      "trajectory": "mixed",
+      "weakest_criteria": [],
+      "strongest_criteria": [
+        {
+          "name": "L1 EIP-712 credential derivation and L2 HMAC authentication succeed",
+          "fail_rate": 0
+        },
+        {
+          "name": "Order price conforms to market tick size",
+          "fail_rate": 0
+        },
+        {
+          "name": "All order types (GTC, GTD, FOK, FAK) placed correctly",
+          "fail_rate": 0
+        }
+      ],
+      "rounds_completed": 2,
+      "rounds_kept": 2,
+      "cost_invested": 0.06,
+      "last_improvement": "2026-04-28T22:00:28.681Z",
+      "last_escalation": null,
+      "stuck_count": 0,
+      "criteria_names": [
+        "L1 EIP-712 credential derivation and L2 HMAC authentication succeed",
+        "Order price conforms to market tick size",
+        "All order types (GTC, GTD, FOK, FAK) placed correctly",
+        "Batch orders up to 15 submitted in single request",
+        "Safety limits enforced before order submission",
+        "Heartbeat maintained to prevent order cancellation",
+        "Order lifecycle tracked from MATCHED to CONFIRMED/FAILED",
+        "Negative risk markets handled with correct exchange contract"
+      ],
+      "scenario_count": 8,
+      "eval_coverage": [
+        "L1 EIP-712 credential derivation and L2 HMAC authentication succeed",
+        "Order price conforms to market tick size",
+        "All order types (GTC, GTD, FOK, FAK) placed correctly",
+        "Batch orders up to 15 submitted in single request",
+        "Safety limits enforced before order submission",
+        "Heartbeat maintained to prevent order cancellation",
+        "Order lifecycle tracked from MATCHED to CONFIRMED/FAILED",
+        "Negative risk markets handled with correct exchange contract"
+      ]
+    },
+    "polymarket-ctf-operations": {
+      "score": 25,
+      "max": 25,
+      "ratio": 1,
+      "trajectory": "improving",
+      "weakest_criteria": [
+        {
+          "name": "Approvals set for correct contracts",
+          "fail_rate": 0.118
+        },
+        {
+          "name": "Correct contracts used for neg risk vs standard",
+          "fail_rate": 0.059
+        }
+      ],
+      "strongest_criteria": [
+        {
+          "name": "Split produces correct token amounts",
+          "fail_rate": 0
+        },
+        {
+          "name": "Merge returns correct USDC.e",
+          "fail_rate": 0
+        },
+        {
+          "name": "Redeem only works on resolved markets",
+          "fail_rate": 0
+        }
+      ],
+      "rounds_completed": 17,
+      "rounds_kept": 2,
+      "cost_invested": 0.61,
+      "last_improvement": "2026-03-21T09:08:52.768Z",
+      "last_escalation": {
+        "diagnosis": "The optimization loop is stuck for two primary reasons. First, the skill has achieved a perfect score (25/25) on the current evaluation suite, meaning there is no room for improvement via incremental mutations. The mutations from rounds 3-5 were stylistic or clarifying changes that couldn't raise an already perfect score. Second, a persistent system-level error (`claude: No such file or directory`) has been preventing any new mutations from being generated since Round 5, causing the system to revert to the last known good version. The core issue is not the skill's quality but the evaluation suite's inability to challenge the skill's more advanced, documented capabilities.",
+        "timestamp": "2026-04-29T14:01:33.406Z"
+      },
+      "stuck_count": 5,
+      "criteria_names": [
+        "Split produces correct token amounts",
+        "Merge returns correct USDC.e",
+        "Redeem only works on resolved markets",
+        "Correct contracts used for neg risk vs standard",
+        "Approvals set for correct contracts"
+      ],
+      "scenario_count": 5,
+      "eval_coverage": [
+        "Split produces correct token amounts",
+        "Merge returns correct USDC.e",
+        "Redeem only works on resolved markets",
+        "Correct contracts used for neg risk vs standard",
+        "Approvals set for correct contracts"
+      ]
+    },
+    "polymarket-flash-crash-detector": {
+      "score": 36,
+      "max": 36,
+      "ratio": 1,
+      "trajectory": "stuck",
+      "weakest_criteria": [],
+      "strongest_criteria": [
+        {
+          "name": "Crash detection triggers at correct threshold",
+          "fail_rate": 0
+        },
+        {
+          "name": "Paper trade mode works without placing real orders",
+          "fail_rate": 0
+        },
+        {
+          "name": "TP/SL exit conditions evaluated correctly",
+          "fail_rate": 0
+        }
+      ],
+      "rounds_completed": 12,
+      "rounds_kept": 1,
+      "cost_invested": 0.46,
+      "last_improvement": "2026-03-21T09:18:20.405Z",
+      "last_escalation": {
+        "diagnosis": "The optimization loop is stuck in a \"local optimum of correctness.\" The skill perfectly implements the simple, deterministic algorithm described in its prompt. The test scenarios and quality gates are designed to verify this implementation correctness, which they do perfectly, resulting in a maximum score of 36/36. The mutations have so far only involved reformatting the tests or adding new correctness checks (like the WebSocket data gap) which the implementation already handled correctly. The system is trying to improve a score that cannot be improved with the current evaluation framework, as the framework only measures *if the algorithm is implemented as described*, not *if the algorithm is strategically effective or robust* against more complex market behaviors.",
+        "timestamp": "2026-04-29T22:01:57.874Z"
+      },
+      "stuck_count": 4,
+      "criteria_names": [
+        "Crash detection triggers at correct threshold",
+        "Paper trade mode works without placing real orders",
+        "TP/SL exit conditions evaluated correctly",
+        "Statistics tracked accurately",
+        "Rolling price buffer maintained correctly",
+        "Max position limit enforced"
+      ],
+      "scenario_count": 6,
+      "eval_coverage": [
+        "Crash detection triggers at correct threshold",
+        "Paper trade mode works without placing real orders",
+        "TP/SL exit conditions evaluated correctly",
+        "Statistics tracked accurately",
+        "Rolling price buffer maintained correctly",
+        "Max position limit enforced"
+      ]
+    },
+    "polymarket-gasless-trader": {
+      "score": 25,
+      "max": 25,
+      "ratio": 1,
+      "trajectory": "improving",
+      "weakest_criteria": [
+        {
+          "name": "Safe wallet deployment succeeds",
+          "fail_rate": 0.222
+        },
+        {
+          "name": "Transactions reach confirmed state",
+          "fail_rate": 0.222
+        },
+        {
+          "name": "Batch operations are atomic",
+          "fail_rate": 0.167
+        }
+      ],
+      "strongest_criteria": [
+        {
+          "name": "No POL gas required",
+          "fail_rate": 0
+        }
+      ],
+      "rounds_completed": 18,
+      "rounds_kept": 3,
+      "cost_invested": 0.64,
+      "last_improvement": "2026-03-21T09:26:58.606Z",
+      "last_escalation": {
+        "diagnosis": "The optimization loop is stuck for two primary reasons. First, there is a recurring system-level failure in the mutation generation step (`claude: No such file or directory`), which prevents any new skill variations from being created and tested. The system reverts to the last perfect score by default. Second, the skill has reached a \"perfection plateau\" where it scores 25/25 on the existing evaluation suite. The test scenarios are no longer challenging enough to measure the incremental improvements in robustness that have been added since Round 2 (e.g., clock skew handling, explicit contract addresses), meaning there is no performance gradient for the optimizer to climb.",
+        "timestamp": "2026-04-30T22:02:07.537Z"
+      },
+      "stuck_count": 6,
+      "criteria_names": [
+        "Builder HMAC authentication works",
+        "Safe wallet deployment succeeds",
+        "Transactions reach confirmed state",
+        "Batch operations are atomic",
+        "No POL gas required"
+      ],
+      "scenario_count": 5,
+      "eval_coverage": [
+        "Builder HMAC authentication works",
+        "Safe wallet deployment succeeds",
+        "Transactions reach confirmed state",
+        "Batch operations are atomic",
+        "No POL gas required"
+      ]
+    },
+    "polymarket-market-analyzer": {
+      "score": 25,
+      "max": 25,
+      "ratio": 1,
+      "trajectory": "improving",
+      "weakest_criteria": [
+        {
+          "name": "Risk assessment categorizes correctly",
+          "fail_rate": 0.353
+        },
+        {
+          "name": "Recommendations are actionable with confidence scores",
+          "fail_rate": 0.353
+        },
+        {
+          "name": "Safety limits inform risk assessment",
+          "fail_rate": 0.294
+        }
+      ],
+      "strongest_criteria": [],
+      "rounds_completed": 17,
+      "rounds_kept": 3,
+      "cost_invested": 0.61,
+      "last_improvement": "2026-03-21T09:33:53.359Z",
+      "last_escalation": {
+        "diagnosis": "The optimization loop is stuck for two primary reasons. First, and most critically, the skill has achieved a perfect score (25/25) against the current evaluation suite. The successful mutations have progressively transformed the skill into a highly deterministic, rule-based calculator, eliminating all ambiguity. The current tests reward this rigidity and adherence to a fixed schema, meaning there is no performance gradient for the optimizer to climb. Second, a persistent system-level environment error (`claude: No such file or directory`) is causing all mutation attempts to fail and revert, but this is a secondary issue masking the more fundamental problem of having reached the global optimum for the existing evaluation criteria.",
+        "timestamp": "2026-05-03T14:01:56.304Z"
+      },
+      "stuck_count": 6,
+      "criteria_names": [
+        "Analysis uses real-time orderbook and volume data",
+        "Risk assessment categorizes correctly",
+        "Recommendations are actionable with confidence scores",
+        "Market comparison ranks meaningfully",
+        "Safety limits inform risk assessment"
+      ],
+      "scenario_count": 5,
+      "eval_coverage": [
+        "Analysis uses real-time orderbook and volume data",
+        "Risk assessment categorizes correctly",
+        "Recommendations are actionable with confidence scores",
+        "Market comparison ranks meaningfully",
+        "Safety limits inform risk assessment"
+      ]
+    },
+    "polymarket-market-discovery": {
+      "score": 36,
+      "max": 36,
+      "ratio": 1,
+      "trajectory": "stuck",
+      "weakest_criteria": [
+        {
+          "name": "Search returns relevant markets matching text query",
+          "fail_rate": 0.167
+        },
+        {
+          "name": "Trending markets sorted by correct volume timeframe",
+          "fail_rate": 0.083
+        },
+        {
+          "name": "Category filtering uses correct tag parameter",
+          "fail_rate": 0.083
+        }
+      ],
+      "strongest_criteria": [
+        {
+          "name": "Output includes all IDs needed for downstream trading",
+          "fail_rate": 0
+        }
+      ],
+      "rounds_completed": 12,
+      "rounds_kept": 1,
+      "cost_invested": 0.56,
+      "last_improvement": "2026-03-21T09:36:53.541Z",
+      "last_escalation": {
+        "diagnosis": "The optimization loop is stuck in a \"perfection plateau\" because the skill has fully solved its existing evaluation suite, achieving a perfect score of 36/36. Subsequent mutations are not improving the score because there are no failures to correct. Instead, the optimizer is applying minor, \"defensive\" clarifications and refactors (e.g., clarifying field names, fallback logic, timestamp handling). While these changes improve the prompt's robustness and clarity, they do not add new functionality that could be measured by a more advanced test suite. The root cause is not a flaw in the skill, but rather an evaluation suite that is no longer challenging enough to drive meaningful evolution.",
+        "timestamp": "2026-03-21T14:08:14.840Z"
+      },
+      "stuck_count": 4,
+      "criteria_names": [
+        "Search returns relevant markets matching text query",
+        "Trending markets sorted by correct volume timeframe",
+        "Category filtering uses correct tag parameter",
+        "Closing-soon accurately identifies markets within time window",
+        "5-minute market discovery finds short-resolution markets",
+        "Output includes all IDs needed for downstream trading"
+      ],
+      "scenario_count": 6,
+      "eval_coverage": [
+        "Search returns relevant markets matching text query",
+        "Trending markets sorted by correct volume timeframe",
+        "Category filtering uses correct tag parameter",
+        "Closing-soon accurately identifies markets within time window",
+        "5-minute market discovery finds short-resolution markets",
+        "Output includes all IDs needed for downstream trading"
+      ]
+    },
+    "polymarket-orderbook-reader": {
+      "score": 36,
+      "max": 36,
+      "ratio": 1,
+      "trajectory": "improving",
+      "weakest_criteria": [
+        {
+          "name": "Spread and midpoint calculated correctly",
+          "fail_rate": 0.318
+        },
+        {
+          "name": "Output includes sufficient data for downstream analysis",
+          "fail_rate": 0.318
+        },
+        {
+          "name": "Fill estimation walks orderbook for accurate slippage",
+          "fail_rate": 0.273
+        }
+      ],
+      "strongest_criteria": [],
+      "rounds_completed": 22,
+      "rounds_kept": 3,
+      "cost_invested": 0.86,
+      "last_improvement": "2026-04-06T14:07:34.924Z",
+      "last_escalation": {
+        "diagnosis": "The optimization is stuck in a local optimum of \"perfection\" because the skill's logic, as defined, fully satisfies the existing 36 test scenarios. The changelog from Round 4 to Round 8 shows a systematic hardening of the skill's core logic, batch processing, and edge-case handling (one-sided books, API parameter specifics), which successfully addressed all previous failures. The mutations since reaching 36/36 have been minor clarifications or have failed due to an external environment issue (the `claude` command path), not a flaw in the mutation logic itself. The core problem is that the evaluation criteria are no longer challenging the skill; the tests only cover success paths and predictable data variations, not external failure modes or invalid inputs.",
+        "timestamp": "2026-05-04T06:02:21.952Z"
+      },
+      "stuck_count": 5,
+      "criteria_names": [
+        "Orderbook correctly parsed with price/size levels",
+        "Spread and midpoint calculated correctly",
+        "Fill estimation walks orderbook for accurate slippage",
+        "Batch queries handle multiple tokens efficiently",
+        "Price history returns data at correct intervals",
+        "Output includes sufficient data for downstream analysis"
+      ],
+      "scenario_count": 6,
+      "eval_coverage": [
+        "Orderbook correctly parsed with price/size levels",
+        "Spread and midpoint calculated correctly",
+        "Fill estimation walks orderbook for accurate slippage",
+        "Batch queries handle multiple tokens efficiently",
+        "Price history returns data at correct intervals",
+        "Output includes sufficient data for downstream analysis"
+      ]
+    },
+    "polymarket-portfolio-tracker": {
+      "score": 24,
+      "max": 25,
+      "ratio": 0.96,
+      "trajectory": "stuck",
+      "weakest_criteria": [
+        {
+          "name": "Export format is structured and complete",
+          "fail_rate": 0.875
+        },
+        {
+          "name": "Positions accurately reflect on-chain state",
+          "fail_rate": 0.688
+        },
+        {
+          "name": "FIFO P&L calculation is mathematically correct",
+          "fail_rate": 0.625
+        }
+      ],
+      "strongest_criteria": [],
+      "rounds_completed": 16,
+      "rounds_kept": 3,
+      "cost_invested": 0.78,
+      "last_improvement": "2026-03-21T09:58:01.394Z",
+      "last_escalation": {
+        "diagnosis": "The optimization loop is stuck in a local optimum due to \"mutation thrashing\" around the wrong problem. The persistent failure is in \"S5: Export format is structured and complete,\" indicating a consistent, specific flaw in the generated `portfolio.json`. The mutations from rounds 5-10 have focused on refining calculation logic (zero-guards for concentration/drawdown, `avg_price` for closed positions) and clarifying existing examples. However, the P&L and Risk criteria are already passing (5/5), meaning the *calculations* are correct. The root cause is a subtle ambiguity in the prompt: the `safety_limits` object in the example JSON schema contains four fields, but the instructions only explicitly mention the calculation for *one* of them (`exposure_used_pct`). The prompt defines the other three (`max_order_size_usd`, etc.) as constants in a separate section but never explicitly instructs the AI to include these hardcoded constants in the final JSON output. The AI is likely interpreting them as internal variables for risk calculation, omitting them from the export, and thus failing the \"completeness\" check of the S5 criterion.",
+        "timestamp": "2026-04-10T06:08:44.404Z"
+      },
+      "stuck_count": 5,
+      "criteria_names": [
+        "Positions accurately reflect on-chain state",
+        "FIFO P&L calculation is mathematically correct",
+        "Risk score reflects portfolio concentration and exposure",
+        "Safety limit utilization reported accurately",
+        "Export format is structured and complete"
+      ],
+      "scenario_count": 5,
+      "eval_coverage": [
+        "Positions accurately reflect on-chain state",
+        "FIFO P&L calculation is mathematically correct",
+        "Risk score reflects portfolio concentration and exposure",
+        "Safety limit utilization reported accurately",
+        "Export format is structured and complete"
+      ]
+    },
+    "polymarket-position-manager": {
+      "score": 25,
+      "max": 25,
+      "ratio": 1,
+      "trajectory": "improving",
+      "weakest_criteria": [
+        {
+          "name": "TP/SL calculated correctly from entry + delta",
+          "fail_rate": 0.176
+        },
+        {
+          "name": "Exit orders triggered at threshold",
+          "fail_rate": 0.118
+        },
+        {
+          "name": "Win rate tracked accurately",
+          "fail_rate": 0.118
+        }
+      ],
+      "strongest_criteria": [
+        {
+          "name": "State persisted for monitoring restarts",
+          "fail_rate": 0
+        }
+      ],
+      "rounds_completed": 17,
+      "rounds_kept": 4,
+      "cost_invested": 0.71,
+      "last_improvement": "2026-03-21T10:02:07.318Z",
+      "last_escalation": {
+        "diagnosis": "The optimization loop is stuck in a local optimum because the skill has perfectly solved the existing evaluation suite. The score of 25/25 for 10 consecutive rounds, combined with the system's own \"Stuck escalation\" note (\"The test scenarios are no longer sophisticated enough to find flaws\"), confirms that the evaluation criteria are too simple. The current tests likely cover only the \"happy path\" lifecycle of a position: creation, hitting a static TP/SL, and correct P&L calculation. Mutations are failing to improve the score because there are no failures to correct; they are either being reverted as unnecessary or are making minor, non-functional clarifications (like adding examples) to an already-perfectly-scoring skill. The problem is not the skill's logic but the evaluation's lack of depth.",
+        "timestamp": "2026-05-04T14:02:03.728Z"
+      },
+      "stuck_count": 5,
+      "criteria_names": [
+        "TP/SL calculated correctly from entry + delta",
+        "Exit orders triggered at threshold",
+        "Win rate tracked accurately",
+        "Position limits enforced",
+        "State persisted for monitoring restarts"
+      ],
+      "scenario_count": 5,
+      "eval_coverage": [
+        "TP/SL calculated correctly from entry + delta",
+        "Exit orders triggered at threshold",
+        "Win rate tracked accurately",
+        "Position limits enforced",
+        "State persisted for monitoring restarts"
+      ]
+    },
+    "polymarket-websocket-monitor": {
+      "score": 25,
+      "max": 25,
+      "ratio": 1,
+      "trajectory": "improving",
+      "weakest_criteria": [
+        {
+          "name": "WebSocket connection maintained with heartbeat",
+          "fail_rate": 0.083
+        },
+        {
+          "name": "Dynamic subscription changes work",
+          "fail_rate": 0.083
+        }
+      ],
+      "strongest_criteria": [
+        {
+          "name": "Events correctly parsed and filtered",
+          "fail_rate": 0
+        },
+        {
+          "name": "User channel authenticates successfully",
+          "fail_rate": 0
+        },
+        {
+          "name": "Events logged in structured format",
+          "fail_rate": 0
+        }
+      ],
+      "rounds_completed": 12,
+      "rounds_kept": 2,
+      "cost_invested": 0.46,
+      "last_improvement": "2026-03-21T10:06:12.869Z",
+      "last_escalation": {
+        "diagnosis": "The optimization loop is stuck in a \"perfect score\" local optimum. The skill has successfully been improved to perfectly satisfy all existing evaluation criteria, achieving a maximum score of 25/25. The current test suite exhaustively covers the mechanics of connection, authentication, subscription, and logging. However, it lacks challenges related to real-world operational robustness, such as performance under high load, handling malformed data, or managing server-side application-level errors. Consequently, the mutation engine can only propose superficial \"clarity\" improvements that do not alter functionality and are correctly reverted, leading to stagnation.",
+        "timestamp": "2026-05-04T22:01:39.922Z"
+      },
+      "stuck_count": 3,
+      "criteria_names": [
+        "WebSocket connection maintained with heartbeat",
+        "Events correctly parsed and filtered",
+        "User channel authenticates successfully",
+        "Dynamic subscription changes work",
+        "Events logged in structured format"
+      ],
+      "scenario_count": 5,
+      "eval_coverage": [
+        "WebSocket connection maintained with heartbeat",
+        "Events correctly parsed and filtered",
+        "User channel authenticates successfully",
+        "Dynamic subscription changes work",
+        "Events logged in structured format"
+      ]
+    },
+    "prompt-refiner-for-robustness": {
+      "score": 36,
+      "max": 36,
+      "ratio": 1,
+      "trajectory": "stuck",
+      "weakest_criteria": [],
+      "strongest_criteria": [
+        {
+          "name": "Identify the weakest part of the input prompt",
+          "fail_rate": 0
+        },
+        {
+          "name": "Does the proposed rewrite explicitly address a known failure mode (e.g., ambiguity)",
+          "fail_rate": 0
+        },
+        {
+          "name": "Add or improve few-shot examples for better guidance",
+          "fail_rate": 0
+        }
+      ],
+      "rounds_completed": 12,
+      "rounds_kept": 1,
+      "cost_invested": 0.46,
+      "last_improvement": "2026-03-20T21:31:54.344Z",
+      "last_escalation": {
+        "diagnosis": "The optimization loop is stuck in a local optimum of \"perfection\" because the evaluation suite is saturated. The skill consistently scores 36/36, meaning the current test scenarios are not challenging enough to reveal any remaining weaknesses. The mutations from rounds 0-4 were minor \"hardening\" clarifications that couldn't possibly improve an already perfect score. The mutations in rounds 5-7 failed due to an external environment error, not a flaw in the mutation logic, but this has compounded the lack of progress. The root cause is not the skill's quality but the evaluation's lack of difficulty.",
+        "timestamp": "2026-05-05T06:02:02.144Z"
+      },
+      "stuck_count": 4,
+      "criteria_names": [
+        "Identify the weakest part of the input prompt",
+        "Does the proposed rewrite explicitly address a known failure mode (e.g., ambiguity)",
+        "Add or improve few-shot examples for better guidance",
+        "Suggest adding explicit instructions for error handling and output formatting",
+        "Is the refined prompt syntactically correct and ready to be used",
+        "Can the skill explain why its proposed change should improve performance"
+      ],
+      "scenario_count": 6,
+      "eval_coverage": [
+        "Identify the weakest part of the input prompt",
+        "Does the proposed rewrite explicitly address a known failure mode (e.g., ambiguity)",
+        "Add or improve few-shot examples for better guidance",
+        "Suggest adding explicit instructions for error handling and output formatting",
+        "Is the refined prompt syntactically correct and ready to be used",
+        "Can the skill explain why its proposed change should improve performance"
+      ]
+    },
+    "scaffold": {
+      "score": 56,
+      "max": 60,
+      "ratio": 0.933,
+      "trajectory": "stuck",
+      "weakest_criteria": [
+        {
+          "name": "Parameter Gathering",
+          "fail_rate": 0.846
+        },
+        {
+          "name": "Execution Completeness",
+          "fail_rate": 0.846
+        },
+        {
+          "name": "Integration Awareness",
+          "fail_rate": 0.692
+        }
+      ],
+      "strongest_criteria": [],
+      "rounds_completed": 13,
+      "rounds_kept": 1,
+      "cost_invested": 0.61,
+      "last_improvement": "2026-03-26T14:00:39.746Z",
+      "last_escalation": {
+        "diagnosis": "The skill is stuck in a local optimum caused by a \"complexity death spiral.\" Each mutation has attempted to fix execution failures by adding more prescriptive rules, mandatory steps, and explicit checklists (e.g., the `INTEGRATION_MAP.md` and its live-tracking). While well-intentioned, this has bloated the `Reverse-Engineer Mode` into a hyper-rigid procedure that is too complex for the AI to follow reliably. The cognitive load of tracking the state of the `INTEGRATION_MAP.md`, cross-referencing multiple sections (2B, 2C, 2D, 3b, 4c), and adhering to a multi-part loop-within-a-loop structure is causing the model to fail at following the procedure itself. The mutations are adding more process instead of simplifying the goal, leading to diminishing or negative returns.",
+        "timestamp": "2026-04-05T06:09:20.031Z"
+      },
+      "stuck_count": 4,
+      "criteria_names": [
+        "Mode Detection",
+        "Parameter Gathering",
+        "Execution Completeness",
+        "Vendor Detection",
+        "Dependency Ordering",
+        "Integration Awareness"
+      ],
+      "scenario_count": 10,
+      "eval_coverage": [
+        "Mode Detection",
+        "Parameter Gathering",
+        "Execution Completeness",
+        "Vendor Detection",
+        "Dependency Ordering",
+        "Integration Awareness"
+      ]
+    },
+    "scrape-leads": {
+      "score": 36,
+      "max": 36,
+      "ratio": 1,
+      "trajectory": "stuck",
+      "weakest_criteria": [
+        {
+          "name": "Task Completion",
+          "fail_rate": 0.167
+        },
+        {
+          "name": "Instructions Clarity",
+          "fail_rate": 0.167
+        },
+        {
+          "name": "Completeness",
+          "fail_rate": 0.167
+        }
+      ],
+      "strongest_criteria": [],
+      "rounds_completed": 12,
+      "rounds_kept": 1,
+      "cost_invested": 0.46,
+      "last_improvement": "2026-03-20T21:40:00.080Z",
+      "last_escalation": {
+        "diagnosis": "The optimization loop is stuck in a local optimum of \"clarification.\" The changelog shows a history of successful mutations that improved the skill's clarity and structure, culminating in a perfect 36/36 score after the Round 5 refactoring. The subsequent score drop to 31/36, despite no new content mutations being successfully applied (due to environment errors), strongly indicates that the *evaluation test suite has become more stringent*. The skill is now failing on new, more complex edge cases that test the robustness of the *process itself*, not just the clarity of its documentation. The current optimization strategy of making minor documentation tweaks is no longer effective because the skill is already exceptionally clear; the new failures require adding new logic and error-handling capabilities to the workflow.",
+        "timestamp": "2026-05-05T14:02:15.042Z"
+      },
+      "stuck_count": 4,
+      "criteria_names": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ],
+      "scenario_count": 6,
+      "eval_coverage": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ]
+    },
+    "skill-improver": {
+      "score": 30,
+      "max": 36,
+      "ratio": 0.833,
+      "trajectory": "insufficient_data",
+      "weakest_criteria": [
+        {
+          "name": "Identify the failing component (prompt, code, eval) of the target skill",
+          "fail_rate": 0.833
+        },
+        {
+          "name": "Does the proposed modification directly address an identified failure mode from the logs",
+          "fail_rate": 0.833
+        },
+        {
+          "name": "Apply the modification to the target skill's definition files",
+          "fail_rate": 0.833
+        }
+      ],
+      "strongest_criteria": [],
+      "rounds_completed": 6,
+      "rounds_kept": 1,
+      "cost_invested": 0.22,
+      "last_improvement": "2026-03-16T18:09:34.400Z",
+      "last_escalation": {
+        "diagnosis": "The mutations are failing to improve the score because they are addressing peripheral robustness issues (e.g., optional `events.jsonl`) rather than the core architectural flaw causing the failures in the most complex test scenario (S6). The repeated `spawnSync /bin/sh ETIMEDOUT` errors strongly indicate that the skill's synchronous execution model is the root cause. In Phase 4, the skill executes `autoresearch-runner` and waits for it to complete. For a complex target skill in S6, this evaluation takes too long, causing the `skill-improver` itself to time out. The skill isn't failing because its analytical logic is wrong, but because its execution flow cannot handle long-running subprocesses within the allowed time limit.",
+        "timestamp": "2026-03-16T18:19:20.652Z"
+      },
+      "stuck_count": 3,
+      "criteria_names": [
+        "Identify the failing component (prompt, code, eval) of the target skill",
+        "Does the proposed modification directly address an identified failure mode from the logs",
+        "Apply the modification to the target skill's definition files",
+        "Trigger a new evaluation run for the modified skill",
+        "Parse the new evaluation results to determine if the change was an improvement",
+        "Revert the change if performance degrades"
+      ],
+      "scenario_count": 6,
+      "eval_coverage": [
+        "Identify the failing component (prompt, code, eval) of the target skill",
+        "Does the proposed modification directly address an identified failure mode from the logs",
+        "Apply the modification to the target skill's definition files",
+        "Trigger a new evaluation run for the modified skill",
+        "Parse the new evaluation results to determine if the change was an improvement",
+        "Revert the change if performance degrades"
+      ]
+    },
+    "skill-optimizer-v2": {
+      "score": 36,
+      "max": 36,
+      "ratio": 1,
+      "trajectory": "stuck",
+      "weakest_criteria": [],
+      "strongest_criteria": [
+        {
+          "name": "Identify the weakest criterion from the target skill's logs",
+          "fail_rate": 0
+        },
+        {
+          "name": "Is the proposed modification a specific, concrete change to a prompt or code file",
+          "fail_rate": 0
+        },
+        {
+          "name": "Does the proposed modification directly address a documented failure mode",
+          "fail_rate": 0
+        }
+      ],
+      "rounds_completed": 12,
+      "rounds_kept": 1,
+      "cost_invested": 0.46,
+      "last_improvement": "2026-03-20T21:47:01.180Z",
+      "last_escalation": {
+        "diagnosis": "The optimization process is stuck in a local optimum of \"perceived perfection.\" The skill's score is 36/36, meaning it passes all existing test scenarios. The recent mutations (e.g., adding tie-breaking logic, handling empty log files) were valid and improved the skill's robustness, but the current evaluation suite lacks scenarios that would trigger these edge cases. Because the new, more robust skill still scores a perfect 36/36 on the existing tests, the skill's own logic in Step 8 (`revert if new_score <= original_score`) correctly identifies this as \"no improvement\" and reverts the beneficial change. The skill is a victim of its own success, trapped by a test suite that isn't challenging enough to reward its recent evolution.",
+        "timestamp": "2026-05-05T22:01:33.344Z"
+      },
+      "stuck_count": 4,
+      "criteria_names": [
+        "Identify the weakest criterion from the target skill's logs",
+        "Is the proposed modification a specific, concrete change to a prompt or code file",
+        "Does the proposed modification directly address a documented failure mode",
+        "Apply the change to the skill's definition files",
+        "Trigger a new evaluation round for the modified skill",
+        "Revert the change if the new score is not an improvement"
+      ],
+      "scenario_count": 6,
+      "eval_coverage": [
+        "Identify the weakest criterion from the target skill's logs",
+        "Is the proposed modification a specific, concrete change to a prompt or code file",
+        "Does the proposed modification directly address a documented failure mode",
+        "Apply the change to the skill's definition files",
+        "Trigger a new evaluation round for the modified skill",
+        "Revert the change if the new score is not an improvement"
+      ]
+    },
+    "skill-test-generator": {
+      "score": 36,
+      "max": 36,
+      "ratio": 1,
+      "trajectory": "improving",
+      "weakest_criteria": [
+        {
+          "name": "Generate a list of 6-8 relevant test scenarios",
+          "fail_rate": 0.083
+        },
+        {
+          "name": "Generate a list of 4-6 binary (yes/no) evaluation criteria",
+          "fail_rate": 0.083
+        },
+        {
+          "name": "Are the generated criteria specific and unambiguous",
+          "fail_rate": 0.083
+        }
+      ],
+      "strongest_criteria": [],
+      "rounds_completed": 12,
+      "rounds_kept": 2,
+      "cost_invested": 0.46,
+      "last_improvement": "2026-03-20T21:58:31.887Z",
+      "last_escalation": {
+        "diagnosis": "The optimization loop is stuck in a local optimum because the skill has perfected its ability to pass a test suite that primarily measures *quantitative* and *syntactic* correctness rather than *semantic quality*. The existing evaluation criteria check if the skill produces the right *number* of scenarios/criteria and if the output is *valid JSON*. The mutations from rounds 1-5 reinforced this by adding more robust checks for counts and schema, which the model easily mastered. The skill is now acing a test that doesn't effectively measure whether the generated scenarios are genuinely insightful or deeply tied to the target skill's logic. The optimizer has no gradient for improvement because, according to the current definition of \"good,\" the skill is already perfect.",
+        "timestamp": "2026-05-06T06:01:41.146Z"
+      },
+      "stuck_count": 3,
+      "criteria_names": [
+        "Generate a list of 6-8 relevant test scenarios",
+        "Generate a list of 4-6 binary (yes/no) evaluation criteria",
+        "Are the generated criteria specific and unambiguous",
+        "Are the generated scenarios diverse, covering both success and failure cases",
+        "Does the output conform to the system's skill definition schema",
+        "Analyze the skill's code to suggest tests for specific functions or parameters"
+      ],
+      "scenario_count": 6,
+      "eval_coverage": [
+        "Generate a list of 6-8 relevant test scenarios",
+        "Generate a list of 4-6 binary (yes/no) evaluation criteria",
+        "Are the generated criteria specific and unambiguous",
+        "Are the generated scenarios diverse, covering both success and failure cases",
+        "Does the output conform to the system's skill definition schema",
+        "Analyze the skill's code to suggest tests for specific functions or parameters"
+      ]
+    },
+    "skill-test-runner": {
+      "score": 36,
+      "max": 36,
+      "ratio": 1,
+      "trajectory": "stuck",
+      "weakest_criteria": [],
+      "strongest_criteria": [
+        {
+          "name": "Identify and parse the test scenarios for the target skill",
+          "fail_rate": 0
+        },
+        {
+          "name": "Execute each test scenario against the target skill",
+          "fail_rate": 0
+        },
+        {
+          "name": "Compare the skill's output against the expected outcome for each test",
+          "fail_rate": 0
+        }
+      ],
+      "rounds_completed": 12,
+      "rounds_kept": 1,
+      "cost_invested": 0.46,
+      "last_improvement": "2026-03-20T22:00:17.451Z",
+      "last_escalation": {
+        "diagnosis": "The optimization loop is stuck in a classic local optimum caused by saturated evaluation criteria. The skill achieved a perfect score of 36/36 by fulfilling the six original test criteria, which cover the \"happy path\" of finding, parsing, and running a valid test suite. Subsequent mutations have correctly identified and added crucial robustness features (bootstrapping `tests.json` for new skills, self-initialization), but the evaluation suite has not been updated to test these new capabilities. As a result, these valuable improvements are not reflected in the score, making all recent mutations appear neutral. The system is trying to improve a skill that is already acing an insufficiently difficult exam.",
+        "timestamp": "2026-05-06T22:01:17.620Z"
+      },
+      "stuck_count": 4,
+      "criteria_names": [
+        "Identify and parse the test scenarios for the target skill",
+        "Execute each test scenario against the target skill",
+        "Compare the skill's output against the expected outcome for each test",
+        "Is the final report a clear summary of passed, failed, and errored tests",
+        "Can the skill run a single, specified test scenario instead of the whole suite",
+        "Capture and log stdout/stderr for failed tests"
+      ],
+      "scenario_count": 6,
+      "eval_coverage": [
+        "Identify and parse the test scenarios for the target skill",
+        "Execute each test scenario against the target skill",
+        "Compare the skill's output against the expected outcome for each test",
+        "Is the final report a clear summary of passed, failed, and errored tests",
+        "Can the skill run a single, specified test scenario instead of the whole suite",
+        "Capture and log stdout/stderr for failed tests"
+      ]
+    },
+    "stuck-skill-diagnoser": {
+      "score": 42,
+      "max": 42,
+      "ratio": 1,
+      "trajectory": "stuck",
+      "weakest_criteria": [],
+      "strongest_criteria": [
+        {
+          "name": "Identify the target skill's performance plateau from logs",
+          "fail_rate": 0
+        },
+        {
+          "name": "Does the analysis pinpoint the specific evaluation criteria that are consistently failing",
+          "fail_rate": 0
+        },
+        {
+          "name": "Correlate failing criteria with specific test scenarios",
+          "fail_rate": 0
+        }
+      ],
+      "rounds_completed": 12,
+      "rounds_kept": 1,
+      "cost_invested": 0.46,
+      "last_improvement": "2026-03-20T22:05:43.121Z",
+      "last_escalation": {
+        "diagnosis": "The skill is stuck at a perfect score of 42/42 not because the mutations are ineffective, but because the evaluation criteria are saturated. The existing tests in `eval.json` are not comprehensive enough to measure the qualitative improvements made in recent rounds (e.g., output path correctness, early-exit for healthy skills, precise report formatting). The skill is passing all existing checks, so these valuable robustness and efficiency enhancements do not register as a score increase. The skill has hit an \"evaluation ceiling,\" where it is more capable than its tests can measure. The problem is not with the skill's prompt, but with the inadequacy of its test suite.",
+        "timestamp": "2026-05-07T06:01:30.328Z"
+      },
+      "stuck_count": 4,
+      "criteria_names": [
+        "Identify the target skill's performance plateau from logs",
+        "Does the analysis pinpoint the specific evaluation criteria that are consistently failing",
+        "Correlate failing criteria with specific test scenarios",
+        "Does the hypothesis distinguish between prompt, code, or evaluation flaws",
+        "Is the proposed remediation strategy concrete and actionable (e.g., 'rewrite prompt X', 'add test case Y', 'refine criterion Z')",
+        "Analyze the 'skill-improver' skill itself recursively"
+      ],
+      "scenario_count": 7,
+      "eval_coverage": [
+        "Identify the target skill's performance plateau from logs",
+        "Does the analysis pinpoint the specific evaluation criteria that are consistently failing",
+        "Correlate failing criteria with specific test scenarios",
+        "Does the hypothesis distinguish between prompt, code, or evaluation flaws",
+        "Is the proposed remediation strategy concrete and actionable (e.g., 'rewrite prompt X', 'add test case Y', 'refine criterion Z')",
+        "Analyze the 'skill-improver' skill itself recursively"
+      ]
+    },
+    "system-dashboard-generator": {
+      "score": 34,
+      "max": 36,
+      "ratio": 0.944,
+      "trajectory": "improving",
+      "weakest_criteria": [
+        {
+          "name": "Execute successfully and produce a coherent report",
+          "fail_rate": 0.765
+        },
+        {
+          "name": "Does the dashboard include the overall skill score ratio",
+          "fail_rate": 0.647
+        },
+        {
+          "name": "Does the dashboard list the top 3 lowest-scoring skills",
+          "fail_rate": 0.647
+        }
+      ],
+      "strongest_criteria": [],
+      "rounds_completed": 17,
+      "rounds_kept": 2,
+      "cost_invested": 0.81,
+      "last_improvement": "2026-03-20T22:23:45.590Z",
+      "last_escalation": {
+        "diagnosis": "The optimization is stuck in a local optimum because all recent mutations have been reinforcing a fundamentally flawed and overly complex \"render-then-replace\" execution model. This two-phase process, which instructs the agent to output a complete dashboard and then later \"update\" or \"replace\" it, is counter-intuitive for a generative model. It leads to failures on the \"produce a coherent report\" criterion, likely by causing the agent to halt in confusion over the impossible \"replace\" instruction or by producing duplicate, incoherent output. The mutations have been adding more procedural guardrails to this brittle architecture instead of simplifying it, thereby increasing cognitive load and exacerbating the root problem.",
+        "timestamp": "2026-04-08T06:07:35.273Z"
+      },
+      "stuck_count": 8,
+      "criteria_names": [
+        "Does the dashboard include the overall skill score ratio",
+        "Does the dashboard list the top 3 lowest-scoring skills",
+        "Does the dashboard show the number of stuck and untested skills",
+        "Does the dashboard include recent high-frequency user intent signals",
+        "Can the output format be specified (e.g., 'text', 'html', 'json')",
+        "Execute successfully and produce a coherent report"
+      ],
+      "scenario_count": 6,
+      "eval_coverage": [
+        "Does the dashboard include the overall skill score ratio",
+        "Does the dashboard list the top 3 lowest-scoring skills",
+        "Does the dashboard show the number of stuck and untested skills",
+        "Does the dashboard include recent high-frequency user intent signals",
+        "Can the output format be specified (e.g., 'text', 'html', 'json')",
+        "Execute successfully and produce a coherent report"
+      ]
+    },
+    "system-self-correction-v2": {
+      "score": 0,
+      "max": 0,
+      "ratio": 0,
+      "trajectory": "untested",
+      "weakest_criteria": [],
+      "strongest_criteria": [],
+      "rounds_completed": 0,
+      "rounds_kept": 0,
+      "cost_invested": 0,
+      "last_improvement": null,
+      "last_escalation": null,
+      "stuck_count": 0,
+      "criteria_names": [
+        "Signal Detection",
+        "Classification",
+        "Quality Gate",
+        "Generalizability",
+        "No Duplication",
+        "Correct Action"
+      ],
+      "scenario_count": 10,
+      "eval_coverage": [
+        "Signal Detection",
+        "Classification",
+        "Quality Gate",
+        "Generalizability",
+        "No Duplication",
+        "Correct Action"
+      ]
+    },
+    "system-status-reporter": {
+      "score": 33,
+      "max": 36,
+      "ratio": 0.917,
+      "trajectory": "stuck",
+      "weakest_criteria": [
+        {
+          "name": "Does the report correctly state the total number of skills, and their status (at target, stuck, untested)",
+          "fail_rate": 0.958
+        },
+        {
+          "name": "Does the report list the top 3 skills with the most unresolved failures",
+          "fail_rate": 0.958
+        },
+        {
+          "name": "Does the report highlight any skills that have recently become 'stuck' or 'plateauing'",
+          "fail_rate": 0.958
+        }
+      ],
+      "strongest_criteria": [],
+      "rounds_completed": 24,
+      "rounds_kept": 3,
+      "cost_invested": 1.12,
+      "last_improvement": "2026-03-24T22:07:34.266Z",
+      "last_escalation": {
+        "diagnosis": "The optimization loop is stuck in a local optimum focused on output formatting and high-level error handling. Recent mutations have added critical output rules, clarified tool usage, and added fallbacks for empty results. While these are useful refinements, they fail to address the core source of failures: the extreme complexity and fragility of the monolithic bash script in Step 2. This script combines directory traversal, file existence checks, and multiple inline Python calls for JSON parsing. It is too complex for the agent to execute reliably across different test scenarios, leading to incorrect data collection (wrong scores, failure counts, and skill statuses) which then causes downstream failures in the final report's accuracy, regardless of how well the output is formatted. The system is trying to perfect the \"frame\" (the output rules) while the \"picture\" (the data itself) is often corrupted at the source.",
+        "timestamp": "2026-03-24T14:08:57.151Z"
+      },
+      "stuck_count": 10,
+      "criteria_names": [
+        "Does the report correctly state the total number of skills, and their status (at target, stuck, untested)",
+        "Does the report list the top 3 skills with the most unresolved failures",
+        "Does the report include the number of open unmet demands",
+        "Does the report highlight any skills that have recently become 'stuck' or 'plateauing'",
+        "Is the output formatted in clean, human-readable Markdown",
+        "Complete its report generation in under 10 seconds"
+      ],
+      "scenario_count": 6,
+      "eval_coverage": [
+        "Does the report correctly state the total number of skills, and their status (at target, stuck, untested)",
+        "Does the report list the top 3 skills with the most unresolved failures",
+        "Does the report include the number of open unmet demands",
+        "Does the report highlight any skills that have recently become 'stuck' or 'plateauing'",
+        "Is the output formatted in clean, human-readable Markdown",
+        "Complete its report generation in under 10 seconds"
+      ]
+    },
+    "the-real-scrumness": {
+      "score": 36,
+      "max": 36,
+      "ratio": 1,
+      "trajectory": "stuck",
+      "weakest_criteria": [
+        {
+          "name": "Card Richness",
+          "fail_rate": 0.083
+        },
+        {
+          "name": "Chart Correctness",
+          "fail_rate": 0.083
+        },
+        {
+          "name": "Error Resilience",
+          "fail_rate": 0.083
+        }
+      ],
+      "strongest_criteria": [
+        {
+          "name": "Deduplication",
+          "fail_rate": 0
+        },
+        {
+          "name": "Status Accuracy",
+          "fail_rate": 0
+        },
+        {
+          "name": "Completeness",
+          "fail_rate": 0
+        }
+      ],
+      "rounds_completed": 12,
+      "rounds_kept": 1,
+      "cost_invested": 0.46,
+      "last_improvement": "2026-03-21T12:01:33.850Z",
+      "last_escalation": {
+        "diagnosis": "The optimization loop is stuck for two primary reasons. First, it reached a local optimum where the skill scored 36/36, saturating the evaluation criteria. The \"proactive\" mutations added during this phase provided no measurable score improvement, leading to reversions. Second, a more critical system-level failure occurred: the mutation generation process itself is broken (as seen in rounds 5-7 with the `claude: No such file or directory` error), preventing any new logic from being introduced. The score drop to 31/36 in round 7 is a symptom of this failure; unable to generate a new, better mutation, the system reverted a previously successful change (Dependency Tracking), which then failed against a newly introduced test case designed to check for that exact feature. The root cause is a fundamental mismatch: the skill's content describes a complex workflow using Node.js and the GitHub CLI, but the frontmatter only declares `Bash, Read, Grep, Glob` as allowed tools, indicating a deep flaw in how the skill is defined and likely evaluated.",
+        "timestamp": "2026-05-07T14:02:23.523Z"
+      },
+      "stuck_count": 4,
+      "criteria_names": [
+        "Card Richness",
+        "Deduplication",
+        "Status Accuracy",
+        "Chart Correctness",
+        "Error Resilience",
+        "Completeness"
+      ],
+      "scenario_count": 6,
+      "eval_coverage": [
+        "Card Richness",
+        "Deduplication",
+        "Status Accuracy",
+        "Chart Correctness",
+        "Error Resilience",
+        "Completeness"
+      ]
+    },
+    "title-variants": {
+      "score": 35,
+      "max": 36,
+      "ratio": 0.972,
+      "trajectory": "improving",
+      "weakest_criteria": [
+        {
+          "name": "Instructions Clarity",
+          "fail_rate": 0.765
+        },
+        {
+          "name": "Completeness",
+          "fail_rate": 0.765
+        },
+        {
+          "name": "Output Quality",
+          "fail_rate": 0.588
+        }
+      ],
+      "strongest_criteria": [],
+      "rounds_completed": 17,
+      "rounds_kept": 2,
+      "cost_invested": 0.81,
+      "last_improvement": "2026-03-20T22:37:20.614Z",
+      "last_escalation": {
+        "diagnosis": "The optimization is stuck in a local optimum because all recent mutations have focused on perfecting the *procedural integrity* of the skill, specifically the logic for detecting Plan A failures and transitioning to Plan B. While these changes have made the skill more robust at identifying when to use the fallback, they have completely ignored the quality and reliability of the fallback (Plan B) itself. The remaining 5 failures are almost certainly occurring in test scenarios that successfully trigger Plan B, but where the AI then fails to execute the abstract, creative instructions in Step B2 correctly. The system is perfecting the error-handling scaffolding while the core fallback logic remains the weak point.",
+        "timestamp": "2026-03-29T07:05:42.504Z"
+      },
+      "stuck_count": 5,
+      "criteria_names": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ],
+      "scenario_count": 6,
+      "eval_coverage": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ]
+    },
+    "tradfi-market-analyzer": {
+      "score": 48,
+      "max": 48,
+      "ratio": 1,
+      "trajectory": "improving",
+      "weakest_criteria": [
+        {
+          "name": "Fetch price data for a given ticker using the appropriate tool",
+          "fail_rate": 0.471
+        },
+        {
+          "name": "Can the skill identify potential arbitrage opportunities between two specified exchanges",
+          "fail_rate": 0.471
+        },
+        {
+          "name": "Does the report summarize relevant macroeconomic indicators for a given country",
+          "fail_rate": 0.471
+        }
+      ],
+      "strongest_criteria": [
+        {
+          "name": "Is the final analysis presented in a structured format (e.g., JSON or markdown table)",
+          "fail_rate": 0
+        }
+      ],
+      "rounds_completed": 17,
+      "rounds_kept": 2,
+      "cost_invested": 0.61,
+      "last_improvement": "2026-03-25T23:06:24.245Z",
+      "last_escalation": {
+        "diagnosis": "The optimization loop is not stuck in a local optimum of skill logic; it is caught in an **infrastructure failure loop**. The logs clearly show the skill repeatedly achieving a perfect score (48/48) after a mutation, but this success is immediately followed by a `Mutation failed` error (`claude: No such file or directory`). This indicates the mutation-generation process itself is broken. The system misinterprets this external tool failure as a failure of the last mutation, causing it to revert a perfectly good, high-scoring skill version back to the lower-scoring 28/48 version. The \"stuck\" state is an artifact of this environmental issue, not an inability to find better skill logic. The mutations themselves are highly effective, but the system's state management is preventing them from being committed.",
+        "timestamp": "2026-05-08T06:01:51.771Z"
+      },
+      "stuck_count": 6,
+      "criteria_names": [
+        "Fetch price data for a given ticker using the appropriate tool",
+        "Can the skill identify potential arbitrage opportunities between two specified exchanges",
+        "Does the report summarize relevant macroeconomic indicators for a given country",
+        "Does the output correctly aggregate signals from multiple sources into a coherent summary",
+        "Can the skill perform a basic technical analysis (e.g., moving average) on a price feed",
+        "Is the final analysis presented in a structured format (e.g., JSON or markdown table)"
+      ],
+      "scenario_count": 8,
+      "eval_coverage": [
+        "Fetch price data for a given ticker using the appropriate tool",
+        "Can the skill identify potential arbitrage opportunities between two specified exchanges",
+        "Does the report summarize relevant macroeconomic indicators for a given country",
+        "Does the output correctly aggregate signals from multiple sources into a coherent summary",
+        "Can the skill perform a basic technical analysis (e.g., moving average) on a price feed",
+        "Is the final analysis presented in a structured format (e.g., JSON or markdown table)"
+      ]
+    },
+    "video-to-action": {
+      "score": 36,
+      "max": 36,
+      "ratio": 1,
+      "trajectory": "improving",
+      "weakest_criteria": [
+        {
+          "name": "Instructions Clarity",
+          "fail_rate": 0.667
+        },
+        {
+          "name": "Completeness",
+          "fail_rate": 0.667
+        },
+        {
+          "name": "Output Quality",
+          "fail_rate": 0.6
+        }
+      ],
+      "strongest_criteria": [],
+      "rounds_completed": 15,
+      "rounds_kept": 3,
+      "cost_invested": 0.71,
+      "last_improvement": "2026-03-20T22:43:58.960Z",
+      "last_escalation": {
+        "diagnosis": "The optimization loop is stuck because the skill has already reached the global maximum score (36/36) for the current evaluation suite. Subsequent mutations are not improvements but rather \"over-engineering\" — they add complexity, clarifications, and edge-case handling that, while theoretically making the skill more robust, increase the cognitive load on the language model. This added complexity makes the prompt harder to follow perfectly, causing failures on the existing test cases and leading to immediate reverts. The system is trying to fix something that isn't broken according to the tests, and in doing so, is degrading its performance. The root cause is a mismatch between the static, maxed-out evaluation suite and a mutation strategy that continues to add detail.",
+        "timestamp": "2026-04-08T22:06:38.836Z"
+      },
+      "stuck_count": 5,
+      "criteria_names": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ],
+      "scenario_count": 6,
+      "eval_coverage": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ]
+    },
+    "welcome-email": {
+      "score": 36,
+      "max": 36,
+      "ratio": 1,
+      "trajectory": "improving",
+      "weakest_criteria": [
+        {
+          "name": "Error Handling",
+          "fail_rate": 0.333
+        },
+        {
+          "name": "Completeness",
+          "fail_rate": 0.333
+        },
+        {
+          "name": "Instructions Clarity",
+          "fail_rate": 0.25
+        }
+      ],
+      "strongest_criteria": [],
+      "rounds_completed": 12,
+      "rounds_kept": 2,
+      "cost_invested": 0.46,
+      "last_improvement": "2026-03-20T22:48:13.087Z",
+      "last_escalation": {
+        "diagnosis": "The optimization loop is stuck in a \"perfection plateau.\" The initial mutation in Round 1 was highly effective, adding comprehensive error handling and output specifications that fully satisfied the existing evaluation suite, resulting in a perfect score of 36/36. Subsequent mutations are minor, cosmetic tweaks that cannot improve the score because the skill already masters all tested scenarios. The recent score drops to 30/36 and 34/36 are red herrings caused by infrastructure failures during the mutation application process (`claude` binary not found), not by flaws in the skill's logic. The system is attempting to incrementally refine a skill that has already reached the performance ceiling defined by its tests.",
+        "timestamp": "2026-05-08T14:02:11.018Z"
+      },
+      "stuck_count": 3,
+      "criteria_names": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ],
+      "scenario_count": 6,
+      "eval_coverage": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ]
+    },
+    "youtube-channel-analysis": {
+      "score": 36,
+      "max": 36,
+      "ratio": 1,
+      "trajectory": "improving",
+      "weakest_criteria": [
+        {
+          "name": "Instructions Clarity",
+          "fail_rate": 0.333
+        },
+        {
+          "name": "Completeness",
+          "fail_rate": 0.267
+        },
+        {
+          "name": "Output Quality",
+          "fail_rate": 0.2
+        }
+      ],
+      "strongest_criteria": [],
+      "rounds_completed": 15,
+      "rounds_kept": 2,
+      "cost_invested": 0.55,
+      "last_improvement": "2026-03-20T22:54:49.018Z",
+      "last_escalation": {
+        "diagnosis": "The optimization loop is not stuck in a performance-based local optimum; it is stuck due to a recurring infrastructure failure. The logs for rounds 5 through 10 all show the exact same error: `Mutation failed: Command failed: ... /claude: No such file or directory`. This indicates the mutation-generation step, which uses a CLI tool to create the next version of the skill, is consistently failing. The system cannot generate new skill candidates to test. Therefore, the score is not improving because the skill content itself is not being successfully mutated. The score of 33/36 is likely the result of the evaluation harness running against a stale or reverted version of the skill from before the infrastructure failures began. The root cause is an environment or configuration issue in the optimization harness, not a deficiency in the skill's logic that incremental changes can't solve.",
+        "timestamp": "2026-05-10T22:02:50.597Z"
+      },
+      "stuck_count": 6,
+      "criteria_names": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ],
+      "scenario_count": 6,
+      "eval_coverage": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ]
+    },
+    "youtube-outliers": {
+      "score": 36,
+      "max": 36,
+      "ratio": 1,
+      "trajectory": "improving",
+      "weakest_criteria": [
+        {
+          "name": "Tool Usage",
+          "fail_rate": 0.231
+        },
+        {
+          "name": "Instructions Clarity",
+          "fail_rate": 0.231
+        },
+        {
+          "name": "Completeness",
+          "fail_rate": 0.231
+        }
+      ],
+      "strongest_criteria": [],
+      "rounds_completed": 13,
+      "rounds_kept": 2,
+      "cost_invested": 0.51,
+      "last_improvement": "2026-03-20T23:08:02.256Z",
+      "last_escalation": {
+        "diagnosis": "The optimization loop is stuck in a local optimum because the skill has achieved a perfect score against the current evaluation suite. The skill is a highly structured, procedural \"cookbook\" that perfectly guides the AI through a fixed set of tasks, and the tests confirm it can follow these instructions flawlessly. Subsequent mutations are minor, safe clarifications (e.g., explaining parameters) that don't introduce new capabilities, and therefore cannot improve upon a perfect score. The system is essentially trying to \"improve\" a skill that already fully solves the problems it's being tested against.",
+        "timestamp": "2026-05-11T06:01:51.305Z"
+      },
+      "stuck_count": 4,
+      "criteria_names": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ],
+      "scenario_count": 6,
+      "eval_coverage": [
+        "Task Completion",
+        "Error Handling",
+        "Output Quality",
+        "Tool Usage",
+        "Instructions Clarity",
+        "Completeness"
+      ]
+    }
+  },
+  "cross_skill_patterns": [
+    {
+      "pattern": "20 skills are currently stuck (3+ consecutive reverts)",
+      "affected_skills": [
+        "classify-leads",
+        "container-security-auditor",
+        "context-drift-detector",
+        "context-loader",
+        "defi-arbitrage-executor",
+        "failure-log-analyzer",
+        "gmaps-leads",
+        "k8s-deployment-manager",
+        "polymarket-5min-strategy",
+        "polymarket-flash-crash-detector",
+        "polymarket-market-discovery",
+        "polymarket-portfolio-tracker",
+        "prompt-refiner-for-robustness",
+        "scaffold",
+        "scrape-leads",
+        "skill-optimizer-v2",
+        "skill-test-runner",
+        "stuck-skill-diagnoser",
+        "system-status-reporter",
+        "the-real-scrumness"
+      ],
+      "frequency": 20,
+      "severity": "high"
+    },
+    {
+      "pattern": "2 skills have had rounds but no kept improvements",
+      "affected_skills": [
+        "context-drift-detector",
+        "polymarket-5min-strategy"
+      ],
+      "frequency": 2,
+      "severity": "high"
+    },
+    {
+      "pattern": "52 skills have triggered stuck escalations",
+      "affected_skills": [
+        "classify-leads",
+        "container-security-auditor",
+        "content-strategy-optimizer",
+        "context-drift-detector",
+        "create-proposal",
+        "cross-model-intelligence-pipeline",
+        "cross-niche-outliers",
+        "defi-arbitrage-executor",
+        "eaas-payment-linker",
+        "failure-log-analyzer",
+        "gmail",
+        "gmail-inbox",
+        "gmail-label",
+        "gmaps-leads",
+        "goal-to-skill-executor",
+        "inbox-cleaner",
+        "instantly-autoreply",
+        "instantly-campaigns",
+        "intent-clarifier",
+        "interactive-skill-refiner",
+        "k8s-deployment-manager",
+        "linkedin-response",
+        "mae-trading-report",
+        "onboarding-kickoff",
+        "polymarket-5min-strategy",
+        "polymarket-bridge",
+        "polymarket-ctf-operations",
+        "polymarket-flash-crash-detector",
+        "polymarket-gasless-trader",
+        "polymarket-market-analyzer",
+        "polymarket-market-discovery",
+        "polymarket-orderbook-reader",
+        "polymarket-portfolio-tracker",
+        "polymarket-position-manager",
+        "polymarket-websocket-monitor",
+        "prompt-refiner-for-robustness",
+        "scaffold",
+        "scrape-leads",
+        "skill-improver",
+        "skill-optimizer-v2",
+        "skill-test-generator",
+        "skill-test-runner",
+        "stuck-skill-diagnoser",
+        "system-dashboard-generator",
+        "system-status-reporter",
+        "the-real-scrumness",
+        "title-variants",
+        "tradfi-market-analyzer",
+        "video-to-action",
+        "welcome-email",
+        "youtube-channel-analysis",
+        "youtube-outliers"
+      ],
+      "frequency": 52,
+      "severity": "medium"
+    },
+    {
+      "pattern": "Criterion \"Completeness\" fails across 14 skills",
+      "affected_skills": [
+        "classify-leads",
+        "cross-niche-outliers",
+        "gmail",
+        "gmail-inbox",
+        "gmail-label",
+        "inbox-cleaner",
+        "instantly-campaigns",
+        "linkedin-response",
+        "scrape-leads",
+        "title-variants",
+        "video-to-action",
+        "welcome-email",
+        "youtube-channel-analysis",
+        "youtube-outliers"
+      ],
+      "frequency": 14,
+      "severity": "medium"
+    },
+    {
+      "pattern": "Criterion \"Instructions Clarity\" fails across 14 skills",
+      "affected_skills": [
+        "classify-leads",
+        "cross-niche-outliers",
+        "gmail",
+        "gmail-inbox",
+        "gmail-label",
+        "gmaps-leads",
+        "linkedin-response",
+        "onboarding-kickoff",
+        "scrape-leads",
+        "title-variants",
+        "video-to-action",
+        "welcome-email",
+        "youtube-channel-analysis",
+        "youtube-outliers"
+      ],
+      "frequency": 14,
+      "severity": "medium"
+    },
+    {
+      "pattern": "Criterion \"Task Completion\" fails across 9 skills",
+      "affected_skills": [
+        "classify-leads",
+        "create-proposal",
+        "gmaps-leads",
+        "inbox-cleaner",
+        "instantly-autoreply",
+        "instantly-campaigns",
+        "linkedin-response",
+        "onboarding-kickoff",
+        "scrape-leads"
+      ],
+      "frequency": 9,
+      "severity": "medium"
+    },
+    {
+      "pattern": "Criterion \"Output Quality\" fails across 8 skills",
+      "affected_skills": [
+        "create-proposal",
+        "cross-niche-outliers",
+        "gmaps-leads",
+        "instantly-autoreply",
+        "onboarding-kickoff",
+        "title-variants",
+        "video-to-action",
+        "youtube-channel-analysis"
+      ],
+      "frequency": 8,
+      "severity": "medium"
+    },
+    {
+      "pattern": "Criterion \"Error Handling\" fails across 7 skills",
+      "affected_skills": [
+        "create-proposal",
+        "gmail-inbox",
+        "gmail-label",
+        "inbox-cleaner",
+        "instantly-autoreply",
+        "instantly-campaigns",
+        "welcome-email"
+      ],
+      "frequency": 7,
+      "severity": "medium"
+    },
+    {
+      "pattern": "Criterion \"Tool Usage\" fails across 2 skills",
+      "affected_skills": [
+        "gmail",
+        "youtube-outliers"
+      ],
+      "frequency": 2,
+      "severity": "medium"
+    }
+  ],
+  "capability_map": {
+    "general": [
+      "backup",
+      "classify-leads",
+      "content-strategy-optimizer",
+      "create-proposal",
+      "cross-niche-outliers",
+      "defi-arbitrage-executor",
+      "eaas-payment-linker",
+      "gmail",
+      "gmail-inbox",
+      "gmail-label",
+      "gmaps-leads",
+      "goal-to-skill-executor",
+      "inbox-cleaner",
+      "instantly-autoreply",
+      "instantly-campaigns",
+      "intent-clarifier",
+      "interactive-skill-refiner",
+      "linkedin-response",
+      "mae-trading-report",
+      "onboarding-kickoff",
+      "polymarket-5min-strategy",
+      "polymarket-bridge",
+      "polymarket-clob-trader",
+      "polymarket-ctf-operations",
+      "polymarket-gasless-trader",
+      "polymarket-market-discovery",
+      "polymarket-orderbook-reader",
+      "polymarket-portfolio-tracker",
+      "polymarket-position-manager",
+      "polymarket-websocket-monitor",
+      "prompt-refiner-for-robustness",
+      "scrape-leads",
+      "skill-optimizer-v2",
+      "stuck-skill-diagnoser",
+      "system-status-reporter",
+      "the-real-scrumness",
+      "title-variants",
+      "video-to-action",
+      "welcome-email",
+      "youtube-channel-analysis",
+      "youtube-outliers"
+    ],
+    "security": [
+      "container-security-auditor"
+    ],
+    "analysis": [
+      "context-drift-detector",
+      "cross-model-intelligence-pipeline",
+      "failure-log-analyzer",
+      "polymarket-flash-crash-detector",
+      "polymarket-market-analyzer",
+      "tradfi-market-analyzer"
+    ],
+    "context_management": [
+      "context-drift-detector",
+      "context-loader"
+    ],
+    "documentation": [
+      "context-loader"
+    ],
+    "research": [
+      "cross-model-intelligence-pipeline"
+    ],
+    "planning": [
+      "deep-plan-v2"
+    ],
+    "deployment": [
+      "k8s-deployment-manager"
+    ],
+    "code_generation": [
+      "scaffold",
+      "skill-test-generator",
+      "system-dashboard-generator"
+    ],
+    "refactoring": [
+      "skill-improver"
+    ],
+    "testing": [
+      "skill-test-generator",
+      "skill-test-runner"
+    ],
+    "self_correction": [
+      "system-self-correction-v2"
+    ]
+  },
+  "uncovered_domains": [],
+  "summary": {
+    "total_skills": 57,
+    "avg_ratio": 0.972,
+    "skills_at_target": 45,
+    "skills_stuck": 20,
+    "skills_untested": 3,
+    "total_cost": 36.81,
+    "total_rounds": 913
+  }
+}

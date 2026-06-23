@@ -1,0 +1,145 @@
+---
+name: create-proposal
+description: Create a PandaDoc proposal for a client and send follow-up email. Use when generating proposals, sales documents, or processing kickoff call transcripts into proposals.
+allowed-tools: Read, Grep, Glob, Bash, Write, WebFetch, mcp__gmail__send_email
+---
+
+> **Demo Library Skill** — This skill is from a demo library. Some configuration values use placeholders (e.g. `{{USER_NAME}}`, `{{COMMUNITY_ID}}`). If something doesn't work, check for placeholder values and replace them with your own information first.
+
+## Tool
+**Script:** `.claude/skills/create-proposal/create_proposal.py`
+**Usage:** Automatically generates PandaDoc proposals from structured input
+
+## Process
+
+**0. Normalize and Validate Input**
+   - **Goal:** Convert any user input format into the required structured data.
+   - **Action:** Examine the user's prompt. It may be a clean transcript, structured bullet points, or a messy, conversational email. Your first task is to parse this input and extract the key fields required in Step 1.
+   - **If any information is missing after parsing,** create a clear, bulleted list of the missing items and ask the user to provide them before proceeding.
+   - **Pre-validation:** Check that financial values (Project Value, Platform Costs, Investment Breakdown) appear to be valid numbers. If you see non-numeric text like "TBD" or "to be discussed," ask the user for a specific number before proceeding.
+
+1. **Gather Information**
+   - The goal is to populate the following structured data, either from the initial input or by asking the user for missing pieces:
+     - Client First Name
+     - Client Last Name
+     - Client Email
+     - Client Company
+     - Project Title
+     - 4 Key Problems (brief)
+     - 4 Key Benefits (brief)
+     - Project Duration
+     - Project Value (Total)
+     - Platform Costs
+     - Investment Breakdown (Month 1, Month 2, Month 3+)
+
+2. **Research Client (Optional)**
+   - **Goal:** Understand the client's brand voice and current context to personalize the proposal.
+   - **Trigger:** If a website URL is provided or can be inferred from the client's email domain (and it's not a generic domain like gmail.com).
+   - **Action:**
+     - Use the **WebFetch tool** to fetch the client's landing page or "About Us" page (e.g., `https://clientdomain.com` or `https://clientdomain.com/about`).
+     - **Analyze**:
+       - **Brand Voice:** (e.g., Professional/Corporate, Friendly/Startup, Technical/Niche)
+       - **Keywords:** Key terms they use to describe their own value.
+       - **Recent Context:** Any recent news or specific focus areas mentioned on the site.
+   - **Output:** A brief "Client Research Summary" to be used in the next step.
+
+3. **Generate Content**
+   - Using the gathered information **and the Client Research Summary (if available)**, generate the following expanded content:
+     - **Problem Expansions**: Expand each of the 4 problems into 1-2 strategic paragraphs (max 50 words each).
+       - **Contextualization:** Use the *Client Research Summary* to mirror their industry terms and brand voice where appropriate.
+       - **Tone & Style Guidelines:**
+         - Use direct "you" language (not third-person or passive voice)
+         - Focus on revenue impact and dollar amounts wherever possible
+         - Be specific and actionable rather than abstract
+         - Think "revenue ops" mindset - quantify business impact
+         - Example: "Right now, your top-of-funnel is converting very poorly to booked meetings. You have no problem generating opportunities; your problem is capitalizing on them. Even a few percentage-point improvement here would lead to many tens of thousands of dollars of additional income"
+     - **Benefit Expansions**: Expand each of the 4 benefits into 1-2 implementation-focused paragraphs (max 50 words each).
+       - **Tone & Style Guidelines:**
+         - Use direct "you" language addressing the client
+         - Emphasize ROI, payback period, and financial outcomes
+         - Be specific about implementation and expected dollar impact
+         - Focus on concrete deliverables and measurable results
+     - **Slide Footer**: "Confidential | [Company] Strategic Initiative | [Date]"
+     - **Contract Footer Slug**: "[Company]-[ProjectTitle]-[YYYY-MM]"
+     - **Created Date**: Current date in YYYY-MM-DD format.
+
+4. **Execute Proposal Creation**
+   - **Tool:** Run `.claude/skills/create-proposal/create_proposal.py` using the **Bash tool** with a heredoc.
+   - Construct the JSON object below, substituting all fields with the actual values gathered and generated in steps 1–3. Then run it using the heredoc form shown — replace the entire JSON block with your real JSON (do not leave any placeholder text):
+     ```bash
+     python3 .claude/skills/create-proposal/create_proposal.py <<'EOF'
+     {
+       "client": {
+         "firstName": "<actual first name>",
+         "lastName": "<actual last name>",
+         "email": "<actual email>",
+         "company": "<actual company>"
+       },
+       "project": {
+         "title": "<actual project title>",
+         "problems": {
+           "problem01": "<expanded problem 1 text>",
+           "problem02": "<expanded problem 2 text>",
+           "problem03": "<expanded problem 3 text>",
+           "problem04": "<expanded problem 4 text>"
+         },
+         "benefits": {
+           "benefit01": "<expanded benefit 1 text>",
+           "benefit02": "<expanded benefit 2 text>",
+           "benefit03": "<expanded benefit 3 text>",
+           "benefit04": "<expanded benefit 4 text>"
+         },
+         "monthOneInvestment": "<month 1 amount>",
+         "monthTwoInvestment": "<month 2 amount>",
+         "monthThreeInvestment": "<month 3+ amount>"
+       },
+       "generated": {
+         "slideFooter": "<slide footer text>",
+         "contractFooterSlug": "<contract footer slug>",
+         "createdDate": "<YYYY-MM-DD>"
+       }
+     }
+     EOF
+     ```
+   - **Important**: Every `<...>` placeholder above must be replaced with actual content before running. The JSON must be valid.
+   - **JSON Safety**: Ensure all string values have internal double-quotes escaped as `\"` and backslashes escaped as `\\`. Do not include raw newlines inside JSON string values.
+   - **Error Handling:** If the script exits with a non-zero exit code or prints an error:
+     - Display the full error output to the user
+     - **Stop here — do not proceed to the email step**
+     - Diagnose the likely cause based on the error message:
+       - `401` / `403` / authentication errors → "Check that your PandaDoc API key is correctly configured in the script or environment."
+       - `422` / validation errors → "One or more input fields may be malformed or missing. Review the JSON input above."
+       - Network/connection errors → "Could not reach the PandaDoc API. Check your internet connection and API endpoint."
+       - Any other error → Show the raw message and ask: "Would you like to fix the input and retry, or handle this manually?"
+     - Do not send the follow-up email until the proposal is confirmed created successfully.
+
+5. **Send Follow-Up Email**
+   - Immediately after proposal creation, send a follow-up email to the client using the **`mcp__gmail__send_email` MCP tool** (not Bash — this is a direct MCP tool call).
+   - Call the tool with `mimeType="text/html"` to send the email in HTML format.
+   - **Determine the sender name for the signature:**
+     - First, run `git config user.name` via Bash to get the configured git user name.
+     - If that returns a name, use it as the signature name.
+     - If the git command returns empty or fails, ask the user: "What name should I use for the email signature?"
+     - Never use a literal placeholder like `{{USER_NAME}}` in the sent email.
+   - **Email Template Structure:**
+     - Subject: "Re: [Brief Project Context] Discussion"
+     - Opening: Personalize the opening sentence by referencing one key finding from the "Client Research Summary" (if available). For example: "Thanks for the chat. Seeing your recent focus on [Keyword from research], I'm confident this plan will help..." If no research was done, use a generic opening like "Thank you for discussing your challenges and goals."
+     - Body: Break down the proposed solution into 2-4 numbered sections with clear headers
+     - Each section should have:
+       - **Bold section header** describing the deliverable (e.g., "1. Tool Consolidation Audit & Migration Plan")
+       - Brief description of what it accomplishes
+       - "Steps:" subheading followed by bullet points (use `<ul>` and `<li>` HTML tags)
+     - Closing: "I'll send you a full proposal for the above shortly. Let me know if you have any questions or want to discuss further."
+     - Signature: "Thanks, [resolved sender name]"
+   - **HTML Formatting Requirements:**
+     - Use `mimeType="text/html"` parameter
+     - Provide both `body` (plain text) and `htmlBody` (HTML version) parameters
+     - In HTML: Use `<p>` tags for paragraphs, `<ul>` and `<li>` for bullet lists
+     - Bold section headers ONLY using `<strong>` tags (e.g., `<strong>1. Tool Consolidation Audit &amp; Migration Plan</strong>`)
+     - Escape all ampersands (`&`) in HTML content as `&amp;` — this is required for valid HTML and prevents email rendering failures
+     - Do NOT bold body text or steps - only section headers
+     - Avoid RFC 2822 plain text wrapping issues by using HTML format
+
+6. **Notify User**
+   - Show the "internalLink" to the user for review and editing in PandaDoc
+   - Confirm that the follow-up email was sent successfully
